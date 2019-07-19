@@ -1,5 +1,3 @@
-from models import Partners, Work_Packages, Deliverables, Users
-from models import Users2Work_Packages, Tasks, Users2Partners
 '''
 COMETApp.py:
 
