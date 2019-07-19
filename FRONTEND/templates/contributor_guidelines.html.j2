@@ -1,0 +1,51 @@
+<html lang="en">
+{% extends 'layout.html.j2' %}
+{% block body %}
+<div id="content-box">
+  <div id="primary" class="site-content">
+    <div id="content" role="main">
+      <article id="Contributor" class="page type-page status-publish hentry">
+        <header class="entry-header">
+          <h1 class="entry-title">Contributor Guidelines</h1>
+        </header>
+        <div class="entry-content">
+          <h4 style="text-align: center">The guidelines below are designed to help contributors fill out the form for adding or editing a volcano database entry.</h4>
+          <p style="text-align: justify"><strong>Volcano name, </strong><strong>Volcano number, Latitude </strong>and<strong> Longitude</strong> should be as they appear in the Smithsonian Database (download the &#8216;Holocene Spreadsheet&#8217;
+            from the Database menu, <a href="http://www.volcano.si.edu/" target="_blank">here</a>). In the case of deformation not clearly associated with a particular volcanic edifice, assign it to the nearest edifice and make this clear in the
+            <strong>Characteristics of Deformation</strong> box, including latitude and longitude of the centre of deformation. Please take particular care with volcanoes that have non-unique names &#8211; check that the <strong>Volcano number</strong>,
+            <strong>Latitude</strong> and <strong>Longitude</strong> all match the Smithsonian Database.</p>
+          <p style="text-align: justify">Please assign each volcano to one of the 19 <strong>Volcanic Regions</strong> used by the Smithsonian Database using the <strong>Category</strong> checkboxes to the right of the form. These can be checked
+            against the &#8216;Holocene Spreadsheet&#8217;.</p>
+          <p style="text-align: justify">Under <strong>Geodetic measurements</strong>, select &#8216;<em>Yes&#8217;</em> for cases where deformation measurements have been made, and &#8216;<em>No&#8217;</em> if there have never been any
+            measurements. If there have been geodetic measurements and deformation of the volcano was shown, the field <strong>Deformation Detected</strong> should be set to &#8216;<em>Yes&#8217;</em>. This should only set to &#8216;<em>No&#8217;</em>
+            if there have been geodetic measurements that have not demonstrated deformation.</p>
+          <p style="text-align: justify">For the <strong>Measurement Method(s)</strong> check boxes, please tick as many as apply. Make sure to record the time periods covered by each measurement method and any differences in the type of deformation
+            measured in the <strong>Characteristics of Deformation</strong> section. If you enter text into the &#8216;<em>Other&#8217;</em> box it will appear on the website exactly as you type it, so make sure that it is phrased clearly and
+            concisely.</p>
+          <p style="text-align: justify">Please indicate the <strong>Duration of Observations</strong> using dates (<em>MM/YYYY</em>) separated by a hyphen. If measurements were made over several discrete periods please list these separated by a
+            comma, e.g. 0<em>5/2007-08/2007, 01/2008-10/2009</em>.</p>
+          <p style="text-align: justify">Choose as many <strong>Inferred Causes of Deformation</strong> as you judge to apply. For more information about the categories we use here, read <a href="http://vccw.test/deformation-causes/" target="_blank">this</a>
+            section. If you enter text into the &#8216;<em>Other&#8217;</em> box it will appear on the website exactly as you type it, so make sure that it is phrased clearly and concisely.</p>
+          <p style="text-align: justify">The <strong>Characteristics of Deformation</strong> box should contain information about all of the observations of deformation, their interpretation and results from modelling. This should be as quantitative
+            as possible and include references (format: <em>Anon et al., 2014</em>). The information contained here will of course vary significantly between volcanoes, but please use the points below as a checklist. You may need to address each
+            point for multiple measurement techniques or periods of observation. Make sure to use SI units and appropriate references in this section.</p>
+          <ul style="text-align: justify">
+            <li>Where is the deformation? If not centred on the volcano, please provide lat/lon. What is the diameter of the deformation? Describe the spatial deformation pattern and how it relates to the volcano?</li>
+            <li>How long did deformation last? Has there been more than one deformation event?</li>
+            <li>Give a <em>qualitative</em> description of the character of the deformation. Was it steady, episodic or transient?</li>
+            <li>Provide <em>quantitative</em> information about the character of deformation to back up your description.What was its rate? By how much does it vary? How many pulses of deformation have been measured? etc.</li>
+            <li>Has a deformation source been inferred? What is the best-fit source for the deformation? What is the uncertainty on this? How deep is the source (with what uncertainty)? What is the volume change of the deformation source (with what
+              uncertainty)?</li>
+          </ul>
+          <p style="text-align: justify">You can add up to five <strong>References</strong> for each volcano (one reference is compulsory). Please include all author names and don&#8217;t use abbreviations in the title or journal name. <em><span
+                style="text-decoration: underline">If the article has a doi, please use it</span></em> and where possible turn it into a hyperlink.</p>
+          <p style="text-align: justify">In order to help with the organisation, it is <strong>important</strong> to keep a record of the volcanoes that you create an entry for.</p>
+          <p style="text-align: justify">Static <strong>figures</strong> can be included to illustrate the database entry. Please provide figures in jpg format, no larger than ~500 x 300. Captions must include a <strong>source</strong> for the
+            image, preferably a reference.</p>
+          <p style="text-align: justify"><em>Internal Contributors</em>: place images in the <em>website/static/</em> folder on the server with a systematic stem, e.g. v<em>olcano_name/volcano_name1.jpg<br />
+            </em><em>External Contributors</em>: please contribute static images in jpg format by email</p>
+          <p style="text-align: justify">
+        </div><!-- .entry-content -->
+        {% endblock %}
+
+</html>

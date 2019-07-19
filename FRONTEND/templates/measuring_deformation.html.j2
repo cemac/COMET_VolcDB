@@ -1,0 +1,147 @@
+<html lang="en">
+{% extends 'layout.html.j2' %}
+{% block body %}
+<header class="entry-header">
+												<h1 class="entry-title">Measuring Deformation</h1>
+		</header>
+
+		<div class="entry-content">
+			<div id="attachment_815" style="width: 310px" class="wp-caption alignright"><a href="http://vccw.test/files/2014/10/Sentinel-1.jpg"><img class="wp-image-815 size-medium" src="http://vccw.test/files/2014/10/Sentinel-1-300x212.jpg" alt="Sentinel-1, volcano deformation" width="300" height="212" srcset="https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/Sentinel-1-300x212.jpg 300w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/Sentinel-1-1024x723.jpg 1024w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/Sentinel-1-624x441.jpg 624w" sizes="(max-width: 300px) 100vw, 300px" /></a><p class="wp-caption-text">ESA&#8217;s Sentinel-1A satellite. Image credit: ESA</p></div>
+<p style="text-align: justify"><span style="color: #ffffff">White space filler</span><br />
+Measuring ground deformation at volcanoes is a critical part of volcano monitoring. Identifying ground deformation can indicate whether a volcano is showing signs of unrest, and potentially building towards an eruption.</p>
+<p style="text-align: justify">There are many techniques used to measure volcano deformation, these include: InSAR, GPS (continuous and campaign), levelling, strainmeters, tiltmeters and EDM. These are described in detail below. Most volcanoes are not monitored using all of these techniques, and many are not currently monitored at all. Other volcano monitoring techniques include measuring seismicity, gas emissions and hydrological changes. Further information about these techniques can be found on the <a href="http://volcanoes.usgs.gov/activity/methods/" target="_blank">USGS website</a>, and an excellent overview of geodetic volcano monitoring techniques is given by Dzurisin (2006) in <em><a href="http://www.springer.com/gp/book/9783540426424" target="_blank">Volcano deformation: new geodetic monitoring techniques</a>.</em></p>
+<p style="text-align: justify"><strong>1. InSAR</strong></p>
+<p style="text-align: justify">Interferometric Synthetic Aperture Radar (InSAR) is a satellite remote sensing technique used to measure ground displacement at the cm-scale over large geographic areas. There are numerous SAR satellites acquiring imagery suitable to create interferograms. Key satellites are summarised in the table below.</p>
+<table style="width: 550px;margin: 1px auto" align="center">
+<tbody>
+<tr>
+<td style="text-align: center" width="106"><strong>Satellite name</strong></td>
+<td style="text-align: center" width="106"><strong>Agency</strong></td>
+<td style="text-align: center" width="106"><strong>Dates</strong></td>
+<td style="text-align: center" width="106"><strong>Wavelength</strong></td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"><a href="https://earth.esa.int/web/guest/missions/esa-operational-eo-missions/ers" target="_blank">ERS</a></td>
+<td style="text-align: center" width="106">ESA</td>
+<td style="text-align: center" width="106">1992 – 2000</td>
+<td style="text-align: center" width="106">C-band</td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"><a href="https://earth.esa.int/web/guest/missions/esa-operational-eo-missions/envisat" target="_blank">Envisat</a></td>
+<td style="text-align: center" width="106">ESA</td>
+<td style="text-align: center" width="106">2002 – 2012</td>
+<td style="text-align: center" width="106">C-band</td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"><a href="http://www.esa.int/Our_Activities/Observing_the_Earth/Copernicus/Sentinel-1/Introducing_Sentinel-1" target="_blank">Sentinel – 1A</a></td>
+<td style="text-align: center" width="106">ESA</td>
+<td style="text-align: center" width="106">2014 &#8211; present</td>
+<td style="text-align: center" width="106">C-band</td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"><a href="http://www.geo-airbusds.com/terrasar-x/" target="_blank">TerraSAR-X</a></td>
+<td style="text-align: center" width="106">DLR</td>
+<td style="text-align: center" width="106">2008 – present</td>
+<td style="text-align: center" width="106">X-band</td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"><a href="http://global.jaxa.jp/projects/sat/alos/" target="_blank">ALOS</a></td>
+<td style="text-align: center" width="106">JAXA</td>
+<td style="text-align: center" width="106">2007 – 2011</td>
+<td style="text-align: center" width="106">L-band</td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"><a href="http://global.jaxa.jp/projects/sat/alos2/" target="_blank">ALOS 2</a></td>
+<td style="text-align: center" width="106">JAXA</td>
+<td style="text-align: center" width="106">2014 – present</td>
+<td style="text-align: center" width="106">L-band</td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"><a href="http://www.e-geos.it/products/cosmo.html" target="_blank">COSMO-SkyMed</a></td>
+<td style="text-align: center" width="106">ASI</td>
+<td style="text-align: center" width="106">2008 – present</td>
+<td style="text-align: center" width="106">X-band</td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+<td style="text-align: center" width="106"></td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"><a href="http://www.asc-csa.gc.ca/eng/satellites/radarsat1/" target="_blank">RADARSAT-1</a></td>
+<td style="text-align: center" width="106">CSA</td>
+<td style="text-align: center" width="106">1995 &#8211; 2013</td>
+<td style="text-align: center" width="106">C-band</td>
+</tr>
+<tr>
+<td style="text-align: center" width="106"><a href="http://www.asc-csa.gc.ca/eng/satellites/radarsat2/" target="_blank">RADARSAT-2</a></td>
+<td style="text-align: center" width="106">CSA</td>
+<td style="text-align: center" width="106">2008 – present</td>
+<td style="text-align: center" width="106">C-band</td>
+</tr>
+</tbody>
+</table>
+<p style="text-align: justify"><span style="color: #ffffff">White space</span><br />
+InSAR uses at least two Synthetic Aperture Radar (SAR) images to form an interferogram. Each SAR image pixel corresponds to a complex number that encodes both the amplitude and phase of the returned radar wave. Ground displacement is determined by measuring the phase difference between two SAR images. Components contributing to the measured phase change include: differences in satellite position (Φ<sub>orbit</sub>), changes in the angle of viewing geometry (Φ<sub>topo</sub>), ground displacement (Φ<sub>defo</sub>), atmospheric water vapour variations (Φ<sub>atm</sub>) and changes to the scattering properties of the ground (Φ<sub>pixel</sub>). This can be represented by the equation:  Φ<sub>interferometric </sub> = Φ<sub>orbit</sub> + Φ<sub>topo</sub> + Φ<sub>defo</sub> + Φ<sub>atm</sub> + Φ<sub>pixel.</sub></p>
+<div id="attachment_820" style="width: 450px" class="wp-caption alignleft"><a href="http://vccw.test/files/2014/10/InSAR_satellites.jpg"><img class="wp-image-820" src="http://vccw.test/files/2014/10/InSAR_satellites-300x256.jpg" alt="InSAR" width="440" height="376" srcset="https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/InSAR_satellites-300x256.jpg 300w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/InSAR_satellites-624x533.jpg 624w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/InSAR_satellites.jpg 745w" sizes="(max-width: 440px) 100vw, 440px" /></a><p class="wp-caption-text">Cartoon schematic of the typical SAR image acquisition geometry. Image credit: Elspeth Robertson</p></div>
+<div id="attachment_818" style="width: 505px" class="wp-caption alignright"><a href="http://vccw.test/files/2014/10/Longonot_ModellingV2.jpg"><img class="wp-image-818" src="http://vccw.test/files/2014/10/Longonot_ModellingV2-300x158.jpg" alt="InSAR, Longonot" width="495" height="262" srcset="https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/Longonot_ModellingV2-300x158.jpg 300w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/Longonot_ModellingV2-1024x541.jpg 1024w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/Longonot_ModellingV2-624x330.jpg 624w" sizes="(max-width: 495px) 100vw, 495px" /></a><p class="wp-caption-text">Wrapped and unwrapped interferograms at Longonot volcano, Kenyan Rift. The wrapped image shows approximately three “fringes”. The interferogram is processed using Envisat imagery; therefore each fringe represents 2.8 cm of ground surface uplift in the satellite line-of-sight. In total, the fringes represent 9.2 cm of ground surface uplift. The unwrapped interferogram (right) shows the same ground uplift, but across one colour scale. Image credit: Elspeth Robertson</p></div>
+<p style="text-align: justify"><span style="color: #ffffff"><em><em>White filler space<br />
+</em></em></span><em><span style="color: #ffffff">White filler space</span><br />
+&#8216;Reading&#8217; an interferogram</em></p>
+<p style="text-align: justify">Interferograms show contours of ground deformation by “fringes” of colour that progress from blue, to yellow, to red and back to blue. For a given satellite, each fringe represents a set amount of displacement, roughly equal to half the radar wavelength. For example, in Envisat and Sentinel interferograms, each fringe represents 2.8 cm of ground displacement, whilst fringes in ALOS interferograms represent 11.2 cm of displacement. Interferograms that display fringes are termed “wrapped”. Sometimes, interferograms are presented “unwrapped”, which means that they show the total amount of ground displacement across a single colour scale (from blue to red). The resolution of interferograms is typically the same as the Digital Elevation Model (DEM) used.</p>
+<p style="text-align: justify"><strong>2. GPS</strong></p>
+<p style="text-align: justify">GPS positioning is based on a triangulation technique using GPS satellites in precisely defined orbits. The Global Positioning System (GPS) is a constellation of 24 to 27 satellites, and each one transmits a unique code modulated onto a carrier frequency. Each GPS satellite orbits the Earth twice a day at an altitude of 20,000 km and transmits information to ground-based GPS receivers. The receiver on the Earth’s surface can determine the time taken for the signal to travel, and can calculate the distance to each GPS satellite. By receiving data from multiple satellites, a single GPS receiver can pinpoint its position to within a few millimeters to centimeters accuracy.</p>
+<div id="attachment_807" style="width: 635px" class="wp-caption aligncenter"><a href="http://vccw.test/files/2015/04/IMG_2972.jpg"><img class="wp-image-807 size-large" src="http://vccw.test/files/2015/04/IMG_2972-1024x682.jpg" alt="Setting up a temporary GPS receiver at Corbetti volcano, Ethiopia. Image credit: Elspeth Robertson" width="625" height="416" srcset="https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2015/04/IMG_2972-1024x682.jpg 1024w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2015/04/IMG_2972-300x200.jpg 300w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2015/04/IMG_2972-624x416.jpg 624w" sizes="(max-width: 625px) 100vw, 625px" /></a><p class="wp-caption-text">Setting up a temporary GPS receiver at Corbetti volcano, Ethiopia. Image credit: Elspeth Robertson</p></div>
+<p style="text-align: justify">There are a variety of GPS survey styles used in volcano monitoring. The style used is decided depending on science objectives, desired precision, cost and logistics. GPS survey styles include continuous and campaign. Campaign surveys can further be subdivided into static, rapid static and kinematic. A continuous network provides excellent temporal resolution but often lacks the spatial coverage of a campaign survey. More information about GPS measurements can be found on the <a href="https://www.unavco.org/" target="_blank">UNAVCO</a> website.</p>
+<p style="text-align: justify"><em>Continuous</em></p>
+<p style="text-align: justify">Continuous GPS stations are permanent operating receivers on the Earth’s surface. They are located on large immobile monuments, which are grounded on bedrock. Continuous GPS data typically has an accuracy of &lt;0.5 cm.</p>
+<p style="text-align: justify"><em>Campaign</em></p>
+<p style="text-align: justify">Static GPS surveys are regional with &lt;1 cm precision. Portable equipment is usually deployed at each site for several days in order to get the highest possible accuracy. Rapid static surveys typically involve acquiring data at with shorter baselines and for a minimum of 10 minutes at each point. Accuracy is typically 1 – 3 cm. Kinematic surveys are local surveys, covering an area of &lt;10 km, and are used when several cm of precision is sufficient.</p>
+<p style="text-align: justify">Key reference: Dzurisin, D. (2006). <em>Volcano deformation: new geodetic monitoring techniques</em>. Springer Science &amp; Business Media.</p>
+<p style="text-align: justify"><strong>3. Leveling</strong></p>
+<p style="text-align: justify">Leveling is a technique that measures height differences within a network of permanent benchmarks and, by repeated surveys, measures height changes as a function of time. There are two types of leveling: spirit leveling and compensator leveling, which are distinguished by the type of level used. Leveling rods are typically 3 m long, graduated every 0.5-1.0 cm (for optical levels) or with a barcode (digital levels). Benchmarks are typically 1-3 km apart. The accuracy of leveling surveys is determined by the combination of equipment and field procedures. Since the onset of GPS and InSAR, the use of leveling has decreased substantially.</p>
+<div id="attachment_812" style="width: 560px" class="wp-caption aligncenter"><a href="http://vccw.test/files/2014/10/Leveling.jpg"><img class="wp-image-812" src="http://vccw.test/files/2014/10/Leveling.jpg" alt="Leveling, volcano deformation" width="550" height="366" srcset="https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/Leveling.jpg 1024w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/Leveling-300x199.jpg 300w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/Leveling-624x414.jpg 624w" sizes="(max-width: 550px) 100vw, 550px" /></a><p class="wp-caption-text">Surveying using a geodetic level. Image source: GeoNet, image is licensed under a Creative Commons Attribution 3.0 New Zealand License.</p></div>
+<p style="text-align: justify">Source and key reference: Dzurisin, D. (2006). <em>Volcano deformation: new geodetic monitoring techniques</em>. Springer Science &amp; Business Media.</p>
+<p style="text-align: justify"><strong>4. Strainmeter</strong></p>
+<p style="text-align: justify">Strainmeters continuously monitor crustal strain and are often deployed within boreholes where surface noise is greatly reduced. Strainmeters often consist of a stainless steel pipe filled with a silicon fluid that is set into the borehole by concrete. They can measure very small changes in the dimension of the borehole at depths ranging up to 250 m. As a volcano deforms, the silicon within the pipe is squeezed. The amount of strain is precisely determined by measuring the flow of the silicon fluid into or out of the strainmeter into a secondary reservoir.</p>
+<p style="text-align: justify">The high sensitivity of strainmeters often allows them to be deployed further from the volcano where they are less susceptible to damage. Most types of strainmeters can measure deformation over frequencies from a few Hz to periods of days, months, and years. This allows them to measure signals at lower frequencies than can be detected with seismometers.</p>
+<p style="text-align: justify">Key reference: Dzurisin, D. (2006). <em>Volcano deformation: new geodetic monitoring techniques</em>. Springer Science &amp; Business Media.<br />
+Sources: <a href="http://earthquake.usgs.gov/monitoring/deformation/data/instruments.php" target="_blank">USGS</a> and <a href="http://www.unavco.org/instrumentation/geophysical/borehole/bsm/bsm.html" target="_blank">UNAVCO</a></p>
+<p><strong>5. Tiltmeter</strong><strong> </strong></p>
+<p>Tiltmeters are electronic spirit levels, which send a radio signal every few minutes giving real-time measurement of localised ground deformation. They measure very small changes in the slope angle, or “tilt”, of the ground, and are often made of a small container with a conducting fluid and a “bubble”. Electrodes are placed in the conducting fluid in order to measure the precise position of the bubble. As the ground tilts and deforms, the voltage output from the electrodes vary in a way that is correlated with the amount and orientation of tilt. At volcanoes, tiltmeters are commonly used in the near-field, around the expected area of deformation (e.g. surrounding the eruptive centre).</p>
+<div id="attachment_810" style="width: 247px" class="wp-caption aligncenter"><a href="http://vccw.test/files/2014/10/Tiltmeter.jpg"><img class="wp-image-810 size-medium" src="http://vccw.test/files/2014/10/Tiltmeter-237x300.jpg" alt="Tiltmeter, volcano deformation" width="237" height="300" srcset="https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/Tiltmeter-237x300.jpg 237w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2014/10/Tiltmeter.jpg 474w" sizes="(max-width: 237px) 100vw, 237px" /></a><p class="wp-caption-text">A tiltmeter buried into the ground. Image source: courtesy of the U.S. Geological Survey</p></div>
+<p style="text-align: justify">Key reference: Dzurisin, D. (1992).<em> </em>Electronic tiltmeters for volcano monitoring: lessons from Mount St. Helens<em>, in Ewert, J.W., and Swanson, D.A. (eds), Monitoring volcanoes: techniques and strategies used by the staff of the Cascades Volcano Observatory, 1980-90, U.S. Geological Survey Bulletin 1966, p. 125-134.<br />
+</em>Sources: <a href="http://www.bgs.ac.uk/discoveringGeology/hazards/volcanoes/montserrat/deformation.html" target="_blank">BGS</a> and the <a href="http://volcanoes.usgs.gov/activity/methods/deformation/tilt/" target="_blank">U.S. Geological Survey</a></p>
+<p style="text-align: justify"><strong>6. EDM</strong></p>
+<p style="text-align: justify">The Electronic Distance Meter (EDM) measures the distance between fixed benchmarks on volcanic flanks. The instrument both sends and receives electromagnetic signals. Short-range EDM&#8217;s typically measure distances of less than 10 km, have an accuracy of 5 mm, and use the near visible infrared part of the spectrum for measuring distances. Medium-range EDM&#8217;s often measure distances of less than 50 km. Depending on the distance between the EDM and reflector, the wavelength of the returned signal will be out of phase with the transmitted signal. The instrument compares the phase of the transmitted and received signals and measures the phase difference electronically to calculate distance.</p>
+<div id="attachment_803" style="width: 635px" class="wp-caption aligncenter"><a href="http://vccw.test/files/2015/04/Cyril_total_station.jpg"><img class="wp-image-803 size-large" src="http://vccw.test/files/2015/04/Cyril_total_station-1024x768.jpg" alt="EDM measurements, volcano deformation" width="625" height="469" srcset="https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2015/04/Cyril_total_station-1024x768.jpg 1024w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2015/04/Cyril_total_station-300x225.jpg 300w, https://see4-177.leeds.ac.uk:5996/wp-content/blogs.dir/267/files/2015/04/Cyril_total_station-624x468.jpg 624w" sizes="(max-width: 625px) 100vw, 625px" /></a><p class="wp-caption-text">Cyril Muller making EDM measurements using a total station setup looking towards Arenal volcano, Costa Rica. Image credit: Susi Ebmeier</p></div>
+<p style="text-align: justify">Key reference: Iwatsubo, E.Y., &amp; Swanson, D.A. (1992).<em> Methods used to monitor deformation of the crater floor and lava dome at Mount St. Helens, Washington: U.S. Geological Survey Bulletin 1966, p. 53-68.<br />
+</em>Sources: <a href="http://www.bgs.ac.uk/discoveringGeology/hazards/volcanoes/montserrat/deformation.html" target="_blank">BGS</a> and the <a href="http://volcanoes.usgs.gov/activity/methods/deformation/edm/" target="_blank">U.S. Geological Survey</a></p>
+					</div><!-- .entry-content -->
+{% endblock %}
+</html>
