@@ -39,12 +39,12 @@ def contact():
 
 @app.route('/contribute', methods=["GET"])
 def contribute():
-    return render_template('contributor-guidelines.html.j2')
+    return render_template('contributor_guidelines.html.j2')
 
 
 @app.route('/deformation-causes', methods=["GET"])
 def deformation():
-    return render_template('deformation-causes.html.j2')
+    return render_template('deformation_causes.html.j2')
 
 
 @app.route('/copyright', methods=["GET"])
@@ -54,7 +54,7 @@ def copyright():
 
 @app.route('/measuring-deformation', methods=["GET"])
 def measure():
-    return render_template('measuring-deformation.html.j2')
+    return render_template('measuring_deformation.html.j2')
 
 
 @app.route('/glossary', methods=["GET"])

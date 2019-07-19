@@ -5,31 +5,31 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-    <li><a href="/about">About</a></li>
-    <li><a href="/volcano-index">Volcano Index</a></li>
-    <li><a href="/measuring-deformation">Measuring Deformation</a></li>
-    <li><a href="/deformation-causes">Deformation Causes</a></li>
-    <li><a href="/glossary">Glossary</a></li>
-    <li><a href="/contact">Contact</a></li>
-    </ul></div>		</div><!-- #access -->
-      <ul class="nav navbar-nav navbar-right">
-        {% if session.username == "admin" or session.admin == "True"%}
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Menu<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/admin/whatever">Admin option1</a></li>
-          </ul>
-        </li>
-        {% endif %}
-        {% if session.logged_in %}
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li class="dropdown-header">Logged in as <b>{{session.username}}</b></li>
-            {% if session.username != "admin" %}
-            <li><a href=/change-pwd>Change Password</a> </li> {% endif %} <li><a href=/logout>Logout </a> </li> </ul> </li> {% else %} <li><a href="/login">Login</a></li>
-            {% endif %}
-          </ul>
+        <li><a href="/about">About</a></li>
+        <li><a href="/volcano-index">Volcano Index</a></li>
+        <li><a href="/measuring-deformation">Measuring Deformation</a></li>
+        <li><a href="/deformation-causes">Deformation Causes</a></li>
+        <li><a href="/glossary">Glossary</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
     </div>
+    <ul class="nav navbar-nav navbar-right">
+      {% if session.username == "admin" or session.admin == "True"%}
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Menu<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/admin/whatever">Admin option1</a></li>
+        </ul>
+      </li>
+      {% endif %}
+      {% if session.logged_in %}
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li class="dropdown-header">Logged in as <b>{{session.username}}</b></li>
+          {% if session.username != "admin" %}
+          <li><a href=/change-pwd>Change Password</a> </li> {% endif %} <li><a href=/logout>Logout </a> </li> </ul> </li> {% else %} <li><a href="/login">Login</a></li>
+          {% endif %}
+        </ul>
   </div>
 </nav>
