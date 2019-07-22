@@ -2,112 +2,117 @@
 {% extends 'layout.html.j2' %}
 {% block body %}
 <header class="entry-header">
-  <h1 class="entry-title">Glossary</h1>
   <div id="branding">
   <a href="/">
 <img src="/static/cropped-Sentinel-1.jpg" width="80%" height="auto" alt="" />
 </a>
 </div><!-- #branding -->
+  <h1 class="entry-title">Glossary</h1>
 </header>
-<div class="entry-content">
-  <p style="text-align: justify"><strong>ALOS</strong> Advanced Land Observing Satellite (Japan).</p>
-  <p style="text-align: justify"><strong>Array</strong> An ordered arrangement of monitoring instruments or measurement stations.</p>
-  <p style="text-align: justify"><strong>ASAR</strong> Advanced Synthetic-aperture Radar (Envisat, European Space Agency).</p>
-  <p style="text-align: justify"><strong>AVO</strong> Alaska Volcano Observatory.</p>
-  <p style="text-align: justify"><strong>Azimuth</strong> Distance measured from the early azimuth line to a particular point in the footprint of an imaging radar, in the direction parallel to the flight path of the radar.</p>
-  <p style="text-align: justify"><strong>Backsight</strong> In leveling, a reading on a leveling rod held in its unchanged position on a survey point of previously determined elevation, known as a turning point, after the leveling instrument has
-    been moved to a new position.</p>
-  <p style="text-align: justify"><strong>Baseline</strong> In GPS, a vector of coordinate differences between two points or an expression of the coordinates of one point with respect to the other. In common usage, the term often refers to the scalar
-    distance between two points rather than to the vector. In InSAR, baseline refers to the perpendicular separation between satellite positions from two image pairs.</p>
-  <p style="text-align: justify"><strong>Bench mark</strong> A relatively permanent, natural or artificial geodetic marker fixed to the Earth and bearing a marked point whose elevation above or below an adopted surface (datum) is known.</p>
-  <p style="text-align: justify"><strong>Bradyseism</strong> An episode of gradual surface uplift or subsidence, usually several kilometers to a few tens of kilometers across, caused by inflation or deflation of a magma reservoir or by
-    pressurisation or depressurisation of a hydrothermal system.</p>
-  <p style="text-align: justify"><strong>Caldera</strong> A large, roughly circular volcanic depression caused by the collapse of surface rock over an underlying magma reservoir.</p>
-  <p style="text-align: justify"><strong>CGPS</strong> Continuous GPS.</p>
-  <p style="text-align: justify"><strong>Coherence</strong> Aspect of an InSAR interferogram related to the amount of change in the position or radar-reflective property of scatterers within corresponding pixels in the two SAR images used to create
+<br>
+<div style="text-align: justify">
+  <table class="table table-striped" style="width: 80%;margin: 1px auto" align="center">
+  <tbody>
+  <tr><th scope="row" width="106">ALOS</th><td> Advanced Land Observing Satellite (Japan).</td></tr>
+  <tr><th scope="row" width="106">Array</th><td> An ordered arrangement of monitoring instruments or measurement stations.</td></tr>
+  <tr><th scope="row" width="106">ASAR</th><td> Advanced Synthetic-aperture Radar (Envisat, European Space Agency).</td></tr>
+  <tr><th scope="row" width="106">AVO</th><td> Alaska Volcano Observatory.</td></tr>
+  <tr><th scope="row" width="106">Azimuth</th><td> Distance measured from the early azimuth line to a particular point in the footprint of an imaging radar, in the direction parallel to the flight path of the radar.</td></tr>
+  <tr><th scope="row" width="106">Backsight</th><td> In leveling, a reading on a leveling rod held in its unchanged position on a survey point of previously determined elevation, known as a turning point, after the leveling instrument has
+    been moved to a new position.</td></tr>
+  <tr><th scope="row" width="106">Baseline</th><td> In GPS, a vector of coordinate differences between two points or an expression of the coordinates of one point with respect to the other. In common usage, the term often refers to the scalar
+    distance between two points rather than to the vector. In InSAR, baseline refers to the perpendicular separation between satellite positions from two image pairs.</td></tr>
+  <tr><th scope="row" width="106">Bench mark</th><td> A relatively permanent, natural or artificial geodetic marker fixed to the Earth and bearing a marked point whose elevation above or below an adopted surface (datum) is known.</td></tr>
+  <tr><th scope="row" width="106">Bradyseism</th><td> An episode of gradual surface uplift or subsidence, usually several kilometers to a few tens of kilometers across, caused by inflation or deflation of a magma reservoir or by
+    pressurisation or depressurisation of a hydrothermal system.</td></tr>
+  <tr><th scope="row" width="106">Caldera</th><td> A large, roughly circular volcanic depression caused by the collapse of surface rock over an underlying magma reservoir.</td></tr>
+  <tr><th scope="row" width="106">CGPS</th><td> Continuous GPS.</td></tr>
+  <tr><th scope="row" width="106">Coherence</th><td> Aspect of an InSAR interferogram related to the amount of change in the position or radar-reflective property of scatterers within corresponding pixels in the two SAR images used to create
     the interferogram. To measure surface displacement using InSAR the deforming area must be mostly coherent, otherwise phase-difference information is lost and the area is termed incoherent. Factors that lead to incoherence include snow cover,
-    farming, and change in vegetation cover.</p>
-  <p style="text-align: justify"><strong>Constellation</strong> In GPS context, the group of NAVSTAR satellites that form the heart of the US GPS system. Typically, there are around 21 active satellites and 3 orbiting spares ensuring that at least 4
-    satellites are above the horizon at all times.</p>
-  <p style="text-align: justify"><strong>Corner reflector</strong> An optical reflector designed such that light incident on its surface is redirected back to its source on a path parallel to the incidence angle.</p>
-  <p style="text-align: justify"><strong>COSMO-SkyMed </strong> An Italian<span class="st"> constellation of four Earth observation SAR satellites for dual (civil and military) use.</span></p>
-  <p style="text-align: justify"><strong>CSA</strong> Canadian Space Agency.</p>
-  <p style="text-align: justify"><strong>CVO</strong> Cascades Volcano Observatory.</p>
-  <p style="text-align: justify"><strong>Décollement </strong>A detachment structure above and below which the style of deformation in the rocks are independent.</p>
-  <p style="text-align: justify"><strong>Decorrelation</strong> In InSAR, a term used to describe the situation in which two radar images of the same area cannot be registered on a pixel by pixel basis.</p>
-  <p style="text-align: justify"><strong>Deflation</strong> In volcanology, a term used to describe shrinking of the ground surface, a volcanic edifice, or a sub-surface magma body. Deflation is a response to depressurisation, which can have several
-    causes.</p>
-  <p style="text-align: justify"><strong>Deformation</strong> In geodesy, any change in the shape or dimension of the Earth’s surface.</p>
-  <p style="text-align: justify"><strong>DEM</strong> Digital Elevation Model.</p>
-  <p style="text-align: justify"><strong>Dilatometer</strong> Synonym for volumetric strainmeter.</p>
-  <p style="text-align: justify"><strong>Dilation</strong> Deformation by a change in volume but not shape.</p>
-  <p style="text-align: justify"><strong>DLR</strong> Deutsches Zentrum fur Luft- und Raumfahrt (German Aeorospace Center).</p>
-  <p style="text-align: justify"><strong>Dry tilt </strong> Equivalent to single-setup leveling. A term coined by the USGS at HVO to distinguish this differential leveling technique from the wet tilt method.</p>
-  <p style="text-align: justify"><strong>DTM</strong> Digital Terrain Model.</p>
-  <p style="text-align: justify"><strong>EDM</strong> Electro-optical distance meter, electronic distance meter, or electronic distance measurement.</p>
-  <p style="text-align: justify"><strong>Envisat </strong>An <span class="st">inoperative ESA Earth-observing satellite still in orbit.</span></p>
-  <p style="text-align: justify"><strong>ERS</strong> An ESA remote-sensing satellite (ERS-1 and ERS-2).</p>
-  <p style="text-align: justify"><strong>ESA </strong> European Space Agency.</p>
-  <p style="text-align: justify"><strong>Footprint</strong> For imaging radar systems, the area on the ground illuminated by the radar beam.</p>
-  <p style="text-align: justify"><strong>Foresight</strong> A reading taken on a level rod to determine the elevation of the point on which the rod rests.</p>
-  <p style="text-align: justify"><strong>Fringe</strong> In InSAR, the colour band from red-blue-green-yellow corresponding to centimeters of topographic relief change.</p>
-  <p style="text-align: justify"><strong>Galileo</strong> Global Navigation Satellite System.</p>
-  <p style="text-align: justify"><strong>Geodetic moment</strong> A measure of the energy associated with rock deformation, such as slip.</p>
-  <p style="text-align: justify"><strong>Geodimeter</strong> Acronym for geodetic distance meter and a trade name for a specific brand.</p>
-  <p style="text-align: justify"><strong>GEONET</strong> GPS Earth Observation Network (continuous GPS network, Japan).</p>
-  <p style="text-align: justify"><strong>GIS</strong> Acronym for geographic information system, a computer system capable of assembling, storing, manipulating and displaying geographically referenced information.</p>
-  <p style="text-align: justify"><strong>GLONASS</strong> Global Navigation Satellite System (Russia).</p>
-  <p style="text-align: justify"><strong>GNSS</strong> Global Navigation Satellite System.</p>
-  <p style="text-align: justify"><strong>GPS</strong> Global Positioning System, specifically the US NAVSTAR GPS Global Navigation System.</p>
-  <p style="text-align: justify"><strong>GPS receiver</strong> An electronic device that receives and processes signals from NAVSTAR or other GNSS satellites to calculate positioning information directly, or alternatively, to produce a dataset that
-    can be further processed to obtain such information.</p>
-  <p style="text-align: justify"><strong>GVN</strong> Global Volcanism Network.</p>
-  <p style="text-align: justify"><strong>HVO</strong> Hawaiian Volcano Observatory.</p>
-  <p style="text-align: justify"><strong>IAVCEI</strong> International Association of Volcanology and Chemistry of the Earth’s Interior.</p>
-  <p style="text-align: justify"><strong>IGS</strong> International GPS Service.</p>
-  <p style="text-align: justify"><strong>InSAR</strong> Interferometric Synthetic Aperture Radar. A satellite remote-sensing technique that measures ground deformation using the phase difference between two time-separated SAR images</p>
-  <p style="text-align: justify"><strong>Interferometry (radar) </strong> A technique that uses the measured phase difference of a return radar signal between two satellite passes to detect ground surface movement. Two SAR images of the same target
-    area on the Earth’s surface are taken at different times, and are flattened, co-registered, and differenced to produce an interferogram. Fringes represent the measured phase differences.</p>
-  <p style="text-align: justify"><strong>Interferogram (radar)</strong> An image produced by differencing two radar-phase images of the same target area. An interferogram can be used to produce a DEM model or to measure surface deformation.</p>
-  <p style="text-align: justify"><strong>JAXA</strong> Japan Aerospace Exploration Agency.</p>
-  <p style="text-align: justify"><strong>JERS</strong> Japanese Earth Resources Satellite.</p>
-  <p style="text-align: justify"><strong>Kinematic (GPS)</strong> A form of GPS surveying in which the position of a moving receiver is tracked by means of uninterrupted carrier-phase measurements following successful solution of the integer
-    ambiguities.</p>
-  <p style="text-align: justify"><strong>Leveling</strong> A surveying technique for determining relative height differences between fixed points on the Earth’s surface (bench marks) by sighting through a leveling instrument to one or more graduated
-    rods.</p>
-  <p style="text-align: justify"><strong>Leveling, compensator</strong> Leveling carried out with a leveling instrument having a compensator, or self-leveling device, for making line-of-sight horizontal.</p>
-  <p style="text-align: justify"><strong>Leveling, differential </strong> Technique for determining the difference in elevation between two points by the incremental vertical displacements of a graduated rod. The two usual methods of differential
-    are spirit leveling and compensator leveling, which differ in the way the instrument determines the horizontal line of sight.</p>
-  <p style="text-align: justify"><strong>Leveling, spirit</strong> Leveling with an instrument that depends on a spirit level for making its line-of-sight horizontal.</p>
-  <p style="text-align: justify"><strong>Lidar</strong> Light Detection and Ranging.</p>
-  <p style="text-align: justify"><strong>LVO</strong> Long Valley Observatory.</p>
-  <p style="text-align: justify"><strong>MSAS</strong> MTSAT Satellite-based Augmentation System for GPS (Japan).</p>
-  <p style="text-align: justify"><strong>NASA</strong> National Aeronautics and Space Administration.</p>
-  <p style="text-align: justify"><strong>NAVSTAR</strong> Navigation Satellite Time and Ranging (US GPS satellite).</p>
-  <p style="text-align: justify"><strong>Network</strong> In geodesy, a group of surveying stations that have been interconnected through measurements of their relative positions in such a way that the self-consistency of the measurements can be
-    checked and adjusted.</p>
-  <p style="text-align: justify"><strong>PALSAR</strong> Phased Array L-band Synthetic-aperture Radar (onboard JAXA’s ALOS satellite).</p>
-  <p style="text-align: justify"><strong>Phase unwrapping (InSAR)</strong> A procedure for solving the 2-pi ambiguity inherent in radar interferograms, using one of several techniques to calculate the correct integer number of phase cycles to be
-    added to each phase measurement. An unwrapped, flattened interferogram has a smooth range of pixel values corresponding to surface elevations.</p>
-  <p style="text-align: justify"><strong>Pixel</strong> Short for ‘picture element’, the smallest part of a digital image. The number of pixels (width and height) in an image defines its size, and the number of pixels per inch defines its
-    resolution.</p>
-  <p style="text-align: justify"><strong>RADAR</strong> Radio detection and ranging.</p>
-  <p style="text-align: justify"><strong>RADARSAT </strong>Commercial Canadian SAR satellites (Radarsat-1 and Radarsat-2).</p>
-  <p style="text-align: justify"><strong>SAR</strong> Synthetic-Aperture Radar.</p>
-  <p style="text-align: justify"><strong>SBAS</strong> Satellite-Based Augmentation System (regional civilian GNSS augmentation system).</p>
-  <p style="text-align: justify"><strong>SBAS</strong> Small baseline subset time-series of ground deformation.</p>
-  <p style="text-align: justify"><strong>Sentinel </strong>A<span class="st"> new family of ESA satellites, called Sentinels, specifically for the operational needs of the Copernicus programme.</span></p>
-  <p style="text-align: justify"><strong>SRTM</strong> Shuttle Radar Topography Mission.</p>
-  <p style="text-align: justify"><strong>Static GPS </strong> A form of GPS surveying in which the position of a fixed point is determined by means of carrier-phase measurements. The integer ambiguities are resolved from an extended observation
-    period through a change in satellite geometry.</p>
-  <p style="text-align: justify"><strong>Strainmeter</strong> An instrument designed to measure changes in the shape or volume of a body as the result of stress.</p>
-  <p style="text-align: justify"><strong>Tiltmeter</strong> An instrument that measures slight changes in the tilt of the ground surface, usually in relation to a liquid-level surface or the rest position of a pendulum.</p>
-  <p style="text-align: justify"><strong>TerraSAR-x </strong>A<span class="st"> commercial German synthetic aperture radar (SAR) Earth observation satellite.</span></p>
-  <p style="text-align: justify"><strong>Total station </strong> A surveying instrument that combines the functions of an EDM and theodolite and thus is capable of measuring both distance and azimuth between fixed points.</p>
-  <p style="text-align: justify"><strong>UNAVACO</strong> Non-profit university-governed consortium that facilitates geoscience research and education using Geodesy.</p>
-  <p style="text-align: justify"><strong>USGS</strong> United States Geological Survey.</p>
-  <p style="text-align: justify"><strong>VEI</strong> Volcanic Explosivity Index.</p>
-  <p style="text-align: justify"><strong>YVO</strong> Yellowstone Volcano Observatory.</p>
+    farming, and change in vegetation cover.</td></tr>
+  <tr><th scope="row" width="106">Constellation</th><td> In GPS context, the group of NAVSTAR satellites that form the heart of the US GPS system. Typically, there are around 21 active satellites and 3 orbiting spares ensuring that at least 4
+    satellites are above the horizon at all times.</td></tr>
+  <tr><th scope="row" width="106">Corner reflector</th><td> An optical reflector designed such that light incident on its surface is redirected back to its source on a path parallel to the incidence angle.</td></tr>
+  <tr><th scope="row" width="106">COSMO-SkyMed </th><td> An Italian<span class="st"> constellation of four Earth observation SAR satellites for dual (civil and military) use.</span></td></tr>
+  <tr><th scope="row" width="106">CSA</th><td> Canadian Space Agency.</td></tr>
+  <tr><th scope="row" width="106">CVO</th><td> Cascades Volcano Observatory.</td></tr>
+  <tr><th scope="row" width="106">Décollement </th><td>A detachment structure above and below which the style of deformation in the rocks are independent.</td></tr>
+  <tr><th scope="row" width="106">Decorrelation</th><td> In InSAR, a term used to describe the situation in which two radar images of the same area cannot be registered on a pixel by pixel basis.</td></tr>
+  <tr><th scope="row" width="106">Deflation</th><td> In volcanology, a term used to describe shrinking of the ground surface, a volcanic edifice, or a sub-surface magma body. Deflation is a response to depressurisation, which can have several
+    causes.</td></tr>
+  <tr><th scope="row" width="106">Deformation</th><td> In geodesy, any change in the shape or dimension of the Earth’s surface.</td></tr>
+  <tr><th scope="row" width="106">DEM</th><td> Digital Elevation Model.</td></tr>
+  <tr><th scope="row" width="106">Dilatometer</th><td> Synonym for volumetric strainmeter.</td></tr>
+  <tr><th scope="row" width="106">Dilation</th><td> Deformation by a change in volume but not shape.</td></tr>
+  <tr><th scope="row" width="106">DLR</th><td> Deutsches Zentrum fur Luft- und Raumfahrt (German Aeorospace Center).</td></tr>
+  <tr><th scope="row" width="106">Dry tilt </th><td> Equivalent to single-setup leveling. A term coined by the USGS at HVO to distinguish this differential leveling technique from the wet tilt method.</td></tr>
+  <tr><th scope="row" width="106">DTM</th><td> Digital Terrain Model.</td></tr>
+  <tr><th scope="row" width="106">EDM</th><td> Electro-optical distance meter, electronic distance meter, or electronic distance measurement.</td></tr>
+  <tr><th scope="row" width="106">Envisat </th><td>An <span class="st">inoperative ESA Earth-observing satellite still in orbit.</span></td></tr>
+  <tr><th scope="row" width="106">ERS</th><td> An ESA remote-sensing satellite (ERS-1 and ERS-2).</td></tr>
+  <tr><th scope="row" width="106">ESA </th><td> European Space Agency.</td></tr>
+  <tr><th scope="row" width="106">Footprint</th><td> For imaging radar systems, the area on the ground illuminated by the radar beam.</td></tr>
+  <tr><th scope="row" width="106">Foresight</th><td> A reading taken on a level rod to determine the elevation of the point on which the rod rests.</td></tr>
+  <tr><th scope="row" width="106">Fringe</th><td> In InSAR, the colour band from red-blue-green-yellow corresponding to centimeters of topographic relief change.</td></tr>
+  <tr><th scope="row" width="106">Galileo</th><td> Global Navigation Satellite System.</td></tr>
+  <tr><th scope="row" width="106">Geodetic moment</th><td> A measure of the energy associated with rock deformation, such as slip.</td></tr>
+  <tr><th scope="row" width="106">Geodimeter</th><td> Acronym for geodetic distance meter and a trade name for a specific brand.</td></tr>
+  <tr><th scope="row" width="106">GEONET</th><td> GPS Earth Observation Network (continuous GPS network, Japan).</td></tr>
+  <tr><th scope="row" width="106">GIS</th><td> Acronym for geographic information system, a computer system capable of assembling, storing, manipulating and displaying geographically referenced information.</td></tr>
+  <tr><th scope="row" width="106">GLONASS</th><td> Global Navigation Satellite System (Russia).</td></tr>
+  <tr><th scope="row" width="106">GNSS</th><td> Global Navigation Satellite System.</td></tr>
+  <tr><th scope="row" width="106">GPS</th><td> Global Positioning System, specifically the US NAVSTAR GPS Global Navigation System.</td></tr>
+  <tr><th scope="row" width="106">GPS receiver</th><td> An electronic device that receives and processes signals from NAVSTAR or other GNSS satellites to calculate positioning information directly, or alternatively, to produce a dataset that
+    can be further processed to obtain such information.</td></tr>
+  <tr><th scope="row" width="106">GVN</th><td> Global Volcanism Network.</td></tr>
+  <tr><th scope="row" width="106">HVO</th><td> Hawaiian Volcano Observatory.</td></tr>
+  <tr><th scope="row" width="106">IAVCEI</th><td> International Association of Volcanology and Chemistry of the Earth’s Interior.</td></tr>
+  <tr><th scope="row" width="106">IGS</th><td> International GPS Service.</td></tr>
+  <tr><th scope="row" width="106">InSAR</th><td> Interferometric Synthetic Aperture Radar. A satellite remote-sensing technique that measures ground deformation using the phase difference between two time-separated SAR images</td></tr>
+  <tr><th scope="row" width="106">Interferometry (radar) </th><td> A technique that uses the measured phase difference of a return radar signal between two satellite passes to detect ground surface movement. Two SAR images of the same target
+    area on the Earth’s surface are taken at different times, and are flattened, co-registered, and differenced to produce an interferogram. Fringes represent the measured phase differences.</td></tr>
+  <tr><th scope="row" width="106">Interferogram (radar)</th><td> An image produced by differencing two radar-phase images of the same target area. An interferogram can be used to produce a DEM model or to measure surface deformation.</td></tr>
+  <tr><th scope="row" width="106">JAXA</th><td> Japan Aerospace Exploration Agency.</td></tr>
+  <tr><th scope="row" width="106">JERS</th><td> Japanese Earth Resources Satellite.</td></tr>
+  <tr><th scope="row" width="106">Kinematic (GPS)</th><td> A form of GPS surveying in which the position of a moving receiver is tracked by means of uninterrupted carrier-phase measurements following successful solution of the integer
+    ambiguities.</td></tr>
+  <tr><th scope="row" width="106">Leveling</th><td> A surveying technique for determining relative height differences between fixed points on the Earth’s surface (bench marks) by sighting through a leveling instrument to one or more graduated
+    rods.</td></tr>
+  <tr><th scope="row" width="106">Leveling, compensator</th><td> Leveling carried out with a leveling instrument having a compensator, or self-leveling device, for making line-of-sight horizontal.</td></tr>
+  <tr><th scope="row" width="106">Leveling, differential </th><td> Technique for determining the difference in elevation between two points by the incremental vertical displacements of a graduated rod. The two usual methods of differential
+    are spirit leveling and compensator leveling, which differ in the way the instrument determines the horizontal line of sight.</td></tr>
+  <tr><th scope="row" width="106">Leveling, spirit</th><td> Leveling with an instrument that depends on a spirit level for making its line-of-sight horizontal.</td></tr>
+  <tr><th scope="row" width="106">Lidar</th><td> Light Detection and Ranging.</td></tr>
+  <tr><th scope="row" width="106">LVO</th><td> Long Valley Observatory.</td></tr>
+  <tr><th scope="row" width="106">MSAS</th><td> MTSAT Satellite-based Augmentation System for GPS (Japan).</td></tr>
+  <tr><th scope="row" width="106">NASA</th><td> National Aeronautics and Space Administration.</td></tr>
+  <tr><th scope="row" width="106">NAVSTAR</th><td> Navigation Satellite Time and Ranging (US GPS satellite).</td></tr>
+  <tr><th scope="row" width="106">Network</th><td> In geodesy, a group of surveying stations that have been interconnected through measurements of their relative positions in such a way that the self-consistency of the measurements can be
+    checked and adjusted.</td></tr>
+  <tr><th scope="row" width="106">PALSAR</th><td> Phased Array L-band Synthetic-aperture Radar (onboard JAXA’s ALOS satellite).</td></tr>
+  <tr><th scope="row" width="106">Phase unwrapping (InSAR)</th><td> A procedure for solving the 2-pi ambiguity inherent in radar interferograms, using one of several techniques to calculate the correct integer number of phase cycles to be
+    added to each phase measurement. An unwrapped, flattened interferogram has a smooth range of pixel values corresponding to surface elevations.</td></tr>
+  <tr><th scope="row" width="106">Pixel</th><td> Short for ‘picture element’, the smallest part of a digital image. The number of pixels (width and height) in an image defines its size, and the number of pixels per inch defines its
+    resolution.</td></tr>
+  <tr><th scope="row" width="106">RADAR</th><td> Radio detection and ranging.</td></tr>
+  <tr><th scope="row" width="106">RADARSAT </th><td>Commercial Canadian SAR satellites (Radarsat-1 and Radarsat-2).</td></tr>
+  <tr><th scope="row" width="106">SAR</th><td> Synthetic-Aperture Radar.</td></tr>
+  <tr><th scope="row" width="106">SBAS</th><td> Satellite-Based Augmentation System (regional civilian GNSS augmentation system).</td></tr>
+  <tr><th scope="row" width="106">SBAS</th><td> Small baseline subset time-series of ground deformation.</td></tr>
+  <tr><th scope="row" width="106">Sentinel </th><td>A<span class="st"> new family of ESA satellites, called Sentinels, specifically for the operational needs of the Copernicus programme.</span></td></tr>
+  <tr><th scope="row" width="106">SRTM</th><td> Shuttle Radar Topography Mission.</td></tr>
+  <tr><th scope="row" width="106">Static GPS </th><td> A form of GPS surveying in which the position of a fixed point is determined by means of carrier-phase measurements. The integer ambiguities are resolved from an extended observation
+    period through a change in satellite geometry.</td></tr>
+  <tr><th scope="row" width="106">Strainmeter</th><td> An instrument designed to measure changes in the shape or volume of a body as the result of stress.</td></tr>
+  <tr><th scope="row" width="106">Tiltmeter</th><td> An instrument that measures slight changes in the tilt of the ground surface, usually in relation to a liquid-level surface or the rest position of a pendulum.</td></tr>
+  <tr><th scope="row" width="106">TerraSAR-x </th><td>A<span class="st"> commercial German synthetic aperture radar (SAR) Earth observation satellite.</span></td></tr>
+  <tr><th scope="row" width="106">Total station </th><td> A surveying instrument that combines the functions of an EDM and theodolite and thus is capable of measuring both distance and azimuth between fixed points.</td></tr>
+  <tr><th scope="row" width="106">UNAVACO</th><td> Non-profit university-governed consortium that facilitates geoscience research and education using Geodesy.</td></tr>
+  <tr><th scope="row" width="106">USGS</th><td> United States Geological Survey.</td></tr>
+  <tr><th scope="row" width="106">VEI</th><td> Volcanic Explosivity Index.</td></tr>
+  <tr><th scope="row" width="106">YVO</th><td> Yellowstone Volcano Observatory.</td></tr>
+</tbody>
+</table>
 </div><!-- .entry-content -->
 {% endblock %}
 
