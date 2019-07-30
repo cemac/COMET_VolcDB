@@ -64,7 +64,7 @@ def glossary():
 
 @app.route('/volcano-index', methods=["GET"])
 def volcanodb():
-    return render_template('view.html.j2')
+    return render_template('volcano-index.html.j2')
 
 
 @app.route('/volcano-index/volcano', methods=["GET"])
