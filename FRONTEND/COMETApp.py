@@ -15,7 +15,7 @@ Attributes:
 
 from flask import Flask, render_template, flash, redirect, url_for, request
 from flask import g, session, abort
-
+from access import *
 
 app = Flask(__name__)
 
@@ -24,6 +24,92 @@ app = Flask(__name__)
 @app.route('/', methods=["GET"])
 def index():
     return render_template('home.html.j2')
+
+
+# Access settings for a given user
+@app.route('/access/<string:id>', methods=['GET', 'POST'])
+@is_logged_in_as_admin
+def access(id):
+    return render_template('access.html.j2')
+
+
+# Login
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if request.method == 'POST':
+        # Get form fields
+        username = request.form['username']
+        password_candidate = request.form['password']
+        # Check trainee accounts first:
+        # user = Users.query.filter_by(username=username).first()
+        if user is not None:
+            password = user.password
+            # Compare passwords
+            if sha256_crypt.verify(password_candidate, password):
+                # Passed
+                session['logged_in'] = True
+                session['username'] = username
+                session['admin'] = 'False'
+                session['reader'] = 'False'
+                username = test
+                flash('You are now logged in', 'success')
+                if 'admin' in user_partners[:]:
+                    session['admin'] = 'True'
+                    flash('You have admin privileges', 'success')
+                return redirect(url_for('index'))
+            else:
+                flash('Incorrect password', 'danger')
+                return redirect(url_for('login'))
+        # Finally check admin account:
+        if username == 'admin':
+            password = app.config['ADMIN_PWD']
+            if password_candidate == password:
+                # Passed
+                session['logged_in'] = True
+                session['username'] = 'admin'
+                # session['usertype'] = 'admin'
+                flash('You are now logged in as admin', 'success')
+                return redirect(url_for('index'))
+            else:
+                flash('Incorrect password', 'danger')
+                return redirect(url_for('login'))
+        # Username not found:
+        flash('Username not found', 'danger')
+        return redirect(url_for('login'))
+    if 'logged_in' in session:
+        flash('Already logged in', 'warning')
+        return redirect(url_for('index'))
+    # Not yet logged in:
+    return render_template('login.html.j2')
+
+
+# Logout
+@app.route('/logout')
+@is_logged_in
+def logout():
+    session.clear()
+    flash('You are now logged out', 'success')
+    return redirect(url_for('index'))
+
+
+# Change password
+@app.route('/change-pwd', methods=["GET", "POST"])
+@is_logged_in
+def change_pwd():
+    form = ChangePwdForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user = Users.query.filter_by(username=session['username']).first()
+        password = user.password
+        current = form.current.data
+        if sha256_crypt.verify(current, password):
+            user.password = sha256_crypt.encrypt(str(form.new.data))
+            db.session.commit()
+            flash('Password changed', 'success')
+            return redirect(url_for('change_pwd'))
+        else:
+            flash('Current password incorrect', 'danger')
+            return redirect(url_for('change_pwd'))
+    return render_template('change-pwd.html.j2', form=form)
 
 
 # static information pages
@@ -70,6 +156,16 @@ def volcanodb():
 @app.route('/volcano-index/volcano', methods=["GET"])
 def volcano():
     return render_template('volcano.html.j2')
+
+
+@app.route('/volcano-index/volcanointerferograms', methods=["GET"])
+def volcanointerferograms():
+    return render_template('volcanointerferograms.html.j2')
+
+
+@app.route('/volcano-index/volcanodetail', methods=["GET"])
+def volcanodetails():
+    return render_template('volcanodetail.html.j2')
 
 
 @app.errorhandler(404)
