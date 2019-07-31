@@ -1,1 +1,0 @@
-This is some information about St Helens pulled in from a text file.
