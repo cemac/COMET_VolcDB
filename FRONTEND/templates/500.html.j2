@@ -1,0 +1,10 @@
+{% extends "layout.html.j2" %}
+{% block title %}Page Not Found{% endblock %}
+{% block body %}
+<h1>Internal Server Error</h1>
+<p> Hey! You broke the website!
+<img src="/static/error.jpg" alt="500 error" >
+<p> Not, really you just caught an error! It would be really helpful to shoot me an email telling me about this:
+  cemac-help@leeds.ac.uk or h.l.burns@leeds.ac.uk
+<p><a href="{{ url_for('index') }}">return home</a>
+{% endblock %}
