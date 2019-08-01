@@ -12,12 +12,26 @@ Attributes:
 .. CEMAC_stomtracking:
    https://github.com/cemac/COMET_VolcDB
 '''
-
 from flask import Flask, render_template, flash, redirect, url_for, request
 from flask import g, session, abort
 from access import *
+import sqlite3
+import pandas as pd
+import os
+from comet_db_functions import *
+
 
 app = Flask(__name__)
+DATABASE = 'volcano.db'
+assert os.path.exists(DATABASE), "Unable to locate database"
+conn = sqlite3.connect('volcano.db')
+
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        conn.close()
 
 
 # Index
@@ -150,7 +164,10 @@ def glossary():
 
 @app.route('/volcano-index', methods=["GET"])
 def volcanodb():
-    return render_template('volcano-index.html.j2')
+    df = pd.read_sql_query("SELECT AREA FROM VolcDB1;", conn)
+    df = df.drop_duplicates().reset_index(drop=True)
+    df = df.drop(df.index[-1])
+    return render_template('volcano-index.html.j2', data=df)
 
 
 @app.route('/volcano-index/volcano', methods=["GET"])
