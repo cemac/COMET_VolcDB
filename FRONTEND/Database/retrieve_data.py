@@ -32,8 +32,8 @@ except FileNotFoundError:
 
     rawDF.to_csv('volcanoes.csv', encoding='utf-8')
     raw_images.to_csv('volcano_image_library.csv', encoding='utf-8')
-
-raw_data = rawDF.drop(['Unnamed: 0', 'api_endpoint', 'date_added',
+# Drop unneccessary columns inc odd named col
+raw_data = rawDF.drop([rawDF.columns.values[0], 'api_endpoint', 'date_added',
                        'last_modified', 'uri', 'images', 'location'], axis=1)
 # For now add the url so can have images on test site
 raw_data['image_url'] = raw_images.url
