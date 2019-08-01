@@ -1,1 +1,0 @@
-jQuery(function(e){e('#s,[name="s"]').suggest(wpss_options.ajaxurl,{onSelect:function(){e.post(wpss_options.url,{action:"wpss-post-url",_wpnonce:wpss_options.nonce,title:e(".ac_over").text()},function(t){if(t){window.location=t}else{e("#searchform").submit()}}).fail(function(){e("#searchform").submit()})}})});
