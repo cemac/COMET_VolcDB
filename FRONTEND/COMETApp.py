@@ -107,7 +107,23 @@ def volcanodb_all():
 def volcano(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
-    return render_template('volcano.html.j2', data=df)
+    return render_template('volcano.html.j2', data=df, country=country, region=region)
+
+
+@app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/volcanodetail',
+           methods=["GET"])
+def volcano_detail(country, region, volcano):
+    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                           "name = '" + str(volcano) + "';", conn)
+    return render_template('volcanodetail.html.j2', data=df, country=country, region=region)
+
+
+@app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/volcanointerferograms',
+           methods=["GET"])
+def volcano_inter(country, region, volcano):
+    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                           "name = '" + str(volcano) + "';", conn)
+    return render_template('volcanointerferograms.html.j2', data=df, country=country, region=region)
 
 
 @app.route('/volcano-index/volcanointerferograms', methods=["GET"])
