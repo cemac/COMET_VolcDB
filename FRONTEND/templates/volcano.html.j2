@@ -1,13 +1,13 @@
 <html lang="en">
 {% extends 'layout.html.j2' %}
 {% block body %}
-<div id="branding">
+<div >
 	<a href="/">
 		<img src="/static/volcano_image2.jpg" width="80%" height="auto" alt="" />
 	</a>
 </div>
-<div id="primary" class="content-area">
-	<div id="content" class="site-content" role="main">
+<div>
+	<div>
 		<style type="text/css">
 			.acf-map {
 				width: 70%;
@@ -17,71 +17,66 @@
 			}
 		</style>
 		<script src="https://maps.googleapis.com/maps/api/js"></script>
-		<header class="entry-header">
-			<h1 class="entry-title">Boset Bericha</h1>
+		<heade>
+			<h1>{{data.name[0]}}</h1>
 		</header><!-- .entry-header -->
 		<ul class="tabrow">
 			<li class="selected">Observations of Deformation</li>
-			<li><a href="/volcano-index/volcanodetail">Latest Sentinel-1 Data</a></li>
-			<li><a href="/volcano-index/volcanointerferograms">Interferograms</a></li>
-			<li><a href="/volcano-index/">Export as CSV</a></li>
+			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/volcanodetail">Latest Sentinel-1 Data</a></li>
+			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/volcanointerferograms">Interferograms</a></li>
+			<li><a href="/volcano-index">Export as CSV</a></li>
 		</ul>
-		<div class="entry-content">
+		<div>
 			<table>
 				<tr>
 					<th>Volcano number:</th>
-					<td>221210</td>
+					<td>{{data.ID[0]}}</td>
 				</tr>
 				<tr>
 					<th>Region:</th>
-					<td>Africa and Red Sea</td>
+					<td>{{data.Area[0]}}</td>
 				</tr>
 				<tr>
 					<th>Country:</th>
-					<td>Ethiopia</td>
+					<td>{{data.country[0]}}</td>
 				</tr>
 				<tr>
 					<th>Geodetic measurements?</th>
-					<td>Yes</td>
+					<td>{{data.geodetic_measurements[0]}}</td>
 				</tr>
 				<tr>
 					<th>Deformation observation?</th>
-					<td>No</td>
+					<td>{{data.deformation_observation[0]}}</td>
 				</tr>
 				<tr>
 					<th>Measurement method(s):</th>
-					<td>InSAR</td>
+					<td>{{data.measurement_methods[0]}}</td>
 				</tr>
 				<tr>
 					<th>Duration of observation:</th>
-					<td>2005-2010</td>
+					<td>{{data.duration_of_observation[0]}}</td>
 				</tr>
 				<tr>
 					<th>Inferred cause of deformation:</th>
-					<td></td>
+					<td>{{data.inferred_causes[0]}}</td>
 				</tr>
 				<tr>
 					<th>Characteristics of deformation:</th>
 					<td>
-						<p>Boset (also known as Gudda, or discussed as Boset-Bericha) volcano exhibits no deformation between 2005-2010, as seen by Envisat interferograms (Biggs et al., 2011).</p>
+					{{data.characteristics_of_deformation[0]}}
 					</td>
 				</tr>
 				<tr>
-					<th>Reference:</th>
-					<td>Biggs, J., I. D. Bastow, D. Keir, and E. Lewi (2011), Pulses of deformation reveal frequently recurring shallow magmatic activity beneath the Main Ethiopian Rift, Geochem. Geophys. Geosyst., 12, Q0AB10, doi:10.1029/2011GC003662.</td>
-				</tr>
-				<tr>
-					<th>Reference:</th>
-					<td>Siebert, L., and T. Simkin (2002), Volcanoes of the World: An Illustrated Catalogue of Holocene Volcanoes and Their Eruptions, Global Volcanism Program Digital Inf. Ser., GVP‐3, Smithsonian Inst., Washington, D. C. [Available at
-						http://www.volcano.si.edu/world/.]</td>
+					<th>References:</th>
+					<td>{{data.references[0][1:-1]}}</td>
 				</tr>
 				<tr>
 					<th>Location:</th>
-					<td>39.475, 8.558</td>
+					<td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
 				</tr>
 			</table>
 			<div class="acf-map">
-				<iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=8.558%2C39.475&t=k&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+				<iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q={{data.latitude[0]}}%2C{{data.longitude[0]}}&t=k&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
 			</div>
 		</div><!-- .entry-content -->
 	</div><!-- #content -->
