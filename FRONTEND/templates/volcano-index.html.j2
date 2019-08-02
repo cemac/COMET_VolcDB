@@ -1,7 +1,7 @@
 <html lang="en">
 {% extends 'layout.html.j2' %}
 {% block body %}
-<div id="branding">
+<div>
 <a href="/">
 <img src="/static/volcano_image2.jpg" width="80%" height="auto" alt="" />
 </a>
@@ -10,9 +10,10 @@
 <div >
   <p> There are currently X volcanos recorded
   <p> Select Browse to select Region to Browse or select All to view all volcanoes and use search function <p>
-  </select>
-
-  </select> </p>
+  <ul class="tabrow">
+      <li class="selected"><a href="/volcano-index/">Browse</a></li>
+      <li><a href="/volcano-index/Search-All">Search All</a></li>
+    </ul>
  <table id="myTable"  class="display" style="width:70%">
     <thead>
       <tr>
