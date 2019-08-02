@@ -22,9 +22,10 @@ from comet_db_functions import *
 
 
 app = Flask(__name__)
+# Connect to database
 DATABASE = 'volcano.db'
 assert os.path.exists(DATABASE), "Unable to locate database"
-conn = sqlite3.connect('volcano.db')
+conn = sqlite3.connect(DATABASE)
 
 
 @app.teardown_appcontext
@@ -40,7 +41,86 @@ def index():
     return render_template('home.html.j2')
 
 
-# Access settings for a given user
+# Volcano Database -----------------------------------------------------------
+@app.route('/volcano-index', methods=["GET"])
+def volcanodb():
+    df = pd.read_sql_query("SELECT AREA FROM VolcDB1;", conn)
+    # Count values and remove weird '0' rows
+    df2 = df.apply(pd.value_counts)
+    df2 = df2.drop(index='0')
+    df2['Area_name'] = df2.index.values
+    df2 = df2.reset_index(drop=True)
+    df2.columns = ['freq', 'Area']
+    total = df2.freq.sum()
+    return render_template('volcano-index.html.j2', data=df2, total=total)
+
+
+@app.route('/volcano-index/<string:region>', methods=["GET"])
+def volcanodb_region(region):
+    # select country
+    df = pd.read_sql_query("SELECT country FROM VolcDB1 WHERE AREA = '"
+                           + region + "';", conn)
+    # Count values and remove weird '0' rows
+    df2 = df.apply(pd.value_counts)
+    df2['contry_name'] = df2.index.values
+    df2 = df2.reset_index(drop=True)
+    df2.columns = ['freq', 'country']
+    total = df2.freq.sum()
+    return render_template('volcano-index_bycountry.html.j2', data=df2,
+                           total=total, region=region, tableclass='region')
+
+
+@app.route('/volcano-index/<string:region>-all', methods=["GET"])
+def volcanodb_region_all(region):
+    # select country
+    df = pd.read_sql_query("SELECT AREA, country, name, geodetic_measurement" +
+                           "s, deformation_observation FROM VolcDB1 WHERE " +
+                           "AREA = '" + str(region) + "';", conn)
+    total = len(df.index)
+    return render_template('volcano-index_all.html.j2', data=df, total=total,
+                           region=region, tableclass='region')
+
+
+@app.route('/volcano-index/<string:region>/<string:country>', methods=["GET"])
+def volcanodb_country(country, region):
+    # select country
+    df = pd.read_sql_query("SELECT AREA, country, name, geodetic_measurement" +
+                           "s, deformation_observation FROM VolcDB1 WHERE " +
+                           "country = '" + str(country) + "';", conn)
+    total = len(df.index)
+    return render_template('volcano-index_all.html.j2', data=df, total=total,
+                           country=country, region=region, tableclass='country')
+
+
+@app.route('/volcano-index/Search-All', methods=["GET"])
+def volcanodb_all():
+    df = pd.read_sql_query("SELECT AREA, country, name, geodetic_measurement" +
+                           "s, deformation_observation FROM VolcDB1;", conn)
+    df = df[df.Area != '0']
+    total = len(df.index)
+    return render_template('volcano-index_all.html.j2', data=df, total=total,
+                           tableclass='all')
+
+
+@app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>',
+           methods=["GET"])
+def volcano(country, region, volcano):
+    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                           "name = '" + str(volcano) + "';", conn)
+    return render_template('volcano.html.j2', data=df)
+
+
+@app.route('/volcano-index/volcanointerferograms', methods=["GET"])
+def volcanointerferograms():
+    return render_template('volcanointerferograms.html.j2')
+
+
+@app.route('/volcano-index/volcanodetail', methods=["GET"])
+def volcanodetails():
+    return render_template('volcanodetail.html.j2')
+
+
+# Access ----------------------------------------------------------------------
 @app.route('/access/<string:id>', methods=['GET', 'POST'])
 @is_logged_in_as_admin
 def access(id):
@@ -126,7 +206,7 @@ def change_pwd():
     return render_template('change-pwd.html.j2', form=form)
 
 
-# static information pages
+# static information pages ---------------------------------------------------
 @app.route('/about', methods=["GET"])
 def about():
     return render_template('about.html.j2')
@@ -162,29 +242,7 @@ def glossary():
     return render_template('glossary.html.j2')
 
 
-@app.route('/volcano-index', methods=["GET"])
-def volcanodb():
-    df = pd.read_sql_query("SELECT AREA FROM VolcDB1;", conn)
-    df = df.drop_duplicates().reset_index(drop=True)
-    df = df.drop(df.index[-1])
-    return render_template('volcano-index.html.j2', data=df)
-
-
-@app.route('/volcano-index/volcano', methods=["GET"])
-def volcano():
-    return render_template('volcano.html.j2')
-
-
-@app.route('/volcano-index/volcanointerferograms', methods=["GET"])
-def volcanointerferograms():
-    return render_template('volcanointerferograms.html.j2')
-
-
-@app.route('/volcano-index/volcanodetail', methods=["GET"])
-def volcanodetails():
-    return render_template('volcanodetail.html.j2')
-
-
+# Error Pages ----------------------------------------------------------------
 @app.errorhandler(404)
 def page_not_found(e):
     # note that we set the 404 status explicitly
