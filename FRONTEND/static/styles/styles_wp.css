@@ -39,7 +39,7 @@ fieldset, form, label, legend, caption, table, tbody, tfoot, thead, tr, th, td {
 body {
 	background: #fff;
 	color: #333;
-	line-height: 1;
+	height: 100%;
 }
 ol, ul {
 	list-style: none;
@@ -68,9 +68,7 @@ a img {
 /* =Structure
 ----------------------------------------------- */
 
-body {
-	padding: 0 3.8%;
-}
+
 #header {
 	float: left;
 	width: 100%;
@@ -1078,55 +1076,6 @@ a.entry-format:hover {
 	font-size: 11px;
 }
 .bypostauthor {
-}
-
-
-/* =Footer
------------------------------------------------ */
-
-#footer {
-	padding: 0 0 1.7em;
-}
-#footer .widget-area {
-	float: left;
-	margin: 0 4.04% 0 0;
-	width: 21.9699%;
-}
-.two-column #footer .widget-area {
-	margin: 0 5.19% 0 0;
-	width: 47.4%;
-}
-.two-column #footer #second,
-#footer #fourth {
-	margin: 0;
-}
-#colophon {
-	border-top: 1px solid #ccc;
-	clear: both;
-	color: #888;
-	font-size: 12px;
-	font-style: italic;
-	line-height: 16px;
-	padding: 1.6em 0 0;
-	text-align: center;
-}
-#colophon a {
-	color: #888;
-	text-decoration: none;
-}
-#colophon a:focus,
-#colophon a:hover {
-	color: #df0000;
-}
-#colophon .generator-link {
-	background: url("images/wordpress.png") no-repeat right center;
-	display: inline-block;
-	margin: 0 3px 0 0;
-	padding-right: 20px;
-}
-#footer img#wpstats {
-	display: block;
-	margin: 0 auto 10px;
 }
 
 
