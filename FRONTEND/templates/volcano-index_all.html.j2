@@ -1,0 +1,83 @@
+<html lang="en">
+{% extends 'layout.html.j2' %}
+{% block body %}
+<div>
+<a href="/">
+<img src="/static/volcano_image2.jpg" width="80%" height="auto" alt="" />
+</a>
+{% if tableclass == 'all' %}
+<h1> Volcano Index </h1>
+{% elif tableclass == 'region' %}
+<h1> Volcano Index - {{region}} </h1>
+{% elif tableclass == 'country' %}
+<h1> Volcano Index - {{country}} </h1>
+{% endif %}
+</div><!-- #branding -->
+<div>
+  {% if tableclass == 'all' %}
+  <p> There are currently {{total}} volcanos recorded
+  <p> Select <b>Browse</b> to select Region or <b>Search All</b> to view all volcanoes and use search function or browse<p>
+  <ul class="tabrow">
+      <li><a href="/volcano-index">Browse</a></li>
+      <li class="selected"><a href="/volcano-index/Search-All">Search All</a></li>
+  </ul>
+  {% elif tableclass == 'region' %}
+  <p> There are currently {{total}} volcanos recorded in {{region}}
+  <ul class="tabrow">
+      <li><a href="/volcano-index">Browse Regions</a></li>
+      <li class="selected">Browse {{region}}</li>
+      <li><a href="/volcano-index/{{region}}">Select Country</a></li>
+      <li><a href="/volcano-index/Search-All">Search All</a></li>
+  </ul>
+  {% elif tableclass == 'country' %}
+  <p> There are currently {{total}} volcanos recorded in {{country}}
+  <ul class="tabrow">
+      <li><a href="/volcano-index">Browse Regions</a></li>
+      <li class="selected">Browse {{country}}</li>
+      <li><a href="/volcano-index/{{region}}-all">Browse {{region}}</a></li>
+      <li><a href="/volcano-index/{{region}}">Select Country</a></li>
+      <li><a href="/volcano-index/Search-All">Search All</a></li>
+  </ul>
+  {% endif %}
+ <table id="myTable"  class="display" style="width:90%">
+    <thead>
+      <tr>
+        <th>Volcano </th>
+        <th>Country </th>
+        <th>Region </th>
+        <th>Geodetic Measurements </th>
+        <th>Deformation Observation </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for index, row in data.iterrows() %}
+      <tr>
+        <td>{{row['name']}}</td>
+        <td> {{row['country']}} </td>
+        <td> {{row['Area']}} </td>
+        <td>{{row['geodetic_measurements']}}</td>
+        <td> {{row['deformation_observation']}} </td>
+        <td> <a href='/volcano-index/{{row['Area']}}/{{row['country']}}/{{row['name']}}'> View </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
+{% block scripts %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready(function(){
+  $('.dropdown-toggle').dropdown();
+  var table = $('#myTable').DataTable({
+    columnDefs: [
+        {targets: [-1], orderable: false}
+    ],
+      order: [[0, "asc"]]
+  });
+});
+</script>
+{% endblock %}
+</html>
