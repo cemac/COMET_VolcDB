@@ -18,6 +18,7 @@ from access import *
 import sqlite3
 import pandas as pd
 import os
+from passlib.hash import sha256_crypt
 from comet_db_functions import *
 
 
@@ -25,7 +26,9 @@ app = Flask(__name__)
 # Connect to database
 DATABASE = 'volcano.db'
 assert os.path.exists(DATABASE), "Unable to locate database"
+app.secret_key = 'secret'
 conn = sqlite3.connect(DATABASE)
+counter = 1
 
 
 @app.teardown_appcontext
@@ -39,6 +42,13 @@ def close_connection(exception):
 @app.route('/', methods=["GET"])
 def index():
     return render_template('home.html.j2')
+
+
+@app.route("/")
+def hitcounter():
+    global counter
+    counter += 1
+    return str(counter)
 
 
 # Volcano Database -----------------------------------------------------------
@@ -151,19 +161,15 @@ def login():
         username = request.form['username']
         password_candidate = request.form['password']
         # Check trainee accounts first:
-        # user = Users.query.filter_by(username=username).first()
+        user = None
         if user is not None:
             password = user.password
             # Compare passwords
             if sha256_crypt.verify(password_candidate, password):
                 # Passed
-                session['logged_in'] = True
-                session['username'] = username
-                session['admin'] = 'False'
-                session['reader'] = 'False'
-                username = test
                 flash('You are now logged in', 'success')
-                if 'admin' in user_partners[:]:
+                roles = None
+                if 'admin' in roles[:]:
                     session['admin'] = 'True'
                     flash('You have admin privileges', 'success')
                 return redirect(url_for('index'))
@@ -172,7 +178,7 @@ def login():
                 return redirect(url_for('login'))
         # Finally check admin account:
         if username == 'admin':
-            password = app.config['ADMIN_PWD']
+            password = 'password'
             if password_candidate == password:
                 # Passed
                 session['logged_in'] = True
