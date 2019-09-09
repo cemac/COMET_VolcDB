@@ -156,9 +156,10 @@ def login():
         username = request.form['username']
         password_candidate = request.form['password']
         # Check trainee accounts first:
-        user = None
+        user = pd.read_sql_query("SELECT * FROM  users WHERE " +
+                                 "username is '" + str(username) + "';", conn)
         if user is not None:
-            password = user.password
+            password = user.password[0]
             # Compare passwords
             if sha256_crypt.verify(password_candidate, password):
                 # Passed
@@ -221,6 +222,9 @@ def change_pwd():
             flash('Current password incorrect', 'danger')
             return redirect(url_for('change_pwd'))
     return render_template('change-pwd.html.j2', form=form)
+
+# Additional logged in only pages ------------------------------
+
 
 # admin pages ---------------------------------------------------
 

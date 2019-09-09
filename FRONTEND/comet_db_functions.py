@@ -23,8 +23,8 @@ def insertUser(username, password, conn):
     # Set up to autoincrement id number
     cur.execute("INSERT INTO users (username,password) VALUES (?,?)",
                 (username, password))
-    con.commit()
-    con.close()
+    conn.commit()
+    conn.close()
 
 
 def retrieveUsers(conn):
