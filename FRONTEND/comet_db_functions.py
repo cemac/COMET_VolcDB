@@ -20,8 +20,9 @@ def query_db(query, args=(), one=False):
 
 def insertUser(username, password, conn):
     cur = conn.cursor()
-    cur.execute("INSERT INTO users (username,password) VALUES (?,?,?)",
-                (id, username, password))
+    # Set up to autoincrement id number
+    cur.execute("INSERT INTO users (username,password) VALUES (?,?)",
+                (username, password))
     con.commit()
     con.close()
 
