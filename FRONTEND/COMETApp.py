@@ -147,11 +147,6 @@ def volcanodetails():
 
 
 # Access ----------------------------------------------------------------------
-@app.route('/access/<string:id>', methods=['GET', 'POST'])
-@is_logged_in_as_admin
-def access(id):
-    return render_template('access.html.j2')
-
 
 # Login
 @app.route('/login', methods=["GET", "POST"])
@@ -227,7 +222,21 @@ def change_pwd():
             return redirect(url_for('change_pwd'))
     return render_template('change-pwd.html.j2', form=form)
 
+# admin pages ---------------------------------------------------
 
+"""
+@app.route('/admin/information', methods=['GET', 'POST'])
+@is_logged_in_as_admin
+def access(id):
+    return render_template('admininfo.html.j2')
+
+
+@app.route('/admin/users', methods=['GET', 'POST'])
+@is_logged_in_as_admin
+def access(id):
+    return render_template('access.html.j2')
+
+"""
 # static information pages ---------------------------------------------------
 @app.route('/about', methods=["GET"])
 def about():
@@ -252,6 +261,11 @@ def deformation():
 @app.route('/copyright', methods=["GET"])
 def copyright():
     return render_template('copyright.html.j2')
+
+
+@app.route('/privacy', methods=["GET"])
+def privacy():
+    return render_template('privacy.html.j2')
 
 
 @app.route('/measuring-deformation', methods=["GET"])
