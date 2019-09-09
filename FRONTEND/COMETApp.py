@@ -178,7 +178,7 @@ def login():
                 # Passed
                 session['logged_in'] = True
                 session['username'] = 'admin'
-                # session['usertype'] = 'admin'
+                session['usertype'] = 'admin'
                 flash('You are now logged in as admin', 'success')
                 return redirect(url_for('index'))
             else:
@@ -224,19 +224,21 @@ def change_pwd():
 
 # admin pages ---------------------------------------------------
 
-"""
+
 @app.route('/admin/information', methods=['GET', 'POST'])
 @is_logged_in_as_admin
-def access(id):
+def access():
     return render_template('admininfo.html.j2')
 
 
+"""
 @app.route('/admin/users', methods=['GET', 'POST'])
 @is_logged_in_as_admin
 def access(id):
     return render_template('access.html.j2')
-
 """
+
+
 # static information pages ---------------------------------------------------
 @app.route('/about', methods=["GET"])
 def about():
