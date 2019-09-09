@@ -33,49 +33,6 @@
   <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" id="select all" /> </th>
   <td><label for="select all">Select All</label></td>
   <hr>
-  <div class="form-group">
-    {{form.AdminReader.label}}
-    <br>
-    {% for subfield in form.partners %}
-    {% if subfield.label.text == "admin" or subfield.label.text == "ViewAll" %}
-    <td>{{ subfield }}</td>
-    <td>{{ subfield.label }}</td>
-    <br>
-    {% endif %}
-    {% endfor %}
-
-    <br>
-  </div>
-  <hr>
-  <div class="form-group">
-    {{form.work_packages.label}}
-    <br><br>
-    {% for subfield in form.work_packages %}
-    <div class="col-md-3">
-    <td>{{ subfield }}</td>
-    <td>{{ subfield.label }}</td>
-    <br>
-    </div>
-    {% endfor %}
-  </div>
-  <br>
-  <hr>
-  <div class="form-group">
-    {{form.partners.label}}
-    <br>
-    {% for subfield in form.partners %}
-    <div class="col-md-4">
-    {% if subfield.label.text == "admin" or subfield.label.text == "ViewAll" %}
-    <br>
-    {% else %}
-    <td>{{ subfield }}</td>
-    <td>{{ subfield.label }}</td>
-    <br>
-    {% endif %}
-  </div>
-    {% endfor %}
-    <br>
-  </div>
 </form>
 <hr>
 {% endblock %}

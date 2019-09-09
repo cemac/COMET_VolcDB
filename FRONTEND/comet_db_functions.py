@@ -20,15 +20,15 @@ def query_db(query, args=(), one=False):
 
 def insertUser(username, password, conn):
     cur = conn.cursor()
-    cur.execute("INSERT INTO users (username,password) VALUES (?,?)",
-                (username, password))
+    cur.execute("INSERT INTO users (username,password) VALUES (?,?,?)",
+                (id, username, password))
     con.commit()
     con.close()
 
 
 def retrieveUsers(conn):
     cur = con.cursor()
-    cur.execute("SELECT username, password FROM users")
+    cur.execute("SELECT id, username, password FROM users")
     users = cur.fetchall()
     con.close()
     return users
