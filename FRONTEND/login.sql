@@ -11,7 +11,10 @@ ON DELETE CASCADE ON UPDATE NO ACTION
 create table users (
 id integer primary key autoincrement,
 username text not null,
-password text not null
+password text not null,
+affiliation text,
+email text,
+consent text
 );
 
 create table roles (
