@@ -10,10 +10,11 @@ username = 'failtest'
 password_candidate = 'ijeowgheri'
 session = pd.DataFrame()
 
-
+print('******Begin Notice*******')
 print('These test are written to work outside of app')
 print('All flask components removed, please use flash rather than print etc')
 print('Function may need to have template renders out back in')
+print('*******End Notice********')
 
 
 def InsertUser(username, password, conn):
@@ -41,8 +42,8 @@ def InsertUser(username, password, conn):
     conn.commit()
 
 
-def OptionalInfo(username, affiliation=None,
-                 email=None, request=None, consent=None, conn):
+def OptionalInfo(username, conn, affiliation=None,
+                 email=None, request=None, consent=None):
     """OptionalInfo
     Description:
         Inserts user into database and hashes password
@@ -58,7 +59,7 @@ def OptionalInfo(username, affiliation=None,
     Returns:
         commits user to database as registered user
     """
-    id =
+    id = None
     cur.execute("INSERT INTO users (affiliation,email) VALUES (?)",
                 (str(affiliation), str(email)))
     conn.commit()
@@ -106,17 +107,18 @@ def AssignRole(username, role, conn):
     if str(role) not in ['Resitered_Users', 'Collaborators', 'Admins']:
         return print('Role must be one of: Resitered_Users, Collaborators, Admins')
     cur = conn.cursor()
-    user = pd.read_sql_query("SELECT * FROM  users WHERE " +
-                             "username is '" + str(username) + "';", conn)
-    exist_role = pd.read_sql_query("SELECT group_id FROM  users_roles" +
-                                   " WHERE id is" + str(user.id) + ";", conn)
+    sql = "SELECT * FROM  users WHERE username is '"+f"{str(username)}"+"';"
+    user = pd.read_sql_query(sql, conn)
+    sql = ("SELECT group_id FROM  users_roles WHERE id is '" +
+           f"{str(user.id.values[0])}"+"';")
+    exist_role = pd.read_sql_query(sql, conn)
     if not exist_role.empty:
         sql = 'DELETE from users_roles where id is ?'
         cur.execute(sql, str(user.id))
+    sql = "SELECT * FROM roles WHERE name is '"+f"{str(role)}"+"';"
+    role = pd.read_sql_query(sql, conn)
     sql = 'INSERT into users_roles VALUES(?,?)'
-    cur = conn.cursor(sql, (str(user.id), str(role)))
-    sql = 'INSERT into roles '
-    cur.execute(sql, (username,))
+    cur.execute(sql, (str(user.id.values[0]), str(role.group_id.values[0])))
     conn.commit()
 
 
@@ -133,7 +135,7 @@ def login(username, password_candidate):
             df = pd.read_sql_query("SELECT * FROM user_roles;", conn)
             role = None
             try:
-                role =
+                role = None
             except:
                 return ('Registerd User only')
             session['logged_in'] = True
