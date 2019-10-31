@@ -50,3 +50,7 @@ This code is currently licensed under the [MIT license](https://choosealicense.c
 ## Acknowledgements
 
 _coming soon_
+
+## References
+
+* [https://github.com/universityofleeds/volcano-database](https://github.com/universityofleeds/volcano-database)
