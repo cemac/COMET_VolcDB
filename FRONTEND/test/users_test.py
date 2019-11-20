@@ -104,8 +104,8 @@ def AssignRole(username, role, conn):
     Returns:
         commits user to database as registered user
     """
-    if str(role) not in ['Resitered_Users', 'Collaborators', 'Admins']:
-        return print('Role must be one of: Resitered_Users, Collaborators, Admins')
+    if str(role) not in ['Registered_Users', 'Collaborators', 'Admins']:
+        return print('Role must be one of: Registerd_Users, Collaborators, Admins')
     cur = conn.cursor()
     sql = "SELECT * FROM  users WHERE username is '"+f"{str(username)}"+"';"
     user = pd.read_sql_query(sql, conn)
@@ -122,28 +122,30 @@ def AssignRole(username, role, conn):
     conn.commit()
 
 
-def login(username, password_candidate):
-    user = pd.read_sql_query("SELECT * FROM  users WHERE " +
-                             "username is '" + str(username) + "';", conn)
+def login(username, password_candidate, conn):
+    if 'logged_in' in session:
+        print('Already logged in', 'warning')
+        return print('already logged in')
+    user = pd.read_sql_query("SELECT * FROM  users WHERE username is '"
+                             + str(username) + "';", conn)
     roles = pd.read_sql_query("SELECT * FROM  roles;", conn)
-    if user is not None and str(username) is not 'admin':
+    if user.empty is False and str(username) is not 'admin':
         password = user.password[0]
         # Compare passwords
         if sha256_crypt.verify(password_candidate, password):
             # Passed
             print('You are now logged in', 'success')
-            df = pd.read_sql_query("SELECT * FROM user_roles;", conn)
-            role = None
-            try:
-                role = None
-            except:
-                return ('Registerd User only')
+            roleid = pd.read_sql_query("SELECT * FROM users_roles WHERE id " +
+                                       "is " + str(user.id[0]) + ";", conn)
+            role = pd.read_sql_query("SELECT * FROM roles WHERE group_id " +
+                                     "is " + str(roleid.group_id[0]) + ";",
+                                     conn)
             session['logged_in'] = True
             session['username'] = str(username)
-            #session['usertype'] = str(role)
-            #if 'admin' in roles[:]:
-            #    session['admin'] = 'True'
-            #    print('You have admin privileges', 'success')
+            session['usertype'] = str(role.name[0])
+            if str(role) == 'admin':
+                session['admin'] = 'True'
+                print('You have admin privileges', 'success')
             return print('success')
         else:
             print('Incorrect password', 'danger')
@@ -164,7 +166,4 @@ def login(username, password_candidate):
         else:
             flash('Incorrect password', 'danger')
             return redirect(url_for('login'))
-    if 'logged_in' in session:
-        print('Already logged in', 'warning')
-        return print('already logged in')
     return print('not really expecting to see this line')
