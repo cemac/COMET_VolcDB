@@ -151,48 +151,16 @@ def volcanodetails():
 # Login
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    if 'logged_in' in session:
+        flash('Already logged in', 'warning')
+        return redirect(url_for('index'))
     if request.method == 'POST':
         # Get form fields
         username = request.form['username']
         password_candidate = request.form['password']
-        # Check trainee accounts first:
-        user = pd.read_sql_query("SELECT * FROM  users WHERE " +
-                                 "username is '" + str(username) + "';", conn)
-        if user is not None:
-            password = user.password[0]
-            # Compare passwords
-            if sha256_crypt.verify(password_candidate, password):
-                # Passed
-                flash('You are now logged in', 'success')
-                roles = None
-                if 'admin' in roles[:]:
-                    session['admin'] = 'True'
-                    flash('You have admin privileges', 'success')
-                return redirect(url_for('index'))
-            else:
-                flash('Incorrect password', 'danger')
-                return redirect(url_for('login'))
-        # Finally check admin account:
-        if username == 'admin':
-            password = 'password'
-            if password_candidate == password:
-                # Passed
-                session['logged_in'] = True
-                session['username'] = 'admin'
-                session['usertype'] = 'admin'
-                flash('You are now logged in as admin', 'success')
-                return redirect(url_for('index'))
-            else:
-                flash('Incorrect password', 'danger')
-                return redirect(url_for('login'))
-        # Username not found:
-        flash('Username not found', 'danger')
-        return redirect(url_for('login'))
-    if 'logged_in' in session:
-        flash('Already logged in', 'warning')
-        return redirect(url_for('index'))
-    # Not yet logged in:
-    return render_template('login.html.j2')
+        user_login(username, password_candidate, conn)
+    if request.method == 'GET':
+        return render_template('login.html.j2')
 
 
 # Logout
@@ -225,6 +193,31 @@ def change_pwd():
 
 # Additional logged in only pages ------------------------------
 
+
+# Add entry
+@app.route('/add/user', methods=["GET", "POST"])
+@is_logged_in_as_admin
+def add(tableClass):
+    if tableClass not in ['Users']:
+        abort(404)
+    # Get form (and tweak where necessary):
+    form = eval(tableClass + "_Form")(request.form)
+    if request.method == 'POST' and form.validate():
+        # Get form fields:
+        if tableClass == 'Users':
+            form.password.data = sha256_crypt.encrypt(str(form.password.data))
+        formdata = []
+        db_string = ""
+        for f, field in enumerate(form):
+            formdata.append(field.data)
+            db_string += str(field.name) + "=formdata[" + str(f) + "],"
+        # Add to DB:
+        db_string = tableClass + "(" + db_string[:-1] + ")"
+        db_row = eval(db_string)
+        psql_insert(db_row)
+        return redirect(url_for('add', tableClass=tableClass))
+    return render_template('add.html.j2', title=title, tableClass=tableClass,
+                           form=form)
 
 # admin pages ---------------------------------------------------
 
