@@ -159,6 +159,7 @@ def login():
         username = request.form['username']
         password_candidate = request.form['password']
         user_login(username, password_candidate, conn)
+        return redirect(url_for('index'))
     if request.method == 'GET':
         return render_template('login.html.j2')
 

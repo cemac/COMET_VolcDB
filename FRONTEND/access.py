@@ -219,10 +219,9 @@ def user_login(username, password_candidate, conn):
             if str(role) == 'admin':
                 session['admin'] = 'True'
                 flash('You have admin privileges', 'success')
-            return redirect(url_for('index'))
         else:
             flash('Incorrect password', 'danger')
-            return redirect(url_for('login'))
+
     else:
         # Username not found:
         flash('Username not found', 'danger')
