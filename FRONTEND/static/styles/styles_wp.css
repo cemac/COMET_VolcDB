@@ -255,7 +255,7 @@ body.no-sidebars #content {
 
 body, input, textarea {
 	color: #333;
-	font: 14px Georgia, "Bitstream Charter", serif;
+	font: 14px, Arial, Helvetica, sans-serif;
 	line-height: 1.7;
 }
 
