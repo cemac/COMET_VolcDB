@@ -304,4 +304,5 @@ def unhandled_exception(e):
 
 
 if __name__ == '__main__':
-    app.run(host='129.11.85.32')
+    #app.run(host='129.11.85.32')
+    app.run()
