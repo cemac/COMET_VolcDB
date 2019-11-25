@@ -27,7 +27,7 @@ app = Flask(__name__)
 DATABASE = 'volcano.db'
 assert os.path.exists(DATABASE), "Unable to locate database"
 app.secret_key = 'secret'
-conn = sqlite3.connect(DATABASE)
+conn = sqlite3.connect(DATABASE, check_same_thread=False)
 counter = 1
 
 
