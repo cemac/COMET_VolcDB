@@ -114,7 +114,7 @@ def InsertUser(username, password, conn):
     cur.execute("INSERT INTO users (username,password) VALUES (?,?)",
                 (username, password))
     # All new users automatically become a registerd user
-    AssignRole(username, 'Registerd_Users', conn)
+    AssignRole(username, 'Registered_Users', conn)
     conn.commit()
 
 
@@ -181,7 +181,7 @@ def AssignRole(username, role, conn):
         commits user to database as registered user
     """
     if str(role) not in ['Registered_Users', 'Collaborators', 'Admins']:
-        return print('Role must be one of: Registerd_Users, Collaborators, Admins')
+        return print('Role must be one of: Registered_Users, Collaborators, Admins')
     cur = conn.cursor()
     sql = "SELECT * FROM  users WHERE username is '"+f"{str(username)}"+"';"
     user = pd.read_sql_query(sql, conn)
@@ -202,7 +202,7 @@ def user_login(username, password_candidate, conn):
     user = pd.read_sql_query("SELECT * FROM  users WHERE username is '"
                              + str(username) + "';", conn)
     roles = pd.read_sql_query("SELECT * FROM  roles;", conn)
-    if user.empty is False and str(username) is not 'admin':
+    if user.empty is False and str(username) != 'admin':
         password = user.password[0]
         # Compare passwords
         if sha256_crypt.verify(password_candidate, password):
@@ -222,13 +222,13 @@ def user_login(username, password_candidate, conn):
         else:
             flash('Incorrect password', 'danger')
 
-    else:
+    elif user.empty is True and str(username) != 'admin' :
         # Username not found:
-        flash('Username not found', 'danger')
+        flash('Username ' + str(username) + ' not found', 'danger')
         return redirect(url_for('login'))
-    if username == 'admin':
+    if str(username) == 'admin':
         password = 'password'
-        if password_candidate == password:
+        if password_candidate == password :
             # Passed
             session['logged_in'] = True
             session['username'] = 'admin'

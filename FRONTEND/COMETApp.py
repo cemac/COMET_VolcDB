@@ -14,6 +14,8 @@ Attributes:
 '''
 from flask import Flask, render_template, flash, redirect, url_for, request
 from flask import g, session, abort
+from wtforms import Form, validators, StringField, SelectField, TextAreaField
+from wtforms import IntegerField, PasswordField, SelectMultipleField, widgets
 from access import *
 import sqlite3
 import pandas as pd
@@ -196,28 +198,21 @@ def change_pwd():
 
 
 # Add entry
-@app.route('/add/user', methods=["GET", "POST"])
+@app.route('/add/Users', methods=["GET", "POST"])
 @is_logged_in_as_admin
-def add(tableClass):
-    if tableClass not in ['Users']:
-        abort(404)
-    # Get form (and tweak where necessary):
-    form = eval(tableClass + "_Form")(request.form)
+def add():
+    form = eval("Users_Form")(request.form)
     if request.method == 'POST' and form.validate():
         # Get form fields:
-        if tableClass == 'Users':
-            form.password.data = sha256_crypt.encrypt(str(form.password.data))
+        form.password.data = sha256_crypt.hash(str(form.password.data))
         formdata = []
         db_string = ""
         for f, field in enumerate(form):
             formdata.append(field.data)
-            db_string += str(field.name) + "=formdata[" + str(f) + "],"
-        # Add to DB:
-        db_string = tableClass + "(" + db_string[:-1] + ")"
-        db_row = eval(db_string)
-        psql_insert(db_row)
-        return redirect(url_for('add', tableClass=tableClass))
-    return render_template('add.html.j2', title=title, tableClass=tableClass,
+        InsertUser(formdata[0], formdata[1], conn)
+        flash('User Added', 'success')
+        return redirect(url_for('add', tableClass='Users'))
+    return render_template('add.html.j2', title='Add Users', tableClass='Users',
                            form=form)
 
 # admin pages ---------------------------------------------------
@@ -225,16 +220,26 @@ def add(tableClass):
 
 @app.route('/admin/information', methods=['GET', 'POST'])
 @is_logged_in_as_admin
-def access():
+def admininfo():
     return render_template('admininfo.html.j2')
 
 
-"""
 @app.route('/admin/users', methods=['GET', 'POST'])
 @is_logged_in_as_admin
-def access(id):
-    return render_template('access.html.j2')
-"""
+def ViewOrAddUsers():
+    df = pd.read_sql_query("SELECT * FROM Users ;", conn)
+    df['password'] = '********'
+    # add roles
+    u2r = pd.read_sql_query("SELECT * FROM users_roles ;", conn)
+    roles =  pd.read_sql_query("SELECT * FROM roles ;", conn)
+    u2r2= pd.merge(u2r, roles, on='group_id')
+    del u2r2['group_id']
+    usersandroles = pd.merge(df, u2r2, on='id', how='outer')
+    usersandroles.rename(columns={'name': 'Role'}, inplace=True)
+    usersandroles = usersandroles.dropna(subset=['username'])
+    colnames = [s.replace("_", " ").title() for s in usersandroles.columns.values[1:]]
+    return render_template('view.html.j2', title='Users', colnames=colnames,
+                           tableClass='Users', editLink="edit", data=usersandroles)
 
 
 # static information pages ---------------------------------------------------

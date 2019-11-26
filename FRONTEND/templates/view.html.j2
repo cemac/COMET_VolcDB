@@ -29,15 +29,7 @@
             <td>{{row[i]}}</td>
           {% endfor %}
         <td>
-          {% if tableClass == 'Users' %}
             <a href=/access/{{row['id']}} class="btn btn-primary pull-right">Edit Access Settings</a>
-          {% elif editLink == "edit" %}
-            <a href=/edit/{{tableClass}}/{{row['id']}} class="btn btn-primary pull-right">Edit</a>
-          {% elif editLink == "none" %}
-             <p> </p>
-          {% else %}
-          <a href=/{{editLink}}/{{row['id']}} class="btn btn-primary pull-right">Update</a>
-          {% endif %}
         </td>
 
         {% if editLink == "edit" %}
@@ -62,31 +54,6 @@ to leave a hidden space for update button and create extra space in the admin
 tables  -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-{% if tableClass == 'Deliverables' %}
-<script>
-$(document).ready(function(){
-  $('.dropdown-toggle').dropdown();
-  var table = $('#myTable').DataTable({
-    columnDefs: [
-        {targets: [2,5,7], orderable: false, searchable : false}
-    ],
-      order: [[0, "asc"]]
-  });
-});
-</script>
-{% elif tableClass == 'Tasks' %}
-<script>
-$(document).ready(function(){
-  $('.dropdown-toggle').dropdown();
-  var table = $('#myTable').DataTable({
-    columnDefs: [
-        {targets: [1,5,7], orderable: false, searchable : false}
-    ],
-      order: [[0, "asc"]]
-  });
-});
-</script>
-{% else %}
 <script>
 $(document).ready(function(){
   $('.dropdown-toggle').dropdown();
@@ -98,6 +65,5 @@ $(document).ready(function(){
   });
 });
 </script>
-{% endif %}
 {% endblock %}
 </html>
