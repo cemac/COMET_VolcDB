@@ -135,7 +135,17 @@ def volcano_detail(country, region, volcano):
 def volcano_inter(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
-    return render_template('volcanointerferograms.html.j2', data=df, country=country, region=region)
+    return render_template('volcanointerferograms.html.j2', data=df,
+                           country=country, region=region)
+
+
+@app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/cemac_analysis_pages',
+           methods=["GET"])
+def volcano_analysis(country, region, volcano):
+    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                           "name = '" + str(volcano) + "';", conn)
+    return render_template('cemac_analysis_pages.html.j2', data=df,
+                           country=country, region=region)
 
 
 @app.route('/volcano-index/volcanointerferograms', methods=["GET"])
@@ -194,7 +204,32 @@ def change_pwd():
             return redirect(url_for('change_pwd'))
     return render_template('change-pwd.html.j2', form=form)
 
-# Additional logged in only pages ------------------------------
+# Additional logged in as Admin only pages ------------------------------
+
+
+@app.route('/admin/information', methods=['GET', 'POST'])
+@is_logged_in_as_admin
+def admininfo():
+    return render_template('admininfo.html.j2')
+
+
+@app.route('/admin/users', methods=['GET', 'POST'])
+@is_logged_in_as_admin
+def ViewOrAddUsers():
+    df = pd.read_sql_query("SELECT * FROM Users ;", conn)
+    df['password'] = '********'
+    # add roles
+    u2r = pd.read_sql_query("SELECT * FROM users_roles ;", conn)
+    roles = pd.read_sql_query("SELECT * FROM roles ;", conn)
+    u2r2 = pd.merge(u2r, roles, on='group_id')
+    del u2r2['group_id']
+    usersandroles = pd.merge(df, u2r2, on='id', how='outer')
+    usersandroles.rename(columns={'name': 'Role'}, inplace=True)
+    usersandroles = usersandroles.dropna(subset=['username'])
+    colnames = [s.replace("_", " ").title() for s in usersandroles.columns.values[1:]]
+    return render_template('view.html.j2', title='Users', colnames=colnames,
+                           tableClass='Users', editLink="edit",
+                           data=usersandroles)
 
 
 # Add entry
@@ -215,31 +250,50 @@ def add():
     return render_template('add.html.j2', title='Add Users', tableClass='Users',
                            form=form)
 
-# admin pages ---------------------------------------------------
 
-
-@app.route('/admin/information', methods=['GET', 'POST'])
+# Delete entry
+@app.route('/delete/<string:tableClass>/<string:id>', methods=['POST'])
 @is_logged_in_as_admin
-def admininfo():
-    return render_template('admininfo.html.j2')
+def delete(tableClass, id):
+    # Retrieve DB entry:
+    user = pd.read_sql_query("SELECT * FROM Users where id = " + id + " ;",
+                             conn)
+    username = user.username
+    DeleteUser(username[0], conn)
+    flash('User Deleted', 'success')
+    return redirect(url_for('ViewOrAddUsers'))
 
 
-@app.route('/admin/users', methods=['GET', 'POST'])
+# Access settings for a given user
+@app.route('/access/<string:id>', methods=['GET', 'POST'])
 @is_logged_in_as_admin
-def ViewOrAddUsers():
-    df = pd.read_sql_query("SELECT * FROM Users ;", conn)
-    df['password'] = '********'
-    # add roles
-    u2r = pd.read_sql_query("SELECT * FROM users_roles ;", conn)
-    roles =  pd.read_sql_query("SELECT * FROM roles ;", conn)
-    u2r2= pd.merge(u2r, roles, on='group_id')
-    del u2r2['group_id']
-    usersandroles = pd.merge(df, u2r2, on='id', how='outer')
-    usersandroles.rename(columns={'name': 'Role'}, inplace=True)
-    usersandroles = usersandroles.dropna(subset=['username'])
-    colnames = [s.replace("_", " ").title() for s in usersandroles.columns.values[1:]]
-    return render_template('view.html.j2', title='Users', colnames=colnames,
-                           tableClass='Users', editLink="edit", data=usersandroles)
+def access(id):
+    form = AccessForm(request.form)
+    form.Role.choices = table_list('roles', 'name', conn)[1:]
+    # Retrieve user DB entry:
+    user = pd.read_sql_query("SELECT * FROM Users where id = " + id + " ;",
+                                 conn)
+    if user.empty:
+        abort(404)
+    # Retrieve all current role
+    u2r = pd.read_sql_query("SELECT * FROM users_roles WHERE id = " + id +
+                            ";", conn)
+    gid = u2r.group_id[0]
+    current_role = pd.read_sql_query("SELECT * FROM roles WHERE group_id = "
+                                     + str(gid) + ";", conn)
+    # If user submits edit entry form:
+    if request.method == 'POST' and form.validate():
+        new_role = form.Role.data
+        AssignRole(user.username[0], new_role, conn)
+        print('test')
+        # Return with success
+        flash('Edits successful', 'success')
+        return redirect(url_for('access', id=id))
+    # Pre-populate form fields with existing data:
+    form.username.render_kw = {'readonly': 'readonly'}
+    form.username.data = user.username[0]
+    form.Role.data = current_role.name[0]
+    return render_template('access.html.j2', form=form, id=id)
 
 
 # static information pages ---------------------------------------------------
@@ -309,5 +363,4 @@ def unhandled_exception(e):
 
 
 if __name__ == '__main__':
-    #app.run(host='129.11.85.32')
-    app.run()
+    app.run(host='129.11.85.32', debug=True)
