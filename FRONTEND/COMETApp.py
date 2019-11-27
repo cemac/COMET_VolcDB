@@ -209,6 +209,18 @@ def change_pwd():
             return redirect(url_for('change_pwd'))
     return render_template('change-pwd.html.j2', form=form)
 
+
+# Access settings for a given user
+@app.route('/account/<string:username>', methods=['GET', 'POST'])
+@is_logged_in
+def account(username):
+    role = session['usertype']
+    # display role
+    # user name
+    # potential to add affiliations and email to give more bespoke access to
+    # who can edit which volcanoes. Eg. Prject or Institute
+    return render_template('account.html.j2', username=username, Role=role)
+
 # Additional logged in as Admin only pages ------------------------------
 
 
