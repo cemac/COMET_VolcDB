@@ -29,7 +29,13 @@
         <ul class="dropdown-menu">
           <li class="dropdown-header">Logged in as <b>{{session.username}}</b></li>
           {% if session.username != "admin" %}
-          <li><a href=/change-pwd>Change Password</a> </li> {% endif %} <li><a href=/logout>Logout </a> </li> </ul> </li> {% else %} <li><a href="/login"><span class="glyphicon glyphicon-log-in"> Login</a></li>
+          <li><a href=/change-pwd>Change Password</a> </li>
+          <li><a href=/account/{{session.username}}>Account</a> </li> 
+          {% endif %}
+          <li><a href=/logout>Logout </a> </li>
+        </ul> </li>
+         {% else %}
+          <li><a href="/login"><span class="glyphicon glyphicon-log-in"> Login</a></li>
           {% endif %}
         </ul>
           </div>
