@@ -3,15 +3,24 @@
 {% block body %}
 <div>
   <div>
+    <style type="text/css">
+      .acf-map {
+        width: 70%;
+        height: 500px;
+        border: #ccc solid 1px;
+        margin: 20px 0;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
     <header>
-      <h1> {{data.name[0]}} </h1>
+      <h1>{{data.name[0]}}</h1>
     </header><!-- .entry-header -->
     <ul class="tabrow">
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}">Observations of Deformation</a></li>
-      <li class="selected">Latest Sentinel-1 Data</li>
+      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/volcanodetail">Latest Sentinel-1 Data</a></li>
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/volcanointerferograms">Interferograms</a></li>
-      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/cemac_analysis_pages">Analysis</a></li>
-      <li><a href="/volcano-index">Export as CSV</a></li>
+      <li class="selected">Analysis</li>
+      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}">Export as CSV</a></li>
       {% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
 			{% endif %}
@@ -65,8 +74,10 @@
           <td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
         </tr>
       </table>
-    </div><!-- #content -->
-  </div><!-- #primary -->
+      <img src="{{data.image_url[0]}}">
+    </div><!-- .entry-content -->
+  </div><!-- #content -->
+</div><!-- #primary -->
 </div><!-- #main .wrapper -->
 {% endblock %}
 
