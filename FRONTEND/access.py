@@ -45,9 +45,17 @@ class MultiCheckboxField(SelectMultipleField):
 
 class AccessForm(Form):
     username = StringField('Username')
-    Role = MultiCheckboxField(
-        'ADMIN', 'Editor', 'User')
+    Role = SelectField(u'*Role', [validators.NoneOf(('blank'),
+                               message='Please select')])
     # Note levels of editor?
+
+
+def table_list(tableClass, col, conn):
+    DF = pd.read_sql_query("SELECT * FROM roles ;", conn)
+    list = [('blank', '--Please select--')]
+    for element in DF[col]:
+        list.append((element, element))
+    return list
 
 
 # ------------------------- is logged in wrappers --------------------------- #
@@ -189,8 +197,8 @@ def AssignRole(username, role, conn):
            f"{str(user.id.values[0])}"+"';")
     exist_role = pd.read_sql_query(sql, conn)
     if not exist_role.empty:
-        sql = 'DELETE from users_roles where id is ?'
-        cur.execute(sql, str(user.id))
+        sql = 'DELETE from users_roles where id = ?'
+        cur.execute(sql, (str(user.id.values[0]),))
     sql = "SELECT * FROM roles WHERE name is '"+f"{str(role)}"+"';"
     role = pd.read_sql_query(sql, conn)
     sql = 'INSERT into users_roles VALUES(?,?)'
@@ -222,17 +230,17 @@ def user_login(username, password_candidate, conn):
         else:
             flash('Incorrect password', 'danger')
 
-    elif user.empty is True and str(username) != 'admin' :
+    elif user.empty is True and str(username) != 'admin':
         # Username not found:
         flash('Username ' + str(username) + ' not found', 'danger')
         return redirect(url_for('login'))
     if str(username) == 'admin':
         password = 'password'
-        if password_candidate == password :
+        if password_candidate == password:
             # Passed
             session['logged_in'] = True
             session['username'] = 'admin'
-            session['usertype'] = 'admin'
+            session['usertype'] = 'Admins'
             flash('You are now logged in as admin', 'success')
             return redirect(url_for('login'))
         else:

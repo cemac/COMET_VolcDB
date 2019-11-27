@@ -1,38 +1,16 @@
 {% extends 'layout.html.j2' %}
 
 {% block body %}
-<SCRIPT language="javascript">
-  function checkAll(ele) {
-   var checkboxes = document.getElementsByTagName('input');
-   if (ele.checked) {
-       for (var i = 0; i < checkboxes.length; i++) {
-           if (checkboxes[i].type == 'checkbox') {
-               checkboxes[i].checked = true;
-           }
-       }
-   } else {
-       for (var i = 0; i < checkboxes.length; i++) {
-           console.log(i)
-           if (checkboxes[i].type == 'checkbox') {
-               checkboxes[i].checked = false;
-           }
-       }
-     }
-  }
-  </SCRIPT>
-<h1>User Access Settings</h1>
-<p> Users must log out and back in for changes to take effect </p>
+<h1>{{title}}</h1>
 <hr>
 {% from "includes/_formhelpers.html.j2" import render_field %}
 <form action=/access/{{id}} method="POST">
+  {% for field in form %}
   <div class="form-group">
-    {{render_field(form.username, class_="form-control")}}
+    {{render_field(field, class_="form-control")}}
   </div>
-  <button type="submit" class="btn btn-primary">Update</button>
-  <br>
-  <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" id="select all" /> </th>
-  <td><label for="select all">Select All</label></td>
-  <hr>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <hr>
 {% endblock %}
