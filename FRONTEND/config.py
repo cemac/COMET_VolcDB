@@ -3,7 +3,7 @@ import os
 
 class Config(object):
     DEBUG = False
-    TESTING = False
+    TESTING = True
     CSRF_ENABLED = True
     SECRET_KEY = secret  # os.environ['SECRET_KEY']
     ADMIN_PWD = password  # os.environ['ADMIN_PWD']
