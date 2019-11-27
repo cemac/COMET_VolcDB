@@ -19,20 +19,23 @@ from passlib.hash import sha256_crypt
 # -------------------------------- Forms ------------------------------------ #
 #          USERS, Change Password, MultiCheckboxField, AccessForm             #
 # --------------------------------------------------------------------------- #
+
+password_message = ("Password must be mimimum 8 characters and contain only" +
+                    " uppercase letters, lowercase letters and numbers")
+
+
 class Users_Form(Form):
     username = StringField('Username', [validators.Length(min=4, max=25)])
     password = PasswordField('Password',
                              [validators.Regexp('^([a-zA-Z0-9]{8,})$',
-                                                message='Password must be mimimum 8 characters and contain only uppercase letters, \
-        lowercase letters and numbers')])
+                                                message=password_message)])
 
 
 class ChangePwdForm(Form):
     current = PasswordField('Current password', [validators.DataRequired()])
     new = PasswordField('New password',
                         [validators.Regexp('^([a-zA-Z0-9]{8,})$',
-                                           message='Password must be mimimum 8 characters and contain only uppercase letters, \
-        lowercase letters and numbers')])
+                                           message=password_message)])
     confirm = PasswordField('Confirm new password',
                             [validators.EqualTo('new',
                                                 message='Passwords do no match')])
@@ -46,7 +49,7 @@ class MultiCheckboxField(SelectMultipleField):
 class AccessForm(Form):
     username = StringField('Username')
     Role = SelectField(u'*Role', [validators.NoneOf(('blank'),
-                               message='Please select')])
+                       message='Please select')])
     # Note levels of editor?
 
 
@@ -77,7 +80,8 @@ def is_logged_in(f):
 def is_logged_in_as_editor(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'logged_in' in session and (session['usertype'] == 'editor' or session['usertype'] == 'admin'):
+        if 'logged_in' in session and (session['usertype'] == 'Collaborators'
+                                       or session['usertype'] == 'Admins'):
             return f(*args, **kwargs)
         else:
             flash('Unauthorised, please login as a editor/admin', 'danger')
@@ -89,7 +93,7 @@ def is_logged_in_as_editor(f):
 def is_logged_in_as_admin(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'logged_in' in session and session['usertype'] == 'admin':
+        if 'logged_in' in session and session['usertype'] == 'Admins':
             return f(*args, **kwargs)
         else:
             flash('Unauthorised, please login as admin', 'danger')
@@ -111,11 +115,6 @@ def InsertUser(username, password, conn):
     Returns:
         commits user to database as registered user
     """
-    # Check
-    if len(password) < 8:
-        return print('password must be more than 8 characters')
-    # Hash password
-    password = sha256_crypt.encrypt(str(password))
     # create a cursor
     cur = conn.cursor()
     # Insert user into table
@@ -213,7 +212,7 @@ def user_login(username, password_candidate, conn):
     if user.empty is False and str(username) != 'admin':
         password = user.password[0]
         # Compare passwords
-        if sha256_crypt.verify(password_candidate, password):
+        if sha256_crypt.verify(str(password_candidate), password):
             # Passed
             flash('You are now logged in', 'success')
             roleid = pd.read_sql_query("SELECT * FROM users_roles WHERE id " +
@@ -224,8 +223,7 @@ def user_login(username, password_candidate, conn):
             session['logged_in'] = True
             session['username'] = str(username)
             session['usertype'] = str(role.name[0])
-            if str(role) == 'admin':
-                session['admin'] = 'True'
+            if session['usertype'] == 'Admins':
                 flash('You have admin privileges', 'success')
         else:
             flash('Incorrect password', 'danger')

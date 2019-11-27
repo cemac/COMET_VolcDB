@@ -189,14 +189,19 @@ def logout():
 @app.route('/change-pwd', methods=["GET", "POST"])
 @is_logged_in
 def change_pwd():
+    username = session['username']
     form = ChangePwdForm(request.form)
     if request.method == 'POST' and form.validate():
-        user = Users.query.filter_by(username=session['username']).first()
-        password = user.password
+        user = pd.read_sql_query("SELECT * FROM users where username is '"
+                                 + username + "' ;", conn)
+        password = user.password[0]
         current = form.current.data
         if sha256_crypt.verify(current, password):
-            user.password = sha256_crypt.encrypt(str(form.new.data))
-            db.session.commit()
+            user.password = sha256_crypt.hash(str(form.new.data))
+            sql = "UPDATE users SET password = ? WHERE username is ? ;"
+            cur = conn.cursor()
+            cur.execute(sql, (user.password[0], str(username)))
+            conn.commit()
             flash('Password changed', 'success')
             return redirect(url_for('change_pwd'))
         else:
@@ -239,9 +244,12 @@ def add():
     form = eval("Users_Form")(request.form)
     if request.method == 'POST' and form.validate():
         # Get form fields:
+        # Check
+        if len(str(form.password.data)) < 8:
+            return flash('password must be more than 8 characters',
+                         'danger')
         form.password.data = sha256_crypt.hash(str(form.password.data))
         formdata = []
-        db_string = ""
         for f, field in enumerate(form):
             formdata.append(field.data)
         InsertUser(formdata[0], formdata[1], conn)
@@ -288,7 +296,7 @@ def access(id):
         print('test')
         # Return with success
         flash('Edits successful', 'success')
-        return redirect(url_for('access', id=id))
+        return redirect(url_for('ViewOrAddUsers'))
     # Pre-populate form fields with existing data:
     form.username.render_kw = {'readonly': 'readonly'}
     form.username.data = user.username[0]
