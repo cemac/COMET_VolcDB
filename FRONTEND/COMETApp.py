@@ -16,12 +16,14 @@ from flask import Flask, render_template, flash, redirect, url_for, request
 from flask import g, session, abort
 from wtforms import Form, validators, StringField, SelectField, TextAreaField
 from wtforms import IntegerField, PasswordField, SelectMultipleField, widgets
-from access import *
 import sqlite3
 import pandas as pd
 import os
 from passlib.hash import sha256_crypt
+# Modules for this site
+from access import *
 from comet_db_functions import *
+from volcanoes import *
 
 
 app = Flask(__name__)
@@ -147,13 +149,45 @@ def volcano_analysis(country, region, volcano):
     return render_template('cemac_analysis_pages.html.j2', data=df,
                            country=country, region=region)
 
+
 @app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/edit',
            methods=["GET","POST"])
 def volcano_edit(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
+    form = eval("Volcano_edit_Form")(request.form)
+    if request.method == 'POST' and form.validate():
+        # Get each form field and update DB:
+        for field in form:
+            print(field)
+        # Return with success:
+        flash('Edits successful', 'success')
+        return redirect(url_for('volcano-index/<string:region>/<string:country>/<string:volcano>/volcanodetail'))
+    # Set title:
+    title = "Edit Volcano"
+    # Pre-populate form fields with existing data:
+    for i, field in enumerate(form):
+        if i == 0:  # Grey out first (immutable) field
+            field.render_kw = {'readonly': 'readonly'}
+        if not request.method == 'POST':
+            # Pre-populate form fields with existing data:
+            form.volcano_number.render_kw = {'readonly': 'readonly'}
+            form.region.render_kw = {'readonly': 'readonly'}
+            form.country.render_kw = {'readonly': 'readonly'}
+            form.volcano_number.data = df['ID'][0]
+            form.region.data = df['Area'][0]
+            form.country.data = df['country'][0]
+            form.geodetic_measurements.data = df['geodetic_measurements'][0]
+            form.deformation_observation.data = df['deformation_observation'][0]
+            form.measurement_method.data = df['measurement_methods'][0]
+            form.duration.data = df['duration_of_observation'][0]
+            form.causes.data = df['inferred_causes'][0]
+            form.characteristics.data = df['characteristics_of_deformation'][0]
+            form.references.data = df['references'][0]
+            form.latitdue.data = df['latitude'][0]
+            form.longitude.data = df['longitude'][0]
     return render_template('edit.html.j2', data=df,
-                           country=country, region=region)
+                           country=country, region=region, volcano=volcano)
 
 
 @app.route('/volcano-index/volcanointerferograms', methods=["GET"])
@@ -391,5 +425,5 @@ def unhandled_exception(e):
 
 
 if __name__ == '__main__':
-    #app.run(host='129.11.85.32', debug=True)
-    app.run(debug=True)
+    app.run(host='129.11.85.32', debug=True)
+    #app.run(debug=True)
