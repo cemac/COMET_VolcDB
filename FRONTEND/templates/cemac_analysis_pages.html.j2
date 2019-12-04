@@ -11,6 +11,8 @@
         margin: 20px 0;
       }
     </style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/nouislider.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/rich_style.css')}}">
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <header>
       <h1>{{data.name[0]}}</h1>
@@ -74,11 +76,159 @@
           <td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
         </tr>
       </table>
-      <img src="{{data.image_url[0]}}">
+    <!-- disp data: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/disp_data/erta_ale.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- prob data: -->
+    <script src="{{url_for('static',filename='COMET_JAVA/prob_data/erta_ale.js')}}"
+            charset="utf-8">
+    </script>
+
+    <!-- licsar data: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/licsar_data/erta_ale.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- plotly js: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/plotly.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- no ui slider js: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/nouislider.min.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- regression js: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/regression.min.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- disp plotting: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/disp_plot.js')}}"
+            charset="utf-8"
+            defer>
+    </script>
+    <!-- prob images: -->
+
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/prob_images.js')}}"
+            charset="utf-8"
+            defer>
+    </script>
+    <!-- licsar images: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/licsar_images.js')}}"
+            charset="utf-8"
+            defer>
+    </script>
+    <!-- full screen images: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/fs_images.js')}}"
+            charset="utf-8"
+            defer>
+    </script>
+
+  </head>
+  <body>
+    <script>
+    var url = "{{ url_for('static',filename='COMET_JAVA/')}}";
+    </script>
+    <!-- plots: -->
+    <div class='disp_plot_container'
+         id='disp_plot_container'>
+      <div class='disp_plot'
+           id='heatmap_plot'>
+      </div>
+      <div class='disp_plot'
+           id='ts_plot'>
+      </div>
+    </div>
+    <!-- plot controls: -->
+    <div class='plot_control_container'
+         id='plot_control_container'>
+      <div class='data_type_control'
+           id='data_type_control'>
+<!--
+          <button id="data_type_button_filt"
+                  onclick="disp_plot('filt');">
+            filtered data
+          </button>
+          <button id="data_type_button_raw"
+                  onclick="disp_plot('raw');">
+            raw data
+          </button>
+-->
+      </div>
+      <div class='data_range_control'
+           id='data_range_control'>
+      </div>
+      <div class='data_range_value'
+           id='data_range_value'>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- probability images: -->
+    <div class='prob_image_container'
+         id='prob_image_container'>
+      <div class='prob_image'
+           id='prob_image'>
+        <img class="prob_image_img fs_img"
+             id="prob_image_img"
+             src="">
+        </img>
+      </div>
+      <div class='prob_image_control'
+           id='prob_image_control'>
+      </div>
+      <div class='prob_image_value'
+           id='prob_image_value'>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- licsar images: -->
+    <div class='licsar_image_container'
+         id='licsar_image_container'>
+      <div class='licsar_image'
+           id='licsar_image'>
+        <img class="licsar_img fs_img"
+             id="licsar_cc_img"
+             src="">
+        </img>
+<!--
+        <img class="licsar_img fs_img"
+             id="licsar_mag_img"
+             src="">
+        </img>
+-->
+        <img class="licsar_img fs_img"
+             id="licsar_pha_img"
+             src="">
+        </img>
+        <img class="licsar_img fs_img"
+             id="licsar_unw_img"
+             src="">
+        </img>
+      </div>
+      <div class='licsar_image_control'
+           id='licsar_image_control'>
+      </div>
+      <div class='licsar_image_value'
+           id='licsar_image_value'>
+      </div>
+    </div>
+
     </div><!-- .entry-content -->
   </div><!-- #content -->
 </div><!-- #primary -->
 </div><!-- #main .wrapper -->
+<!-- full screen images: -->
+    <div id="fs_img_div"
+         class="fs_img_div">
+      <span id="fs_img_close"
+            class="fs_img_close">&times;</span>
+      <img id="fs_img_img"
+           class="fs_img_img"
+           src="">
+    </div>
 {% endblock %}
 
 </html>
