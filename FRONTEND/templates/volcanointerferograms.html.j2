@@ -1,6 +1,30 @@
 <html lang="en">
 {% extends 'layout.html.j2' %}
 {% block body %}
+<head>
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/nouislider.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/rich_style.css')}}">
+    <!-- licsar data: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/licsar_data/erta_ale.js')}}"
+            charset="utf-8">
+    </script>
+  <!-- no ui slider js: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/nouislider.min.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- licsar images: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/licsar_images.js')}}"
+            charset="utf-8"
+            defer>
+    </script>
+    <!-- full screen images: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/fs_images.js')}}"
+            charset="utf-8"
+            defer>
+    </script>
+
+  </head>
 <div>
   <div>
     <style type="text/css">
@@ -74,11 +98,54 @@
           <td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
         </tr>
       </table>
-      <img src="{{data.image_url[0]}}">
+      <script>
+    var url = "{{ url_for('static',filename='COMET_JAVA/')}}";
+    </script>
+        <!-- licsar images: -->
+    <div class='licsar_image_container'
+         id='licsar_image_container'>
+      <div class='licsar_image'
+           id='licsar_image'>
+        <img class="licsar_img fs_img"
+             id="licsar_cc_img"
+             src="">
+        </img>
+<!--
+        <img class="licsar_img fs_img"
+             id="licsar_mag_img"
+             src="">
+        </img>
+-->
+        <img class="licsar_img fs_img"
+             id="licsar_pha_img"
+             src="">
+        </img>
+        <img class="licsar_img fs_img"
+             id="licsar_unw_img"
+             src="">
+        </img>
+      </div>
+      <div class='licsar_image_control'
+           id='licsar_image_control'>
+      </div>
+      <div class='licsar_image_value'
+           id='licsar_image_value'>
+      </div>
+    </div>
     </div><!-- .entry-content -->
   </div><!-- #content -->
 </div><!-- #primary -->
 </div><!-- #main .wrapper -->
+</div><!-- #main .wrapper -->
+<!-- full screen images: -->
+    <div id="fs_img_div"
+         class="fs_img_div">
+      <span id="fs_img_close"
+            class="fs_img_close">&times;</span>
+      <img id="fs_img_img"
+           class="fs_img_img"
+           src="">
+    </div>
 {% endblock %}
 
 </html>

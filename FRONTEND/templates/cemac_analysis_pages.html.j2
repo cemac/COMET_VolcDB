@@ -1,6 +1,56 @@
 <html lang="en">
 {% extends 'layout.html.j2' %}
 {% block body %}
+<head>
+    <!-- disp data: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/disp_data/erta_ale.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- prob data: -->
+    <script src="{{url_for('static',filename='COMET_JAVA/prob_data/erta_ale.js')}}"
+            charset="utf-8">
+    </script>
+
+    <!-- licsar data: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/licsar_data/erta_ale.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- plotly js: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/plotly.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- no ui slider js: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/nouislider.min.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- regression js: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/regression.min.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- disp plotting: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/disp_plot.js')}}"
+            charset="utf-8"
+            defer>
+    </script>
+    <!-- prob images: -->
+
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/prob_images.js')}}"
+            charset="utf-8"
+            defer>
+    </script>
+    <!-- licsar images: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/licsar_images.js')}}"
+            charset="utf-8"
+            defer>
+    </script>
+    <!-- full screen images: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/fs_images.js')}}"
+            charset="utf-8"
+            defer>
+    </script>
+
+  </head>
+
 <div>
   <div>
     <style type="text/css">
@@ -76,55 +126,7 @@
           <td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
         </tr>
       </table>
-    <!-- disp data: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/disp_data/erta_ale.js')}}"
-            charset="utf-8">
-    </script>
-    <!-- prob data: -->
-    <script src="{{url_for('static',filename='COMET_JAVA/prob_data/erta_ale.js')}}"
-            charset="utf-8">
-    </script>
 
-    <!-- licsar data: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/licsar_data/erta_ale.js')}}"
-            charset="utf-8">
-    </script>
-    <!-- plotly js: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/plotly.js')}}"
-            charset="utf-8">
-    </script>
-    <!-- no ui slider js: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/nouislider.min.js')}}"
-            charset="utf-8">
-    </script>
-    <!-- regression js: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/regression.min.js')}}"
-            charset="utf-8">
-    </script>
-    <!-- disp plotting: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/disp_plot.js')}}"
-            charset="utf-8"
-            defer>
-    </script>
-    <!-- prob images: -->
-
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/prob_images.js')}}"
-            charset="utf-8"
-            defer>
-    </script>
-    <!-- licsar images: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/licsar_images.js')}}"
-            charset="utf-8"
-            defer>
-    </script>
-    <!-- full screen images: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/fs_images.js')}}"
-            charset="utf-8"
-            defer>
-    </script>
-
-  </head>
-  <body>
     <script>
     var url = "{{ url_for('static',filename='COMET_JAVA/')}}";
     </script>
