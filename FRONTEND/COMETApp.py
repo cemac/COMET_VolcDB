@@ -69,7 +69,7 @@ def volcanodb():
     return render_template('volcano-index.html.j2', data=df2, total=total)
 
 
-@app.route('/volcano-index/<string:region>', methods=["GET"])
+@app.route('/volcano-index/<string:region>', methods=["GET", "POST"])
 def volcanodb_region(region):
     # select country
     df = pd.read_sql_query("SELECT country FROM VolcDB1 WHERE AREA = '"
@@ -117,7 +117,7 @@ def volcanodb_all():
 
 
 @app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>',
-           methods=["GET"])
+           methods=["GET", "POST"])
 def volcano(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
@@ -151,29 +151,35 @@ def volcano_analysis(country, region, volcano):
 
 
 @app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/edit',
-           methods=["GET","POST"])
+           methods=["GET", "POST"])
 @is_logged_in
 def volcano_edit(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
     form = eval("Volcano_edit_Form")(request.form)
-    form.geodetic_measurements.choices = yesno_list()[1:]
-    form.deformation_observation.choices = yesno_list()[1:]
+    form.geodetic_measurements.choices = yesno_list()
+    form.deformation_observation.choices = yesno_list()
     if request.method == 'POST' and form.validate():
-    # Get each form field and update DB:
+        # Get each form field and update DB:
         for field in form:
-            print('test')
+            editrow('VolcDB1', df.ID[0], field.name, str(field.data), conn)
         # Return with success:
         flash('Edits successful', 'success')
-        return redirect(url_for('volcano-index/<string:region>/<string:country>/<string:volcano>/volcanodetail'))
+        return redirect(url_for('volcano', country=country, region=region,
+                                volcano=volcano))
     # Set title:
     title = "Edit Volcano"
     # Pre-populate form fields with existing data:
     noedit = ['ID', 'Area', 'country']
+    yesnocheck = ['geodetic_measurements', 'deformation_observation']
     for field in form:
         if not request.method == 'POST':
             if field.name in noedit:
                 field.render_kw = {'readonly': 'readonly'}
+            if field.name in yesnocheck:
+                if exec("df." + field.name + "[0]" + "!= 'yes'"):
+                    print(field.name)
+                    exec("df." + field.name + "[0] = 'no'")
             exec("field.data = df." + field.name + "[0]")
     return render_template('edit.html.j2', data=df, title=title, form=form,
                            country=country, region=region, volcano=volcano)
@@ -323,7 +329,7 @@ def access(id):
     form.Role.choices = table_list('roles', 'name', conn)[1:]
     # Retrieve user DB entry:
     user = pd.read_sql_query("SELECT * FROM Users where id = " + id + " ;",
-                                 conn)
+                             conn)
     if user.empty:
         abort(404)
     # Retrieve all current role

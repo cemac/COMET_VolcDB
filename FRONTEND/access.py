@@ -62,10 +62,10 @@ def table_list(tableClass, col, conn):
 
 
 def yesno_list():
-
-    list = [('blank', '--Please select--')]
-    list.append(('yes', 'yes'))
-    list.append(('no', 'no'))
+    list = []
+    list.append(('blank', '--Please select--'))
+    list.append(('Yes', 'Yes'))
+    list.append(('No', 'No'))
     return list
 
 

@@ -32,11 +32,9 @@ class Volcano_edit_Form(Form):
     country = StringField(u'Country')
     # # yes or no questions
     geodetic_measurements = SelectField(u'*Geodetic measurements?',
-                                        [validators.NoneOf(('blank'),
-                                        message='Please select')])
+                                        [validators.Optional()])
     deformation_observation = SelectField(u'*Deformation Observation',
-                                          [validators.NoneOf(('blank'),
-                                           message='Please select')])
+                                          [validators.Optional()])
     measurement_methods = StringField(u'Measurement method(s)',
                                       [validators.Optional()],
                                       render_kw={"placeholder": "e.g. InSAR"})
