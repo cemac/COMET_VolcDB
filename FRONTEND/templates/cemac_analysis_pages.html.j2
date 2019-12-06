@@ -2,16 +2,41 @@
 {% extends 'layout.html.j2' %}
 {% block body %}
 <head>
+    <!-- disp data: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/disp_data/erta_ale.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- prob data: -->
+    <script src="{{url_for('static',filename='COMET_JAVA/prob_data/erta_ale.js')}}"
+            charset="utf-8">
+    </script>
 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/nouislider.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/rich_style.css')}}">
     <!-- licsar data: -->
     <script src="{{ url_for('static',filename='COMET_JAVA/licsar_data/erta_ale.js')}}"
             charset="utf-8">
     </script>
-  <!-- no ui slider js: -->
+    <!-- plotly js: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/plotly.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- no ui slider js: -->
     <script src="{{ url_for('static',filename='COMET_JAVA/script/nouislider.min.js')}}"
             charset="utf-8">
+    </script>
+    <!-- regression js: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/regression.min.js')}}"
+            charset="utf-8">
+    </script>
+    <!-- disp plotting: -->
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/disp_plot.js')}}"
+            charset="utf-8"
+            defer>
+    </script>
+    <!-- prob images: -->
+
+    <script src="{{ url_for('static',filename='COMET_JAVA/script/prob_images.js')}}"
+            charset="utf-8"
+            defer>
     </script>
     <!-- licsar images: -->
     <script src="{{ url_for('static',filename='COMET_JAVA/script/licsar_images.js')}}"
@@ -25,6 +50,7 @@
     </script>
 
   </head>
+
 <div>
   <div>
     <style type="text/css">
@@ -35,6 +61,8 @@
         margin: 20px 0;
       }
     </style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/nouislider.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/rich_style.css')}}">
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <header>
       <h1>{{data.name[0]}}</h1>
@@ -42,9 +70,9 @@
     <ul class="tabrow">
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}">Observations of Deformation</a></li>
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/volcanodetail">Latest Sentinel-1 Data</a></li>
-      <li class="selected">Interferograms</li>
-      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/cemac_analysis_pages">Analysis</a></li>
-      <li><a href="/volcano-index">Export as CSV</a></li>
+      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/volcanointerferograms">Interferograms</a></li>
+      <li class="selected">Analysis</li>
+      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}">Export as CSV</a></li>
       {% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
 			{% endif %}
@@ -98,10 +126,67 @@
           <td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
         </tr>
       </table>
-      <script>
+
+    <script>
     var url = "{{ url_for('static',filename='COMET_JAVA/')}}";
     </script>
-        <!-- licsar images: -->
+    <!-- plots: -->
+    <div class='disp_plot_container'
+         id='disp_plot_container'>
+      <div class='disp_plot'
+           id='heatmap_plot'>
+      </div>
+      <div class='disp_plot'
+           id='ts_plot'>
+      </div>
+    </div>
+    <!-- plot controls: -->
+    <div class='plot_control_container'
+         id='plot_control_container'>
+      <div class='data_type_control'
+           id='data_type_control'>
+<!--
+          <button id="data_type_button_filt"
+                  onclick="disp_plot('filt');">
+            filtered data
+          </button>
+          <button id="data_type_button_raw"
+                  onclick="disp_plot('raw');">
+            raw data
+          </button>
+-->
+      </div>
+      <div class='data_range_control'
+           id='data_range_control'>
+      </div>
+      <div class='data_range_value'
+           id='data_range_value'>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- probability images: -->
+    <div class='prob_image_container'
+         id='prob_image_container'>
+      <div class='prob_image'
+           id='prob_image'>
+        <img class="prob_image_img fs_img"
+             id="prob_image_img"
+             src="">
+        </img>
+      </div>
+      <div class='prob_image_control'
+           id='prob_image_control'>
+      </div>
+      <div class='prob_image_value'
+           id='prob_image_value'>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- licsar images: -->
     <div class='licsar_image_container'
          id='licsar_image_container'>
       <div class='licsar_image'
@@ -132,10 +217,10 @@
            id='licsar_image_value'>
       </div>
     </div>
+
     </div><!-- .entry-content -->
   </div><!-- #content -->
 </div><!-- #primary -->
-</div><!-- #main .wrapper -->
 </div><!-- #main .wrapper -->
 <!-- full screen images: -->
     <div id="fs_img_div"

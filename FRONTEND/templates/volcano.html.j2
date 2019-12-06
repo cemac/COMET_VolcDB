@@ -1,11 +1,6 @@
 <html lang="en">
 {% extends 'layout.html.j2' %}
 {% block body %}
-<div >
-	<a href="/">
-		<img src="/static/volcano_image2.jpg" width="80%" height="auto" alt="" />
-	</a>
-</div>
 <div>
 	<div>
 		<style type="text/css">
@@ -17,14 +12,18 @@
 			}
 		</style>
 		<script src="https://maps.googleapis.com/maps/api/js"></script>
-		<heade>
+		<header>
 			<h1>{{data.name[0]}}</h1>
 		</header><!-- .entry-header -->
 		<ul class="tabrow">
 			<li class="selected">Observations of Deformation</li>
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/volcanodetail">Latest Sentinel-1 Data</a></li>
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/volcanointerferograms">Interferograms</a></li>
-			<li><a href="/volcano-index">Export as CSV</a></li>
+			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/cemac_analysis_pages">Analysis</a></li>
+			<li><a href="">Export as CSV</a></li>
+			{% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
+			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
+			{% endif %}
 		</ul>
 		<div>
 			<table>
