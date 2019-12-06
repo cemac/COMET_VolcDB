@@ -16,20 +16,26 @@ from functools import wraps
 from passlib.hash import sha256_crypt
 
 
+# -------------------------------- Forms ------------------------------------ #
+#          USERS, Change Password, MultiCheckboxField, AccessForm             #
+# --------------------------------------------------------------------------- #
+
+password_message = ("Password must be mimimum 8 characters and contain only" +
+                    " uppercase letters, lowercase letters and numbers")
+
+
 class Users_Form(Form):
     username = StringField('Username', [validators.Length(min=4, max=25)])
     password = PasswordField('Password',
                              [validators.Regexp('^([a-zA-Z0-9]{8,})$',
-                                                message='Password must be mimimum 8 characters and contain only uppercase letters, \
-        lowercase letters and numbers')])
+                                                message=password_message)])
 
 
 class ChangePwdForm(Form):
     current = PasswordField('Current password', [validators.DataRequired()])
     new = PasswordField('New password',
                         [validators.Regexp('^([a-zA-Z0-9]{8,})$',
-                                           message='Password must be mimimum 8 characters and contain only uppercase letters, \
-        lowercase letters and numbers')])
+                                           message=password_message)])
     confirm = PasswordField('Confirm new password',
                             [validators.EqualTo('new',
                                                 message='Passwords do no match')])
@@ -42,13 +48,30 @@ class MultiCheckboxField(SelectMultipleField):
 
 class AccessForm(Form):
     username = StringField('Username')
-    AdminReader = MultiCheckboxField(
-        'ADMIN or View all Access: (Grant Admin privileges or the ability to view all (read-only)):')
-    work_packages = MultiCheckboxField(
-        'WORK PACKAGE LEADERS: Can update Work Package progress and view associated Task and Deliverables:')
-    partners = MultiCheckboxField(
-        'PARTNER LEADER: Can update progress on tasks and deliverables for which they are the responsible partner:')
+    Role = SelectField(u'*Role', [validators.NoneOf(('blank'),
+                       message='Please select')])
+    # Note levels of editor?
 
+
+def table_list(tableClass, col, conn):
+    DF = pd.read_sql_query("SELECT * FROM roles ;", conn)
+    list = [('blank', '--Please select--')]
+    for element in DF[col]:
+        list.append((element, element))
+    return list
+
+
+def yesno_list():
+    list = []
+    list.append(('blank', '--Please select--'))
+    list.append(('Yes', 'Yes'))
+    list.append(('No', 'No'))
+    return list
+
+
+# ------------------------- is logged in wrappers --------------------------- #
+#                        logged_in as user editor admin                       #
+# --------------------------------------------------------------------------- #
 
 def is_logged_in(f):
     @wraps(f)
@@ -65,7 +88,8 @@ def is_logged_in(f):
 def is_logged_in_as_editor(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'logged_in' in session and (session['usertype'] == 'editor' or session['usertype'] == 'admin'):
+        if 'logged_in' in session and (session['usertype'] == 'Collaborators'
+                                       or session['usertype'] == 'Admins'):
             return f(*args, **kwargs)
         else:
             flash('Unauthorised, please login as a editor/admin', 'danger')
@@ -77,9 +101,155 @@ def is_logged_in_as_editor(f):
 def is_logged_in_as_admin(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'logged_in' in session and session['usertype'] == 'admin':
+        if 'logged_in' in session and session['usertype'] == 'Admins':
             return f(*args, **kwargs)
         else:
             flash('Unauthorised, please login as admin', 'danger')
             return redirect(url_for('index'))
     return wrap
+
+# ------------------------- User Access and Login --------------------------- #
+#                         Add, Delete, Edit role, login                       #
+# --------------------------------------------------------------------------- #
+
+
+def InsertUser(username, password, conn):
+    """InsertUser
+    Description:
+        Inserts user into database and hashes password
+    Args:
+        username (str): username e.g jsmith
+        password (str): password must be more than 8 characters
+    Returns:
+        commits user to database as registered user
+    """
+    # create a cursor
+    cur = conn.cursor()
+    # Insert user into table
+    cur.execute("INSERT INTO users (username,password) VALUES (?,?)",
+                (username, password))
+    # All new users automatically become a registerd user
+    AssignRole(username, 'Registered_Users', conn)
+    conn.commit()
+
+
+def OptionalInfo(username, conn, affiliation=None,
+                 email=None, request=None, consent=None):
+    """OptionalInfo
+    Description:
+        Inserts user into database and hashes password
+    Args:
+        username (str): username e.g jsmith
+        password (str): password must be more than 8 characters
+    Kargs:
+        affiliation (str): Institute affiliation (optional)
+        email (str): optional Email address (required only for Collaborators)
+        request collaborator (str): optional 'Y' or 'N'
+        consent_regional_map_anon (str): consent to anonomous data added to
+                                         regional users map? defaults to None
+    Returns:
+        commits user to database as registered user
+    """
+    id = None
+    cur.execute("INSERT INTO users (affiliation,email) VALUES (?)",
+                (str(affiliation), str(email)))
+    conn.commit()
+
+
+def DeleteUser(username, conn):
+    """DeleteUser
+    Description:
+        Delets user from database
+    Args:
+        username (str): username e.g jsmith
+        conn (db connection): database connection to volcano.db
+    Kargs:
+        affiliation (str): Institute affiliation (optional)
+        email (str): Email address (required only for Collaborators)
+        request collaborator (str): 'Y' or 'N', defaults to 'N'
+        consent_regional_map_anon (str): consent to anonomous data added to
+                                         regional users map? defaults to 'N'
+    Returns:
+        commits user to database as registered user
+    """
+    cur = conn.cursor()
+    sql = 'DELETE FROM users WHERE username=?'
+    cur.execute(sql, (username,))
+    conn.commit()
+
+
+def AssignRole(username, role, conn):
+    """AssignRole
+    Description:
+        Delets user from database
+    Args:
+        username (str): username e.g jsmith
+        role (str): predefined role name
+        conn (db connection): database connection to volcano.db
+    Kargs:
+        affiliation (str): Institute affiliation (optional)
+        email (str): Email address (required only for Collaborators)
+        request collaborator (str): 'Y' or 'N', defaults to 'N'
+        consent_regional_map_anon (str): consent to anonomous data added to
+                                         regional users map? defaults to 'N'
+    Returns:
+        commits user to database as registered user
+    """
+    if str(role) not in ['Registered_Users', 'Collaborators', 'Admins']:
+        return print('Role must be one of: Registered_Users, Collaborators, Admins')
+    cur = conn.cursor()
+    sql = "SELECT * FROM  users WHERE username is '"+f"{str(username)}"+"';"
+    user = pd.read_sql_query(sql, conn)
+    sql = ("SELECT group_id FROM  users_roles WHERE id is '" +
+           f"{str(user.id.values[0])}"+"';")
+    exist_role = pd.read_sql_query(sql, conn)
+    if not exist_role.empty:
+        sql = 'DELETE from users_roles where id = ?'
+        cur.execute(sql, (str(user.id.values[0]),))
+    sql = "SELECT * FROM roles WHERE name is '"+f"{str(role)}"+"';"
+    role = pd.read_sql_query(sql, conn)
+    sql = 'INSERT into users_roles VALUES(?,?)'
+    cur.execute(sql, (str(user.id.values[0]), str(role.group_id.values[0])))
+    conn.commit()
+
+
+def user_login(username, password_candidate, conn):
+    user = pd.read_sql_query("SELECT * FROM  users WHERE username is '"
+                             + str(username) + "';", conn)
+    roles = pd.read_sql_query("SELECT * FROM  roles;", conn)
+    if user.empty is False and str(username) != 'admin':
+        password = user.password[0]
+        # Compare passwords
+        if sha256_crypt.verify(str(password_candidate), password):
+            # Passed
+            flash('You are now logged in', 'success')
+            roleid = pd.read_sql_query("SELECT * FROM users_roles WHERE id " +
+                                       "is " + str(user.id[0]) + ";", conn)
+            role = pd.read_sql_query("SELECT * FROM roles WHERE group_id " +
+                                     "is " + str(roleid.group_id[0]) + ";",
+                                     conn)
+            session['logged_in'] = True
+            session['username'] = str(username)
+            session['usertype'] = str(role.name[0])
+            if session['usertype'] == 'Admins':
+                flash('You have admin privileges', 'success')
+        else:
+            flash('Incorrect password', 'danger')
+
+    elif user.empty is True and str(username) != 'admin':
+        # Username not found:
+        flash('Username ' + str(username) + ' not found', 'danger')
+        return redirect(url_for('login'))
+    if str(username) == 'admin':
+        password = 'password'
+        if password_candidate == password:
+            # Passed
+            session['logged_in'] = True
+            session['username'] = 'admin'
+            session['usertype'] = 'Admins'
+            flash('You are now logged in as admin', 'success')
+            return redirect(url_for('login'))
+        else:
+            flash('Incorrect password', 'danger')
+            return redirect(url_for('login'))
+    return

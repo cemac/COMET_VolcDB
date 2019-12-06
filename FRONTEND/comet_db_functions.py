@@ -16,3 +16,31 @@ def query_db(query, args=(), one=False):
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else (rv if rv else None)
+
+
+def insertUser(username, password, conn):
+    cur = conn.cursor()
+    # Set up to autoincrement id number
+    cur.execute("INSERT INTO users (username,password) VALUES (?,?)",
+                (username, password))
+    conn.commit()
+    conn.close()
+
+
+def retrieveUsers(conn):
+    cur = con.cursor()
+    cur.execute("SELECT id, username, password FROM users")
+    users = cur.fetchall()
+    con.close()
+    return users
+
+
+def editrow(table, id, colname, value, conn):
+    cur = conn.cursor()
+    # Set up to autoincrement id number
+    # NB as a column is called key word references it must include '' round
+    # col name
+    sql = ("UPDATE " + str(table) + " SET '" + str(colname) + "' = ? WHERE"
+           + " ID is ? ;")
+    cur.execute(sql, (str(value), str(id)))
+    conn.commit()

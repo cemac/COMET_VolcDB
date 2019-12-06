@@ -1,11 +1,12 @@
+<html lang="en">
 {% extends 'layout.html.j2' %}
 
 {% block body %}
 <h1>{{title}}</h1>
 <hr>
 {% from "includes/_formhelpers.html.j2" import render_field %}
-<form action=/edit/{{tableClass}}/{{id}} method="POST">
-  {% for field in form %}
+<form action="/volcano-index/{{region}}/{{country}}/{{volcano}}/edit" method="POST">
+{% for field in form %}
   <div class="form-group">
     {{render_field(field, class_="form-control")}}
   </div>
@@ -14,3 +15,4 @@
 </form>
 <hr>
 {% endblock %}
+</html>

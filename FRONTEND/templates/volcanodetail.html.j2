@@ -2,11 +2,6 @@
 {% extends 'layout.html.j2' %}
 {% block body %}
 <div>
-  <a href="/">
-    <img src="/static/volcano_image2.jpg" width="80%" height="auto" alt="" />
-  </a>
-</div>
-<div>
   <div>
     <header>
       <h1> {{data.name[0]}} </h1>
@@ -15,7 +10,11 @@
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}">Observations of Deformation</a></li>
       <li class="selected">Latest Sentinel-1 Data</li>
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/volcanointerferograms">Interferograms</a></li>
-      <li><a href="/volcano-index">Export as CSV</a></li>
+      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/cemac_analysis_pages">Analysis</a></li>
+      <li><a href="">Export as CSV</a></li>
+      {% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
+			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
+			{% endif %}
     </ul>
     <div>
       <table>

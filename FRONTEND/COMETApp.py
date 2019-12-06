@@ -14,18 +14,25 @@ Attributes:
 '''
 from flask import Flask, render_template, flash, redirect, url_for, request
 from flask import g, session, abort
-from access import *
+from wtforms import Form, validators, StringField, SelectField, TextAreaField
+from wtforms import IntegerField, PasswordField, SelectMultipleField, widgets
 import sqlite3
 import pandas as pd
 import os
+from passlib.hash import sha256_crypt
+# Modules for this site
+from access import *
 from comet_db_functions import *
+from volcanoes import *
 
 
 app = Flask(__name__)
 # Connect to database
 DATABASE = 'volcano.db'
 assert os.path.exists(DATABASE), "Unable to locate database"
-conn = sqlite3.connect(DATABASE)
+app.secret_key = 'secret'
+conn = sqlite3.connect(DATABASE, check_same_thread=False)
+counter = 1
 
 
 @app.teardown_appcontext
@@ -39,6 +46,13 @@ def close_connection(exception):
 @app.route('/', methods=["GET"])
 def index():
     return render_template('home.html.j2')
+
+
+@app.route("/")
+def hitcounter():
+    global counter
+    counter += 1
+    return str(counter)
 
 
 # Volcano Database -----------------------------------------------------------
@@ -55,7 +69,7 @@ def volcanodb():
     return render_template('volcano-index.html.j2', data=df2, total=total)
 
 
-@app.route('/volcano-index/<string:region>', methods=["GET"])
+@app.route('/volcano-index/<string:region>', methods=["GET", "POST"])
 def volcanodb_region(region):
     # select country
     df = pd.read_sql_query("SELECT country FROM VolcDB1 WHERE AREA = '"
@@ -103,7 +117,7 @@ def volcanodb_all():
 
 
 @app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>',
-           methods=["GET"])
+           methods=["GET", "POST"])
 def volcano(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
@@ -123,7 +137,52 @@ def volcano_detail(country, region, volcano):
 def volcano_inter(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
-    return render_template('volcanointerferograms.html.j2', data=df, country=country, region=region)
+    return render_template('volcanointerferograms.html.j2', data=df,
+                           country=country, region=region)
+
+
+@app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/cemac_analysis_pages',
+           methods=["GET"])
+def volcano_analysis(country, region, volcano):
+    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                           "name = '" + str(volcano) + "';", conn)
+    return render_template('cemac_analysis_pages.html.j2', data=df,
+                           country=country, region=region)
+
+
+@app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/edit',
+           methods=["GET", "POST"])
+@is_logged_in
+def volcano_edit(country, region, volcano):
+    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                           "name = '" + str(volcano) + "';", conn)
+    form = eval("Volcano_edit_Form")(request.form)
+    form.geodetic_measurements.choices = yesno_list()
+    form.deformation_observation.choices = yesno_list()
+    if request.method == 'POST' and form.validate():
+        # Get each form field and update DB:
+        for field in form:
+            editrow('VolcDB1', df.ID[0], field.name, str(field.data), conn)
+        # Return with success:
+        flash('Edits successful', 'success')
+        return redirect(url_for('volcano', country=country, region=region,
+                                volcano=volcano))
+    # Set title:
+    title = "Edit Volcano"
+    # Pre-populate form fields with existing data:
+    noedit = ['ID', 'Area', 'country']
+    yesnocheck = ['geodetic_measurements', 'deformation_observation']
+    for field in form:
+        if not request.method == 'POST':
+            if field.name in noedit:
+                field.render_kw = {'readonly': 'readonly'}
+            if field.name in yesnocheck:
+                if exec("df." + field.name + "[0]" + "!= 'yes'"):
+                    print(field.name)
+                    exec("df." + field.name + "[0] = 'no'")
+            exec("field.data = df." + field.name + "[0]")
+    return render_template('edit.html.j2', data=df, title=title, form=form,
+                           country=country, region=region, volcano=volcano)
 
 
 @app.route('/volcano-index/volcanointerferograms', methods=["GET"])
@@ -137,60 +196,21 @@ def volcanodetails():
 
 
 # Access ----------------------------------------------------------------------
-@app.route('/access/<string:id>', methods=['GET', 'POST'])
-@is_logged_in_as_admin
-def access(id):
-    return render_template('access.html.j2')
-
 
 # Login
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    if 'logged_in' in session:
+        flash('Already logged in', 'warning')
+        return redirect(url_for('index'))
     if request.method == 'POST':
         # Get form fields
         username = request.form['username']
         password_candidate = request.form['password']
-        # Check trainee accounts first:
-        # user = Users.query.filter_by(username=username).first()
-        if user is not None:
-            password = user.password
-            # Compare passwords
-            if sha256_crypt.verify(password_candidate, password):
-                # Passed
-                session['logged_in'] = True
-                session['username'] = username
-                session['admin'] = 'False'
-                session['reader'] = 'False'
-                username = test
-                flash('You are now logged in', 'success')
-                if 'admin' in user_partners[:]:
-                    session['admin'] = 'True'
-                    flash('You have admin privileges', 'success')
-                return redirect(url_for('index'))
-            else:
-                flash('Incorrect password', 'danger')
-                return redirect(url_for('login'))
-        # Finally check admin account:
-        if username == 'admin':
-            password = app.config['ADMIN_PWD']
-            if password_candidate == password:
-                # Passed
-                session['logged_in'] = True
-                session['username'] = 'admin'
-                # session['usertype'] = 'admin'
-                flash('You are now logged in as admin', 'success')
-                return redirect(url_for('index'))
-            else:
-                flash('Incorrect password', 'danger')
-                return redirect(url_for('login'))
-        # Username not found:
-        flash('Username not found', 'danger')
-        return redirect(url_for('login'))
-    if 'logged_in' in session:
-        flash('Already logged in', 'warning')
+        user_login(username, password_candidate, conn)
         return redirect(url_for('index'))
-    # Not yet logged in:
-    return render_template('login.html.j2')
+    if request.method == 'GET':
+        return render_template('login.html.j2')
 
 
 # Logout
@@ -206,20 +226,131 @@ def logout():
 @app.route('/change-pwd', methods=["GET", "POST"])
 @is_logged_in
 def change_pwd():
+    username = session['username']
     form = ChangePwdForm(request.form)
     if request.method == 'POST' and form.validate():
-        user = Users.query.filter_by(username=session['username']).first()
-        password = user.password
+        user = pd.read_sql_query("SELECT * FROM users where username is '"
+                                 + username + "' ;", conn)
+        password = user.password[0]
         current = form.current.data
         if sha256_crypt.verify(current, password):
-            user.password = sha256_crypt.encrypt(str(form.new.data))
-            db.session.commit()
+            user.password = sha256_crypt.hash(str(form.new.data))
+            sql = "UPDATE users SET password = ? WHERE username is ? ;"
+            cur = conn.cursor()
+            cur.execute(sql, (user.password[0], str(username)))
+            conn.commit()
             flash('Password changed', 'success')
             return redirect(url_for('change_pwd'))
         else:
             flash('Current password incorrect', 'danger')
             return redirect(url_for('change_pwd'))
     return render_template('change-pwd.html.j2', form=form)
+
+
+# Access settings for a given user
+@app.route('/account/<string:username>', methods=['GET', 'POST'])
+@is_logged_in
+def account(username):
+    role = session['usertype']
+    # display role
+    # user name
+    # potential to add affiliations and email to give more bespoke access to
+    # who can edit which volcanoes. Eg. Prject or Institute
+    return render_template('account.html.j2', username=username, Role=role)
+
+# Additional logged in as Admin only pages ------------------------------
+
+
+@app.route('/admin/information', methods=['GET', 'POST'])
+@is_logged_in_as_admin
+def admininfo():
+    return render_template('admininfo.html.j2')
+
+
+@app.route('/admin/users', methods=['GET', 'POST'])
+@is_logged_in_as_admin
+def ViewOrAddUsers():
+    df = pd.read_sql_query("SELECT * FROM Users ;", conn)
+    df['password'] = '********'
+    # add roles
+    u2r = pd.read_sql_query("SELECT * FROM users_roles ;", conn)
+    roles = pd.read_sql_query("SELECT * FROM roles ;", conn)
+    u2r2 = pd.merge(u2r, roles, on='group_id')
+    del u2r2['group_id']
+    usersandroles = pd.merge(df, u2r2, on='id', how='outer')
+    usersandroles.rename(columns={'name': 'Role'}, inplace=True)
+    usersandroles = usersandroles.dropna(subset=['username'])
+    colnames = [s.replace("_", " ").title() for s in usersandroles.columns.values[1:]]
+    return render_template('view.html.j2', title='Users', colnames=colnames,
+                           tableClass='Users', editLink="edit",
+                           data=usersandroles)
+
+
+# Add entry
+@app.route('/add/Users', methods=["GET", "POST"])
+@is_logged_in_as_admin
+def add():
+    form = eval("Users_Form")(request.form)
+    if request.method == 'POST' and form.validate():
+        # Get form fields:
+        # Check
+        if len(str(form.password.data)) < 8:
+            return flash('password must be more than 8 characters',
+                         'danger')
+        form.password.data = sha256_crypt.hash(str(form.password.data))
+        formdata = []
+        for f, field in enumerate(form):
+            formdata.append(field.data)
+        InsertUser(formdata[0], formdata[1], conn)
+        flash('User Added', 'success')
+        return redirect(url_for('add', tableClass='Users'))
+    return render_template('add.html.j2', title='Add Users', tableClass='Users',
+                           form=form)
+
+
+# Delete entry
+@app.route('/delete/<string:tableClass>/<string:id>', methods=['POST'])
+@is_logged_in_as_admin
+def delete(tableClass, id):
+    # Retrieve DB entry:
+    user = pd.read_sql_query("SELECT * FROM Users where id = " + id + " ;",
+                             conn)
+    username = user.username
+    DeleteUser(username[0], conn)
+    flash('User Deleted', 'success')
+    return redirect(url_for('ViewOrAddUsers'))
+
+
+# Access settings for a given user
+@app.route('/access/<string:id>', methods=['GET', 'POST'])
+@is_logged_in_as_admin
+def access(id):
+    form = AccessForm(request.form)
+    form.Role.choices = table_list('roles', 'name', conn)[1:]
+    # Retrieve user DB entry:
+    user = pd.read_sql_query("SELECT * FROM Users where id = " + id + " ;",
+                             conn)
+    if user.empty:
+        abort(404)
+    # Retrieve all current role
+    u2r = pd.read_sql_query("SELECT * FROM users_roles WHERE id = " + id +
+                            ";", conn)
+    gid = u2r.group_id[0]
+    current_role = pd.read_sql_query("SELECT * FROM roles WHERE group_id = "
+                                     + str(gid) + ";", conn)
+    # If user submits edit entry form:
+    if request.method == 'POST' and form.validate():
+        new_role = form.Role.data
+        AssignRole(user.username[0], new_role, conn)
+        print('test')
+        # Return with success
+        flash('Edits successful', 'success')
+        return redirect(url_for('ViewOrAddUsers'))
+    # Pre-populate form fields with existing data:
+    form.username.render_kw = {'readonly': 'readonly'}
+    form.username.data = user.username[0]
+    form.Role.data = current_role.name[0]
+    return render_template('access.html.j2', form=form, id=id)
 
 
 # static information pages ---------------------------------------------------
@@ -246,6 +377,11 @@ def deformation():
 @app.route('/copyright', methods=["GET"])
 def copyright():
     return render_template('copyright.html.j2')
+
+
+@app.route('/privacy', methods=["GET"])
+def privacy():
+    return render_template('privacy.html.j2')
 
 
 @app.route('/measuring-deformation', methods=["GET"])
@@ -284,4 +420,5 @@ def unhandled_exception(e):
 
 
 if __name__ == '__main__':
-    app.run(host='129.11.85.32')
+    app.run(host='129.11.85.32', debug=True)
+    #app.run(debug=True)
