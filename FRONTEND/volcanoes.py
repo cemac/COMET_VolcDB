@@ -26,32 +26,32 @@ class Volcano_edit_Form(Form):
     """Editing an existing volcano
     """
     # Volcano no auto generated
-    volcano_number = StringField(u'Volcano number')
+    ID = StringField(u'Volcano number')
     # List existing regions and countries to avoid spelling mistakes etc
-    region = SelectField(u'*Region')
-    country = SelectField(u'*Country')
-    # yes or no questions
+    Area = StringField(u'Region')
+    country = StringField(u'Country')
+    # # yes or no questions
     geodetic_measurements = SelectField(u'*Geodetic measurements?',
                                         [validators.NoneOf(('blank'),
-                                         message='Please select')])
+                                        message='Please select')])
     deformation_observation = SelectField(u'*Deformation Observation',
                                           [validators.NoneOf(('blank'),
                                            message='Please select')])
-    measurement_method = StringField(u'Measurement method(s)',
-                                     [validators.Optional()],
-                                     render_kw={"placeholder": "e.g. InSAR"})
-    duration = StringField(u'Duration of observation',
-                           [validators.Optional()],
-                           render_kw={"placeholder": "e.g. 2005-2010"})
-    causes = StringField(u'Inferred cause of deformation',
-                         [validators.Optional()],
-                         render_kw={"placeholder": "e.g. magmatic"})
-    characteristics = StringField(u'Characteristics of deformation',
+    measurement_methods = StringField(u'Measurement method(s)',
+                                      [validators.Optional()],
+                                      render_kw={"placeholder": "e.g. InSAR"})
+    duration_of_observation = StringField(u'Duration of observation',
+                                          [validators.Optional()],
+                                          render_kw={"placeholder": "e.g. 2005-2010"})
+    inferred_causes = StringField(u'Inferred cause of deformation',
                                   [validators.Optional()],
-                                  render_kw={"placeholder": "description of deformation"})
+                                  render_kw={"placeholder": "e.g. magmatic"})
+    characteristics_of_deformation = StringField(u'Characteristics of deformation',
+                                                 [validators.Optional()],
+                                                 render_kw={"placeholder": "description of deformation"})
     references = StringField(u'References', [validators.Optional()],
                              render_kw={"placeholder": "list of references"})
-    latitdue = DecimalField(u'latitdue', places=3)
+    latitude = DecimalField(u'latitdue', places=3)
     longitude = DecimalField(u'longitude', places=3)
 
 
@@ -59,23 +59,23 @@ class Volacano_Form(Form):
     """Adding a new volcano
     """
     # Volcano no auto generated
-    volcano_number = StringField(u'Volcano number')
+    ID = StringField(u'Volcano number')
     # List existing regions and countries to avoid spelling mistakes etc
-    region = SelectField(u'*Region',
-                         [validators.NoneOf(('blank'),
-                          message='Please select')])
+    Area = SelectField(u'*Region',
+                       [validators.NoneOf(('blank'),
+                       message='Please select')])
     new_region = StringField(u'If other please specify', [validators.Optional()],
                              render_kw={"placeholder": "region not in dropdown"})
     country = SelectField(u'*Country',
                           [validators.NoneOf(('blank'),
                            message='Please select')])
     new_country = StringField(u'If other please specify', [validators.Optional()],
-                             render_kw={"placeholder": "country not in dropdown"})
+                              render_kw={"placeholder": "country not in dropdown"})
     # yes or no questions
     geodetic_measurements = SelectField(u'*Geodetic measurements?',
                                         [validators.NoneOf(('blank'),
                                          message='Please select')])
-    deformation_observation = SelectField(u'*Deformation Observation',
+    deformation_observation = SelectField(u'*Deformation Observation?',
                                           [validators.NoneOf(('blank'),
                                            message='Please select')])
     measurement_method = StringField(u'Measurement method(s)',
