@@ -33,3 +33,14 @@ def retrieveUsers(conn):
     users = cur.fetchall()
     con.close()
     return users
+
+
+def editrow(table, id, colname, value, conn):
+    cur = conn.cursor()
+    # Set up to autoincrement id number
+    # NB as a column is called key word references it must include '' round
+    # col name
+    sql = ("UPDATE " + str(table) + " SET '" + str(colname) + "' = ? WHERE"
+           + " ID is ? ;")
+    cur.execute(sql, (str(value), str(id)))
+    conn.commit()
