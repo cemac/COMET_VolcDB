@@ -112,23 +112,27 @@ span.fs_img {
 /* buttons : */
 button {
   width:            140px;
-  color:            #ffffff;
-  background-color: #1e90ff;
-  border:           1px solid #3333cc;
+  color:            #0066cc;
+  background-color: #99ccff;
+  border:           1px solid #99ccff;
   padding:          3px;
   margin:           2px 2px;
   cursor:           pointer;
 }
 /* hovering buttons: */
 button:focus, button:active, button:hover {
-  background-color: #2fa1ff;
+  background-color: #99ccff;
+  border:           1px solid #003399;
+  color:            #003399;
 }
 /* disabled buttons: */
 button:disabled, button[disabled] {
-  background-color: #ff3333;
-  border:           1px solid #cc3333;
+  background-color: #1e90ff;
+  border:           1px solid #3333cc;
+  color:            #ffffff;
   cursor:           auto;
 }
+
 /* remove outlines from active buttons: */
 button, button:focus, button:active {
   outline:          0;
