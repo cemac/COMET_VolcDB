@@ -140,21 +140,30 @@
            id='ts_plot'>
       </div>
     </div>
-    <!-- plot controls: -->
+        <!-- plot controls: -->
     <div class='plot_control_container'
          id='plot_control_container'>
       <div class='data_type_control'
            id='data_type_control'>
-<!--
-          <button id="data_type_button_filt"
-                  onclick="disp_plot('filt');">
-            filtered data
-          </button>
-          <button id="data_type_button_raw"
+          <button id="data_type_button_disp"
                   onclick="disp_plot('raw');">
-            raw data
+            displacement
           </button>
--->
+          <button id="data_type_button_coh"
+                  onclick="disp_plot('coh');">
+            coherence
+          </button>
+      </div>
+      <div class='click_mode_control'
+           id='click_modee_control'>
+          <button id="click_mode_button_select"
+                  onclick="set_click_mode('select');">
+            select
+          </button>
+          <button id="click_mode_button_ref"
+                  onclick="set_click_mode('ref');">
+            reference
+          </button>
       </div>
       <div class='data_range_control'
            id='data_range_control'>
@@ -163,8 +172,7 @@
            id='data_range_value'>
       </div>
     </div>
-
-    <hr>
+    
 
     <!-- probability images: -->
     <div class='prob_image_container'
