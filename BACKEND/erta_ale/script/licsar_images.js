@@ -3,14 +3,13 @@ function display_licsar_images(index) {
 
   /* image index: */
   if (index == undefined) {
-    var image_index = 0;
+    var image_index = licsar_images['count'] - 1;
   } else {
     var image_index = index;
   };
 
   /* get image elements: */
   var cc_img = document.getElementById('licsar_cc_img');
-//  var mag_img = document.getElementById('licsar_mag_img');
   var pha_img = document.getElementById('licsar_pha_img');
   var unw_img = document.getElementById('licsar_unw_img');
 
@@ -24,10 +23,9 @@ function display_licsar_images(index) {
   var image_label = licsar_images['dates'][image_index];
 
   /* set images: */
-  cc_img.src = url+image_path[0];
-//  mag_img.src = image_path[1];
-  pha_img.src = url+image_path[1];
-  unw_img.src = url+image_path[2];
+  cc_img.src = url + lics_img_prefix + image_path[0];
+  pha_img.src = url + lics_img_prefix + image_path[1];
+  unw_img.src = url + lics_img_prefix + image_path[2];
 
   /* set image label: */
   image_label_div.innerHTML = '<label>' +
