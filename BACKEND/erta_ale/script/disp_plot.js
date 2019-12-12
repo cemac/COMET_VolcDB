@@ -575,7 +575,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
           },
         },
         overlaying: 'x',
-        range: [x_dist, 0],
+        range: [-x_dist / 2, x_dist / 2],
         zeroline: false,
         ticks: 'outside',
         side: 'top'
@@ -589,7 +589,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
           },
         },
         overlaying: 'y',
-        range: [y_dist, 0],
+        range: [-y_dist / 2, y_dist / 2],
         zeroline: false,
         ticks: 'outside',
         side: 'right'
@@ -603,6 +603,13 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       showLink: false,
       linkText: '',
       displaylogo: false,
+      modeBarButtonsToRemove: [
+        'autoScale2d',
+        'lasso2d',
+        'hoverClosestCartesian',
+        'hoverCompareCartesian',
+        'toggleSpikelines'
+      ],
       responsive: true
     };
 
@@ -799,6 +806,12 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       showLink: false,
       linkText: '',
       displaylogo: false,
+      modeBarButtonsToRemove: [
+        'autoScale2d',
+        'lasso2d',
+        'toggleSpikelines',
+        'select2d'
+      ],
       responsive: true
     };
     /* create the plot: */
