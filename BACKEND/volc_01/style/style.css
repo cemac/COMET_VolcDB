@@ -1,0 +1,156 @@
+
+/* page defaults: */
+* {
+  color: #5c5b56;
+  font:  14px Verdana,Helvetica,Arial,sans-serif;
+}
+
+/* body: */
+body {
+  background-color: #ffffff;
+}
+
+/* plot container: */
+.disp_plot_container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+/* plots: */
+.disp_plot {
+  max-width: 650px;
+  max-height: 650px;
+}
+
+/* plot_control_container: */
+.plot_control_container {
+  width: 100%;
+}
+
+/* probability images container div: */
+.prob_image {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+/* probability images: */
+.prob_image_img {
+  max-width: 650px;
+}
+
+/* licsar images container div: */
+.licsar_image {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* licsar images: */
+.licsar_img {
+  max-width: 650px;
+}
+
+/* full screen images: */
+.fs_img {
+  cursor: pointer;
+}
+
+span.fs_img {
+  text-decoration: underline;
+  color: #00275e;
+}
+
+.fs_img_div {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #292929;
+}
+
+.fs_img_img {
+  position: absolute;
+  z-index: 99999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 80%;
+  height: 90%;
+  object-fit: contain;
+}
+
+.fs_img_close {
+  display: inline-block;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  color: white;
+  font-size: xx-large;
+  font-weight: bold;
+  padding: 5px;
+  width: calc(1em + 10px);
+  height: calc(1em + 10px);
+  text-align: center;
+}
+
+.fs_img_close:hover,
+.fs_img_close:focus {
+  color: #999999;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* buttons : */
+button {
+  width:            140px;
+  color:            #0066cc;
+  background-color: #99ccff;
+  border:           1px solid #99ccff;
+  padding:          3px;
+  margin:           2px 2px;
+  cursor:           pointer;
+}
+/* hovering buttons: */
+button:focus, button:active, button:hover {
+  background-color: #99ccff;
+  border:           1px solid #003399;
+  color:            #003399;
+}
+/* disabled buttons: */
+button:disabled, button[disabled] {
+  background-color: #1e90ff;
+  border:           1px solid #3333cc;
+  color:            #ffffff;
+  cursor:           auto;
+}
+
+/* remove outlines from active buttons: */
+button, button:focus, button:active {
+  outline:          0;
+}
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
+
+/* slider: */
+.noUi-target {
+  margin: 15px 0 25px 20px;
+  width: 50%;
+}
+.noUi-connect {
+  background: #1e90ff;
+}
+
+/* slider label: */
+.data_range_value {
+  margin: 8px;
+  font-size: 13px;
+}
