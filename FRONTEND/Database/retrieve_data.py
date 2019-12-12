@@ -56,3 +56,5 @@ locationdf.to_csv('volcano_location_data.csv', encoding='utf-8')
 raw_data['Area'] = locationdf.name
 # Save to csv
 raw_data.to_csv('VolcDB_df.csv')
+volcloc = raw_data[['name', 'latitude', 'longitude']]
+volcloc.to_csv('volc_lat_lons.csv', encoding='utf-8')
