@@ -1,55 +1,42 @@
 <html lang="en">
 {% extends 'layout.html.j2' %}
 {% block body %}
+
 <head>
-    <!-- disp data: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/disp_data/erta_ale.js')}}"
-            charset="utf-8">
-    </script>
-    <!-- prob data: -->
-    <script src="{{url_for('static',filename='COMET_JAVA/prob_data/erta_ale.js')}}"
-            charset="utf-8">
-    </script>
+  <!-- disp data: -->
+  <script src="{{ url_for('static',filename='COMET_JAVA/disp_data/')}}{{volcano}}.js" charset="utf-8">
+  </script>
+  <!-- prob data: -->
+  <script src="{{url_for('static',filename='COMET_JAVA/prob_data/')}}{{volcano}}.js" charset="utf-8">
+  </script>
 
-    <!-- licsar data: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/licsar_data/erta_ale.js')}}"
-            charset="utf-8">
-    </script>
-    <!-- plotly js: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/plotly.js')}}"
-            charset="utf-8">
-    </script>
-    <!-- no ui slider js: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/nouislider.min.js')}}"
-            charset="utf-8">
-    </script>
-    <!-- regression js: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/regression.min.js')}}"
-            charset="utf-8">
-    </script>
-    <!-- disp plotting: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/disp_plot.js')}}"
-            charset="utf-8"
-            defer>
-    </script>
-    <!-- prob images: -->
+  <!-- licsar data: -->
+  <script src="{{ url_for('static',filename='COMET_JAVA/licsar_data/')}}{{volcano}}.js" charset="utf-8">
+  </script>
+  <!-- plotly js: -->
+  <script src="{{ url_for('static',filename='COMET_JAVA/script/plotly.js')}}" charset="utf-8">
+  </script>
+  <!-- no ui slider js: -->
+  <script src="{{ url_for('static',filename='COMET_JAVA/script/nouislider.min.js')}}" charset="utf-8">
+  </script>
+  <!-- regression js: -->
+  <script src="{{ url_for('static',filename='COMET_JAVA/script/regression.min.js')}}" charset="utf-8">
+  </script>
+  <!-- disp plotting: -->
+  <script src="{{ url_for('static',filename='COMET_JAVA/script/disp_plot.js')}}" charset="utf-8" defer>
+  </script>
+  <!-- prob images: -->
 
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/prob_images.js')}}"
-            charset="utf-8"
-            defer>
-    </script>
-    <!-- licsar images: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/licsar_images.js')}}"
-            charset="utf-8"
-            defer>
-    </script>
-    <!-- full screen images: -->
-    <script src="{{ url_for('static',filename='COMET_JAVA/script/fs_images.js')}}"
-            charset="utf-8"
-            defer>
-    </script>
+  <script src="{{ url_for('static',filename='COMET_JAVA/script/prob_images.js')}}" charset="utf-8" defer>
+  </script>
+  <!-- licsar images: -->
+  <script src="{{ url_for('static',filename='COMET_JAVA/script/licsar_images.js')}}" charset="utf-8" defer>
+  </script>
+  <!-- full screen images: -->
+  <script src="{{ url_for('static',filename='COMET_JAVA/script/fs_images.js')}}" charset="utf-8" defer>
+  </script>
 
-  </head>
+</head>
 
 <div>
   <div>
@@ -72,8 +59,8 @@
       <li class="selected">Latest Sentinel-1 Data/Analysis</li>
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}">Export as CSV</a></li>
       {% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
-			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
-			{% endif %}
+      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
+      {% endif %}
     </ul>
     <div>
       <table>
@@ -125,121 +112,89 @@
         </tr>
       </table>
 
-    <script>
-    var url = "{{ url_for('static',filename='COMET_JAVA/')}}";
-    var volcano_name = 'erta_ale';
-    var prob_img_prefix = 'prob_images/' + volcano_name + '/';
-    var lics_img_prefix = 'licsar_images/' + volcano_name + '/';
-    </script>
-    <!-- plots: -->
-    <div class='disp_plot_container'
-         id='disp_plot_container'>
-      <div class='disp_plot'
-           id='heatmap_plot'>
+      <script>
+        var url = "{{ url_for('static',filename='COMET_JAVA/')}}";
+        var volcano_name = '{{volcano}}';
+        var prob_img_prefix = 'prob_images/' + volcano_name + '/';
+        var lics_img_prefix = 'licsar_images/' + volcano_name + '/';
+      </script>
+      <!-- plots: -->
+      <div class='disp_plot_container' id='disp_plot_container'>
+        <div class='disp_plot' id='heatmap_plot'>
+        </div>
+        <div class='disp_plot' id='ts_plot'>
+        </div>
       </div>
-      <div class='disp_plot'
-           id='ts_plot'>
-      </div>
-    </div>
-        <!-- plot controls: -->
-    <div class='plot_control_container'
-         id='plot_control_container'>
-      <div class='data_type_control'
-           id='data_type_control'>
-          <button id="data_type_button_disp"
-                  onclick="disp_plot('raw');">
+      <!-- plot controls: -->
+      <div class='plot_control_container' id='plot_control_container'>
+        <div class='data_type_control' id='data_type_control'>
+          <button id="data_type_button_disp" onclick="disp_plot('raw');">
             displacement
           </button>
-          <button id="data_type_button_coh"
-                  onclick="disp_plot('coh');">
+          <button id="data_type_button_coh" onclick="disp_plot('coh');">
             coherence
           </button>
-      </div>
-      <div class='click_mode_control'
-           id='click_modee_control'>
-          <button id="click_mode_button_select"
-                  onclick="set_click_mode('select');">
+        </div>
+        <div class='click_mode_control' id='click_modee_control'>
+          <button id="click_mode_button_select" onclick="set_click_mode('select');">
             select
           </button>
-          <button id="click_mode_button_ref"
-                  onclick="set_click_mode('ref');">
+          <button id="click_mode_button_ref" onclick="set_click_mode('ref');">
             reference
           </button>
+        </div>
+        <div class='data_range_control' id='data_range_control'>
+        </div>
+        <div class='data_range_value' id='data_range_value'>
+        </div>
       </div>
-      <div class='data_range_control'
-           id='data_range_control'>
-      </div>
-      <div class='data_range_value'
-           id='data_range_value'>
-      </div>
-    </div>
 
 
-    <!-- probability images: -->
-    <div class='prob_image_container'
-         id='prob_image_container'>
-      <div class='prob_image'
-           id='prob_image'>
-        <img class="prob_image_img fs_img"
-             id="prob_image_img"
-             src="">
-        </img>
+      <!-- probability images: -->
+      <div class='prob_image_container' id='prob_image_container'>
+        <div class='prob_image' id='prob_image'>
+          <img class="prob_image_img fs_img" id="prob_image_img" src="">
+          </img>
+        </div>
+        <div class='prob_image_control' id='prob_image_control'>
+        </div>
+        <div class='prob_image_value' id='prob_image_value'>
+        </div>
       </div>
-      <div class='prob_image_control'
-           id='prob_image_control'>
-      </div>
-      <div class='prob_image_value'
-           id='prob_image_value'>
-      </div>
-    </div>
 
-    <hr>
+      <hr>
 
-    <!-- licsar images: -->
-    <div class='licsar_image_container'
-         id='licsar_image_container'>
-      <div class='licsar_image'
-           id='licsar_image'>
-        <img class="licsar_img fs_img"
-             id="licsar_cc_img"
-             src="">
-        </img>
-<!--
+      <!-- licsar images: -->
+      <div class='licsar_image_container' id='licsar_image_container'>
+        <div class='licsar_image' id='licsar_image'>
+          <img class="licsar_img fs_img" id="licsar_cc_img" src="">
+          </img>
+          <!--
         <img class="licsar_img fs_img"
              id="licsar_mag_img"
              src="">
         </img>
 -->
-        <img class="licsar_img fs_img"
-             id="licsar_pha_img"
-             src="">
-        </img>
-        <img class="licsar_img fs_img"
-             id="licsar_unw_img"
-             src="">
-        </img>
+          <img class="licsar_img fs_img" id="licsar_pha_img" src="">
+          </img>
+          <img class="licsar_img fs_img" id="licsar_unw_img" src="">
+          </img>
+        </div>
+        <div class='licsar_image_control' id='licsar_image_control'>
+        </div>
+        <div class='licsar_image_value' id='licsar_image_value'>
+        </div>
       </div>
-      <div class='licsar_image_control'
-           id='licsar_image_control'>
-      </div>
-      <div class='licsar_image_value'
-           id='licsar_image_value'>
-      </div>
-    </div>
 
     </div><!-- .entry-content -->
   </div><!-- #content -->
 </div><!-- #primary -->
 </div><!-- #main .wrapper -->
 <!-- full screen images: -->
-    <div id="fs_img_div"
-         class="fs_img_div">
-      <span id="fs_img_close"
-            class="fs_img_close">&times;</span>
-      <img id="fs_img_img"
-           class="fs_img_img"
-           src="">
-    </div>
+<div id="fs_img_div" class="fs_img_div">
+  <span id="fs_img_close" class="fs_img_close">&times;</span>
+  <img id="fs_img_img" class="fs_img_img" src="">
+</div>
 {% endblock %}
 
 </html>
