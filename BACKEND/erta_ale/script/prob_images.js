@@ -3,7 +3,7 @@ function display_prob_image(index) {
 
   /* image index: */
   if (index == undefined) {
-    var image_index = 0;
+    var image_index = probability_images['count'] - 1;
   } else {
     var image_index = index;
   };
@@ -15,7 +15,7 @@ function display_prob_image(index) {
   var image_label_div = document.getElementById('prob_image_value');
 
   /* get image path: */
-  var image_path = probability_images['images'][image_index];
+  var image_path =  prob_img_prefix + probability_images['images'][image_index];
 
   /* get image label: */
   var image_label = probability_images['dates'][image_index] +
@@ -24,7 +24,7 @@ function display_prob_image(index) {
                     ')';
 
   /* set image: */
-  image_img.src = url+image_path;
+  image_img.src = url + image_path;
 
   /* set image label: */
   image_label_div.innerHTML = '<label>' +
