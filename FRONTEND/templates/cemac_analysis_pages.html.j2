@@ -69,9 +69,7 @@
     </header><!-- .entry-header -->
     <ul class="tabrow">
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}">Observations of Deformation</a></li>
-      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/volcanodetail">Latest Sentinel-1 Data</a></li>
-      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/volcanointerferograms">Interferograms</a></li>
-      <li class="selected">Analysis</li>
+      <li class="selected">Latest Sentinel-1 Data/Analysis</li>
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}">Export as CSV</a></li>
       {% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
@@ -129,6 +127,9 @@
 
     <script>
     var url = "{{ url_for('static',filename='COMET_JAVA/')}}";
+    var volcano_name = 'erta_ale';
+    var prob_img_prefix = 'prob_images/' + volcano_name + '/';
+    var lics_img_prefix = 'licsar_images/' + volcano_name + '/';
     </script>
     <!-- plots: -->
     <div class='disp_plot_container'
@@ -172,7 +173,7 @@
            id='data_range_value'>
       </div>
     </div>
-    
+
 
     <!-- probability images: -->
     <div class='prob_image_container'
