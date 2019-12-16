@@ -13,12 +13,13 @@ Attributes:
    https://github.com/cemac/COMET_VolcDB
 '''
 from flask import Flask, render_template, flash, redirect, url_for, request
-from flask import g, session, abort
+from flask import g, session, abort, make_response
 from wtforms import Form, validators, StringField, SelectField, TextAreaField
 from wtforms import IntegerField, PasswordField, SelectMultipleField, widgets
 import sqlite3
 import pandas as pd
 import os
+import io
 from passlib.hash import sha256_crypt
 # Modules for this site
 from access import *
@@ -150,6 +151,19 @@ def volcano_analysis(country, region, volcano):
     return render_template('cemac_analysis_pages.html.j2', data=df,
                            country=country, region=region, volcano=volcano_name)
 
+
+@app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/download',
+           methods=["GET", "POST"])
+def export_as_csv(region, country, volcano):
+    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                           "name = '" + str(volcano) + "';", conn)
+    out = io.StringIO()
+    volcano_name = str(volcano).replace(" ", "_").lower()
+    df.to_csv(out)
+    output = make_response(out.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=volcano.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
 
 @app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/edit',
            methods=["GET", "POST"])
