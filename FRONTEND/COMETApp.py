@@ -165,6 +165,7 @@ def export_as_csv(region, country, volcano):
     output.headers["Content-type"] = "text/csv"
     return output
 
+
 @app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/edit',
            methods=["GET", "POST"])
 @is_logged_in
@@ -193,11 +194,39 @@ def volcano_edit(country, region, volcano):
                 field.render_kw = {'readonly': 'readonly'}
             if field.name in yesnocheck:
                 if exec("df." + field.name + "[0]" + "!= 'yes'"):
-                    print(field.name)
                     exec("df." + field.name + "[0] = 'no'")
             exec("field.data = df." + field.name + "[0]")
     return render_template('edit.html.j2', data=df, title=title, form=form,
                            country=country, region=region, volcano=volcano)
+
+
+@app.route('/volcano-index/add',
+           methods=["GET", "POST"])
+@is_logged_in
+def volcano_add():
+    # get headers
+    df = pd.read_sql_query("select * from  'VolcDB1' limit 0  ", conn)
+    form = eval("Volcano_Form")(request.form)
+    form.geodetic_measurements.choices = yesno_list()
+    form.deformation_observation.choices = yesno_list()
+    form.Area.choices = option_list('Area', conn)
+    form.country.choices = option_list('country', conn)
+    if request.method == 'POST' and form.validate():
+        # Get each form field and update DB:
+        for field in form:
+            editrow('VolcDB1', df.ID[0], field.name, str(field.data), conn)
+        # Return with success:
+        flash('Edits successful', 'success')
+        return redirect(url_for('volcano', country=country, region=region,
+                                volcano=volcano))
+    # Set title:
+    title = "Edit Volcano"
+    noedit = ['ID']
+    for field in form:
+        if not request.method == 'POST':
+            if field.name in noedit:
+                field.render_kw = {'readonly': 'readonly'}
+    return render_template('add.html.j2', data=df, title=title, form=form)
 
 
 @app.route('/volcano-index/volcanointerferograms', methods=["GET"])
