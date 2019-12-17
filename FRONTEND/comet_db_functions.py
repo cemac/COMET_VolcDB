@@ -44,3 +44,19 @@ def editrow(table, id, colname, value, conn):
            + " ID is ? ;")
     cur.execute(sql, (str(value), str(id)))
     conn.commit()
+
+
+def addrow(table, df, conn):
+    """
+    table(str)
+    datafram(df) = headers match column name
+    """
+    cur = conn.cursor()
+    colname = df.columns.values
+    column = ','.join(colname)
+    # Set up to autoincrement id number
+    # NB as a column is called key word references it must include '' round
+    # col name
+    sql = ("insert into " + str(table) + ' (' + str(colname) + "') VALUES (?);")
+    cur.execute(sql, str(df.values)))
+    conn.commit()
