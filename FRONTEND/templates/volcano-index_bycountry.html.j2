@@ -2,13 +2,10 @@
 {% extends 'layout.html.j2' %}
 {% block body %}
 <div  style="text-align:center; width:100%; display:block; margin:auto;">
-<a href="/">
-<img src="/static/volcano_image2.jpg" width="80%" height="auto" alt="" />
-</a>
 <h1> Volcano Index ({{region}})</h1>
 </div><!-- #branding -->
 <div >
-  <p> There are currently {{total}} volcanos recorded in {{region}}
+  <p> There are currently <b>{{total}}</b> volcanos recorded in {{region}}
   <p> Select Browse to select Country Browse {{region}} to view all volcanos in region or Search All to view all volcanoes and use search function to search <p>
   <ul class="tabrow">
      <li><a href="/volcano-index">Browse</a></li>
