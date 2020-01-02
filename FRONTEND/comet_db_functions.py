@@ -58,5 +58,5 @@ def addrow(table, df, conn):
     # NB as a column is called key word references it must include '' round
     # col name
     sql = ("insert into " + str(table) + ' (' + str(colname) + "') VALUES (?);")
-    cur.execute(sql, str(df.values)))
+    cur.execute(sql, str(df.values))
     conn.commit()
