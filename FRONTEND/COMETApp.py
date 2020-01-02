@@ -25,7 +25,7 @@ from passlib.hash import sha256_crypt
 from access import *
 from comet_db_functions import *
 from volcanoes import *
-
+from interactivemap import *
 
 app = Flask(__name__)
 # Connect to database
@@ -46,6 +46,7 @@ def close_connection(exception):
 # Index
 @app.route('/', methods=["GET"])
 def index():
+    volcmap()
     return render_template('home.html.j2')
 
 
