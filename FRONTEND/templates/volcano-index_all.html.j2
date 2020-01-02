@@ -1,11 +1,6 @@
 <html lang="en">
 {% extends 'layout.html.j2' %}
 {% block body %}
-<div style="text-align:center; width:100%; display:block; margin:auto;">
-<a href="/">
-<img src="/static/volcano_image2.jpg" width="80%" height="auto" alt="" />
-</a>
-</div>
 <div>
 {% if tableclass == 'all' %}
 <h1> Volcano Index </h1>
@@ -17,14 +12,14 @@
 </div><!-- #branding -->
 <div class="container" style="width:95%; margin:auto;">
   {% if tableclass == 'all' %}
-  <p> There are currently {{total}} volcanos recorded
+  <p> There are currently <b>{{total}}</b> volcanos recorded
   <p> Select <b>Browse</b> to select Region or <b>Search All</b> to view all volcanoes and use search function or browse<p>
   <ul class="tabrow">
       <li><a href="/volcano-index">Browse</a></li>
       <li class="selected"><a href="/volcano-index/Search-All">Search All</a></li>
   </ul>
   {% elif tableclass == 'region' %}
-  <p> There are currently {{total}} volcanos recorded in {{region}}
+  <p> There are currently <b>{{total}}</b> volcanos recorded in {{region}}
   <ul class="tabrow">
       <li><a href="/volcano-index">Browse Regions</a></li>
       <li class="selected">Browse {{region}}</li>
@@ -32,7 +27,7 @@
       <li><a href="/volcano-index/Search-All">Search All</a></li>
   </ul>
   {% elif tableclass == 'country' %}
-  <p> There are currently {{total}} volcanos recorded in {{country}}
+  <p> There are currently <b>{{total}}</b> volcanos recorded in {{country}}
   <ul class="tabrow">
       <li><a href="/volcano-index">Browse Regions</a></li>
       <li class="selected">Browse {{country}}</li>
