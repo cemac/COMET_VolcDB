@@ -20,7 +20,7 @@ L.Canvas.prototype._updateTriangle = function (layer) {
     // rotation angle from deg to rad
     r   = layer._rotation !== 0 ? layer._rotation * (Math.PI * 2) / 360 : 0
 
-    this._drawnLayers[layer._leaflet_id] = layer
+    this._layers[layer._leaflet_id] = layer
 
     // rotate canvas on triangle center before drawing
     ctx.save()
