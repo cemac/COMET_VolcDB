@@ -34,19 +34,18 @@
   map.addLayer(layer);
 
   // It even opens up a popup when you click it!
-  L.marker([40.712, -74.006]).addTo(map)
-    .bindPopup("<strong>Henry Street School</strong>");
+  L.circleMarker([40.712, -74.006],{
+    radius: 4,
+    stroke: false,
+    fill: true,
+    fillColor: "red",
+  }).addTo(map)
+    .bindPopup("volcano name");
   var popup = L.popup();
 
-  function onMapClick(e) {
-    popup
-      .setLatLng(e.latlng)
-      .setContent("You clicked the map at " + e.latlng.toString())
-      .openOn(map);
-  }
 
-  map.on('click', onMapClick);
-   map.setZoom(2)
+
+  map.setZoom(2)
   map.setView([0, 0])
 </script>
 {% endblock %}
