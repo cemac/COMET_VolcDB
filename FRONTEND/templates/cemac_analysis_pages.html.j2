@@ -52,65 +52,18 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/rich_style.css')}}">
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <header>
-      <h1>{{data.name[0]}}</h1>
+      <h1>{{data.name[0]}} {{data.ID[0]}} </h1>
     </header><!-- .entry-header -->
     <ul class="tabrow">
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}">Observations of Deformation</a></li>
-      <li class="selected">Latest Sentinel-1 Data/Analysis</li>
+      <li class="selected">Explore Sentinel-1 imagery</li>
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/download">Export as CSV</a></li>
       {% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
       {% endif %}
     </ul>
     <div>
-      <table>
-        <tr>
-          <th>Volcano number:</th>
-          <td>{{data.ID[0]}}</td>
-        </tr>
-        <tr>
-          <th>Region:</th>
-          <td>{{data.Area[0]}}</td>
-        </tr>
-        <tr>
-          <th>Country:</th>
-          <td>{{data.country[0]}}</td>
-        </tr>
-        <tr>
-          <th>Geodetic measurements?</th>
-          <td>{{data.geodetic_measurements[0]}}</td>
-        </tr>
-        <tr>
-          <th>Deformation observation?</th>
-          <td>{{data.deformation_observation[0]}}</td>
-        </tr>
-        <tr>
-          <th>Measurement method(s):</th>
-          <td>{{data.measurement_methods[0]}}</td>
-        </tr>
-        <tr>
-          <th>Duration of observation:</th>
-          <td>{{data.duration_of_observation[0]}}</td>
-        </tr>
-        <tr>
-          <th>Inferred cause of deformation:</th>
-          <td>{{data.inferred_causes[0]}}</td>
-        </tr>
-        <tr>
-          <th>Characteristics of deformation:</th>
-          <td>
-            {{data.characteristics_of_deformation[0]}}
-          </td>
-        </tr>
-        <tr>
-          <th>References:</th>
-          <td>{{data.references[0][1:-1]}}</td>
-        </tr>
-        <tr>
-          <th>Location:</th>
-          <td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
-        </tr>
-      </table>
+<div style="text-align:center; width:100%; display:block; margin:auto;">
 
       <script>
         var url = "{{ url_for('static',filename='COMET_JAVA/')}}";
@@ -120,13 +73,13 @@
       </script>
       <!-- plots: -->
       <div class='disp_plot_container' id='disp_plot_container'>
-        <div class='disp_plot' id='heatmap_plot'>
+        <div class='disp_plot' id='heatmap_plot' style="text-align:center; width:40%; display:block; margin:auto;">
         </div>
-        <div class='disp_plot' id='ts_plot'>
+        <div class='disp_plot' id='ts_plot' style="text-align:center; width:40%; display:block; margin:auto;">
         </div>
       </div>
       <!-- plot controls: -->
-      <div class='plot_control_container' id='plot_control_container'>
+      <div class='plot_control_container' id='plot_control_container' style="text-align:center; width:100%; display:block; margin:auto;">
         <div class='data_type_control' id='data_type_control'>
           <button id="data_type_button_disp" onclick="disp_plot('raw');">
             displacement
@@ -143,7 +96,8 @@
             reference
           </button>
         </div>
-        <div class='data_range_control' id='data_range_control'>
+        <p>
+        <div class='data_range_control' id='data_range_control' style="text-align:center; width:100%; margin:auto;">
         </div>
         <div class='data_range_value' id='data_range_value'>
         </div>
@@ -151,12 +105,13 @@
 
 
       <!-- probability images: -->
-      <div class='prob_image_container' id='prob_image_container'>
+      <div class='prob_image_container' id='prob_image_container' style="text-align:center; width:40%; margin:auto;">
         <div class='prob_image' id='prob_image'>
           <img class="prob_image_img fs_img" id="prob_image_img" src="">
           </img>
         </div>
-        <div class='prob_image_control' id='prob_image_control'>
+        <p>
+        <div class='prob_image_control' id='prob_image_control' style="text-align:center; width:100%; margin:auto;">
         </div>
         <div class='prob_image_value' id='prob_image_value'>
         </div>
@@ -180,7 +135,8 @@
           <img class="licsar_img fs_img" id="licsar_unw_img" src="">
           </img>
         </div>
-        <div class='licsar_image_control' id='licsar_image_control'>
+        <p>
+        <div class='licsar_image_control' id='licsar_image_control' style="text-align:center; width:80%; margin:auto;">
         </div>
         <div class='licsar_image_value' id='licsar_image_value'>
         </div>
@@ -194,6 +150,7 @@
 <div id="fs_img_div" class="fs_img_div">
   <span id="fs_img_close" class="fs_img_close">&times;</span>
   <img id="fs_img_img" class="fs_img_img" src="">
+</div>
 </div>
 {% endblock %}
 
