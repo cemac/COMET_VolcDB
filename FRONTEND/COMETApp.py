@@ -51,8 +51,7 @@ def close_connection(exception):
 def index():
     df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
     df = df[df.Area != '0']
-    volcinfo = df[['name', 'latitude', 'longitude']]
-    total = len(df.index)
+    volcinfo = df[['name', 'latitude', 'longitude', 'Area', 'country']]
     return render_template('home.html.j2', volcinfo=json.dumps(volcinfo.values.tolist()))
 
 
