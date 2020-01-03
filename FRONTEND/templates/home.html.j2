@@ -1,18 +1,55 @@
 <html lang="en-UK">
 {% extends 'layout.html.j2' %}
+
+
 {% block body %}
-<div style="text-align:center; width:100%; display:block; margin:auto;">
-<a href="/">
-<img src="/static/volcano_image1.jpg" width="100%" height="auto" alt="" />
-</a>
-</div><!-- #branding -->
+
+
 <div style="text-align: justify">
-<p>
-This website provides information about observations of surface deformation at volcanoes around the world, guided by the <a href="http://volcano.si.edu/">Global Volcanism Program</a> volcano list.</p>
-<p> All the volcanoes in our <a href="/volcano-index/" target="_blank" rel="noopener">index</a> have a database entry detailing any recorded past deformation events, measured using satellite radar (InSAR) or ground-based methods (e.g., GPS, levelling or tilt).  Using data from a new satellite, ESA's <a href="https://earth.esa.int/web/guest/missions/esa-operational-eo-missions/sentinel-1">Sentinel-1</a>, each volcano entry will also be updated with the most recent processed InSAR image.</p>
+  <p>
+    This website provides information about observations of surface deformation at volcanoes around the world, guided by the <a href="http://volcano.si.edu/">Global Volcanism Program</a> volcano list.</p>
+  <p> All the volcanoes in our <a href="/volcano-index/" target="_blank" rel="noopener">index</a> have a database entry detailing any recorded past deformation events, measured using satellite radar (InSAR) or ground-based methods (e.g., GPS,
+    levelling or tilt). Using data from a new satellite, ESA's <a href="https://earth.esa.int/web/guest/missions/esa-operational-eo-missions/sentinel-1">Sentinel-1</a>, each volcano entry will also be updated with the most recent processed InSAR
+    image.</p>
 </div><!-- .entry-content -->
-<div style="text-align:center; width:100%; display:block; margin:auto;">
-<a href="/volcano-index"><img src="/static/Defdatabase.jpg" alt="Volcano Deformation Database" style="float: center; width: 40%;"></a>
-</div>
+<div id="map" style="height: 512px; width:1050px; display:block; margin:auto;"></div>
+<script type="text/javascript">
+  // The first parameter are the coordinates of the center of the map
+  // The second parameter is the zoom level
+  var map = L.map('map', {
+    minZoom: 0,
+    zoomSnap: 0.25,
+  });
+
+
+  // {s}, {z}, {x} and {y} are placeholders for map tiles
+  // {x} and {y} are the x/y of where you are on the map
+  // {z} is the zoom level
+  // {s} is the subdomain of cartodb
+  var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+  });
+
+  // Now add the layer onto the map
+  map.addLayer(layer);
+
+  var planes = {{volcinfo}};
+
+
+    for (var i = 0; i < planes.length; i++) {
+      marker = new L.circleMarker([planes[i][1],planes[i][2]],{
+        radius: 4,
+        stroke: false,
+        fill: true,
+        fillColor: "red",
+      })
+        .bindPopup(planes[i][0])
+        .addTo(map);
+    }
+
+  map.setZoom(2)
+  map.setView([0, 0])
+</script>
 {% endblock %}
+
 </html>

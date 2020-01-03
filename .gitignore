@@ -1,2 +1,3 @@
 *.pyc
 FRONTEND/comet/
+FRONTEND/static/js/o3.js

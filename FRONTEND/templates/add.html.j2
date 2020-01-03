@@ -19,6 +19,16 @@
     (under 'Account' on the menu bar).
   </p>
   {% endif %}
+  {% if tableClass == 'Volcano' %}
+  <form action="/volcano-index/add" method="POST">
+{% for field in form %}
+  <div class="form-group">
+    {{render_field(field, class_="form-control")}}
+  </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+  {% endif %}
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <hr>
