@@ -19,7 +19,7 @@
   var map = L.map('map', {
     minZoom: 0,
     zoomSnap: 0.25,
-});
+  });
 
 
   // {s}, {z}, {x} and {y} are placeholders for map tiles
@@ -33,17 +33,19 @@
   // Now add the layer onto the map
   map.addLayer(layer);
 
-  // It even opens up a popup when you click it!
-  L.circleMarker([40.712, -74.006],{
-    radius: 4,
-    stroke: false,
-    fill: true,
-    fillColor: "red",
-  }).addTo(map)
-    .bindPopup("volcano name");
-  var popup = L.popup();
+  var planes = {{volcinfo}};
 
 
+    for (var i = 0; i < planes.length; i++) {
+      marker = new L.circleMarker([planes[i][1],planes[i][2]],{
+        radius: 4,
+        stroke: false,
+        fill: true,
+        fillColor: "red",
+      })
+        .bindPopup(planes[i][0])
+        .addTo(map);
+    }
 
   map.setZoom(2)
   map.setView([0, 0])
