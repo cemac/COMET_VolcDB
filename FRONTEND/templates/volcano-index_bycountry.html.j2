@@ -26,7 +26,7 @@
       <tr>
         <td>{{row['country']}}</td>
         <td> {{row['freq']}} </td>
-        <td> <a href='/volcano-index/{{region}}/{{row['country']}}'> Browse Country </td>
+        <td> <a href='/volcano-index/{{region}}/{{row['country']|replace('/','_')}}'> Browse Country </td>
       </tr>
       {% endfor %}
     </tbody>
