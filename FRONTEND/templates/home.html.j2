@@ -11,6 +11,8 @@
   <p> All the volcanoes in our <a href="/volcano-index/" target="_blank" rel="noopener">index</a> have a database entry detailing any recorded past deformation events, measured using satellite radar (InSAR) or ground-based methods (e.g., GPS,
     levelling or tilt). Using data from a new satellite, ESA's <a href="https://earth.esa.int/web/guest/missions/esa-operational-eo-missions/sentinel-1">Sentinel-1</a>, each volcano entry will also be updated with the most recent processed InSAR
     image.</p>
+
+  <p><center> Interactivemap of volcanoes on this database </center></p>
 </div><!-- .entry-content -->
 <div id="map" style="height: 512px; width:1050px; display:block; margin:auto;"></div>
 <script type="text/javascript">
@@ -20,8 +22,6 @@
     minZoom: 0,
     zoomSnap: 0.25,
   });
-
-
   // {s}, {z}, {x} and {y} are placeholders for map tiles
   // {x} and {y} are the x/y of where you are on the map
   // {z} is the zoom level
@@ -34,8 +34,6 @@
   map.addLayer(layer);
 
   var planes = {{volcinfo}};
-
-
     for (var i = 0; i < planes.length; i++) {
       marker = new L.circleMarker([planes[i][1],planes[i][2]],{
         radius: 4,
@@ -43,7 +41,7 @@
         fill: true,
         fillColor: "red",
       })
-        .bindPopup(planes[i][0])
+        .bindPopup('<a href="/volcano-index/'+planes[i][3]+'/'+planes[i][4]+'/'+ planes[i][0]+'">'+planes[i][0]+'</a>')
         .addTo(map);
     }
 
