@@ -58,6 +58,8 @@ class Volcano_Form(Form):
     """
     # Volcano no auto generated
     # List existing regions and countries to avoid spelling mistakes etc
+    name = StringField(u'Volcano Name', [validators.Optional()],
+                                     render_kw={"placeholder": "Volcano name"})
     Area = SelectField(u'*Region',
                        [validators.NoneOf(('blank'),
                         message='Please select')])
