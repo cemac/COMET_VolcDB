@@ -18,8 +18,10 @@ from wtforms import Form, validators, StringField, SelectField, TextAreaField
 from wtforms import IntegerField, PasswordField, SelectMultipleField, widgets
 import sqlite3
 import pandas as pd
+import numpy as np
 import os
 import io
+import json
 from passlib.hash import sha256_crypt
 # Modules for this site
 from access import *
@@ -44,10 +46,14 @@ def close_connection(exception):
 
 
 # Index
+
 @app.route('/', methods=["GET"])
 def index():
-    volcmap()
-    return render_template('home.html.j2')
+    df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
+    df = df[df.Area != '0']
+    volcinfo = df[['name', 'latitude', 'longitude']]
+    total = len(df.index)
+    return render_template('home.html.j2', volcinfo=json.dumps(volcinfo.values.tolist()))
 
 
 @app.route("/")
