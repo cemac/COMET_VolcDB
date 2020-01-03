@@ -102,13 +102,14 @@ def volcanodb_region_all(region):
                            region=region, tableclass='region')
 
 
-@app.route('/volcano-index/<string:region>/<string:country>', methods=["GET"])
+@app.route('/volcano-index/<string:region>/<path:country>', methods=["GET"])
 def volcanodb_country(country, region):
     # select country
     df = pd.read_sql_query("SELECT AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1 WHERE " +
-                           "country = '" + str(country) + "';", conn)
+                           "country = '" + str(country.replace('_', '/')) + "';", conn)
     total = len(df.index)
+    country.replace('/', '_')
     return render_template('volcano-index_all.html.j2', data=df, total=total,
                            country=country, region=region, tableclass='country')
 
@@ -123,7 +124,7 @@ def volcanodb_all():
                            tableclass='all')
 
 
-@app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>',
+@app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>',
            methods=["GET", "POST"])
 def volcano(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
@@ -132,7 +133,7 @@ def volcano(country, region, volcano):
 
 
 
-@app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/cemac_analysis_pages',
+@app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/cemac_analysis_pages',
            methods=["GET"])
 def volcano_analysis(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
@@ -142,7 +143,7 @@ def volcano_analysis(country, region, volcano):
                            country=country, region=region, volcano=volcano_name)
 
 
-@app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/download',
+@app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/download',
            methods=["GET", "POST"])
 def export_as_csv(region, country, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
@@ -156,7 +157,7 @@ def export_as_csv(region, country, volcano):
     return output
 
 
-@app.route('/volcano-index/<string:region>/<string:country>/<string:volcano>/edit',
+@app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/edit',
            methods=["GET", "POST"])
 @is_logged_in
 def volcano_edit(country, region, volcano):
