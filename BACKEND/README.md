@@ -1,3 +1,0 @@
-# BACKEND
-
-*Developed by Richard*
