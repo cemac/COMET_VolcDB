@@ -8,8 +8,8 @@
   <p> There are currently {{total}} volcanos recorded
   <p> Select Browse to select Region to Browse or Search All to view all volcanoes and use search function <p>
   <ul class="tabrow">
-      <li class="selected"><a href="/volcano-index/">Browse</a></li>
       <li><a href="/volcano-index/Search-All">Search All</a></li>
+      <li class="selected"><a href="/volcano-index/">Browse</a></li>
       {% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
       <li><a href="/volcano-index/add">Add new Volcano</a></li>
       {% endif %}
