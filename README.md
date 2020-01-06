@@ -13,6 +13,8 @@
 
 Repository for the [COMET](comet.nerc.ac.uk) Volcano Database. [<insert future site address here>]()
 
+![map](docs/github_images/map.png)
+
 <hr>
 
 ## Requirements
