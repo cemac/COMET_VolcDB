@@ -47,21 +47,26 @@ function display_prob_image(index) {
                          '/' + links_date + '.geo.cc.tif">tif</a></td>' +
                          '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
-                         '/' + links_date + '.geo.cc.png">png</a></td></tr>' +
+                         '/' + links_date + '.geo.cc.png">' + links_date +
+                         '.geo.cc.png</a></td></tr>' +
                          '<tr><td>LOS change</td>' +
                          '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
-                         '/' + links_date + '.geo.diff_pha.tif">tif</a></td>' +
+                         '/' + links_date + '.geo.diff_pha.tif">' + links_date +
+                         '.geo.diff_pha.tif</a></td>' +
                          '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
-                         '/' + links_date + '.geo.diff.png">png</a></td></tr>' +
+                         '/' + links_date + '.geo.diff.png">' + links_date +
+                         '.geo.diff.png</a></td></tr>' +
                          '<tr><td>Unwrapped LOS change</td>' +
                          '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
-                         '/' + links_date + '.geo.unw.tif">tif</a></td>' + 
+                         '/' + links_date + '.geo.unw.tif">' + links_date +
+                         '.geo.unw.tif</a></td>' + 
                          '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
-                         '/' + links_date + '.geo.unw.png">png</a></td></tr>';
+                         '/' + links_date + '.geo.unw.png">' + links_date +
+                         '.geo.unw.png</a></td></tr>';
 
   /* function to set pips where probability is visible: */
   function filterPips(value, type) {

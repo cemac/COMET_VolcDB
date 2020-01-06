@@ -48,6 +48,28 @@ body {
   margin: 30px;
 }
 
+/* download links table: */
+.s1_data_links {
+  border: 0px;
+  padding: 10px;
+  text-align: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: calc(100% - 25px);
+}
+
+.s1_data_links td {
+  padding: 5px;
+}
+
+.s1_data_links tr:nth-child(odd) {
+  background-color: #eeeeee;
+}
+
+.s1_data_links tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
 /* full screen images: */
 .fs_img {
   cursor: pointer;
