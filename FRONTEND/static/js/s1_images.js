@@ -41,24 +41,27 @@ function display_prob_image(index) {
   var links_date = probability_images['dates'][image_index]
   links_date = links_date.replace(' - ', '_');
   links_date = links_date.replace(/-/g, '');
-  links_span.innerHTML = '&nbsp;coherence <a href="' + data_href_prefix + '/' + volcano_track +
+  links_span.innerHTML = '<tr><td>Coherence</td>' +
+                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +
-                         '/' + links_date + '.geo.cc.tif">tif</a>' +
-                         ' <a href="' + data_href_prefix + '/' + volcano_track +
+                         '/' + links_date + '.geo.cc.tif">tif</a></td>' +
+                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
-                         '/' + links_date + '.geo.cc.png">png</a><br>' +
-                         '&nbsp;LOS change <a href="' + data_href_prefix + '/' + volcano_track +
+                         '/' + links_date + '.geo.cc.png">png</a></td></tr>' +
+                         '<tr><td>LOS change</td>' +
+                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
-                         '/' + links_date + '.geo.diff_pha.tif">tif</a>' +
-                         ' <a href="' + data_href_prefix + '/' + volcano_track +
+                         '/' + links_date + '.geo.diff_pha.tif">tif</a></td>' +
+                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
-                         '/' + links_date + '.geo.diff.png">png</a><br>' +
-                         '&nbsp;unwrapped LOS change <a href="' + data_href_prefix + '/' + volcano_track +
+                         '/' + links_date + '.geo.diff.png">png</a></td></tr>' +
+                         '<tr><td>Unwrapped LOS change</td>' +
+                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
-                         '/' + links_date + '.geo.unw.tif">tif</a>' + 
-                         ' <a href="' + data_href_prefix + '/' + volcano_track +
+                         '/' + links_date + '.geo.unw.tif">tif</a></td>' + 
+                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
-                         '/' + links_date + '.geo.unw.png">png</a>';
+                         '/' + links_date + '.geo.unw.png">png</a></td></tr>';
 
   /* function to set pips where probability is visible: */
   function filterPips(value, type) {
