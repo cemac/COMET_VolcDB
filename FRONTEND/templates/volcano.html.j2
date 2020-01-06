@@ -17,10 +17,18 @@
 		</header><!-- .entry-header -->
 		<ul class="tabrow">
 			<li class="selected">Observations of Deformation</li>
+			{% if data.name[0] == 'Unnamed' %}
+			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/cemac_analysis_pages">Explore Sentinel-1 imagery</a></li>
+			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/download">Export as CSV</a></li>
+			{% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
+			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/edit">Update Observations</a></li>
+			{% endif %}
+			{% else %}
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/cemac_analysis_pages">Explore Sentinel-1 imagery</a></li>
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/download">Export as CSV</a></li>
 			{% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
+			{% endif %}
 			{% endif %}
 		</ul>
 		<div>

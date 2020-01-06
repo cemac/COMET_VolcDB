@@ -51,6 +51,7 @@ def close_connection(exception):
 def index():
     df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
     df = df[df.Area != '0']
+    df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
     volcinfo = df[['name', 'latitude', 'longitude', 'Area', 'country']]
     return render_template('home.html.j2', volcinfo=json.dumps(volcinfo.values.tolist()))
 
@@ -94,7 +95,7 @@ def volcanodb_region(region):
 @app.route('/volcano-index/<string:region>-all', methods=["GET"])
 def volcanodb_region_all(region):
     # select country
-    df = pd.read_sql_query("SELECT AREA, country, name, geodetic_measurement" +
+    df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1 WHERE " +
                            "AREA = '" + str(region) + "';", conn)
     total = len(df.index)
@@ -105,7 +106,7 @@ def volcanodb_region_all(region):
 @app.route('/volcano-index/<string:region>/<path:country>', methods=["GET"])
 def volcanodb_country(country, region):
     # select country
-    df = pd.read_sql_query("SELECT AREA, country, name, geodetic_measurement" +
+    df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1 WHERE " +
                            "country = '" + str(country.replace('_', '/')) + "';", conn)
     total = len(df.index)
@@ -116,7 +117,7 @@ def volcanodb_country(country, region):
 
 @app.route('/volcano-index/Search-All', methods=["GET"])
 def volcanodb_all():
-    df = pd.read_sql_query("SELECT AREA, country, name, geodetic_measurement" +
+    df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1;", conn)
     df = df[df.Area != '0']
     total = len(df.index)
@@ -129,7 +130,10 @@ def volcanodb_all():
 def volcano(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
-    return render_template('volcano.html.j2', data=df, country=country, region=region)
+    if len(df.index) == 0:
+        df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                               "ID = '" + str(volcano) + "';", conn)
+    return render_template('volcano.html.j2', data=df, country=country, region=region, id=id)
 
 
 
@@ -138,6 +142,9 @@ def volcano(country, region, volcano):
 def volcano_analysis(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
+    if len(df.index) == 0:
+        df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                               "ID = '" + str(volcano) + "';", conn)
     volcano_name = str(volcano).replace(" ", "_").lower()
     return render_template('cemac_analysis_pages.html.j2', data=df,
                            country=country, region=region, volcano=volcano_name)
@@ -148,6 +155,9 @@ def volcano_analysis(country, region, volcano):
 def export_as_csv(region, country, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
+    if len(df.index) == 0:
+        df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                               "ID = '" + str(volcano) + "';", conn)
     out = io.StringIO()
     volcano_name = str(volcano).replace(" ", "_").lower()
     df.to_csv(out)
@@ -163,6 +173,9 @@ def export_as_csv(region, country, volcano):
 def volcano_edit(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
+    if len(df.index) == 0:
+        df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                               "ID = '" + str(volcano) + "';", conn)
     form = eval("Volcano_edit_Form")(request.form)
     form.geodetic_measurements.choices = yesno_list()
     form.deformation_observation.choices = yesno_list()

@@ -55,7 +55,11 @@
         <td> {{row['Area']}} </td>
         <td>{{row['geodetic_measurements']}}</td>
         <td> {{row['deformation_observation']}} </td>
+        {% if row['name'] == 'Unnamed' %}
+          <td> <a href='/volcano-index/{{row['Area']}}/{{row['country']}}/{{row['ID']}}'> View(unnamed) </td>
+        {% else %}
         <td> <a href='/volcano-index/{{row['Area']}}/{{row['country']}}/{{row['name']}}'> View </td>
+        {% endif %}
       </tr>
       {% endfor %}
     </tbody>
