@@ -468,5 +468,4 @@ def unhandled_exception(e):
 
 
 if __name__ == '__main__':
-    app.run(host='129.11.85.32', debug=True, port=5900)
-    #app.run(debug=True)
+    app.run(debug=True)
