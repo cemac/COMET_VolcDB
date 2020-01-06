@@ -54,76 +54,107 @@
    <div>
 <div style="text-align:center; width:100%; display:block; margin:auto;">
 
-      <script>
-        var volcano_name = 'erta_ale';
-        var volcano_region = 'africa';
-        //var volcano_frame = '079D_07694_131313';
-        var volcano_frame = '014A_07688_131313';
-        //var volcano_track = '79';
-        var volcano_track = '14';
-        var prob_img_prefix = 'prob_images/' + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
-        var lics_img_prefix = 'licsar_images/' + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
-        var data_href_prefix = 'http://gws-access.ceda.ac.uk/public/nceo_geohazards/LiCSAR_products';
-      </script>
-      <!-- plots: -->
-      <div class='disp_plot_container' id='disp_plot_container'>
-        <div class='disp_plot' id='heatmap_plot' style="text-align:center; width:40%; display:block; margin:auto;">
-        </div>
-        <div class='disp_plot' id='ts_plot' style="text-align:center; width:40%; display:block; margin:auto;">
-        </div>
+    <script>
+      var volcano_name = 'erta_ale';
+      var volcano_region = 'africa';
+      //var volcano_frame = '079D_07694_131313';
+      var volcano_frame = '014A_07688_131313';
+      //var volcano_track = '79';
+      var volcano_track = '14';
+      var prob_img_prefix = 'prob_images/' + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
+      var lics_img_prefix = 'licsar_images/' + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
+      var data_href_prefix = 'http://gws-access.ceda.ac.uk/public/nceo_geohazards/LiCSAR_products';
+    </script>
+
+    <!-- plots: -->
+    <div class="disp_plot_container"
+         id="disp_plot_container">
+      <div class="disp_plot"
+           id="heatmap_plot">
       </div>
-      <!-- plot controls: -->
-      <div class='plot_control_container' id='plot_control_container' style="text-align:center; width:100%; display:block; margin:auto;">
-        <div class='data_type_control' id='data_type_control'>
-          <button id="data_type_button_disp" onclick="disp_plot('raw');">
+      <div class="disp_plot"
+           id="ts_plot">
+      </div>
+    </div>
+    <!-- plot controls: -->
+    <div class="plot_control_container"
+         id="plot_control_container">
+      <div class="data_type_control"
+           id="data_type_control">
+          <button id="data_type_button_disp"
+                  onclick="disp_plot('raw');">
             displacement
           </button>
-          <button id="data_type_button_coh" onclick="disp_plot('coh');">
+          <button id="data_type_button_coh"
+                  onclick="disp_plot('coh');">
             coherence
           </button>
-        </div>
-        <div class='click_mode_control' id='click_modee_control'>
-          <button id="click_mode_button_select" onclick="set_click_mode('select');">
-            select
+      </div>
+      <div class="click_mode_control"
+           id="click_mode_control">
+          <button id="click_mode_button_select"
+                  onclick="set_click_mode('select');">
+            point to plot
           </button>
-          <button id="click_mode_button_ref" onclick="set_click_mode('ref');">
-            reference
+          <button id="click_mode_button_ref"
+                  onclick="set_click_mode('ref');">
+            reference pixel or area
           </button>
-        </div>
-        <p>
-        <div class='data_range_control' id='data_range_control' style="text-align:center; width:100%; margin:auto;">
-        </div>
-        <div class='data_range_value' id='data_range_value'>
-        </div>
+      </div>
+      <div class="data_range_control"
+           id="data_range_control">
+      </div>
+      <div class="data_range_value"
+           id="data_range_value">
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- s1 images: -->
+    <div class="s1_image_container"
+         id="s1_image_container">
+      <div class="s1_imgs"
+           id="s1_imgs">
+        <img class="s1_img fs_img"
+             id="s1_cc_img"
+             src="">
+        <img class="s1_img fs_img"
+             id="s1_pha_img"
+             src="">
+        <img class="s1_img fs_img"
+             id="s1_unw_img"
+             src="">
+        <img class="s1_img fs_img"
+             id="s1_prob_img"
+             src="">
+      </div>
+      <div class="s1_image_control"
+           id="s1_image_control">
+      </div>
+      <div class="s1_image_value"
+           id="s1_image_value">
+      </div>
+      <div class="s1_data"
+           id="s1_data">
+        <h3>data downloads</h3>
+        <span class="s1_data_links"
+              id="s1_data_links">
+        </span>
       </div>
 
-      <!-- probability images: -->
-      <div class='prob_image_container' id='prob_image_container' style="text-align:center; width:40%; margin:auto;">
-        <div class='prob_image' id='prob_image'>
-          <img class="prob_image_img fs_img" id="prob_image_img" src="">
-        </div>
-        <p>
-        <div class='prob_image_control' id='prob_image_control' style="text-align:center; width:100%; margin:auto;">
-        </div>
-        <div class='prob_image_value' id='prob_image_value'>
-        </div>
-      </div>
+    </div>
 
-      <hr>
+    <!-- full screen images: -->
+    <div id="fs_img_div"
+         class="fs_img_div">
+      <span id="fs_img_close"
+            class="fs_img_close">&times;</span>
+      <img id="fs_img_img"
+           class="fs_img_img"
+           src="">
+    </div>
 
-      <!-- licsar images: -->
-      <div class='licsar_image_container' id='licsar_image_container'>
-        <div class='licsar_image' id='licsar_image'>
-          <img class="licsar_img fs_img" id="licsar_cc_img" src="">
-          <img class="licsar_img fs_img" id="licsar_pha_img" src="">
-          <img class="licsar_img fs_img" id="licsar_unw_img" src="">
-        </div>
-        <p>
-        <div class='licsar_image_control' id='licsar_image_control' style="text-align:center; width:80%; margin:auto;">
-        </div>
-        <div class='licsar_image_value' id='licsar_image_value'>
-        </div>
-      </div>
 
     </div><!-- .entry-content -->
   </div><!-- #content -->
