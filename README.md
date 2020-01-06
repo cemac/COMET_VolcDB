@@ -6,6 +6,7 @@
 
  <h1> <center> COMET VOLC DB </center> </h1>
 
+:warning: *This repository is in **alpha phase** documentation is incomplete* :warning:
 
 Repository for the [COMET](comet.nerc.ac.uk) Volcano Database. [<insert future site address here>]()
 
@@ -13,18 +14,27 @@ Repository for the [COMET](comet.nerc.ac.uk) Volcano Database. [<insert future s
 
 ## Requirements
 
-* anaconda (reccomended) *see Requirements.txt*
+* anaconda (reccomended) *see environment.yml*
 * SQLlite
+
+requirements.txt is provided for full package version information and installing via other means.
 
 ## Installation (UNIX)
 
-*Comming Soon*
+Install via git and anaconda
+
+```bash
+git clone https://github.com/cemac/COMET_VolcDB.git
+cd COMET_VolcDB
+conda env create -f environment.yml
+conda activate cometapp
+```
 
 <hr>
 
 ## Usage
 
-*Coming soon Recommended to write wiki for Developers and site Users
+*Coming soon Recommended to write wiki for Developers and site Users*
 
 * [Developers]()
 * [Users]()
@@ -33,10 +43,14 @@ Repository for the [COMET](comet.nerc.ac.uk) Volcano Database. [<insert future s
 
 ## Backups
 
+*comming soon*
 
 <hr>
 
 <!--- release table --->
+
+*comming soon*
+
 |  Version            | Release          |
 |---------------------|------------------|
 |  Beta               | [![GitHubrelease](https://img.shields.io/badge/release-v.0.0-red.svg)](https://github.com/cemac/COMET_VolcDB/releases/tag/0.0)|
@@ -45,7 +59,7 @@ Repository for the [COMET](comet.nerc.ac.uk) Volcano Database. [<insert future s
 
 ## License Information
 
-This code is currently licensed under the [MIT license](https://choosealicense.com/licenses/mit/).
+*comming soon*
 
 ## Acknowledgements
 
