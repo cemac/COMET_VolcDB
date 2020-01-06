@@ -44,7 +44,8 @@ function display_prob_image(index) {
   links_span.innerHTML = '<tr><td>Coherence</td>' +
                          '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +
-                         '/' + links_date + '.geo.cc.tif">tif</a></td>' +
+                         '/' + links_date + '.geo.cc.tif">' + links_date +
+                         '.geo.cc.tif</a></td>' +
                          '<td><a href="' + data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
                          '/' + links_date + '.geo.cc.png">' + links_date +
