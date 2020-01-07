@@ -1,15 +1,6 @@
 {% extends 'layout.html.j2' %}
 {% block body %}
 
-  <!-- disp data: -->
-  <script src="/data/disp_data/africa/{{volcano}}_014A_07688_131313.js" charset="utf-8">
-  </script>
-  <!-- prob data: -->
-  <script src="/data/prob_data/africa/{{volcano}}_014A_07688_131313.js" charset="utf-8">
-  </script>
-  <!-- licsar data: -->
-  <script src="/data/licsar_data/africa/{{volcano}}_014A_07688_131313.js" charset="utf-8">
-  </script>
   <!-- plotly js: -->
   <script src="{{ url_for('static',filename='js/plotly.js')}}" charset="utf-8">
   </script>
@@ -17,13 +8,16 @@
   <script src="{{ url_for('static',filename='js/nouislider.min.js')}}" charset="utf-8">
   </script>
   <!-- disp plotting: -->
-  <script src="{{ url_for('static',filename='js/disp_plot.js')}}" charset="utf-8" defer>
+  <script src="{{ url_for('static',filename='js/disp_plot.js')}}" charset="utf-8">
   </script>
   <!-- prob images: -->
-  <script src="{{ url_for('static',filename='js/s1_images.js')}}" charset="utf-8" defer>
+  <script src="{{ url_for('static',filename='js/s1_images.js')}}" charset="utf-8">
   </script>
   <!-- full screen images: -->
-  <script src="{{ url_for('static',filename='js/fs_images.js')}}" charset="utf-8" defer>
+  <script src="{{ url_for('static',filename='js/fs_images.js')}}" charset="utf-8">
+  </script>
+  <!-- page set up / functions: -->
+  <script src="{{ url_for('static',filename='js/s1_analysis.js')}}" charset="utf-8">
   </script>
 
 <div>
@@ -54,16 +48,27 @@
 <div style="width:100%; display:block; margin:auto;">
 
     <script>
-      var volcano_name = 'erta_ale';
+      var volcano_name = {{ volcano }};
       var volcano_region = 'africa';
-      //var volcano_frame = '079D_07694_131313';
-      var volcano_frame = '014A_07688_131313';
-      //var volcano_track = '79';
-      var volcano_track = '14';
-      var prob_img_prefix = '/images/prob_images/' + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
-      var lics_img_prefix = '/images/licsar_images/' + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
+      var volcano_frames = [{"id": "014A_07688_131313", "track": "14"},{"id": "079D_07694_131313", "track": "79"}];
+
+      var js_data_prefix = '/data/';
+      var disp_data_prefix = 'disp_data';
+      var licsar_data_prefix = 'licsar_data';
+      var prob_data_prefix = '/images/prob_data';
+      var prob_imgs_prefix = '/images/prob_images/';
+      var licsar_imgs_prefix = '/images/licsar_images/';
       var data_href_prefix = 'http://gws-access.ceda.ac.uk/public/nceo_geohazards/LiCSAR_products';
     </script>
+
+    <!-- frame selection: -->
+    <div class="s1_frame"
+         id="s1_frame">
+      <h2>Sentinel 1 Frame</h2>
+      <div class="frame_id_control"
+           id="frame_id_control">
+      </div>
+    </div>
 
     <!-- plots: -->
     <div class="disp_plot_container"

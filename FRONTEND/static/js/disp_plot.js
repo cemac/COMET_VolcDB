@@ -1,23 +1,28 @@
 
-var plot_vars = {
-  data_type: null,
-  start_index: null,
-  end_index: null,
-  z_min_raw: null,
-  z_max_raw: null,
-  z_min_coh: 0,
-  z_max_coh: 1.0,
-  ts_y: null,
-  ts_x: null,
-  ref_y: null,
-  ref_x: null,
-  ref_data: null,
-  heatmap_data: {},
-  hover_data: {},
-  ts_data: {},
-  heatmap_plot: null,
-  ts_plot: null,
-  click_mode: 'select'
+var plot_vars = {};
+
+function reset_plot_vars() {
+  plot_vars = {
+    data_type: null,
+    start_index: null,
+    end_index: null,
+    z_min_raw: null,
+    z_max_raw: null,
+    z_min_coh: 0,
+    z_max_coh: 1.0,
+    ts_y: null,
+    ts_x: null,
+    ref_y: null,
+    ref_x: null,
+    ref_data: null,
+    heatmap_data: {},
+    hover_data: {},
+    ts_data: {},
+    heatmap_plot: null,
+    ts_plot: null,
+    click_mode: 'select',
+    update_page: false
+  };
 };
 
 /* function to set the click mode to either 'select' (selected pixel) or
@@ -268,23 +273,43 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     plot_vars['ts_data'][range_key] = {};
   };
 
-  /* if slider does not exist: */
-  if (slider_div.noUiSlider == undefined) {
+  /* if slider does not exist or page is being updated: */
+  if ((slider_div.noUiSlider == undefined) ||
+      (page_update == true)) {
+
     /* range min and max values: */
     var slider_range_min = 0;
     var slider_range_max = date_data.length -1;
-    /* create slider: */
-    noUiSlider.create(slider_div, {
-      start: [start_index, end_index],
-      range: {
-        min: slider_range_min,
-        max: slider_range_max
-      },
-      connect: true,
-      step: 1,
-      margin: 1,
-      tooltips: false
-    });
+
+    /* if slider does not exist: */
+    if (slider_div.noUiSlider == undefined) {
+      /* create slider: */
+      noUiSlider.create(slider_div, {
+        start: [start_index, end_index],
+        range: {
+          min: slider_range_min,
+          max: slider_range_max
+        },
+        connect: true,
+        step: 1,
+        margin: 1,
+        tooltips: false
+      });
+    } else {
+      /* update slider: */
+      slider_div.noUiSlider.updateOptions({
+        start: [start_index, end_index],
+        range: {
+          min: slider_range_min,
+          max: slider_range_max
+        },
+        connect: true,
+        step: 1,
+        margin: 1,
+        tooltips: false
+      });
+    };
+
     /* start and end dates: */
     var slider_start_date = date_data[start_index];
     var slider_end_date = date_data[end_index];
@@ -853,10 +878,3 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   };
 /* end disp_plot function: */
 };
-
-/* on page load: */
-window.addEventListener('load', function() {
-  /* plot!: */
-  disp_plot();
-});
-

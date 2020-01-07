@@ -2,8 +2,9 @@
 function display_prob_image(index) {
 
   /* image index: */
-  if (index == undefined) {
-    var image_index = probability_images['count'] - 1;
+  if ((index == undefined) ||
+      (index == null)) {
+    var image_index = prob_data['count'] - 1;
   } else {
     var image_index = index;
   };
@@ -15,12 +16,12 @@ function display_prob_image(index) {
   var image_label_div = document.getElementById('s1_image_value');
 
   /* get image path: */
-  var image_path = prob_img_prefix + probability_images['images'][image_index];
+  var image_path = prob_img_prefix + prob_data['images'][image_index];
 
   /* get image label: */
-  var image_label = probability_images['dates'][image_index] + 
+  var image_label = prob_data['dates'][image_index] + 
                     ' (' +
-                    probability_images['means'][image_index] + 
+                    prob_data['means'][image_index] + 
                     ')';
 
   /* set image: */
@@ -38,7 +39,7 @@ function display_prob_image(index) {
   var links_span = document.getElementById('s1_data_links');
 
   /* set data links: */
-  var links_date = probability_images['dates'][image_index]
+  var links_date = prob_data['dates'][image_index]
   links_date = links_date.replace(' - ', '_');
   links_date = links_date.replace(/-/g, '');
   links_span.innerHTML = '<tr><td>Coherence</td>' +
@@ -71,33 +72,54 @@ function display_prob_image(index) {
 
   /* function to set pips where probability is visible: */
   function filterPips(value, type) {
-    if (probability_images['means'][value] > 0.05 &&
-        probability_images['means'][value] < 0.7) {
+    if (prob_data['means'][value] > 0.05 &&
+        prob_data['means'][value] < 0.7) {
       return 0;
     } else {
       return -1;
     };
   };
 
-  /* if slider does not exist: */
-  if (slider_div.noUiSlider == undefined) {
+  /* if slider does not exist or page is being updated: */
+  if ((slider_div.noUiSlider == undefined) ||
+      (page_update == true)) {
     /* range min and max values: */
     var slider_range_min = 0;
-    var slider_range_max = probability_images['count'] - 1;
-    /* create slider: */
-    noUiSlider.create(slider_div, {
-      start: image_index,
-      range: {
-        min: slider_range_min,
-        max: slider_range_max
-      },
-      pips: {
-        mode: 'steps',
-        filter: filterPips
-      },
-      step: 1,
-      tooltips: false
-    });
+    var slider_range_max = prob_data['count'] - 1;
+
+    /* if slider does not exist: */
+    if (slider_div.noUiSlider == undefined) {
+      /* create slider: */
+      noUiSlider.create(slider_div, {
+        start: image_index,
+        range: {
+          min: slider_range_min,
+          max: slider_range_max
+        },
+        pips: {
+          mode: 'steps',
+          filter: filterPips
+        },
+        step: 1,
+        tooltips: false
+      });
+    } else {
+      /* update slider: */
+      slider_div.noUiSlider.updateOptions({
+        start: image_index,
+        range: {
+          min: slider_range_min,
+          max: slider_range_max
+        },
+        pips: {
+          mode: 'steps',
+          filter: filterPips
+        },
+        step: 1,
+        tooltips: false
+      });
+    };
+
     /* add change listerner: */
     slider_div.noUiSlider.on('change', function() {
       /* get slider value: */
@@ -105,9 +127,9 @@ function display_prob_image(index) {
       /* index to int: */
       var slider_index = parseInt(slider_value);
       /* label: */
-      var slider_date = probability_images['dates'][slider_index];
+      var slider_date = prob_data['dates'][slider_index];
       /* mean: */
-      var slider_mean = probability_images['means'][slider_index];
+      var slider_mean = prob_data['means'][slider_index];
       /* update image: */
       display_prob_image(slider_index);
       display_licsar_images(slider_index);
@@ -119,9 +141,9 @@ function display_prob_image(index) {
       /* index to int: */
       var slider_index = parseInt(slider_value);
       /* label: */
-      var slider_date = probability_images['dates'][slider_index];
+      var slider_date = prob_data['dates'][slider_index];
       /* mean: */
-      var slider_mean = probability_images['means'][slider_index];
+      var slider_mean = prob_data['means'][slider_index];
       /* set labels: */
       image_label_div.innerHTML = '<label>' +
         slider_date + 
@@ -137,7 +159,7 @@ function display_licsar_images(index) {
 
   /* image index: */
   if (index == undefined) {
-    var image_index = licsar_images['count'] - 1;
+    var image_index = licsar_data['count'] - 1;
   } else {
     var image_index = index;
   };
@@ -148,22 +170,14 @@ function display_licsar_images(index) {
   var unw_img = document.getElementById('s1_unw_img');
 
   /* get image paths: */
-  var image_path = licsar_images['images'][image_index];
+  var image_path = licsar_data['images'][image_index];
 
   /* get image label: */
-  var image_label = licsar_images['dates'][image_index];
+  var image_label = licsar_data['dates'][image_index];
 
   /* set images: */
-  cc_img.src =  lics_img_prefix + image_path[0];
-  pha_img.src = lics_img_prefix + image_path[1];
-  unw_img.src = lics_img_prefix + image_path[2];
+  cc_img.src =  licsar_img_prefix + image_path[0];
+  pha_img.src = licsar_img_prefix + image_path[1];
+  unw_img.src = licsar_img_prefix + image_path[2];
 
 };
-
-/* on page load: */
-window.addEventListener('load', function() {
-  /* display images!: */
-  display_prob_image();
-  display_licsar_images();
-});
-
