@@ -1,13 +1,20 @@
 
+var s1_indexes = {};
+
 function display_prob_image(index) {
 
   /* image index: */
   if ((index == undefined) ||
       (index == null)) {
-    var image_index = prob_data['count'] - 1;
+    if (s1_indexes[volcano_frame] == undefined) {
+      var image_index = prob_data['count'] - 1;
+    } else {
+      var image_index = s1_indexes[volcano_frame];
+    };
   } else {
     var image_index = index;
   };
+  s1_indexes[volcano_frame] = image_index;
 
   /* get image element: */
   var image_img = document.getElementById('s1_prob_img');

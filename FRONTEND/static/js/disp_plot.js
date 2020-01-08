@@ -1,27 +1,29 @@
 
 var plot_vars = {};
 
-function reset_plot_vars() {
-  plot_vars = {
-    data_type: null,
-    start_index: null,
-    end_index: null,
-    z_min_raw: null,
-    z_max_raw: null,
-    z_min_coh: 0,
-    z_max_coh: 1.0,
-    ts_y: null,
-    ts_x: null,
-    ref_y: null,
-    ref_x: null,
-    ref_data: null,
-    heatmap_data: {},
-    hover_data: {},
-    ts_data: {},
-    heatmap_plot: null,
-    ts_plot: null,
-    click_mode: 'select',
-    update_page: false
+function set_plot_vars(frame_id) {
+  if (plot_vars[frame_id] == undefined) {
+    plot_vars[frame_id] = {
+      data_type: null,
+      start_index: null,
+      end_index: null,
+      z_min_raw: null,
+      z_max_raw: null,
+      z_min_coh: 0,
+      z_max_coh: 1.0,
+      ts_y: null,
+      ts_x: null,
+      ref_y: null,
+      ref_x: null,
+      ref_data: null,
+      heatmap_data: {},
+      hover_data: {},
+      ts_data: {},
+      heatmap_plot: null,
+      ts_plot: null,
+      click_mode: 'select',
+      update_page: false
+    };
   };
 };
 
@@ -37,14 +39,14 @@ function set_click_mode(click_mode) {
   if (click_mode == 'ref') {
     button_ref.setAttribute('disabled', true);
     button_select.removeAttribute('disabled');
-    plot_vars['click_mode'] = 'ref';
+    plot_vars[volcano_frame]['click_mode'] = 'ref';
     if (heatmap_div.data != undefined) {
       Plotly.update(heatmap_div, {}, {dragmode: 'select'});
     };
   } else {
     button_select.setAttribute('disabled', true);
     button_ref.removeAttribute('disabled');
-    plot_vars['click_mode'] = 'select';
+    plot_vars[volcano_frame]['click_mode'] = 'select';
     if (heatmap_div.data != undefined) {
       Plotly.update(heatmap_div, {}, {dragmode: 'zoom'});
     };
@@ -55,20 +57,20 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
 
   /* make sure ref_data is set: */
   if (ref_data == undefined) {
-    if (plot_vars['ref_data'] != undefined) {
-      ref_data = plot_vars['ref_data'];
+    if (plot_vars[volcano_frame]['ref_data'] != undefined) {
+      ref_data = plot_vars[volcano_frame]['ref_data'];
     } else {
       ref_data = null;
     };
   };
 
   /* if nothing has changed ... : */
-  if (data_type && data_type == plot_vars['data_type'] &&
-      start_index && start_index == plot_vars['start_index'] &&
-      end_index && end_index == plot_vars['end_index'] &&
-      ts_y && ts_y == plot_vars['ts_y'] &&
-      ts_x && ts_x == plot_vars['ts_x'] &&
-      ref_data && ref_data == plot_vars['ref_data']) {
+  if (data_type && data_type == plot_vars[volcano_frame]['data_type'] &&
+      start_index && start_index == plot_vars[volcano_frame]['start_index'] &&
+      end_index && end_index == plot_vars[volcano_frame]['end_index'] &&
+      ts_y && ts_y == plot_vars[volcano_frame]['ts_y'] &&
+      ts_x && ts_x == plot_vars[volcano_frame]['ts_x'] &&
+      ref_data && ref_data == plot_vars[volcano_frame]['ref_data']) {
     /* return: */
     return;
   };
@@ -163,13 +165,13 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   var update_ref_data = false;
 
   /* get data type value. set default value if not set: */
-  var data_type = data_type || plot_vars['data_type'] || 'raw';
+  var data_type = data_type || plot_vars[volcano_frame]['data_type'] || 'raw';
   /* data type to be plotted. check if it has changed: */
-  if (data_type != plot_vars['data_type']) {
+  if (data_type != plot_vars[volcano_frame]['data_type']) {
     update_heatmap_data_type = true;
   };
   /* store the value: */
-  plot_vars['data_type'] = data_type;
+  plot_vars[volcano_frame]['data_type'] = data_type;
 
   /* disable button for active data type: */
   if (data_type == 'raw') {
@@ -181,7 +183,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   };
 
   /* set click mode: */
-  set_click_mode(plot_vars['click_mode']);
+  set_click_mode(plot_vars[volcano_frame]['click_mode']);
 
   /* reference area data: */
   if (ref_data == null) {
@@ -190,20 +192,20 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     ref_data = ref_data;
   };
   /* if reference area has updated: */
-  if (ref_data != plot_vars['ref_data']) {
+  if (ref_data != plot_vars[volcano_frame]['ref_data']) {
     /* heatmap and time series data is updating: */
     update_ref_data = true;
     update_ts_data = true;
   };
   /* store the value: */
-  plot_vars['ref_data'] = ref_data;
+  plot_vars[volcano_frame]['ref_data'] = ref_data;
 
   /* init vars for time series indexes: */
   var ts_y, ts_x;
   /* if time series indexes not specified: */
   if (ts_y == null || ts_x == null) {
-    /* if time series indexes are also not in plot_vars: */
-    if (plot_vars['ts_y'] == null || plot_vars['ts_x'] == null) {
+    /* if time series indexes are also not in plot_vars[volcano_frame]: */
+    if (plot_vars[volcano_frame]['ts_y'] == null || plot_vars[volcano_frame]['ts_x'] == null) {
       /* pick a pixel: */
       var ts_indexes = get_ts_indexes()
       ts_y = ts_indexes[0];
@@ -211,19 +213,19 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       /* time series data is updating: */
       update_ts_data = true;
     } else {
-      /* use values from plot_vars: */
-      ts_y = plot_vars['ts_y'];
-      ts_x = plot_vars['ts_x'];
+      /* use values from plot_vars[volcano_frame]: */
+      ts_y = plot_vars[volcano_frame]['ts_y'];
+      ts_x = plot_vars[volcano_frame]['ts_x'];
     };
   };
 
   /* check if time series indexes have changed: */
-  if (ts_y != plot_vars['ts_y'] || ts_x != plot_vars['ts_x']) {
+  if (ts_y != plot_vars[volcano_frame]['ts_y'] || ts_x != plot_vars[volcano_frame]['ts_x']) {
     /* time series data is updating: */
     update_ts_data = true;
     /* store new values: */
-    plot_vars['ts_y'] = ts_y;
-    plot_vars['ts_x'] = ts_x;
+    plot_vars[volcano_frame]['ts_y'] = ts_y;
+    plot_vars[volcano_frame]['ts_x'] = ts_x;
   };
   /* ts lat and lon values: */
   var ts_lat = y_data[ts_y];
@@ -235,8 +237,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
 
   /* get start and indexes. check if values have updated: */
   if (start_index == null || end_index == null ||
-      start_index != plot_vars['start_index'] ||
-      end_index != plot_vars['end_index']) {
+      start_index != plot_vars[volcano_frame]['start_index'] ||
+      end_index != plot_vars[volcano_frame]['end_index']) {
     /* set data range to be updated: */
     update_heatmap_data_range = true;
     /* also need to recalculate time series: */
@@ -244,33 +246,33 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   };
   /* start index value: */
   if (start_index == null) {
-    if (plot_vars['start_index'] == null) {
+    if (plot_vars[volcano_frame]['start_index'] == null) {
       var start_index = 0;
     } else {
-      var start_index = plot_vars['start_index'];
+      var start_index = plot_vars[volcano_frame]['start_index'];
     };
   } else {
     var start_index = start_index;
   };
   /* end index value: */
   if (end_index == null) {
-    if (plot_vars['end_index'] == null) {
+    if (plot_vars[volcano_frame]['end_index'] == null) {
       var end_index = date_data.length - 1;
     } else {
-      var end_index = plot_vars['end_index'];
+      var end_index = plot_vars[volcano_frame]['end_index'];
     };
   } else {
     var end_index = end_index;
   };
   /* store start / end index values: */
-  plot_vars['start_index'] = start_index;
-  plot_vars['end_index'] = end_index;
+  plot_vars[volcano_frame]['start_index'] = start_index;
+  plot_vars[volcano_frame]['end_index'] = end_index;
   /* key for this range in data: */
   var range_key = start_index + '_' + end_index + '_' + ref_data[0] + '_' +
                   ref_data[1] + '_' + ref_data[2] + '_' + ref_data[3];;
   /* create key for storing time series data: */
-  if (plot_vars['ts_data'][range_key] == undefined) {
-    plot_vars['ts_data'][range_key] = {};
+  if (plot_vars[volcano_frame]['ts_data'][range_key] == undefined) {
+    plot_vars[volcano_frame]['ts_data'][range_key] = {};
   };
 
   /* if slider does not exist or page is being updated: */
@@ -331,8 +333,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       var slider_end_date = date_data[slider_end_index];
       /* update plotting: */
       disp_plot(null, slider_start_index, slider_end_index,
-                plot_vars['ts_y'], plot_vars['ts_x'],
-                plot_vars['ref_data']);
+                plot_vars[volcano_frame]['ts_y'], plot_vars[volcano_frame]['ts_x'],
+                plot_vars[volcano_frame]['ref_data']);
     });
     /* add slide listerner: */
     slider_div.noUiSlider.on('slide', function() {
@@ -359,24 +361,24 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   /* if data range or reference area is changed ... : */
   if (update_heatmap_data_range == true ||
       update_ref_data == true) {
-    /* if data for this range does not exist in plot_vars: */
-    if (plot_vars['heatmap_data'][range_key] == undefined ||
-        plot_vars['hover_data'][range_key] == undefined) {
+    /* if data for this range does not exist in plot_vars[volcano_frame]: */
+    if (plot_vars[volcano_frame]['heatmap_data'][range_key] == undefined ||
+        plot_vars[volcano_frame]['hover_data'][range_key] == undefined) {
       /* need to calculate: */
       update_heatmap_data = true;
     } else {
       /* z_data from stored values: */
-      z_data_masked_raw = plot_vars['heatmap_data'][range_key]['raw'];
+      z_data_masked_raw = plot_vars[volcano_frame]['heatmap_data'][range_key]['raw'];
       /* hover data: */
-      hover_data_raw = plot_vars['hover_data'][range_key]['raw'];
+      hover_data_raw = plot_vars[volcano_frame]['hover_data'][range_key]['raw'];
       /* no need to recalculate: */
       update_heatmap_data = false;
     };
   };
 
   /* init ref_y and ref_x vars: */
-  var ref_y = plot_vars['ref_y'];
-  var ref_x = plot_vars['ref_x'];
+  var ref_y = plot_vars[volcano_frame]['ref_y'];
+  var ref_x = plot_vars[volcano_frame]['ref_x'];
 
   /* if data range has changed: */
   if (update_heatmap_data == true) {
@@ -404,8 +406,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       };
     };
     /* store values: */
-    plot_vars['ref_y'] = ref_y;
-    plot_vars['ref_x'] = ref_x;
+    plot_vars[volcano_frame]['ref_y'] = ref_y;
+    plot_vars[volcano_frame]['ref_x'] = ref_x;
     /* calculate mean for raw values: */
     if (ref_count_raw > 0) {
       ref_mean_raw = ref_sum_raw / ref_count_raw;
@@ -466,14 +468,14 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     };
 
     /* store caculated values; */
-    plot_vars['heatmap_data'][range_key] = {};
-    plot_vars['heatmap_data'][range_key]['raw'] = z_data_masked_raw;
-    plot_vars['hover_data'][range_key] = {};
-    plot_vars['hover_data'][range_key]['raw'] = hover_data_raw;
+    plot_vars[volcano_frame]['heatmap_data'][range_key] = {};
+    plot_vars[volcano_frame]['heatmap_data'][range_key]['raw'] = z_data_masked_raw;
+    plot_vars[volcano_frame]['hover_data'][range_key] = {};
+    plot_vars[volcano_frame]['hover_data'][range_key]['raw'] = hover_data_raw;
 
     /* if z min or max values are not set: */
-    if (plot_vars['z_min_raw'] == null ||
-        plot_vars['z_max_raw'] == null) {
+    if (plot_vars[volcano_frame]['z_min_raw'] == null ||
+        plot_vars[volcano_frame]['z_max_raw'] == null) {
       /* sort z values: */
       z_values_raw.sort(function num_cmp(a, b) {
         return a - b;
@@ -483,8 +485,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
                                              * 1)];
       var z_max_raw = z_values_raw[Math.floor((z_values_raw.length / 100)
                                               * 99)];
-      plot_vars['z_min_raw'] = z_min_raw;
-      plot_vars['z_max_raw'] = z_max_raw;
+      plot_vars[volcano_frame]['z_min_raw'] = z_min_raw;
+      plot_vars[volcano_frame]['z_max_raw'] = z_max_raw;
     };
 
   /* end if data range has changed: */
@@ -498,8 +500,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     hover_data = hover_data_raw;
     if (data_type == 'raw') {
       z_data = z_data_masked_raw;
-      z_min = plot_vars['z_min_raw'];
-      z_max = plot_vars['z_max_raw'];
+      z_min = plot_vars[volcano_frame]['z_min_raw'];
+      z_max = plot_vars[volcano_frame]['z_max_raw'];
       heatmap_colorbar = { tickprefix: ' ', x: 1.10 };
       heatmap_colorscale = [
         [0, 'rgb(26, 51, 153)'],
@@ -511,10 +513,10 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       heatmap_title = 'displacement (mm)';
     } else {
       z_data = coh_data;
-      z_min = plot_vars['z_min_coh'];
-      z_max = plot_vars['z_max_coh'];
-      if (plot_vars['z_min_raw'] < -100 ||
-          plot_vars['z_max_raw'] > 100) {
+      z_min = plot_vars[volcano_frame]['z_min_coh'];
+      z_max = plot_vars[volcano_frame]['z_max_coh'];
+      if (plot_vars[volcano_frame]['z_min_raw'] < -100 ||
+          plot_vars[volcano_frame]['z_max_raw'] > 100) {
         heatmap_colorbar = { tickprefix: '    ', x: 1.10 };
       } else {
         heatmap_colorbar = { tickprefix: '  ', x: 1.10 };
@@ -525,7 +527,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   };
 
   /* if there is no heatmap plot ... : */
-  if (plot_vars['heatmap_plot'] == null) {
+  if (plot_vars[volcano_frame]['heatmap_plot'] == null) {
     /* set up the heatmap plot data: */
     var heatmap_disp = {
       type: 'heatmap',
@@ -656,8 +658,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     /* create a new plot: */
     var heatmap_plot = Plotly.newPlot(heatmap_div, heatmap_data,
                                       heatmap_layout, heatmap_conf);
-    /* store the plot information in plot_vars: */
-    plot_vars['heatmap_plot'] = heatmap_plot;
+    /* store the plot information in plot_vars[volcano_frame]: */
+    plot_vars[volcano_frame]['heatmap_plot'] = heatmap_plot;
 
     /* add on click functionality: */
     heatmap_div.on('plotly_click', function(click_data){
@@ -686,16 +688,16 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       /* otherwise, update the plots: */
       } else {
         /* reference area updating: */
-        if (plot_vars['click_mode'] == 'ref') {
-          disp_plot(plot_vars['data_type'],
-                    plot_vars['start_index'], plot_vars['end_index'],
-                    plot_vars['ts_y'], plot_vars['ts_x'],
+        if (plot_vars[volcano_frame]['click_mode'] == 'ref') {
+          disp_plot(plot_vars[volcano_frame]['data_type'],
+                    plot_vars[volcano_frame]['start_index'], plot_vars[volcano_frame]['end_index'],
+                    plot_vars[volcano_frame]['ts_y'], plot_vars[volcano_frame]['ts_x'],
                     [click_y, click_y + 1, click_x, click_x + 1]);
         } else {
           /* presume selected pixel updating: */
-          disp_plot(plot_vars['data_type'],
-                    plot_vars['start_index'], plot_vars['end_index'],
-                    click_y, click_x, plot_vars['ref_data']);
+          disp_plot(plot_vars[volcano_frame]['data_type'],
+                    plot_vars[volcano_frame]['start_index'], plot_vars[volcano_frame]['end_index'],
+                    click_y, click_x, plot_vars[volcano_frame]['ref_data']);
         };
       };
     });
@@ -703,7 +705,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     /* selecting a reference area when multiple points are selected: */
     heatmap_div.on('plotly_selected', function(sel_data){
       /* f current click mode is reference area selecting: */
-      if (plot_vars['click_mode'] == 'ref') {
+      if (plot_vars[volcano_frame]['click_mode'] == 'ref') {
         /* only if sel_Data is defined: */
         if (sel_data != undefined && sel_data.range != undefined) {
           /* get nearest x and y values: */
@@ -714,9 +716,9 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
           var ref_y1 = get_nearest_value(sel_data.range.y[1], y_data);
           ref_y1++;
           /* update plot: */
-          disp_plot(plot_vars['data_type'],
-                    plot_vars['start_index'], plot_vars['end_index'],
-                    plot_vars['ts_y'], plot_vars['ts_x'],
+          disp_plot(plot_vars[volcano_frame]['data_type'],
+                    plot_vars[volcano_frame]['start_index'], plot_vars[volcano_frame]['end_index'],
+                    plot_vars[volcano_frame]['ts_y'], plot_vars[volcano_frame]['ts_x'],
                     [ref_y0, ref_y1, ref_x0, ref_x1]);
         };
       };
@@ -774,7 +776,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   /* if time series is being updated: */
   if (update_ts_data == true || update_ref_data == true) {
     /* check for stored values: */
-    if (plot_vars['ts_data'][range_key][ts_key] == undefined) {
+    if (plot_vars[volcano_frame]['ts_data'][range_key][ts_key] == undefined) {
       /* get start and end data: */
       var start_data_raw = disp_data_raw[start_index];
       var end_data_raw = disp_data_raw[end_index];
@@ -797,18 +799,18 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       /* end loop through time series: */
       };
       /* store values: */
-      plot_vars['ts_data'][range_key][ts_key] = {};
-      plot_vars['ts_data'][range_key][ts_key]['raw'] = ts_data_raw;
+      plot_vars[volcano_frame]['ts_data'][range_key][ts_key] = {};
+      plot_vars[volcano_frame]['ts_data'][range_key][ts_key]['raw'] = ts_data_raw;
     /* end if no stored values: */
     } else {
       /* use stored values: */
-      var ts_data_raw = plot_vars['ts_data'][range_key][ts_key]['raw'];
+      var ts_data_raw = plot_vars[volcano_frame]['ts_data'][range_key][ts_key]['raw'];
     };
   /* end if ts update is true: */
   };
 
   /* if there is no time series plot ... : */
-  if (plot_vars['ts_plot'] == null) {
+  if (plot_vars[volcano_frame]['ts_plot'] == null) {
     /* raw scatter data: */
     var scatter_raw = {
       type: 'scatter',
@@ -856,7 +858,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     var ts_plot = Plotly.newPlot(ts_div, ts_data,
                                  ts_layout, ts_conf);
     /* store plot information: */
-    plot_vars['ts_plot'] = ts_plot;
+    plot_vars[volcano_frame]['ts_plot'] = ts_plot;
   /* time series plot exists ... if just updating: */
   } else if (update_ts_data == true) {
     /* time series data update: */
