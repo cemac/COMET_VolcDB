@@ -165,11 +165,17 @@ function display_prob_image(index) {
 function display_licsar_images(index) {
 
   /* image index: */
-  if (index == undefined) {
-    var image_index = licsar_data['count'] - 1;
+  if ((index == undefined) ||
+      (index == null)) {
+    if (s1_indexes[volcano_frame] == undefined) {
+      var image_index = licsar_data['count'] - 1;
+    } else {
+      var image_index = s1_indexes[volcano_frame];
+    };
   } else {
     var image_index = index;
   };
+  s1_indexes[volcano_frame] = image_index;
 
   /* get image elements: */
   var cc_img = document.getElementById('s1_cc_img');
