@@ -146,8 +146,10 @@ def volcano_analysis(country, region, volcano):
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
     volcano_name = str(volcano).replace(" ", "_").lower()
+    frame = df.frames[0]
     return render_template('cemac_analysis_pages.html.j2', data=df,
-                           country=country, region=region, volcano=volcano_name)
+                           country=country, region=region,
+                           frame=frame, volcano=volcano_name)
 
 
 @app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/download',
