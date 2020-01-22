@@ -18,7 +18,10 @@ import pandas as pd
 import sqlite3
 from sqlalchemy import create_engine
 
+# connect to volcano.db
 conn = sqlite3.connect('volcano.db')
 df = pd.read_csv('VolcDB_df.csv')
+# NB pandas is due to change behaviour to not underscore column names
+# Replace table VolcDB1
 df.to_sql('VolcDB1', con=conn, if_exists='replace', index=False)
 conn.close()

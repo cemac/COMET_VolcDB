@@ -50,7 +50,7 @@ def close_connection(exception):
 @app.route('/', methods=["GET"])
 def index():
     df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
-    df = df[df.Area != '0']
+    df = df[df.Area != 'none']
     df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
     volcinfo = df[['name', 'latitude', 'longitude', 'Area', 'country']]
     return render_template('home.html.j2', volcinfo=json.dumps(volcinfo.values.tolist()))
@@ -69,7 +69,7 @@ def volcanodb():
     df = pd.read_sql_query("SELECT AREA FROM VolcDB1;", conn)
     # Count values and remove weird '0' rows
     df2 = df.apply(pd.value_counts)
-    df2 = df2.drop(index='0')
+    df2 = df2.drop(index='none')
     df2['Area_name'] = df2.index.values
     df2 = df2.reset_index(drop=True)
     df2.columns = ['freq', 'Area']
@@ -119,7 +119,7 @@ def volcanodb_country(country, region):
 def volcanodb_all():
     df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1;", conn)
-    df = df[df.Area != '0']
+    df = df[df.Area != 'none']
     total = len(df.index)
     return render_template('volcano-index_all.html.j2', data=df, total=total,
                            tableclass='all')
@@ -465,7 +465,6 @@ def internal_error(error):
 def unhandled_exception(e):
     app.logger.error('Unhandled Exception: %s', (e))
     return render_template('500.html.j2'), 500
-
 
 if __name__ == '__main__':
     app.run(host='129.11.85.32', debug=True, port=5900)
