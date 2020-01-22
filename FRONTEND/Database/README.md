@@ -2,7 +2,7 @@
 
 ## Setting up the initial Database
 
-1. Retrieve  data from [COMET API](https://comet.nerc.ac.uk/wp-json/volcanodb/v1/volcanoes?filter=0)
+1. Retrieve  data from [COMET API](https://comet.nerc.ac.uk/wp-json/volcanodb/v1/volcanoes?limit=0)
 2. Clean data to suitable format using python script [retrieve_data.py](retrieve_data.py)
 3. Turn csv into initial database (will need modifying to accommodate) [create_db.py](create_db.py)
 
