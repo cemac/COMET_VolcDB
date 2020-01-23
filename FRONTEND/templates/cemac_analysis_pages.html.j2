@@ -48,9 +48,10 @@
 <div style="width:100%; display:block; margin:auto;">
 
     <script>
+      var this_frame = '{{ frame }}';
       var volcano_name = '{{ volcano }}';
-      var volcano_region = 'africa';
-      var volcano_frames = [{"id": "014A_07688_131313", "track": "14"},{"id": "079D_07694_131313", "track": "79"}];
+      var volcano_region = this_frame['region'];
+      var volcano_frames = this_frame['frame'];
 
       var js_data_prefix = '/data/';
       var disp_data_prefix = 'disp_data';
