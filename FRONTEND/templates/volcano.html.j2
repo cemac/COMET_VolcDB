@@ -13,7 +13,12 @@
 		</style>
 		<script src="https://maps.googleapis.com/maps/api/js"></script>
 		<header>
+			{% if pending == 'Y' %}
+			<h1>{{data.name[0]}}*</h1>
+			<p> <i> *updates pending approval </i>
+			{% else %}
 			<h1>{{data.name[0]}}</h1>
+			{% endif %}
 		</header><!-- .entry-header -->
 		<ul class="tabrow">
 			<li class="selected">Observations of Deformation</li>
