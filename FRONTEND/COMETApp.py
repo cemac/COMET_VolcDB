@@ -64,6 +64,7 @@ def hitcounter():
 
 
 # Volcano Database -----------------------------------------------------------
+
 @app.route('/volcano-index', methods=["GET"])
 def volcanodb():
     df = pd.read_sql_query("SELECT AREA FROM VolcDB1;", conn)
@@ -108,7 +109,8 @@ def volcanodb_country(country, region):
     # select country
     df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1 WHERE " +
-                           "country = '" + str(country.replace('_', '/')) + "';", conn)
+                           "country = '" + str(country.replace('_', '/')) +
+                           "';", conn)
     total = len(df.index)
     country.replace('/', '_')
     return render_template('volcano-index_all.html.j2', data=df, total=total,
@@ -133,7 +135,9 @@ def volcano(country, region, volcano):
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
-    return render_template('volcano.html.j2', data=df, country=country, region=region, id=id)
+    pending = df['Review needed']
+    return render_template('volcano.html.j2', data=df, country=country,
+                           region=region, id=id, pending=pending)
 
 
 
@@ -147,6 +151,8 @@ def volcano_analysis(country, region, volcano):
                                "ID = '" + str(volcano) + "';", conn)
     volcano_name = str(volcano).replace(" ", "_").lower()
     frame = df.frames[0]
+    if frame = '':
+        frame = 'none'
     return render_template('cemac_analysis_pages.html.j2', data=df,
                            country=country, region=region,
                            frame=frame, volcano=volcano_name)
@@ -184,9 +190,14 @@ def volcano_edit(country, region, volcano):
     if request.method == 'POST' and form.validate():
         # Get each form field and update DB:
         for field in form:
-            editrow('VolcDB1', df.ID[0], field.name, str(field.data), conn)
+            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data), conn)
+        # Save to edit database
+        editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
+        now = dt.datetime.now().strftime("%Y-%m-%d")
+        editrow('VolcDB1_edits', df.ID[0], 'date_edited', str(now), conn)
+        editrow('VolcDB1_edits', df.ID[0], 'owner_id', user_id, conn)
         # Return with success:
-        flash('Edits successful', 'success')
+        flash('Edits awaiting approval successful', 'success')
         return redirect(url_for('volcano', country=country, region=region,
                                 volcano=volcano))
     # Set title:
@@ -220,7 +231,10 @@ def volcano_add():
     if request.method == 'POST' and form.validate():
         # Get each form field and update DB:
         for field in form:
-            editrow('VolcDB1', df.ID[0], field.name, str(field.data), conn)
+            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data), conn)
+        editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
+        now = dt.datetime.now().strftime("%Y-%m-%d")
+        editrow('VolcDB1_edits', df.ID[0], 'date_edited', str(now), conn)
         # Return with success:
         flash('Edits successful', 'success')
         return redirect(url_for('volcano', country=country, region=region,

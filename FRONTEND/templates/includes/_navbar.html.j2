@@ -5,6 +5,9 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav ">
+        {% if session.username == "admin" or session.usertype == "Admins" or session.usertype == "Admins"%}
+        <li><a href="/review"><b>Awaiting Review</b></a></li>
+        {% endif %}
         <li><a href="/about">About</a></li>
         <li><a href="/volcano-index/Search-All">Volcano Index</a></li>
         <li><a href="/measuring-deformation">Measuring Deformation</a></li>
