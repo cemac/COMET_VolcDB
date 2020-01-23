@@ -2,7 +2,7 @@
 /* page defaults: */
 * {
   color: #5c5b56;
-  font:  14px Verdana,Helvetica,Arial,sans-serif;
+  font: 14px Verdana,Helvetica,Arial,sans-serif;
 }
 
 /* body: */
@@ -29,30 +29,45 @@ body {
   width: 100%;
 }
 
-/* probability images container div: */
-.prob_image {
+/* s1 images container div: */
+.s1_imgs {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
-/* probability images: */
-.prob_image_img {
+/* s1 images: */
+.s1_img {
   max-width: 650px;
 }
 
-/* licsar images container div: */
-.licsar_image {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+/* s1 image labels: */
+.s1_image_value {
+  margin: 30px;
 }
 
-/* licsar images: */
-.licsar_img {
-  max-width: 650px;
+/* download links table: */
+.s1_data_links {
+  border: 0px;
+  padding: 10px;
+  text-align: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: calc(100% - 25px);
+}
+
+.s1_data_links td {
+  padding: 5px;
+}
+
+.s1_data_links tr:nth-child(odd) {
+  background-color: #eeeeee;
+}
+
+.s1_data_links tr:nth-child(even) {
+  background-color: #ffffff;
 }
 
 /* full screen images: */
@@ -111,31 +126,31 @@ span.fs_img {
 
 /* buttons : */
 button {
-  width:            140px;
-  color:            #0066cc;
+  width: 190px;
+  color: #0066cc;
   background-color: #99ccff;
-  border:           1px solid #99ccff;
-  padding:          3px;
-  margin:           2px 2px;
-  cursor:           pointer;
+  border: 1px solid #99ccff;
+  padding: 3px;
+  margin: 2px 2px;
+  cursor: pointer;
 }
 /* hovering buttons: */
 button:focus, button:active, button:hover {
   background-color: #99ccff;
-  border:           1px solid #003399;
-  color:            #003399;
+  border: 1px solid #003399;
+  color: #003399;
 }
 /* disabled buttons: */
 button:disabled, button[disabled] {
   background-color: #1e90ff;
-  border:           1px solid #3333cc;
-  color:            #ffffff;
-  cursor:           auto;
+  border: 1px solid #3333cc;
+  color: #ffffff;
+  cursor: auto;
 }
 
 /* remove outlines from active buttons: */
 button, button:focus, button:active {
-  outline:          0;
+  outline: 0;
 }
 :focus {outline:none;}
 ::-moz-focus-inner {border:0;}
@@ -147,6 +162,12 @@ button, button:focus, button:active {
 }
 .noUi-connect {
   background: #1e90ff;
+}
+
+/* slider pipds: */
+.noUi-marker-horizontal.noUi-marker {
+  background: #666666;
+  height: 15px;
 }
 
 /* slider label: */
