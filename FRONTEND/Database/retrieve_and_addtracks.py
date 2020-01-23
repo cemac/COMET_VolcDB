@@ -68,8 +68,9 @@ with open('all_volcs.json') as json_file:
             vname = str(vnameraw).lower().replace(' ', '_')
             vname = vname.replace('-', '_')
             try:
-                framesdf = json_normalize(data[vname])
-                raw_data.loc[vnameraw].frames = str(framesdf.frames[0])
+                #framesdf = json_normalize(data[vname])
+                framesdf = data[vname]
+                raw_data.loc[vnameraw].frames = framesdf
             except KeyError:
                 print('skipping ' + vname)
 # put the name back into dataframe and index by number
