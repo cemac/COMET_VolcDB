@@ -151,7 +151,7 @@ def volcano_analysis(country, region, volcano):
                                "ID = '" + str(volcano) + "';", conn)
     volcano_name = str(volcano).replace(" ", "_").lower()
     frame = df.frames[0]
-    if frame = '':
+    if frame == '':
         frame = 'none'
     return render_template('cemac_analysis_pages.html.j2', data=df,
                            country=country, region=region,
@@ -259,6 +259,15 @@ def volcanodetails():
     return render_template('volcanodetail.html.j2')
 
 
+@app.route('/review', methods=["GET"])
+def volcanodb_reviewlist():
+    df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
+                           "s, deformation_observation FROM VolcDB1 " +
+                           "where 'Review needed' = 'Y';", conn)
+    df = df[df.Area != 'none']
+    total = len(df.index)
+    return render_template('moderation.html.j2', data=df, total=total,
+                           tableclass='all')
 # Access ----------------------------------------------------------------------
 
 # Login
