@@ -2,7 +2,7 @@ alter table VolcDB1 add column "Review needed" VARCHAR;
 alter table VolcDB1 add column "date_edited" DATE;
 
 create table VolcDB1_edits (
-ID INTEGER PRIMARY KEY,
+ID INTEGER NOT NULL,
 characteristics_of_deformation TEXT,
 country TEXT  NOT NULL,
 deformation_observation TEXT,
@@ -18,11 +18,11 @@ name TEXT NOT NULL,
 volcano_number INTEGER,
 image_url TEXT,
 Area TEXT  NOT NULL,
-'Review needed'
+'Review needed' TEXT,
 date_edited DATE,
 owner_id integer NOT NULL,
 FOREIGN KEY (owner_id) REFERENCES users (id)
-FOREIGN KEY (id) REFERENCES VolcDB1 (ID)
+FOREIGN KEY (ID) REFERENCES VolcDB1 (ID)
 );
 
 create table site_text (

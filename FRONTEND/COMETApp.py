@@ -189,23 +189,31 @@ def export_as_csv(region, country, volcano):
 @is_logged_in
 def volcano_edit(country, region, volcano):
     df = pd.read_sql_query( "SELECT * FROM VolcDB1 WHERE " +
-                           "name = '" + str(volcano) + "';", conn)
+                            "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
+    pending = df['Review needed'].values[0]
+    print(pending)
+    if pending == 'Y':
+        df = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+                               "name = '" + str(volcano) + "';", conn)
+        if len(df.index) == 0:
+            df = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+                                   "ID = '" + str(volcano) + "';", conn)
     form = eval("Volcano_edit_Form")(request.form)
     form.geodetic_measurements.choices = yesno_list()
     form.deformation_observation.choices = yesno_list()
     if request.method == 'POST' and form.validate():
         # Get each form field and update DB:
-        for field in form:
-            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data), conn)
-        # Save to edit database
-        editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
         now = dt.datetime.now().strftime("%Y-%m-%d")
         df['date_edited'] = str(now)
         df['owner_id'] = session['username']
         addrowedits('VolcDB1_edits', df, conn)
+        for field in form:
+            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data), conn)
+        # Save to edit database
+        editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
         # Return with success:
         flash('Success! Edits awaiting approval', 'success')
         return redirect(url_for('volcano', country=country, region=region,
