@@ -135,10 +135,19 @@ def volcano(country, region, volcano):
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
+    # If there is a pending update
     pending = df['Review needed'].values
+    editor = False
+    if pending == 'Y':
+        dfeds = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+                                  "name = '" + str(volcano) + "';", conn)
+        if dfeds.owner_id.values[0] == session['username']:
+            editor = True
+    else:
+        dfeds = None
     return render_template('volcano.html.j2', data=df, country=country,
-                           region=region, id=id, pending=pending)
-
+                           region=region, id=id, pending=pending,
+                           editor=editor, edits=dfeds)
 
 
 @app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/cemac_analysis_pages',
@@ -179,7 +188,7 @@ def export_as_csv(region, country, volcano):
            methods=["GET", "POST"])
 @is_logged_in
 def volcano_edit(country, region, volcano):
-    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+    df = pd.read_sql_query( "SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
@@ -194,10 +203,11 @@ def volcano_edit(country, region, volcano):
         # Save to edit database
         editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
         now = dt.datetime.now().strftime("%Y-%m-%d")
-        editrow('VolcDB1_edits', df.ID[0], 'date_edited', str(now), conn)
-        editrow('VolcDB1_edits', df.ID[0], 'owner_id', user_id, conn)
+        df['date_edited'] = str(now)
+        df['owner_id'] = session['username']
+        addrowedits('VolcDB1_edits', df, conn)
         # Return with success:
-        flash('Edits awaiting approval successful', 'success')
+        flash('Success! Edits awaiting approval', 'success')
         return redirect(url_for('volcano', country=country, region=region,
                                 volcano=volcano))
     # Set title:

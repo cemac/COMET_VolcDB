@@ -18,6 +18,8 @@ name TEXT NOT NULL,
 volcano_number INTEGER,
 image_url TEXT,
 Area TEXT  NOT NULL,
+'Review needed'
+date_edited DATE,
 owner_id integer NOT NULL,
 FOREIGN KEY (owner_id) REFERENCES users (id)
 FOREIGN KEY (id) REFERENCES VolcDB1 (ID)
