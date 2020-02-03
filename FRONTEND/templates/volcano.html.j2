@@ -29,6 +29,9 @@
 			{% if pending != 'Y' %}
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/edit">Update Observations</a></li>
 			{% endif %}
+			{% if editor == True %}
+			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/edit">Edit Updates</a></li>
+			{% endif %}
 			{% endif %}
 			{% else %}
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/cemac_analysis_pages">Explore Sentinel-1 imagery</a></li>
