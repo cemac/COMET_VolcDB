@@ -57,6 +57,22 @@ def addrow(table, df, conn):
     # Set up to autoincrement id number
     # NB as a column is called key word references it must include '' round
     # col name
-    sql = ("insert into " + str(table) + ' (' + str(colname) + "') VALUES (?);")
+    sql = ("insert into " + str(table) + ' (' + str(colname)
+           + "') VALUES (?);")
     cur.execute(sql, str(df.values))
     conn.commit()
+
+
+def addrowedits(table, df, conn):
+    """
+    table(str)
+    datafram(df) = headers match column name
+    """
+    # remove odd Unnamed: 0 column
+    df = df.iloc[:, 1::]
+    colname = df.columns.values
+    colname = "','".join(colname)
+    # Set up to autoincrement id number
+    # NB as a column is called key word references it must include '' round
+    # col name
+    df.to_sql(table, con=conn, index=False, if_exists='append')
