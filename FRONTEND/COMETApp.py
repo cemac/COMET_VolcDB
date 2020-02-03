@@ -135,7 +135,7 @@ def volcano(country, region, volcano):
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
-    pending = df['Review needed']
+    pending = df['Review needed'].values
     return render_template('volcano.html.j2', data=df, country=country,
                            region=region, id=id, pending=pending)
 
