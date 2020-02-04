@@ -1,5 +1,5 @@
 import sqlite3
-
+import pandas as pd
 
 # Connect to DB
 def get_db():
@@ -72,7 +72,7 @@ def addrowedits(table, df, conn):
     colname = df.columns.values
     colname = "','".join(colname)
     # instert into db
-    df.to_sql(table, con=conn, index=False, if_exists='append')
+    df.to_sql(table, con=conn, index=False, if_exists='replace')
 
 
 def DeleteVolcEdit(id, conn):
@@ -83,5 +83,16 @@ def DeleteVolcEdit(id, conn):
     cur = conn.cursor()
     sql = ("UPDATE VolcDB1 SET 'Review needed' = 'N' WHERE"
            + " id is ? ;")
+    cur.execute(sql, (id,))
+    conn.commit()
+
+
+def AcceptVolcEdit(id, conn):
+    df_edits = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+                             "ID = '" + str(id) + "';", conn)
+    df_edits['Review needed'] = 'N'
+    df_edits.to_sql('VolcDB1', con=conn, index=False, if_exists='replace')
+    cur = conn.cursor()
+    sql = 'DELETE FROM VolcDB1_edits WHERE id is ? ;'
     cur.execute(sql, (id,))
     conn.commit()

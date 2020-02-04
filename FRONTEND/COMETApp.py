@@ -196,7 +196,6 @@ def volcano_edit(country, region, volcano):
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
     pending = df['Review needed'].values[0]
-    print(pending)
     if pending == 'Y':
         df = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
                                "name = '" + str(volcano) + "';", conn)
@@ -322,7 +321,18 @@ def delete_entry(tableClass, id):
         flash('Deleted suggested modification', 'success')
         return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
     else:
-        flash('Deleted suggested modification', 'danger')
+        flash('not set up for this yet', 'danger')
+    return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
+
+@app.route('/accept/<string:tableClass>/<string:id>', methods=['POST'])
+@is_logged_in_as_admin
+def accept_entry(tableClass, id):
+    if tableClass == 'volcanoreview':
+        AcceptVolcEdit(id, conn)
+        flash('Approved suggested modification', 'success')
+        return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
+    else:
+        flash('not set up for this yet', 'danger')
     return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
 # Access ----------------------------------------------------------------------
 # Login
@@ -471,7 +481,6 @@ def access(id):
     if request.method == 'POST' and form.validate():
         new_role = form.Role.data
         AssignRole(user.username[0], new_role, conn)
-        print('test')
         # Return with success
         flash('Edits successful', 'success')
         return redirect(url_for('ViewOrAddUsers'))
