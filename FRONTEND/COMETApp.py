@@ -237,8 +237,7 @@ def volcano_edit(country, region, volcano):
                            country=country, region=region, volcano=volcano)
 
 
-@app.route('/volcano-index/add',
-           methods=["GET", "POST"])
+@app.route('/add/Volcano',  methods=["GET", "POST"])
 @is_logged_in
 def volcano_add():
     # get headers
@@ -254,20 +253,17 @@ def volcano_add():
         df['date_edited'] = str(now)
         df['owner_id'] = session['username']
         df['Review needed'] = 'Y'
-        addrowedits('VolcDB1', df, conn)
+        df['id'] = pd.read_sql_query("select max(id) from VolcDB1;", conn) + 1
         addrowedits('VolcDB1_edits', df, conn)
         # Get each form field and update DB:
         for field in form:
             editrow('VolcDB1', df.ID[0], field.name, str(field.data), conn)
-        editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
-        now = dt.datetime.now().strftime("%Y-%m-%d")
-        editrow('VolcDB1_edits', df.ID[0], 'date_edited', str(now), conn)
         # Return with success:
         flash('Edits successful', 'success')
         return redirect(url_for('volcano', country=country, region=region,
                                 volcano=volcano))
     # Set title:
-    title = "Edit Volcano"
+    title = "Add New Volcano"
     noedit = ['ID']
     for field in form:
         if not request.method == 'POST':
