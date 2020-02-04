@@ -1,5 +1,6 @@
 alter table VolcDB1 add column "Review needed" VARCHAR;
 alter table VolcDB1 add column "date_edited" DATE;
+alter table VolcDB1 add column "owner_id" TEXT;
 
 create table VolcDB1_edits (
 ID INTEGER NOT NULL,
@@ -15,8 +16,6 @@ measurement_methods TEXT,
 name TEXT NOT NULL,
 'references' TEXT,
 "frames" TEXT,
-volcano_number INTEGER,
-image_url TEXT,
 Area TEXT  NOT NULL,
 'Review needed' TEXT,
 date_edited DATE,
