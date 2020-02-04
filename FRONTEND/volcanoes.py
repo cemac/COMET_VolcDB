@@ -60,16 +60,16 @@ class Volcano_Form(Form):
     # List existing regions and countries to avoid spelling mistakes etc
     name = StringField(u'Volcano Name', [validators.Optional()],
                                      render_kw={"placeholder": "Volcano name"})
-    Area = SelectField(u'*Region',
-                       [validators.NoneOf(('blank'),
-                        message='Please select')])
-    new_region = StringField(u'If other please specify', [validators.Optional()],
-                             render_kw={"placeholder": "region not in dropdown"})
     country = SelectField(u'*Country',
                           [validators.NoneOf(('blank'),
                            message='Please select')])
     new_country = StringField(u'If other please specify', [validators.Optional()],
                               render_kw={"placeholder": "country not in dropdown"})
+    Area = SelectField(u'*Region (suggested in country selection)',
+                       [validators.NoneOf(('blank'),
+                        message='Please select')])
+    new_region = StringField(u'If other please specify', [validators.Optional()],
+                             render_kw={"placeholder": "region not in dropdown"})
     # yes or no questions
     geodetic_measurements = SelectField(u'Geodetic measurements?',
                                         [validators.NoneOf(('blank'),
