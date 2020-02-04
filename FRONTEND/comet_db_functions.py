@@ -71,8 +71,13 @@ def addrowedits(table, df, conn):
     # remove odd Unnamed: 0 column
     colname = df.columns.values
     colname = "','".join(colname)
+    id = df.ID.values[0]
     # instert into db
-    df.to_sql(table, con=conn, index=False, if_exists='replace')
+    cur = conn.cursor()
+    sql = 'DELETE FROM VolcDB1_edits WHERE ID = '+str(id)+' ;'
+    cur.execute(sql)
+    conn.commit()
+    df.to_sql(table, con=conn, index=False, if_exists='append')
 
 
 def DeleteVolcEdit(id, conn):
@@ -89,9 +94,13 @@ def DeleteVolcEdit(id, conn):
 
 def AcceptVolcEdit(id, conn):
     df_edits = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
-                             "ID = '" + str(id) + "';", conn)
+                                 "ID = '" + str(id) + "';", conn)
     df_edits['Review needed'] = 'N'
-    df_edits.to_sql('VolcDB1', con=conn, index=False, if_exists='replace')
+    cur = conn.cursor()
+    sql = 'DELETE FROM VolcDB1 WHERE id is ? ;'
+    cur.execute(sql, (id,))
+    conn.commit()
+    df_edits.to_sql('VolcDB1', con=conn, index=False, if_exists='append')
     cur = conn.cursor()
     sql = 'DELETE FROM VolcDB1_edits WHERE id is ? ;'
     cur.execute(sql, (id,))
