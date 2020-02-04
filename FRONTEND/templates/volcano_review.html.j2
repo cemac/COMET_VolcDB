@@ -19,11 +19,11 @@
 			{% endif %}
 		</header><!-- .entry-header -->
 		<div style='text-align: right'>
-		<form action=/reject/ {{data.ID}} method="post" onsubmit="return confirm('Are you sure?');">
+		<form action=/delete/{{tableClass}}/{{data.ID[0]}} method="post" onsubmit="return confirm('Are you sure?');">
 			<input type="hidden" name="_method" value="delete">
 			<input type="submit" value="delete &#10008;" class="btn btn-danger pull-right">
 		</form>
-		<form action=/accept/ {{data.ID}} method="post" onsubmit="return confirm('Are you sure?');">
+		<form action=/accept/{{data.ID[0]}} method="post" onsubmit="return confirm('Are you sure?');">
 			<input type="hidden" name="_method" value="accept">
 			<input type="submit" value="accept &#10004;" class="btn btn-success pull-right">
 		</form>
