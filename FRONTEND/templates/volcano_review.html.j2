@@ -1,0 +1,73 @@
+<html lang="en">
+{% extends 'layout.html.j2' %}
+{% block body %}
+<div>
+	<div>
+		<style type="text/css">
+			.acf-map {
+				width: 70%;
+				height: 500px;
+				border: #ccc solid 1px;
+				margin: 20px 0;
+			}
+		</style>
+		<header>
+			<h1>{{data.name[0]}}</h1>
+		</header><!-- .entry-header -->
+		<div>
+			<table>
+				<tr>
+					<th>Volcano number:</th>
+					<td>{{data.ID[0]}}</td>
+				</tr>
+				<tr>
+					<th>Region:</th>
+					<td>{{data.Area[0]}}</td>
+				</tr>
+				<tr>
+					<th>Country:</th>
+					<td>{{data.country[0]}}</td>
+				</tr>
+				<tr>
+					<th>Geodetic measurements?</th>
+					<td>{{data.geodetic_measurements[0]}}</td>
+				</tr>
+				<tr>
+					<th>Deformation observation?</th>
+					<td>{{data.deformation_observation[0]}}</td>
+				</tr>
+				<tr>
+					<th>Measurement method(s):</th>
+					<td>{{data.measurement_methods[0]}}</td>
+				</tr>
+				<tr>
+					<th>Duration of observation:</th>
+					<td>{{data.duration_of_observation[0]}}</td>
+				</tr>
+				<tr>
+					<th>Inferred cause of deformation:</th>
+					<td>{{data.inferred_causes[0]}}</td>
+				</tr>
+				<tr>
+					<th>Characteristics of deformation:</th>
+					<td>
+					{{data.characteristics_of_deformation[0]}}
+					</td>
+				</tr>
+				<tr>
+					<th>References:</th>
+					<td>{{data.references[0][1:-1]}}</td>
+				</tr>
+				<tr>
+					<th>Location:</th>
+					<td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
+				</tr>
+			</table>
+			
+		</div><!-- .entry-content -->
+	</div><!-- #content -->
+</div><!-- #primary -->
+</div><!-- #main .wrapper -->
+{% endblock %}
+
+</html>

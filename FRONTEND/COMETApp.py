@@ -45,7 +45,7 @@ def close_connection(exception):
         conn.close()
 
 
-# Index
+# Index ----------------------------------------------------------------------
 
 @app.route('/', methods=["GET"])
 def index():
@@ -53,7 +53,8 @@ def index():
     df = df[df.Area != 'none']
     df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
     volcinfo = df[['name', 'latitude', 'longitude', 'Area', 'country']]
-    return render_template('home.html.j2', volcinfo=json.dumps(volcinfo.values.tolist()))
+    return render_template('home.html.j2',
+                           volcinfo=json.dumps(volcinfo.values.tolist()))
 
 
 @app.route("/")
@@ -114,7 +115,8 @@ def volcanodb_country(country, region):
     total = len(df.index)
     country.replace('/', '_')
     return render_template('volcano-index_all.html.j2', data=df, total=total,
-                           country=country, region=region, tableclass='country')
+                           country=country, region=region,
+                           tableclass='country')
 
 
 @app.route('/volcano-index/Search-All', methods=["GET"])
@@ -188,8 +190,8 @@ def export_as_csv(region, country, volcano):
            methods=["GET", "POST"])
 @is_logged_in
 def volcano_edit(country, region, volcano):
-    df = pd.read_sql_query( "SELECT * FROM VolcDB1 WHERE " +
-                            "name = '" + str(volcano) + "';", conn)
+    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                           "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
@@ -211,7 +213,8 @@ def volcano_edit(country, region, volcano):
         df['owner_id'] = session['username']
         addrowedits('VolcDB1_edits', df, conn)
         for field in form:
-            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data), conn)
+            editrow('VolcDB1_edits', df.ID[0],
+                    field.name, str(field.data), conn)
         # Save to edit database
         editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
         # Return with success:
@@ -291,8 +294,21 @@ def volcanodb_reviewlist():
     total = len(df.index)
     return render_template('moderation.html.j2', data=df, total=total,
                            tableclass='all')
-# Access ----------------------------------------------------------------------
 
+
+@app.route('/review_volcano/<string:volcano>', methods=["GET"])
+def volcano_review(volcano):
+    df_edits = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+                                 "ID = '" + str(volcano) + "';", conn)
+    df_old = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                               "ID = '" + str(volcano) + "';", conn)
+    print(df_edits.volcano_number)
+    print(df_edits.columns.values)
+    return render_template('volcano_review.html.j2', data=df_edits,
+                           data_old=df_old, tableclass='all')
+
+
+# Access ----------------------------------------------------------------------
 # Login
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -376,7 +392,8 @@ def ViewOrAddUsers():
     usersandroles = pd.merge(df, u2r2, on='id', how='outer')
     usersandroles.rename(columns={'name': 'Role'}, inplace=True)
     usersandroles = usersandroles.dropna(subset=['username'])
-    colnames = [s.replace("_", " ").title() for s in usersandroles.columns.values[1:]]
+    colnames = [s.replace("_", " ").title()
+                for s in usersandroles.columns.values[1:]]
     return render_template('view.html.j2', title='Users', colnames=colnames,
                            tableClass='Users', editLink="edit",
                            data=usersandroles)
@@ -514,6 +531,7 @@ def unhandled_exception(e):
     app.logger.error('Unhandled Exception: %s', (e))
     return render_template('500.html.j2'), 500
 
+
 if __name__ == '__main__':
     app.run(host='129.11.85.32', debug=True, port=5900)
-    #app.run(debug=True)
+    # app.run(debug=True)

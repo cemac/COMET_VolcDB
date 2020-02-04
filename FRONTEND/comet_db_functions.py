@@ -69,7 +69,6 @@ def addrowedits(table, df, conn):
     datafram(df) = headers match column name
     """
     # remove odd Unnamed: 0 column
-    df = df.iloc[:, 1::]
     colname = df.columns.values
     colname = "','".join(colname)
     # instert into db
