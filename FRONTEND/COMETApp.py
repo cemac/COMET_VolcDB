@@ -247,9 +247,16 @@ def volcano_add():
     form.Area.choices = option_list('Area', conn)
     form.country.choices = option_list('country', conn)
     if request.method == 'POST' and form.validate():
+        # Create a new line in VolcDB1 and VolcDB1_edits to get new id no
+        now = dt.datetime.now().strftime("%Y-%m-%d")
+        df['date_edited'] = str(now)
+        df['owner_id'] = session['username']
+        df['Review needed'] = 'Y'
+        addrowedits('VolcDB1', df, conn)
+        addrowedits('VolcDB1_edits', df, conn)
         # Get each form field and update DB:
         for field in form:
-            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data), conn)
+            editrow('VolcDB1', df.ID[0], field.name, str(field.data), conn)
         editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
         now = dt.datetime.now().strftime("%Y-%m-%d")
         editrow('VolcDB1_edits', df.ID[0], 'date_edited', str(now), conn)
@@ -279,9 +286,7 @@ def volcanodetails():
 
 @app.route('/review', methods=["GET"])
 def volcanodb_reviewlist():
-    df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
-                           "s, deformation_observation FROM VolcDB1 " +
-                           "where 'Review needed' = 'Y';", conn)
+    df = pd.read_sql_query("SELECT * FROM VolcDB1_edits ;", conn)
     df = df[df.Area != 'none']
     total = len(df.index)
     return render_template('moderation.html.j2', data=df, total=total,

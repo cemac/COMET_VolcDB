@@ -72,7 +72,5 @@ def addrowedits(table, df, conn):
     df = df.iloc[:, 1::]
     colname = df.columns.values
     colname = "','".join(colname)
-    # Set up to autoincrement id number
-    # NB as a column is called key word references it must include '' round
-    # col name
+    # instert into db
     df.to_sql(table, con=conn, index=False, if_exists='append')
