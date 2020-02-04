@@ -312,9 +312,18 @@ def volcano_review(volcano):
             df_diffs[str(columnName)] = 'new'
     return render_template('volcano_review.html.j2', data=df_edits,
                            data_old=df_old, data_diff=df_diffs,
-                           tableclass='all')
+                           tableClass='volcanoreview')
 
-
+@app.route('/delete/<string:tableClass>/<string:id>', methods=['POST'])
+@is_logged_in_as_admin
+def delete_entry(tableClass, id):
+    if tableClass == 'volcanoreview':
+        DeleteVolcEdit(id, conn)
+        flash('Deleted suggested modification', 'success')
+        return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
+    else:
+        flash('Deleted suggested modification', 'danger')
+    return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
 # Access ----------------------------------------------------------------------
 # Login
 @app.route('/login', methods=["GET", "POST"])

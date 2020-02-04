@@ -73,3 +73,15 @@ def addrowedits(table, df, conn):
     colname = "','".join(colname)
     # instert into db
     df.to_sql(table, con=conn, index=False, if_exists='append')
+
+
+def DeleteVolcEdit(id, conn):
+    cur = conn.cursor()
+    sql = 'DELETE FROM VolcDB1_edits WHERE id is ? ;'
+    cur.execute(sql, (id,))
+    conn.commit()
+    cur = conn.cursor()
+    sql = ("UPDATE VolcDB1 SET 'Review needed' = 'N' WHERE"
+           + " id is ? ;")
+    cur.execute(sql, (id,))
+    conn.commit()
