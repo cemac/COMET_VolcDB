@@ -302,10 +302,17 @@ def volcano_review(volcano):
                                  "ID = '" + str(volcano) + "';", conn)
     df_old = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
-    print(df_edits.volcano_number)
-    print(df_edits.columns.values)
+    df_diffs = df_old.copy()
+    for (columnName, columnData) in df_old.iteritems():
+        new = df_edits[str(columnName)].values
+        old = df_old[str(columnName)].values
+        if new == old:
+            df_diffs[str(columnName)] = 'old'
+        else:
+            df_diffs[str(columnName)] = 'new'
     return render_template('volcano_review.html.j2', data=df_edits,
-                           data_old=df_old, tableclass='all')
+                           data_old=df_old, data_diff=df_diffs,
+                           tableclass='all')
 
 
 # Access ----------------------------------------------------------------------
