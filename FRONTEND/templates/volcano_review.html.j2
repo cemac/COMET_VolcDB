@@ -15,7 +15,7 @@
 			{% if data_diff.name[0]=='new' %}
 			<h1><span style="color: red">{{data.name[0]}} (new)</span></h1>
 			{% else %}
-			<h1>{{data.name[0]}} (new)</h1>
+			<h1>{{data.name[0]}} (new additon)</h1>
 			{% endif %}
 		</header><!-- .entry-header -->
 		<div style='text-align: right'>
@@ -128,7 +128,7 @@
 					{% endif %}
 				</tr>
 			</table>
-
+{%if newvolc == 'False' %}
 			<hr>
 			<h1>{{data_old.name[0]}} (previous)</h1>
 			<table>
@@ -180,6 +180,7 @@
 					<td> {{data_old.longitude[0]}}, {{data_old.latitude[0]}} </td>
 				</tr>
 			</table>
+			{% endif %}
 		</div><!-- .entry-content -->
 	</div><!-- #content -->
 </div><!-- #primary -->

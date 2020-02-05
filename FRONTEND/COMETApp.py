@@ -250,18 +250,41 @@ def volcano_add():
     if request.method == 'POST' and form.validate():
         # Create a new line in VolcDB1 and VolcDB1_edits to get new id no
         now = dt.datetime.now().strftime("%Y-%m-%d")
-        df['date_edited'] = str(now)
-        df['owner_id'] = session['username']
+        df.date_edited = str(now)
+        df.owner_id = str(session['username'])
         df['Review needed'] = 'Y'
-        df['id'] = pd.read_sql_query("select max(id) from VolcDB1;", conn) + 1
+        df['ID'] = pd.read_sql_query("select max(id) from VolcDB1;", conn) + 1
+        # check ID no Already  exists
+        idmaxeds = pd.read_sql_query("select max(id) from VolcDB1_edits;", conn)
+        if df['ID'].values[0] <= idmaxeds.values[0]:
+            df.ID = idmaxeds + 1
+        # dummy variables to allow row creation in DATABASE
+        df.country = 'not null'
+        df.latitude = 51
+        df.longitude = 0
+        df.name = 'not null'
+        df.Area = 'not null'
+        df.owner_id = str(session['username'])
         addrowedits('VolcDB1_edits', df, conn)
         # Get each form field and update DB:
         for field in form:
-            editrow('VolcDB1', df.ID[0], field.name, str(field.data), conn)
+            if field.name == 'new_country':
+                if str(field.data) != '':
+                    field.name = 'country'
+                    editrow('VolcDB1_edits', df.ID[0], field.name,
+                            str(field.data), conn)
+                else:
+                    continue
+            if field.name == 'new_region':
+                if str(field.data) != '':
+                    field.name = 'Area'
+                    editrow('VolcDB1_edits', df.ID[0], field.name,
+                            str(field.data), conn)
+                else:
+                    continue
+            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data), conn)
         # Return with success:
-        flash('Edits successful', 'success')
-        return redirect(url_for('volcano', country=country, region=region,
-                                volcano=volcano))
+        flash('Successfully added, awaiting review', 'success')
     # Set title:
     title = "Add New Volcano"
     noedit = ['ID']
@@ -269,7 +292,8 @@ def volcano_add():
         if not request.method == 'POST':
             if field.name in noedit:
                 field.render_kw = {'readonly': 'readonly'}
-    return render_template('add.html.j2', data=df, title=title, form=form)
+    return render_template('add.html.j2',title=title, form=form,
+                           tableClass='Volcano')
 
 
 @app.route('/volcano-index/volcanointerferograms', methods=["GET"])
@@ -297,6 +321,10 @@ def volcano_review(volcano):
                                  "ID = '" + str(volcano) + "';", conn)
     df_old = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
+    newvolc = False
+    if df_old.empty:
+        df_old = df_edits
+        newvolc = True
     df_diffs = df_old.copy()
     for (columnName, columnData) in df_old.iteritems():
         new = df_edits[str(columnName)].values
@@ -307,7 +335,8 @@ def volcano_review(volcano):
             df_diffs[str(columnName)] = 'new'
     return render_template('volcano_review.html.j2', data=df_edits,
                            data_old=df_old, data_diff=df_diffs,
-                           tableClass='volcanoreview')
+                           tableClass='volcanoreview', newvolc=newvolc)
+
 
 @app.route('/delete/<string:tableClass>/<string:id>', methods=['POST'])
 @is_logged_in_as_admin
@@ -319,6 +348,7 @@ def delete_entry(tableClass, id):
     else:
         flash('not set up for this yet', 'danger')
     return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
+
 
 @app.route('/accept/<string:tableClass>/<string:id>', methods=['POST'])
 @is_logged_in_as_admin
