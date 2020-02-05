@@ -79,7 +79,8 @@ def volcanodb():
     df2 = df2.reset_index(drop=True)
     df2.columns = ['freq', 'Area']
     total = df2.freq.sum()
-    return render_template('volcano-index.html.j2', data=df2, total=total)
+    return render_template('volcano-index.html.j2', tableClass='index', data=df2,
+                           total=total)
 
 
 @app.route('/volcano-index/<string:region>', methods=["GET", "POST"])
@@ -93,8 +94,8 @@ def volcanodb_region(region):
     df2 = df2.reset_index(drop=True)
     df2.columns = ['freq', 'country']
     total = df2.freq.sum()
-    return render_template('volcano-index_bycountry.html.j2', data=df2,
-                           total=total, region=region, tableclass='region')
+    return render_template('volcano-index.html.j2', data=df2,
+                           total=total, region=region, tableClass='region')
 
 
 @app.route('/volcano-index/<string:region>-all', methods=["GET"])
