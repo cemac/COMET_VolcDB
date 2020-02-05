@@ -77,7 +77,7 @@ with open('all_volcs.json') as json_file:
 raw_data = raw_data.reset_index()
 # Save to csv
 raw_data = raw_data.rename(columns={"volcano_number": "ID"})
-raw_data.to_csv('VolcDB_df.csv')
+raw_data.to_csv('VolcDB_df.csv', index=False)
 # Save lat lons for outside plotting
 volcloc = raw_data[['name', 'latitude', 'longitude']]
 volcloc.to_csv('volc_lat_lons.csv', encoding='utf-8')

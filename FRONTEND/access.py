@@ -136,10 +136,24 @@ def is_logged_in_as_editor(f):
     @wraps(f)
     def wrap(*args, **kwargs):
         if 'logged_in' in session and (session['usertype'] == 'Collaborators'
+                                       or session['usertype'] == 'Reviewers'
                                        or session['usertype'] == 'Admins'):
             return f(*args, **kwargs)
         else:
-            flash('Unauthorised, please login as a editor/admin', 'danger')
+            flash('Unauthorised, please login as a editor/reviewer/admin',
+                  'danger')
+            return redirect(url_for('index'))
+    return wrap
+
+
+def is_logged_in_as_reviewer(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session and (session['usertype'] == 'Reviewers'
+                                       or session['usertype'] == 'Admins'):
+            return f(*args, **kwargs)
+        else:
+            flash('Unauthorised, please login as a reviewer/admin', 'danger')
             return redirect(url_for('index'))
     return wrap
 
@@ -242,8 +256,10 @@ def AssignRole(username, role, conn):
     Returns:
         commits user to database as registered user
     """
-    if str(role) not in ['Registered_Users', 'Collaborators', 'Admins']:
-        return print('Role must be one of: Registered_Users, Collaborators, Admins')
+    if str(role) not in ['Registered_Users', 'Collaborators', 'Admins',
+                         'Reviewers']:
+        return flash(('Role must be one of: \n Registered_Users,' +
+                     ' Reviewer, Collaborators, Admins'), 'danger')
     cur = conn.cursor()
     sql = "SELECT * FROM  users WHERE username is '"+f"{str(username)}"+"';"
     user = pd.read_sql_query(sql, conn)

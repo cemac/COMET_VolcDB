@@ -1,0 +1,55 @@
+<html lang="en">
+{% extends 'layout.html.j2' %}
+{% block body %}
+<div style="text-align:center; width:100%; display:block; margin:auto;">
+{% if tableclass == 'all' %}
+<h1> Volcano updates pending review </h1>
+{% elif tableclass == 'region' %}
+<h1> Volcano Index - {{region}} </h1>
+{% elif tableclass == 'country' %}
+<h1> Volcano Index - {{country}} </h1>
+{% endif %}
+</div><!-- #branding -->
+<div class="container" style="width:95%; margin:auto;">
+  <p> There are currently <b>{{total}}</b> volcanoes pending review
+ <table id="myTable"  class="display" style="width:90%">
+    <thead>
+      <tr>
+        <th>Volcano </th>
+        <th>Country </th>
+        <th>Date Edited </th>
+        <th>Author </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for index, row in data.iterrows() %}
+      <tr>
+        <td>{{row['name']}}</td>
+        <td> {{row['country']}} </td>
+        <td> {{row['date_edited']}} </td>
+        <td>{{row['owner_id']}}</td>
+        <td> <a href='/review_volcano/{{row['ID']}}'> View </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
+{% block scripts %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready(function(){
+  $('.dropdown-toggle').dropdown();
+  var table = $('#myTable').DataTable({
+    columnDefs: [
+        {targets: [-1], orderable: false}
+    ],
+      order: [[0, "asc"]],
+      stateSave: true
+  });
+});
+</script>
+{% endblock %}
+</html>
