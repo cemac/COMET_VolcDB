@@ -1,42 +1,24 @@
-<html lang="en">
 {% extends 'layout.html.j2' %}
 {% block body %}
 
-<head>
-  <!-- disp data: -->
-  <script src="{{ url_for('static',filename='COMET_JAVA/disp_data/')}}{{volcano}}.js" charset="utf-8">
-  </script>
-  <!-- prob data: -->
-  <script src="{{url_for('static',filename='COMET_JAVA/prob_data/')}}{{volcano}}.js" charset="utf-8">
-  </script>
-
-  <!-- licsar data: -->
-  <script src="{{ url_for('static',filename='COMET_JAVA/licsar_data/')}}{{volcano}}.js" charset="utf-8">
-  </script>
   <!-- plotly js: -->
-  <script src="{{ url_for('static',filename='COMET_JAVA/script/plotly.js')}}" charset="utf-8">
+  <script src="{{ url_for('static',filename='js/plotly.js')}}" charset="utf-8">
   </script>
   <!-- no ui slider js: -->
-  <script src="{{ url_for('static',filename='COMET_JAVA/script/nouislider.min.js')}}" charset="utf-8">
-  </script>
-  <!-- regression js: -->
-  <script src="{{ url_for('static',filename='COMET_JAVA/script/regression.min.js')}}" charset="utf-8">
+  <script src="{{ url_for('static',filename='js/nouislider.min.js')}}" charset="utf-8">
   </script>
   <!-- disp plotting: -->
-  <script src="{{ url_for('static',filename='COMET_JAVA/script/disp_plot.js')}}" charset="utf-8" defer>
+  <script src="{{ url_for('static',filename='js/disp_plot.js')}}" charset="utf-8">
   </script>
   <!-- prob images: -->
-
-  <script src="{{ url_for('static',filename='COMET_JAVA/script/prob_images.js')}}" charset="utf-8" defer>
-  </script>
-  <!-- licsar images: -->
-  <script src="{{ url_for('static',filename='COMET_JAVA/script/licsar_images.js')}}" charset="utf-8" defer>
+  <script src="{{ url_for('static',filename='js/s1_images.js')}}" charset="utf-8">
   </script>
   <!-- full screen images: -->
-  <script src="{{ url_for('static',filename='COMET_JAVA/script/fs_images.js')}}" charset="utf-8" defer>
+  <script src="{{ url_for('static',filename='js/fs_images.js')}}" charset="utf-8">
   </script>
-
-</head>
+  <!-- page set up / functions: -->
+  <script src="{{ url_for('static',filename='js/s1_analysis.js')}}" charset="utf-8">
+  </script>
 
 <div>
   <div>
@@ -49,7 +31,7 @@
       }
     </style>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/nouislider.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/rich_style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/s1_analysis.css')}}">
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <header>
       <h1>{{data.name[0]}} {{data.ID[0]}} </h1>
@@ -62,86 +44,122 @@
       <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
       {% endif %}
     </ul>
-    <div>
-<div style="text-align:center; width:100%; display:block; margin:auto;">
+   <div>
+<div style="width:100%; display:block; margin:auto;">
 
-      <script>
-        var frame_json = {{frame}}
-        var url = "{{ url_for('static',filename='COMET_JAVA/')}}";
-        var volcano_name = '{{volcano}}';
-        var prob_img_prefix = 'prob_images/' + volcano_name + '/';
-        var lics_img_prefix = 'licsar_images/' + volcano_name + '/';
-      </script>
-      <!-- plots: -->
-      <div class='disp_plot_container' id='disp_plot_container'>
-        <div class='disp_plot' id='heatmap_plot' style="text-align:center; width:40%; display:block; margin:auto;">
-        </div>
-        <div class='disp_plot' id='ts_plot' style="text-align:center; width:40%; display:block; margin:auto;">
-        </div>
+    <script>
+      var this_frame = {{ frame }};
+      var volcano_name = '{{ volcano }}';
+      var volcano_region = this_frame['region'];
+      var volcano_frames = this_frame['frames'];
+
+      var js_data_prefix = '/data/';
+      var disp_data_prefix = 'disp_data';
+      var licsar_data_prefix = 'licsar_data';
+      var prob_data_prefix = 'prob_data';
+      var prob_imgs_prefix = '/images/prob_images/';
+      var licsar_imgs_prefix = '/images/licsar_images/';
+      var data_href_prefix = 'http://gws-access.ceda.ac.uk/public/nceo_geohazards/LiCSAR_products';
+    </script>
+
+    <!-- frame selection: -->
+    <div class="s1_frame"
+         id="s1_frame">
+      <h2>Sentinel 1 Frame</h2>
+      <div class="frame_id_control"
+           id="frame_id_control">
       </div>
-      <!-- plot controls: -->
-      <div class='plot_control_container' id='plot_control_container' style="text-align:center; width:100%; display:block; margin:auto;">
-        <div class='data_type_control' id='data_type_control'>
-          <button id="data_type_button_disp" onclick="disp_plot('raw');">
+    </div>
+
+    <!-- plots: -->
+    <div class="disp_plot_container"
+         id="disp_plot_container">
+      <div class="disp_plot"
+           id="heatmap_plot">
+      </div>
+      <div class="disp_plot"
+           id="ts_plot">
+      </div>
+    </div>
+    <!-- plot controls: -->
+    <div class="plot_control_container"
+         id="plot_control_container">
+      <div class="data_type_control"
+           id="data_type_control">
+          <button id="data_type_button_disp"
+                  onclick="disp_plot('raw');">
             displacement
           </button>
-          <button id="data_type_button_coh" onclick="disp_plot('coh');">
+          <button id="data_type_button_coh"
+                  onclick="disp_plot('coh');">
             coherence
           </button>
-        </div>
-        <div class='click_mode_control' id='click_modee_control'>
-          <button id="click_mode_button_select" onclick="set_click_mode('select');">
-            select
-          </button>
-          <button id="click_mode_button_ref" onclick="set_click_mode('ref');">
-            reference
-          </button>
-        </div>
-        <p>
-        <div class='data_range_control' id='data_range_control' style="text-align:center; width:100%; margin:auto;">
-        </div>
-        <div class='data_range_value' id='data_range_value'>
-        </div>
       </div>
-
-
-      <!-- probability images: -->
-      <div class='prob_image_container' id='prob_image_container' style="text-align:center; width:40%; margin:auto;">
-        <div class='prob_image' id='prob_image'>
-          <img class="prob_image_img fs_img" id="prob_image_img" src="">
-          </img>
-        </div>
-        <p>
-        <div class='prob_image_control' id='prob_image_control' style="text-align:center; width:100%; margin:auto;">
-        </div>
-        <div class='prob_image_value' id='prob_image_value'>
-        </div>
+      <div class="click_mode_control"
+           id="click_mode_control">
+          <button id="click_mode_button_select"
+                  onclick="set_click_mode('select');">
+            point to plot
+          </button>
+          <button id="click_mode_button_ref"
+                  onclick="set_click_mode('ref');">
+            reference pixel or area
+          </button>
       </div>
+      <div class="data_range_control"
+           id="data_range_control">
+      </div>
+      <div class="data_range_value"
+           id="data_range_value">
+      </div>
+    </div>
 
-      <hr>
+    <hr>
 
-      <!-- licsar images: -->
-      <div class='licsar_image_container' id='licsar_image_container'>
-        <div class='licsar_image' id='licsar_image'>
-          <img class="licsar_img fs_img" id="licsar_cc_img" src="">
-          </img>
-          <!--
-        <img class="licsar_img fs_img"
-             id="licsar_mag_img"
+    <!-- s1 images: -->
+    <div class="s1_image_container"
+         id="s1_image_container">
+      <div class="s1_imgs"
+           id="s1_imgs">
+        <img class="s1_img fs_img"
+             id="s1_cc_img"
              src="">
-        </img>
--->
-          <img class="licsar_img fs_img" id="licsar_pha_img" src="">
-          </img>
-          <img class="licsar_img fs_img" id="licsar_unw_img" src="">
-          </img>
-        </div>
-        <p>
-        <div class='licsar_image_control' id='licsar_image_control' style="text-align:center; width:80%; margin:auto;">
-        </div>
-        <div class='licsar_image_value' id='licsar_image_value'>
-        </div>
+        <img class="s1_img fs_img"
+             id="s1_pha_img"
+             src="">
+        <img class="s1_img fs_img"
+             id="s1_unw_img"
+             src="">
+        <img class="s1_img fs_img"
+             id="s1_prob_img"
+             src="">
       </div>
+      <div class="s1_image_control"
+           id="s1_image_control">
+      </div>
+      <div class="s1_image_value"
+           id="s1_image_value">
+      </div>
+      <div class="s1_data"
+           id="s1_data">
+        <h2>Data Downloads</h2>
+        <table class="s1_data_links"
+              id="s1_data_links">
+        </table>
+      </div>
+
+    </div>
+
+    <!-- full screen images: -->
+    <div id="fs_img_div"
+         class="fs_img_div">
+      <span id="fs_img_close"
+            class="fs_img_close">&times;</span>
+      <img id="fs_img_img"
+           class="fs_img_img"
+           src="">
+    </div>
+
 
     </div><!-- .entry-content -->
   </div><!-- #content -->
@@ -151,7 +169,6 @@
 <div id="fs_img_div" class="fs_img_div">
   <span id="fs_img_close" class="fs_img_close">&times;</span>
   <img id="fs_img_img" class="fs_img_img" src="">
-</div>
 </div>
 {% endblock %}
 
