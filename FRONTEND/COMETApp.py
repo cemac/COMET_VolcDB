@@ -259,8 +259,12 @@ def volcano_add():
         df['ID'] = pd.read_sql_query("select max(id) from VolcDB1;", conn) + 1
         # check ID no Already  exists
         idmaxeds = pd.read_sql_query("select max(id) from VolcDB1_edits;", conn)
-        if df['ID'].values[0] <= idmaxeds.values[0]:
-            df.ID = idmaxeds + 1
+        # if the edit databas is empty
+        try:
+            if df['ID'].values[0] <= idmaxeds.values[0]:
+                df.ID = idmaxeds + 1
+        except TypeError:
+            pass
         # dummy variables to allow row creation in DATABASE
         df.country = 'not null'
         df.latitude = 51
@@ -326,10 +330,10 @@ def volcano_review(volcano):
                                  "ID = '" + str(volcano) + "';", conn)
     df_old = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
-    newvolc = False
+    newvolc = 'False'
     if df_old.empty:
         df_old = df_edits
-        newvolc = True
+        newvolc = 'True'
     df_diffs = df_old.copy()
     for (columnName, columnData) in df_old.iteritems():
         new = df_edits[str(columnName)].values
@@ -471,7 +475,7 @@ def add():
         formdata = []
         for f, field in enumerate(form):
             formdata.append(field.data)
-        InsertUser(formdata[0], formdata[1], conn)
+        InsertUser(formdata[0], formdata[1], connuser)
         flash('User Added', 'success')
         return redirect(url_for('add', tableClass='Users'))
     return render_template('add.html.j2', title='Add Users', tableClass='Users',
@@ -511,7 +515,7 @@ def access(id):
     # If user submits edit entry form:
     if request.method == 'POST' and form.validate():
         new_role = form.Role.data
-        AssignRole(user.username[0], new_role, conn)
+        AssignRole(user.username[0], new_role, connuser)
         # Return with success
         flash('Edits successful', 'success')
         return redirect(url_for('ViewOrAddUsers'))

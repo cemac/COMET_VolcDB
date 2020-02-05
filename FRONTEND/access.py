@@ -136,10 +136,12 @@ def is_logged_in_as_editor(f):
     @wraps(f)
     def wrap(*args, **kwargs):
         if 'logged_in' in session and (session['usertype'] == 'Collaborators'
+                                       or session['usertype'] == 'Reviewers'
                                        or session['usertype'] == 'Admins'):
             return f(*args, **kwargs)
         else:
-            flash('Unauthorised, please login as a editor/admin', 'danger')
+            flash('Unauthorised, please login as a editor/reviewer/admin',
+                  'danger')
             return redirect(url_for('index'))
     return wrap
 
@@ -147,7 +149,7 @@ def is_logged_in_as_editor(f):
 def is_logged_in_as_reviewer(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'logged_in' in session and (session['usertype'] == 'reviewer'
+        if 'logged_in' in session and (session['usertype'] == 'Reviewers'
                                        or session['usertype'] == 'Admins'):
             return f(*args, **kwargs)
         else:
