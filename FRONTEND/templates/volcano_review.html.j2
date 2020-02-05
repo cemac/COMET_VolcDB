@@ -13,9 +13,11 @@
 		</style>
 		<header>
 			{% if data_diff.name[0]=='new' %}
-			<h1><span style="color: red">{{data.name[0]}} (new)</span></h1>
-			{% else %}
-			<h1>{{data.name[0]}} (new additon)</h1>
+			<h1><span style="color: red">{{data.name[0]}}</span></h1>
+			{% elif newvolc == 'True' %}
+			<h1><span style="color: red">{{data.name[0]}} (new entry)</span></h1>
+				{% else %}
+			<h1>{{data.name[0]}} </h1>
 			{% endif %}
 		</header><!-- .entry-header -->
 		<div style='text-align: right'>

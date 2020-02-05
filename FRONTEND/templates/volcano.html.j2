@@ -36,7 +36,7 @@
 			{% else %}
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/cemac_analysis_pages">Explore Sentinel-1 imagery</a></li>
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/download">Export as CSV</a></li>
-			{% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
+			{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
 			{% if pending != 'Y' %}
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
 			{% endif %}
