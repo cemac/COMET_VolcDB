@@ -33,7 +33,7 @@ app = Flask(__name__)
 # Connect to database
 DATABASE = 'volcano.db'
 # Separate user database to keep user info Separate
-USERDATABASE = 'user.db'
+USERDATABASE = 'users.db'
 assert os.path.exists(DATABASE), "Unable to locate database"
 app.secret_key = 'secret'
 conn = sqlite3.connect(DATABASE, check_same_thread=False)
@@ -191,7 +191,7 @@ def export_as_csv(region, country, volcano):
 
 @app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/edit',
            methods=["GET", "POST"])
-@is_logged_in
+@is_logged_in_as_editor
 def volcano_edit(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
@@ -241,7 +241,7 @@ def volcano_edit(country, region, volcano):
 
 
 @app.route('/add/Volcano',  methods=["GET", "POST"])
-@is_logged_in
+@is_logged_in_as_editor
 def volcano_add():
     # get headers
     df = pd.read_sql_query("select * from  'VolcDB1' limit 0  ", conn)
@@ -310,6 +310,7 @@ def volcanodetails():
 
 
 @app.route('/review', methods=["GET"])
+@is_logged_in_as_reviewer
 def volcanodb_reviewlist():
     df = pd.read_sql_query("SELECT * FROM VolcDB1_edits ;", conn)
     df = df[df.Area != 'none']
@@ -319,6 +320,7 @@ def volcanodb_reviewlist():
 
 
 @app.route('/review_volcano/<string:volcano>', methods=["GET"])
+@is_logged_in_as_reviewer
 def volcano_review(volcano):
     df_edits = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
                                  "ID = '" + str(volcano) + "';", conn)
@@ -342,7 +344,7 @@ def volcano_review(volcano):
 
 
 @app.route('/delete/<string:tableClass>/<string:id>', methods=['POST'])
-@is_logged_in_as_admin
+@is_logged_in_as_reviewer
 def delete_entry(tableClass, id):
     if tableClass == 'volcanoreview':
         DeleteVolcEdit(id, conn)
@@ -354,7 +356,7 @@ def delete_entry(tableClass, id):
 
 
 @app.route('/accept/<string:tableClass>/<string:id>', methods=['POST'])
-@is_logged_in_as_admin
+@is_logged_in_as_reviewer
 def accept_entry(tableClass, id):
     if tableClass == 'volcanoreview':
         AcceptVolcEdit(id, conn)
@@ -437,7 +439,7 @@ def admininfo():
 @app.route('/admin/users', methods=['GET', 'POST'])
 @is_logged_in_as_admin
 def ViewOrAddUsers():
-    df = pd.read_sql_query("SELECT * FROM Users ;", connuser)
+    df = pd.read_sql_query("SELECT * FROM users ;", connuser)
     df['password'] = '********'
     # add roles
     u2r = pd.read_sql_query("SELECT * FROM users_roles ;", connuser)
@@ -481,7 +483,7 @@ def add():
 @is_logged_in_as_admin
 def delete(tableClass, id):
     # Retrieve DB entry:
-    user = pd.read_sql_query("SELECT * FROM Users where id = " + id + " ;",
+    user = pd.read_sql_query("SELECT * FROM users where id = " + id + " ;",
                              connuser)
     username = user.username
     DeleteUser(username[0], connuser)
@@ -494,9 +496,9 @@ def delete(tableClass, id):
 @is_logged_in_as_admin
 def access(id):
     form = AccessForm(request.form)
-    form.Role.choices = table_list('roles', 'name', conn)[1:]
+    form.Role.choices = table_list('roles', 'name', connuser)[1:]
     # Retrieve user DB entry:
-    user = pd.read_sql_query("SELECT * FROM Users where id = " + id + " ;",
+    user = pd.read_sql_query("SELECT * FROM users where id = " + id + " ;",
                              connuser)
     if user.empty:
         abort(404)
