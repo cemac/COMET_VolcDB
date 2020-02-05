@@ -255,7 +255,7 @@ def AssignRole(username, role, conn):
         commits user to database as registered user
     """
     if str(role) not in ['Registered_Users', 'Collaborators', 'Admins',
-                         'Reviewer']:
+                         'Reviewers']:
         return flash(('Role must be one of: \n Registered_Users,' +
                      ' Reviewer, Collaborators, Admins'), 'danger')
     cur = conn.cursor()

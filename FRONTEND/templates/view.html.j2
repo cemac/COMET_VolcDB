@@ -7,7 +7,7 @@
 <p> List of Users and their current assigned site role </p>
 {% endif %}
 {% if editLink == "edit" %}
-<a class="btn btn-success" href="/add/{{tableClass}}" role="button"><b>+</b> Add entry</a>
+<a class="btn btn-success" href="/add/{{tableClass}}" role="button"><b>&#10010;</b> Add entry</a>
 {% endif %}
 <div>
   <table id="myTable"  class="display" style="width:100%">
@@ -36,7 +36,7 @@
         <td>
           <form action=/delete/{{tableClass}}/{{row['id']}} method="post" onsubmit="return confirm('Are you sure?');">
             <input type="hidden" name="_method" value="DELETE">
-            <input type="submit" value="Delete" class="btn btn-danger">
+            <input type="submit" value="Delete" class="btn btn-danger pull-right">
           </form>
         </td>
         {% endif %}
