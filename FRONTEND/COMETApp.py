@@ -9,7 +9,7 @@ Example:
 Attributes:
     endMonth(int): Project length in months
 
-.. CEMAC_stomtracking:
+.. CEMAC_COMETApp:
    https://github.com/cemac/COMET_VolcDB
 '''
 from flask import Flask, render_template, flash, redirect, url_for, request
@@ -32,9 +32,12 @@ from interactivemap import *
 app = Flask(__name__)
 # Connect to database
 DATABASE = 'volcano.db'
+# Separate user database to keep user info Separate
+USERDATABASE = 'user.db'
 assert os.path.exists(DATABASE), "Unable to locate database"
 app.secret_key = 'secret'
 conn = sqlite3.connect(DATABASE, check_same_thread=False)
+connuser = sqlite3.connect(USERDATABASE, check_same_thread=False)
 counter = 1
 
 
@@ -371,7 +374,7 @@ def login():
         # Get form fields
         username = request.form['username']
         password_candidate = request.form['password']
-        user_login(username, password_candidate, conn)
+        user_login(username, password_candidate, connuser)
         return redirect(url_for('index'))
     if request.method == 'GET':
         return render_template('login.html.j2')
@@ -394,7 +397,7 @@ def change_pwd():
     form = ChangePwdForm(request.form)
     if request.method == 'POST' and form.validate():
         user = pd.read_sql_query("SELECT * FROM users where username is '"
-                                 + username + "' ;", conn)
+                                 + username + "' ;", connuser)
         password = user.password[0]
         current = form.current.data
         if sha256_crypt.verify(current, password):
@@ -434,11 +437,11 @@ def admininfo():
 @app.route('/admin/users', methods=['GET', 'POST'])
 @is_logged_in_as_admin
 def ViewOrAddUsers():
-    df = pd.read_sql_query("SELECT * FROM Users ;", conn)
+    df = pd.read_sql_query("SELECT * FROM Users ;", connuser)
     df['password'] = '********'
     # add roles
-    u2r = pd.read_sql_query("SELECT * FROM users_roles ;", conn)
-    roles = pd.read_sql_query("SELECT * FROM roles ;", conn)
+    u2r = pd.read_sql_query("SELECT * FROM users_roles ;", connuser)
+    roles = pd.read_sql_query("SELECT * FROM roles ;", connuser)
     u2r2 = pd.merge(u2r, roles, on='group_id')
     del u2r2['group_id']
     usersandroles = pd.merge(df, u2r2, on='id', how='outer')
@@ -479,9 +482,9 @@ def add():
 def delete(tableClass, id):
     # Retrieve DB entry:
     user = pd.read_sql_query("SELECT * FROM Users where id = " + id + " ;",
-                             conn)
+                             connuser)
     username = user.username
-    DeleteUser(username[0], conn)
+    DeleteUser(username[0], connuser)
     flash('User Deleted', 'success')
     return redirect(url_for('ViewOrAddUsers'))
 
@@ -494,15 +497,15 @@ def access(id):
     form.Role.choices = table_list('roles', 'name', conn)[1:]
     # Retrieve user DB entry:
     user = pd.read_sql_query("SELECT * FROM Users where id = " + id + " ;",
-                             conn)
+                             connuser)
     if user.empty:
         abort(404)
     # Retrieve all current role
     u2r = pd.read_sql_query("SELECT * FROM users_roles WHERE id = " + id +
-                            ";", conn)
+                            ";", connuser)
     gid = u2r.group_id[0]
     current_role = pd.read_sql_query("SELECT * FROM roles WHERE group_id = "
-                                     + str(gid) + ";", conn)
+                                     + str(gid) + ";", connuser)
     # If user submits edit entry form:
     if request.method == 'POST' and form.validate():
         new_role = form.Role.data
