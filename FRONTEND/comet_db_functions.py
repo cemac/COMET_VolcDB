@@ -105,3 +105,10 @@ def AcceptVolcEdit(id, conn):
     sql = 'DELETE FROM VolcDB1_edits WHERE id is ? ;'
     cur.execute(sql, (id,))
     conn.commit()
+
+
+def DeleteVolc(id, conn):
+    cur = conn.cursor()
+    sql = 'DELETE FROM VolcDB1 WHERE id is ? ;'
+    cur.execute(sql, (id,))
+    conn.commit()
