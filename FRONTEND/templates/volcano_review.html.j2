@@ -1,0 +1,192 @@
+<html lang="en">
+{% extends 'layout.html.j2' %}
+{% block body %}
+<div>
+	<div>
+		<style type="text/css">
+			.acf-map {
+				width: 70%;
+				height: 500px;
+				border: #ccc solid 1px;
+				margin: 20px 0;
+			}
+		</style>
+		<header>
+			{% if data_diff.name[0]=='new' %}
+			<h1><span style="color: red">{{data.name[0]}}</span></h1>
+			{% elif newvolc == 'True' %}
+			<h1><span style="color: red">{{data.name[0]}} (new entry)</span></h1>
+				{% else %}
+			<h1>{{data.name[0]}} </h1>
+			{% endif %}
+		</header><!-- .entry-header -->
+		<div style='text-align: right'>
+		<form action=/delete/{{tableClass}}/{{data.ID[0]}} method="post" onsubmit="return confirm('Are you sure?');">
+			<input type="hidden" name="_method" value="delete">
+			<input type="submit" value="delete &#10008;" class="btn btn-danger pull-right">
+		</form>
+		<form action=/accept/{{tableClass}}/{{data.ID[0]}} method="post" onsubmit="return confirm('Are you sure?');">
+			<input type="hidden" name="_method" value="accept">
+			<input type="submit" value="accept &#10004;" class="btn btn-success pull-right">
+		</form>
+		<a href="/review" class="btn btn-info" role="button">&#8592; Back</a>
+	</div>
+		<div>
+			<table>
+				<tr>
+					<th>Volcano number:</th>
+					<td>{{data.ID[0]}}</td>
+				</tr>
+				<tr>
+					{% if data_diff.Area[0]=='new' %}
+					<th><span style="color: red">Region: </span></th>
+					<td><span style="color: red">{{data.Area[0]}}</span></td>
+					{% else %}
+					<th>Region:</th>
+					<td>{{data.Area[0]}}</td>
+					{% endif %}
+
+				</tr>
+				<tr>
+					{% if data_diff.country[0]=='new' %}
+					<th><span style="color: red">Country:</span></th>
+					<td><span style="color: red">{{data.country[0]}}</span></td>
+					{% else %}
+					<th>Country:</th>
+					<td>{{data.country[0]}}</td>
+					{% endif %}
+				</tr>
+				<tr>
+					{% if data_diff.geodetic_measurements[0]=='new' %}
+
+					<th><span style="color: red"> Geodetic measurements?</span></th>
+					<td><span style="color: red"> {{data.geodetic_measurements[0]}}</span></td>
+					{% else %}
+					<th>Geodetic measurements?</th>
+					<td>{{data.geodetic_measurements[0]}}</td>
+					{% endif %}
+				</tr>
+				<tr>
+					{% if data_diff.deformation_observation[0]=='new' %}
+					<th><span style="color: red"> Deformation observation?</span></th>
+					<td><span style="color: red"> {{data.deformation_observation[0]}}</span></td>
+					{% else %}
+					<th>Deformation observation?</th>
+					<td>{{data.deformation_observation[0]}}</td>
+					{% endif %}
+				</tr>
+				<tr>
+					{% if data_diff.measurement_methods[0]=='new' %}
+					<th><span style="color: red"> Measurement method(s):</span></th>
+					<td><span style="color: red"> {{data.measurement_methods[0]}}</span></td>
+					{% else %}
+					<th>Measurement method(s):</th>
+					<td>{{data.measurement_methods[0]}}</td>
+					{% endif %}
+				</tr>
+				<tr>
+					{% if data_diff.duration_of_observation[0]=='new' %}
+					<th><span style="color: red"> Duration of observation:</span></th>
+					<td><span style="color: red"> {{data.duration_of_observation[0]}}</span></td>
+					{% else %}
+					<th>Duration of observation:</th>
+					<td>{{data.duration_of_observation[0]}}</td>
+					{% endif %}
+				</tr>
+				<tr>
+					{% if data_diff.inferred_causes[0]=='new' %}
+					<th><span style="color: red"> Inferred cause of deformation: </span></th>
+					<td><span style="color: red"> {{data.inferred_causes[0]}} </span></td>
+					{% else %}
+					<th> Inferred cause of deformation: </th>
+					<td>{{data.inferred_causes[0]}}</td>
+					{% endif %}
+				</tr>
+				<tr>
+					{% if data_diff.characteristics_of_deformation[0]=='new' %}
+					<th><span style="color: red"> Characteristics of deformation:</span></th>
+					<td><span style="color: red"> {{data.characteristics_of_deformation[0]}}</span></td>
+					{% else %}
+					<th>Characteristics of deformation:</th>
+					<td>{{data.characteristics_of_deformation[0]}}</td>
+					{% endif %}
+				</tr>
+				<tr>
+					{% if data_diff.references[0][1:-1]=='new' %}
+					<th><span style="color: red"> References:</span></th>
+					<td><span style="color: red"> {{data.references[0][1:-1]}}</span></td>
+					{% else %}
+					<th>References:</th>
+					<td>{{data.references[0][1:-1]}}</td>
+					{% endif %}
+				</tr>
+				<tr>
+					{% if data_diff.longitude[0]=='new' or data_diff.latitude[0]=='new' %}
+					<th><span style="color: red"> Location:</span></th>
+					<td><span style="color: red"> {{data.longitude[0]}}, {{data.latitude[0]}}</span> </td>
+					{% else %}
+					<th>Location:</th>
+					<td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
+					{% endif %}
+				</tr>
+			</table>
+{%if newvolc == 'False' %}
+			<hr>
+			<h1>{{data_old.name[0]}} (previous)</h1>
+			<table>
+				<!-- .entry-header -->
+				<tr>
+					<th>Volcano number:</th>
+					<td>{{data_old.ID[0]}}</td>
+				</tr>
+				<tr>
+					<th>Region:</th>
+					<td>{{data_old.Area[0]}}</td>
+				</tr>
+				<tr>
+					<th>Country:</th>
+					<td>{{data_old.country[0]}}</td>
+				</tr>
+				<tr>
+					<th>Geodetic measurements?</th>
+					<td>{{data_old.geodetic_measurements[0]}}</td>
+				</tr>
+				<tr>
+					<th>Deformation observation?</th>
+					<td>{{data_old.deformation_observation[0]}}</td>
+				</tr>
+				<tr>
+					<th>Measurement method(s):</th>
+					<td>{{data_old.measurement_methods[0]}}</td>
+				</tr>
+				<tr>
+					<th>Duration of observation:</th>
+					<td>{{data_old.duration_of_observation[0]}}</td>
+				</tr>
+				<tr>
+					<th>Inferred cause of deformation:</th>
+					<td>{{data_old.inferred_causes[0]}}</td>
+				</tr>
+				<tr>
+					<th>Characteristics of deformation:</th>
+					<td>
+						{{data_old.characteristics_of_deformation[0]}}
+					</td>
+				</tr>
+				<tr>
+					<th>References:</th>
+					<td>{{data_old.references[0][1:-1]}}</td>
+				</tr>
+				<tr>
+					<th>Location:</th>
+					<td> {{data_old.longitude[0]}}, {{data_old.latitude[0]}} </td>
+				</tr>
+			</table>
+			{% endif %}
+		</div><!-- .entry-content -->
+	</div><!-- #content -->
+</div><!-- #primary -->
+</div><!-- #main .wrapper -->
+{% endblock %}
+
+</html>

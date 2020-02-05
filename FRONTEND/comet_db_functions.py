@@ -1,5 +1,5 @@
 import sqlite3
-
+import pandas as pd
 
 # Connect to DB
 def get_db():
@@ -57,6 +57,58 @@ def addrow(table, df, conn):
     # Set up to autoincrement id number
     # NB as a column is called key word references it must include '' round
     # col name
-    sql = ("insert into " + str(table) + ' (' + str(colname) + "') VALUES (?);")
+    sql = ("insert into " + str(table) + ' (' + str(colname)
+           + "') VALUES (?);")
     cur.execute(sql, str(df.values))
+    conn.commit()
+
+
+def addrowedits(table, df, conn):
+    """
+    table(str)
+    datafram(df) = headers match column name
+    """
+    # remove odd Unnamed: 0 column
+    colname = df.columns.values
+    colname = "','".join(colname)
+    id = df.ID.values[0]
+    # instert into db
+    cur = conn.cursor()
+    sql = 'DELETE FROM VolcDB1_edits WHERE ID = '+str(id)+' ;'
+    cur.execute(sql)
+    conn.commit()
+    df.to_sql(table, con=conn, index=False, if_exists='append')
+
+
+def DeleteVolcEdit(id, conn):
+    cur = conn.cursor()
+    sql = 'DELETE FROM VolcDB1_edits WHERE id is ? ;'
+    cur.execute(sql, (id,))
+    conn.commit()
+    cur = conn.cursor()
+    sql = ("UPDATE VolcDB1 SET 'Review needed' = 'N' WHERE"
+           + " id is ? ;")
+    cur.execute(sql, (id,))
+    conn.commit()
+
+
+def AcceptVolcEdit(id, conn):
+    df_edits = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+                                 "ID = '" + str(id) + "';", conn)
+    df_edits['Review needed'] = 'N'
+    cur = conn.cursor()
+    sql = 'DELETE FROM VolcDB1 WHERE id is ? ;'
+    cur.execute(sql, (id,))
+    conn.commit()
+    df_edits.to_sql('VolcDB1', con=conn, index=False, if_exists='append')
+    cur = conn.cursor()
+    sql = 'DELETE FROM VolcDB1_edits WHERE id is ? ;'
+    cur.execute(sql, (id,))
+    conn.commit()
+
+
+def DeleteVolc(id, conn):
+    cur = conn.cursor()
+    sql = 'DELETE FROM VolcDB1 WHERE id is ? ;'
+    cur.execute(sql, (id,))
     conn.commit()

@@ -4,6 +4,13 @@
 <div style="text-align:center; width:100%; display:block; margin:auto;">
 {% if tableclass == 'all' %}
 <h1> Volcano Index </h1>
+{% if session.username == "admin" or session.usertype == "Admins" or session.usertype == "Reviewers"
+or session.usertype == "Collaborators"%}
+	<form action=/add/Volcano method="get" onsubmit="return ;">
+			<input type="hidden" name="_method" value="accept">
+			<input type="submit" value="&#10010; add" class="btn btn-success pull-right">
+		</form>
+		{% endif %}
 {% elif tableclass == 'region' %}
 <h1> Volcano Index - {{region}} </h1>
 {% elif tableclass == 'country' %}
@@ -75,9 +82,11 @@ $(document).ready(function(){
     columnDefs: [
         {targets: [-1], orderable: false}
     ],
-      order: [[0, "asc"]]
+      order: [[0, "asc"]],
+			stateSave: true
   });
 });
+
 </script>
 {% endblock %}
 </html>

@@ -9,7 +9,7 @@ Example:
 Attributes:
     endMonth(int): Project length in months
 
-.. CEMAC_stomtracking:
+.. CEMAC_COMETApp:
    https://github.com/cemac/COMET_VolcDB
 '''
 from flask import Flask, render_template, flash, redirect, url_for, request
@@ -32,9 +32,12 @@ from interactivemap import *
 app = Flask(__name__)
 # Connect to database
 DATABASE = 'volcano.db'
+# Separate user database to keep user info Separate
+USERDATABASE = 'users.db'
 assert os.path.exists(DATABASE), "Unable to locate database"
 app.secret_key = 'secret'
 conn = sqlite3.connect(DATABASE, check_same_thread=False)
+connuser = sqlite3.connect(USERDATABASE, check_same_thread=False)
 counter = 1
 
 
@@ -45,7 +48,7 @@ def close_connection(exception):
         conn.close()
 
 
-# Index
+# Index ----------------------------------------------------------------------
 
 @app.route('/', methods=["GET"])
 def index():
@@ -53,7 +56,8 @@ def index():
     df = df[df.Area != 'none']
     df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
     volcinfo = df[['name', 'latitude', 'longitude', 'Area', 'country']]
-    return render_template('home.html.j2', volcinfo=json.dumps(volcinfo.values.tolist()))
+    return render_template('home.html.j2',
+                           volcinfo=json.dumps(volcinfo.values.tolist()))
 
 
 @app.route("/")
@@ -64,6 +68,7 @@ def hitcounter():
 
 
 # Volcano Database -----------------------------------------------------------
+
 @app.route('/volcano-index', methods=["GET"])
 def volcanodb():
     df = pd.read_sql_query("SELECT AREA FROM VolcDB1;", conn)
@@ -74,7 +79,8 @@ def volcanodb():
     df2 = df2.reset_index(drop=True)
     df2.columns = ['freq', 'Area']
     total = df2.freq.sum()
-    return render_template('volcano-index.html.j2', data=df2, total=total)
+    return render_template('volcano-index.html.j2', tableClass='index', data=df2,
+                           total=total)
 
 
 @app.route('/volcano-index/<string:region>', methods=["GET", "POST"])
@@ -88,8 +94,8 @@ def volcanodb_region(region):
     df2 = df2.reset_index(drop=True)
     df2.columns = ['freq', 'country']
     total = df2.freq.sum()
-    return render_template('volcano-index_bycountry.html.j2', data=df2,
-                           total=total, region=region, tableclass='region')
+    return render_template('volcano-index.html.j2', data=df2,
+                           total=total, region=region, tableClass='region')
 
 
 @app.route('/volcano-index/<string:region>-all', methods=["GET"])
@@ -108,11 +114,13 @@ def volcanodb_country(country, region):
     # select country
     df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1 WHERE " +
-                           "country = '" + str(country.replace('_', '/')) + "';", conn)
+                           "country = '" + str(country.replace('_', '/')) +
+                           "';", conn)
     total = len(df.index)
     country.replace('/', '_')
     return render_template('volcano-index_all.html.j2', data=df, total=total,
-                           country=country, region=region, tableclass='country')
+                           country=country, region=region,
+                           tableclass='country')
 
 
 @app.route('/volcano-index/Search-All', methods=["GET"])
@@ -133,8 +141,19 @@ def volcano(country, region, volcano):
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
-    return render_template('volcano.html.j2', data=df, country=country, region=region, id=id)
-
+    # If there is a pending update
+    pending = df['Review needed'].values
+    editor = False
+    if pending == 'Y':
+        dfeds = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+                                  "name = '" + str(volcano) + "';", conn)
+        if dfeds.owner_id.values[0] == session['username']:
+            editor = True
+    else:
+        dfeds = None
+    return render_template('volcano.html.j2', data=df, country=country,
+                           region=region, id=id, pending=pending,
+                           editor=editor, edits=dfeds)
 
 
 @app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/cemac_analysis_pages',
@@ -147,6 +166,8 @@ def volcano_analysis(country, region, volcano):
                                "ID = '" + str(volcano) + "';", conn)
     volcano_name = str(volcano).replace(" ", "_").lower()
     frame = df.frames[0]
+    if frame == '':
+        frame = 'none'
     return render_template('cemac_analysis_pages.html.j2', data=df,
                            country=country, region=region,
                            frame=frame, volcano=volcano_name)
@@ -171,22 +192,36 @@ def export_as_csv(region, country, volcano):
 
 @app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/edit',
            methods=["GET", "POST"])
-@is_logged_in
+@is_logged_in_as_editor
 def volcano_edit(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
+    pending = df['Review needed'].values[0]
+    if pending == 'Y':
+        df = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+                               "name = '" + str(volcano) + "';", conn)
+        if len(df.index) == 0:
+            df = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+                                   "ID = '" + str(volcano) + "';", conn)
     form = eval("Volcano_edit_Form")(request.form)
     form.geodetic_measurements.choices = yesno_list()
     form.deformation_observation.choices = yesno_list()
     if request.method == 'POST' and form.validate():
         # Get each form field and update DB:
+        now = dt.datetime.now().strftime("%Y-%m-%d")
+        df['date_edited'] = str(now)
+        df['owner_id'] = session['username']
+        addrowedits('VolcDB1_edits', df, conn)
         for field in form:
-            editrow('VolcDB1', df.ID[0], field.name, str(field.data), conn)
+            editrow('VolcDB1_edits', df.ID[0],
+                    field.name, str(field.data), conn)
+        # Save to edit database
+        editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
         # Return with success:
-        flash('Edits successful', 'success')
+        flash('Success! Edits awaiting approval', 'success')
         return redirect(url_for('volcano', country=country, region=region,
                                 volcano=volcano))
     # Set title:
@@ -206,9 +241,8 @@ def volcano_edit(country, region, volcano):
                            country=country, region=region, volcano=volcano)
 
 
-@app.route('/volcano-index/add',
-           methods=["GET", "POST"])
-@is_logged_in
+@app.route('/add/Volcano',  methods=["GET", "POST"])
+@is_logged_in_as_editor
 def volcano_add():
     # get headers
     df = pd.read_sql_query("select * from  'VolcDB1' limit 0  ", conn)
@@ -218,21 +252,56 @@ def volcano_add():
     form.Area.choices = option_list('Area', conn)
     form.country.choices = option_list('country', conn)
     if request.method == 'POST' and form.validate():
+        # Create a new line in VolcDB1 and VolcDB1_edits to get new id no
+        now = dt.datetime.now().strftime("%Y-%m-%d")
+        df.date_edited = str(now)
+        df.owner_id = str(session['username'])
+        df['Review needed'] = 'Y'
+        df['ID'] = pd.read_sql_query("select max(id) from VolcDB1;", conn) + 1
+        # check ID no Already  exists
+        idmaxeds = pd.read_sql_query("select max(id) from VolcDB1_edits;", conn)
+        # if the edit databas is empty
+        try:
+            if df['ID'].values[0] <= idmaxeds.values[0]:
+                df.ID = idmaxeds + 1
+        except TypeError:
+            pass
+        # dummy variables to allow row creation in DATABASE
+        df.country = 'not null'
+        df.latitude = 51
+        df.longitude = 0
+        df.name = 'not null'
+        df.Area = 'not null'
+        df.owner_id = str(session['username'])
+        addrowedits('VolcDB1_edits', df, conn)
         # Get each form field and update DB:
         for field in form:
-            editrow('VolcDB1', df.ID[0], field.name, str(field.data), conn)
+            if field.name == 'new_country':
+                if str(field.data) != '':
+                    field.name = 'country'
+                    editrow('VolcDB1_edits', df.ID[0], field.name,
+                            str(field.data), conn)
+                else:
+                    continue
+            if field.name == 'new_region':
+                if str(field.data) != '':
+                    field.name = 'Area'
+                    editrow('VolcDB1_edits', df.ID[0], field.name,
+                            str(field.data), conn)
+                else:
+                    continue
+            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data), conn)
         # Return with success:
-        flash('Edits successful', 'success')
-        return redirect(url_for('volcano', country=country, region=region,
-                                volcano=volcano))
+        flash('Successfully added, awaiting review', 'success')
     # Set title:
-    title = "Edit Volcano"
+    title = "Add New Volcano"
     noedit = ['ID']
     for field in form:
         if not request.method == 'POST':
             if field.name in noedit:
                 field.render_kw = {'readonly': 'readonly'}
-    return render_template('add.html.j2', data=df, title=title, form=form)
+    return render_template('add.html.j2',title=title, form=form,
+                           tableClass='Volcano')
 
 
 @app.route('/volcano-index/volcanointerferograms', methods=["GET"])
@@ -245,8 +314,71 @@ def volcanodetails():
     return render_template('volcanodetail.html.j2')
 
 
-# Access ----------------------------------------------------------------------
+@app.route('/review', methods=["GET"])
+@is_logged_in_as_reviewer
+def volcanodb_reviewlist():
+    df = pd.read_sql_query("SELECT * FROM VolcDB1_edits ;", conn)
+    df = df[df.Area != 'none']
+    total = len(df.index)
+    return render_template('moderation.html.j2', data=df, total=total,
+                           tableclass='all')
 
+
+@app.route('/review_volcano/<string:volcano>', methods=["GET"])
+@is_logged_in_as_reviewer
+def volcano_review(volcano):
+    df_edits = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+                                 "ID = '" + str(volcano) + "';", conn)
+    df_old = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                               "ID = '" + str(volcano) + "';", conn)
+    newvolc = 'False'
+    if df_old.empty:
+        df_old = df_edits
+        newvolc = 'True'
+    df_diffs = df_old.copy()
+    for (columnName, columnData) in df_old.iteritems():
+        new = df_edits[str(columnName)].values
+        old = df_old[str(columnName)].values
+        if new == old:
+            df_diffs[str(columnName)] = 'old'
+        else:
+            df_diffs[str(columnName)] = 'new'
+    return render_template('volcano_review.html.j2', data=df_edits,
+                           data_old=df_old, data_diff=df_diffs,
+                           tableClass='volcanoreview', newvolc=newvolc)
+
+
+@app.route('/delete/<string:tableClass>/<string:id>', methods=['POST'])
+@is_logged_in_as_reviewer
+def delete_entry(tableClass, id):
+    if tableClass == 'volcanoreview':
+        DeleteVolcEdit(id, conn)
+        flash('Deleted suggested modification', 'success')
+        return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
+    else:
+        flash('not set up for this yet', 'danger')
+    return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
+
+
+@app.route('/delete/VolcDB1/<string:id>', methods=['POST'])
+@is_logged_in_as_admin
+def delete_volcano(id):
+        DeleteVolc(id, conn)
+        flash('Deleted Volcano database entry!', 'danger')
+        return redirect(url_for('volcanodb_all'))
+
+
+@app.route('/accept/<string:tableClass>/<string:id>', methods=['POST'])
+@is_logged_in_as_reviewer
+def accept_entry(tableClass, id):
+    if tableClass == 'volcanoreview':
+        AcceptVolcEdit(id, conn)
+        flash('Approved suggested modification', 'success')
+        return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
+    else:
+        flash('not set up for this yet', 'danger')
+    return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
+# Access ----------------------------------------------------------------------
 # Login
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -257,7 +389,7 @@ def login():
         # Get form fields
         username = request.form['username']
         password_candidate = request.form['password']
-        user_login(username, password_candidate, conn)
+        user_login(username, password_candidate, connuser)
         return redirect(url_for('index'))
     if request.method == 'GET':
         return render_template('login.html.j2')
@@ -280,7 +412,7 @@ def change_pwd():
     form = ChangePwdForm(request.form)
     if request.method == 'POST' and form.validate():
         user = pd.read_sql_query("SELECT * FROM users where username is '"
-                                 + username + "' ;", conn)
+                                 + username + "' ;", connuser)
         password = user.password[0]
         current = form.current.data
         if sha256_crypt.verify(current, password):
@@ -320,17 +452,18 @@ def admininfo():
 @app.route('/admin/users', methods=['GET', 'POST'])
 @is_logged_in_as_admin
 def ViewOrAddUsers():
-    df = pd.read_sql_query("SELECT * FROM Users ;", conn)
+    df = pd.read_sql_query("SELECT * FROM users ;", connuser)
     df['password'] = '********'
     # add roles
-    u2r = pd.read_sql_query("SELECT * FROM users_roles ;", conn)
-    roles = pd.read_sql_query("SELECT * FROM roles ;", conn)
+    u2r = pd.read_sql_query("SELECT * FROM users_roles ;", connuser)
+    roles = pd.read_sql_query("SELECT * FROM roles ;", connuser)
     u2r2 = pd.merge(u2r, roles, on='group_id')
     del u2r2['group_id']
     usersandroles = pd.merge(df, u2r2, on='id', how='outer')
     usersandroles.rename(columns={'name': 'Role'}, inplace=True)
     usersandroles = usersandroles.dropna(subset=['username'])
-    colnames = [s.replace("_", " ").title() for s in usersandroles.columns.values[1:]]
+    colnames = [s.replace("_", " ").title()
+                for s in usersandroles.columns.values[1:]]
     return render_template('view.html.j2', title='Users', colnames=colnames,
                            tableClass='Users', editLink="edit",
                            data=usersandroles)
@@ -351,7 +484,7 @@ def add():
         formdata = []
         for f, field in enumerate(form):
             formdata.append(field.data)
-        InsertUser(formdata[0], formdata[1], conn)
+        InsertUser(formdata[0], formdata[1], connuser)
         flash('User Added', 'success')
         return redirect(url_for('add', tableClass='Users'))
     return render_template('add.html.j2', title='Add Users', tableClass='Users',
@@ -363,10 +496,10 @@ def add():
 @is_logged_in_as_admin
 def delete(tableClass, id):
     # Retrieve DB entry:
-    user = pd.read_sql_query("SELECT * FROM Users where id = " + id + " ;",
-                             conn)
+    user = pd.read_sql_query("SELECT * FROM users where id = " + id + " ;",
+                             connuser)
     username = user.username
-    DeleteUser(username[0], conn)
+    DeleteUser(username[0], connuser)
     flash('User Deleted', 'success')
     return redirect(url_for('ViewOrAddUsers'))
 
@@ -376,23 +509,22 @@ def delete(tableClass, id):
 @is_logged_in_as_admin
 def access(id):
     form = AccessForm(request.form)
-    form.Role.choices = table_list('roles', 'name', conn)[1:]
+    form.Role.choices = table_list('roles', 'name', connuser)[1:]
     # Retrieve user DB entry:
-    user = pd.read_sql_query("SELECT * FROM Users where id = " + id + " ;",
-                             conn)
+    user = pd.read_sql_query("SELECT * FROM users where id = " + id + " ;",
+                             connuser)
     if user.empty:
         abort(404)
     # Retrieve all current role
     u2r = pd.read_sql_query("SELECT * FROM users_roles WHERE id = " + id +
-                            ";", conn)
+                            ";", connuser)
     gid = u2r.group_id[0]
     current_role = pd.read_sql_query("SELECT * FROM roles WHERE group_id = "
-                                     + str(gid) + ";", conn)
+                                     + str(gid) + ";", connuser)
     # If user submits edit entry form:
     if request.method == 'POST' and form.validate():
         new_role = form.Role.data
-        AssignRole(user.username[0], new_role, conn)
-        print('test')
+        AssignRole(user.username[0], new_role, connuser)
         # Return with success
         flash('Edits successful', 'success')
         return redirect(url_for('ViewOrAddUsers'))
@@ -468,6 +600,12 @@ def unhandled_exception(e):
     app.logger.error('Unhandled Exception: %s', (e))
     return render_template('500.html.j2'), 500
 
+
 if __name__ == '__main__':
+<<<<<<< HEAD
+    app.run(host='129.11.85.32', debug=True, port=5900)
+    # app.run(debug=True)
+=======
     #app.run(host='129.11.85.32', debug=True, port=5900)
     app.run(debug=True)
+>>>>>>> master
