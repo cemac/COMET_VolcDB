@@ -13,13 +13,23 @@
 		</style>
 		<script src="https://maps.googleapis.com/maps/api/js"></script>
 		<header>
+			<div style='text-align: right'>
+				{% if session.usertype == 'Admins' %}
+			<form action=/delete/VolcDB1/{{data.ID[0]}} method="post" onsubmit="return confirm('Are you sure?');">
+				<input type="hidden" name="_method" value="delete">
+				<input type="submit" value="&#10008; delete " class="btn btn-danger pull-right">
+			</form>
+			{% endif %}
+		</div>
 			{% if pending == 'Y' %}
 			<h1>{{data.name[0]}}*</h1>
 			<p> <i> *updates pending approval </i>
 			{% else %}
 			<h1>{{data.name[0]}}</h1>
 			{% endif %}
+
 		</header><!-- .entry-header -->
+
 		<ul class="tabrow">
 			<li class="selected">Observations of Deformation</li>
 			{% if data.name[0] == 'Unnamed' %}

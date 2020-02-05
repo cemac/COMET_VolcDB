@@ -359,6 +359,14 @@ def delete_entry(tableClass, id):
     return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
 
 
+@app.route('/delete/VolcDB1/<string:id>', methods=['POST'])
+@is_logged_in_as_admin
+def delete_volcano(id):
+        DeleteVolc(id, conn)
+        flash('Deleted Volcano database entry!', 'danger')
+        return redirect(url_for('volcanodb_all'))
+
+
 @app.route('/accept/<string:tableClass>/<string:id>', methods=['POST'])
 @is_logged_in_as_reviewer
 def accept_entry(tableClass, id):
