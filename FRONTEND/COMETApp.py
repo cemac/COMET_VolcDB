@@ -455,7 +455,9 @@ def account(username):
     # user name
     # potential to add affiliations and email to give more bespoke access to
     # who can edit which volcanoes. Eg. Prject or Institute
-    return render_template('account.html.j2', username=username, Role=role)
+    return render_template('account.html.j2', username=username, Role=role,
+                           cometmail=os.environ['mailusername'],
+                           cometpassword=os.environ['mailpassword'])
 
 # Additional logged in as Admin only pages ------------------------------
 
@@ -463,7 +465,9 @@ def account(username):
 @app.route('/admin/information', methods=['GET', 'POST'])
 @is_logged_in_as_admin
 def admininfo():
-    return render_template('admininfo.html.j2')
+    return render_template('admininfo.html.j2',
+                           cometmail=os.environ['mailusername'],
+                           cometpassword=os.environ['mailpassword'])
 
 
 @app.route('/admin/users', methods=['GET', 'POST'])
