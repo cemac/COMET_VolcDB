@@ -28,8 +28,10 @@ from access import *
 from comet_db_functions import *
 from volcanoes import *
 from interactivemap import *
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
+mail = Mail(app)
 # Connect to database
 DATABASE = 'volcano.db'
 # Separate user database to keep user info Separate
@@ -79,8 +81,8 @@ def volcanodb():
     df2 = df2.reset_index(drop=True)
     df2.columns = ['freq', 'Area']
     total = df2.freq.sum()
-    return render_template('volcano-index.html.j2', tableClass='index', data=df2,
-                           total=total)
+    return render_template('volcano-index.html.j2', tableClass='index',
+                           data=df2, total=total)
 
 
 @app.route('/volcano-index/<string:region>', methods=["GET", "POST"])
@@ -220,6 +222,11 @@ def volcano_edit(country, region, volcano):
                     field.name, str(field.data), conn)
         # Save to edit database
         editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
+        msg = Message(str(session['username']) + ' edited ' + str(volcano) + ' [ REVIEW REQUIRED ]',
+                      sender=os.environ['mailusername'],
+                      recipients=[os.environ['mailusername']])
+        msg.body = 'Changes need approval'
+        mail.send(msg)
         # Return with success:
         flash('Success! Edits awaiting approval', 'success')
         return redirect(url_for('volcano', country=country, region=region,
@@ -259,7 +266,8 @@ def volcano_add():
         df['Review needed'] = 'Y'
         df['ID'] = pd.read_sql_query("select max(id) from VolcDB1;", conn) + 1
         # check ID no Already  exists
-        idmaxeds = pd.read_sql_query("select max(id) from VolcDB1_edits;", conn)
+        idmaxeds = pd.read_sql_query("select max(id) from VolcDB1_edits;",
+                                     conn)
         # if the edit databas is empty
         try:
             if df['ID'].values[0] <= idmaxeds.values[0]:
@@ -290,7 +298,14 @@ def volcano_add():
                             str(field.data), conn)
                 else:
                     continue
-            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data), conn)
+            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data),
+                    conn)
+        # email reviewers
+        msg = Message(str(session['username']) + ' added new volcano [ REVIEW REQUIRED ]',
+                      sender=os.environ['mailusername'],
+                      recipients=[os.environ['mailusername']])
+        msg.body = 'Changes awaiting approval'
+        mail.send(msg)
         # Return with success:
         flash('Successfully added, awaiting review', 'success')
     # Set title:
@@ -300,7 +315,7 @@ def volcano_add():
         if not request.method == 'POST':
             if field.name in noedit:
                 field.render_kw = {'readonly': 'readonly'}
-    return render_template('add.html.j2',title=title, form=form,
+    return render_template('add.html.j2', title=title, form=form,
                            tableClass='Volcano')
 
 
@@ -378,6 +393,8 @@ def accept_entry(tableClass, id):
     else:
         flash('not set up for this yet', 'danger')
     return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
+
+
 # Access ----------------------------------------------------------------------
 # Login
 @app.route('/login', methods=["GET", "POST"])
@@ -541,9 +558,23 @@ def about():
     return render_template('about.html.j2')
 
 
-@app.route('/contact', methods=["GET"])
+@app.route('/contact', methods=["GET", "POST"])
 def contact():
-    return render_template('contact.html.j2')
+    form = eval("Contact_Form")(request.form)
+    form.subject.choices = subject_list()
+    if request.method == 'POST' and form.validate():
+        formdata = []
+        for f, field in enumerate(form):
+            formdata.append(field.data)
+        msg = Message(formdata[0] + ' [' + formdata[2] + ']',
+                      sender=os.environ['mailusername'],
+                      recipients=[formdata[1], os.environ['mailusername']])
+        msg.body = formdata[3] + '\n please note forwarding to appropriate emails not yet set up'
+        mail.send(msg)
+        flash('Message sent', 'success')
+        return redirect(url_for('contact'))
+    return render_template('contact.html.j2', title='Contact Form',
+                           form=form)
 
 
 @app.route('/contribute', methods=["GET"])
