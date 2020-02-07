@@ -5,8 +5,8 @@ class Config(object):
     DEBUG = False
     TESTING = True
     CSRF_ENABLED = True
-    SECRET_KEY = secret  # os.environ['SECRET_KEY']
-    ADMIN_PWD = password  # os.environ['ADMIN_PWD']
+    SECRET_KEY = os.environ['SECRET_KEY']
+    ADMIN_PWD =  os.environ['ADMIN_PWD']
     # SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     # EMAIL SETTINGS
     MAIL_SERVER = 'smtp.gmail.com',
