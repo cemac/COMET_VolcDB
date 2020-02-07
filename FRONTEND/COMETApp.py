@@ -20,8 +20,10 @@ import sqlite3
 import pandas as pd
 import numpy as np
 import os
+import sys
 import io
 import json
+import smtplib
 from passlib.hash import sha256_crypt
 # Modules for this site
 from access import *
@@ -29,8 +31,14 @@ from comet_db_functions import *
 from volcanoes import *
 from interactivemap import *
 from flask_mail import Mail, Message
-
 app = Flask(__name__)
+
+app.config.update(
+MAIL_SERVER = 'smtp.gmail.com',
+MAIL_PORT = 465,
+MAIL_USE_SSL = True,
+MAIL_USERNAME = os.environ['mailusername'],
+MAIL_PASSWORD = os.environ['mailpassword'])
 mail = Mail(app)
 # Connect to database
 DATABASE = 'volcano.db'
@@ -222,11 +230,14 @@ def volcano_edit(country, region, volcano):
                     field.name, str(field.data), conn)
         # Save to edit database
         editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
-        msg = Message(str(session['username']) + ' edited ' + str(volcano) + ' [ REVIEW REQUIRED ]',
-                      sender=os.environ['mailusername'],
-                      recipients=[os.environ['mailusername']])
-        msg.body = 'Changes need approval'
-        mail.send(msg)
+        try:
+            msg = Message(str(session['username']) + ' edited ' + str(volcano) + ' [ REVIEW REQUIRED ]',
+                          sender=os.environ['mailusername'],
+                          recipients=[os.environ['mailusername']])
+            msg.body = 'Changes need approval'
+            mail.send(msg)
+        except Exception as e:
+            sys.stderr.write(str(e))
         # Return with success:
         flash('Success! Edits awaiting approval', 'success')
         return redirect(url_for('volcano', country=country, region=region,
@@ -301,11 +312,14 @@ def volcano_add():
             editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data),
                     conn)
         # email reviewers
-        msg = Message(str(session['username']) + ' added new volcano [ REVIEW REQUIRED ]',
-                      sender=os.environ['mailusername'],
-                      recipients=[os.environ['mailusername']])
-        msg.body = 'Changes awaiting approval'
-        mail.send(msg)
+        try:
+            msg = Message(str(session['username']) + ' added new volcano [ REVIEW REQUIRED ]',
+                          sender=os.environ['mailusername'],
+                          recipients=[os.environ['mailusername']])
+            msg.body = 'Changes awaiting approval'
+            mail.send(msg)
+        except Exception as e:
+            sys.stderr.write(str(e))
         # Return with success:
         flash('Successfully added, awaiting review', 'success')
     # Set title:
@@ -570,11 +584,14 @@ def contact():
         formdata = []
         for f, field in enumerate(form):
             formdata.append(field.data)
-        msg = Message(formdata[0] + ' [' + formdata[2] + ']',
-                      sender=os.environ['mailusername'],
-                      recipients=[formdata[1], os.environ['mailusername']])
-        msg.body = formdata[3] + '\n please note forwarding to appropriate emails not yet set up'
-        mail.send(msg)
+        try:
+            msg = Message(formdata[0] + ' [' + formdata[2] + ']',
+                          sender=os.environ['mailusername'],
+                          recipients=[formdata[1], os.environ['mailusername']])
+            msg.body = formdata[3] + '\n please note forwarding to appropriate emails not yet set up'
+            mail.send(msg)
+        except Exception as e:
+            flash(str(e), 'danger')
         flash('Message sent', 'success')
         return redirect(url_for('contact'))
     return render_template('contact.html.j2', title='Contact Form',
