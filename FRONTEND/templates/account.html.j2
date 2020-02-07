@@ -3,9 +3,25 @@
 {% block body %}
 <div>
 <h1> {{username}} account details </h1>
-<p> Your role is {{Role}},
-<p> information on roles ...
-<p> affiliation ? emails?
+<p> The role assigned to this user is: {{Role}}
+{% if Role == 'Registered_Users' %}
+<p> This means you only have no Additional access or privileges
+{% elif Role == 'Collaborators' %}
+<p> You can Add Volcanoes, Update Volcano information.
+<p> <i> Updates will be checked and approved by site moderators </i>
+{% elif Role == 'Reviewers' %}
+<p> You can Add Volcanoes, Update Volcano information, Approve updates.
+{% elif Role == 'Admins' %}
+<p> You can Add/ Delete Volcanoes, Add/ Modify Users, Update Volcano information, Approve updates.
+<p> You can also have access to the email address associated with this site to control email forwarding (who gets notified of contact form entries and edits pending approval)
+<p> The group email for COMET is: <b> {{cometmail}} </b>
+<p> The password is: <b> {{cometpassword}} </b>
+<p> <i> In the future minor edits to site text will be able to be done as admin </i>
+{% endif %}
+<p> If you believe this to be incorrectly assigned please get in contact via email
+  or the contact form </p>
+<p> <i> currently no other account information is collected on this site </i>
+
 </div><!-- .entry-content -->
 {% endblock %}
 </html>

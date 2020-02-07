@@ -1,12 +1,20 @@
 <html lang="en">
 {% extends 'layout.html.j2' %}
 {% block body %}
-<div style="text-align:center; width:100%; display:block; margin:auto;">
-<a href="/">
-<img src="/static/cropped-Sentinel-1.jpg" width="100%" height="auto" alt="" />
-</a>
-</div><!-- #branding -->
-<h1> Contact Form </h1>
-<p> coming soon
+<h1>{{title}}</h1>
+<hr>
+<p> If have questions or you would like to be involved in contributing to the
+  volcano database please use the contact form below. Your email will be
+  required if you wish to recieve a reply (<i>email addresses submitted here will not be stored on this site</i>).  </p>
+{% from "includes/_formhelpers.html.j2" import render_field %}
+<form action="/contact" method="POST">
+{% for field in form %}
+  <div class="form-group">
+    {{render_field(field, class_="form-control")}}
+  </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<hr>
 {% endblock %}
 </html>

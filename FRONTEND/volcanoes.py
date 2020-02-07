@@ -42,13 +42,13 @@ class Volcano_edit_Form(Form):
                                           [validators.Optional()],
                                           render_kw={"placeholder": "e.g. 2005-2010"})
     inferred_causes = TextAreaField(u'Inferred cause of deformation',
-                                  [validators.Optional()],
-                                  render_kw={"placeholder": "e.g. magmatic"})
+                                    [validators.Optional()],
+                                    render_kw={"placeholder": "e.g. magmatic"})
     characteristics_of_deformation = TextAreaField(u'Characteristics of deformation',
-                                                 [validators.Optional()],
-                                                 render_kw={"placeholder": "description of deformation"})
+                                                   [validators.Optional()],
+                                                   render_kw={"placeholder": "description of deformation"})
     references = TextAreaField(u'References', [validators.Optional()],
-                             render_kw={"placeholder": "list of references"})
+                               render_kw={"placeholder": "list of references"})
     latitude = DecimalField(u'latitude', places=3)
     longitude = DecimalField(u'longitude', places=3)
 
@@ -59,7 +59,7 @@ class Volcano_Form(Form):
     # Volcano no auto generated
     # List existing regions and countries to avoid spelling mistakes etc
     name = StringField(u'Volcano Name',
-                                     render_kw={"placeholder": "Volcano name"})
+                       render_kw={"placeholder": "Volcano name"})
     country = SelectField(u'*Country',
                           [validators.Optional()])
     new_country = StringField(u'If other please specify', [validators.Optional()],
@@ -77,12 +77,14 @@ class Volcano_Form(Form):
                                       [validators.Optional()],
                                       render_kw={"placeholder": "e.g. InSAR"})
     inferred_causes = TextAreaField(u'Inferred cause of deformation',
-                                  [validators.Optional()],
-                                  render_kw={"placeholder": "e.g. magmatic"})
+                                    [validators.Optional()],
+                                    render_kw={"placeholder": "e.g. magmatic"})
     characteristics_of_deformation = TextAreaField(u'Characteristics of deformation',
-                                                 [validators.Optional()],
-                                                 render_kw={"placeholder": "description of deformation"})
+                                                   [validators.Optional()],
+                                                   render_kw={"placeholder": "description of deformation"})
     references = TextAreaField(u'References', [validators.Optional()],
-                             render_kw={"placeholder": "list of references"})
-    latitude = DecimalField(u'*latitude', places=3, render_kw={"placeholder": "degrees North (between -90.000 and 90.000)"})
-    longitude = DecimalField(u'*longitude', places=3, render_kw={"placeholder": "degrees East (between -180.000 and 180.000)"})
+                               render_kw={"placeholder": "list of references"})
+    latitude = DecimalField(
+        u'*latitude', places=3, render_kw={"placeholder": "degrees North (between -90.000 and 90.000)"})
+    longitude = DecimalField(u'*longitude', places=3, render_kw={
+                             "placeholder": "degrees East (between -180.000 and 180.000)"})

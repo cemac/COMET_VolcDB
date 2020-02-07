@@ -71,6 +71,18 @@ def yesno_list():
     return list
 
 
+def subject_list():
+    """generate yes no list for forms
+    """
+    list = []
+    list.append(('blank', '--Please select--'))
+    list.append(('request access', 'request access'))
+    list.append(('general question', 'general question'))
+    list.append(('contributor query', 'contributor query'))
+    list.append(('other', 'other'))
+    return list
+
+
 def option_list(col_name, conn):
     """Create list of options on forms
     args:
@@ -116,9 +128,19 @@ def option_list(col_name, conn):
     return list
 
 
+class Contact_Form(Form):
+    name = StringField(u'Name', [validators.InputRequired()],
+                       render_kw={"placeholder": "Name"})
+    email = StringField(u'Email',
+                        render_kw={"placeholder": "Required if reply needed"})
+    subject = SelectField(u'Subject', [validators.Optional()])
+    message = TextAreaField(u'Message', [validators.Optional()],
+                            render_kw={"placeholder": "Enter Message Here"})
+
 # ------------------------- is logged in wrappers --------------------------- #
 #                        logged_in as user editor admin                       #
 # --------------------------------------------------------------------------- #
+
 
 def is_logged_in(f):
     @wraps(f)

@@ -20,16 +20,26 @@ import sqlite3
 import pandas as pd
 import numpy as np
 import os
+import sys
 import io
 import json
+import smtplib
 from passlib.hash import sha256_crypt
 # Modules for this site
 from access import *
 from comet_db_functions import *
 from volcanoes import *
 from interactivemap import *
-
+from flask_mail import Mail, Message
 app = Flask(__name__)
+
+app.config.update(
+MAIL_SERVER = 'smtp.gmail.com',
+MAIL_PORT = 465,
+MAIL_USE_SSL = True,
+MAIL_USERNAME = os.environ['mailusername'],
+MAIL_PASSWORD = os.environ['mailpassword'])
+mail = Mail(app)
 # Connect to database
 DATABASE = 'volcano.db'
 # Separate user database to keep user info Separate
@@ -79,8 +89,8 @@ def volcanodb():
     df2 = df2.reset_index(drop=True)
     df2.columns = ['freq', 'Area']
     total = df2.freq.sum()
-    return render_template('volcano-index.html.j2', tableClass='index', data=df2,
-                           total=total)
+    return render_template('volcano-index.html.j2', tableClass='index',
+                           data=df2, total=total)
 
 
 @app.route('/volcano-index/<string:region>', methods=["GET", "POST"])
@@ -220,6 +230,14 @@ def volcano_edit(country, region, volcano):
                     field.name, str(field.data), conn)
         # Save to edit database
         editrow('VolcDB1', df.ID[0], 'Review needed', 'Y', conn)
+        try:
+            msg = Message(str(session['username']) + ' edited ' + str(volcano) + ' [ REVIEW REQUIRED ]',
+                          sender=os.environ['mailusername'],
+                          recipients=[os.environ['mailusername']])
+            msg.body = 'Changes need approval'
+            mail.send(msg)
+        except Exception as e:
+            sys.stderr.write(str(e))
         # Return with success:
         flash('Success! Edits awaiting approval', 'success')
         return redirect(url_for('volcano', country=country, region=region,
@@ -259,7 +277,8 @@ def volcano_add():
         df['Review needed'] = 'Y'
         df['ID'] = pd.read_sql_query("select max(id) from VolcDB1;", conn) + 1
         # check ID no Already  exists
-        idmaxeds = pd.read_sql_query("select max(id) from VolcDB1_edits;", conn)
+        idmaxeds = pd.read_sql_query("select max(id) from VolcDB1_edits;",
+                                     conn)
         # if the edit databas is empty
         try:
             if df['ID'].values[0] <= idmaxeds.values[0]:
@@ -290,7 +309,17 @@ def volcano_add():
                             str(field.data), conn)
                 else:
                     continue
-            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data), conn)
+            editrow('VolcDB1_edits', df.ID[0], field.name, str(field.data),
+                    conn)
+        # email reviewers
+        try:
+            msg = Message(str(session['username']) + ' added new volcano [ REVIEW REQUIRED ]',
+                          sender=os.environ['mailusername'],
+                          recipients=[os.environ['mailusername']])
+            msg.body = 'Changes awaiting approval'
+            mail.send(msg)
+        except Exception as e:
+            sys.stderr.write(str(e))
         # Return with success:
         flash('Successfully added, awaiting review', 'success')
     # Set title:
@@ -300,7 +329,7 @@ def volcano_add():
         if not request.method == 'POST':
             if field.name in noedit:
                 field.render_kw = {'readonly': 'readonly'}
-    return render_template('add.html.j2',title=title, form=form,
+    return render_template('add.html.j2', title=title, form=form,
                            tableClass='Volcano')
 
 
@@ -378,6 +407,8 @@ def accept_entry(tableClass, id):
     else:
         flash('not set up for this yet', 'danger')
     return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
+
+
 # Access ----------------------------------------------------------------------
 # Login
 @app.route('/login', methods=["GET", "POST"])
@@ -438,7 +469,9 @@ def account(username):
     # user name
     # potential to add affiliations and email to give more bespoke access to
     # who can edit which volcanoes. Eg. Prject or Institute
-    return render_template('account.html.j2', username=username, Role=role)
+    return render_template('account.html.j2', username=username, Role=role,
+                           cometmail=os.environ['mailusername'],
+                           cometpassword=os.environ['mailpassword'])
 
 # Additional logged in as Admin only pages ------------------------------
 
@@ -446,7 +479,9 @@ def account(username):
 @app.route('/admin/information', methods=['GET', 'POST'])
 @is_logged_in_as_admin
 def admininfo():
-    return render_template('admininfo.html.j2')
+    return render_template('admininfo.html.j2',
+                           cometmail=os.environ['mailusername'],
+                           cometpassword=os.environ['mailpassword'])
 
 
 @app.route('/admin/users', methods=['GET', 'POST'])
@@ -541,9 +576,26 @@ def about():
     return render_template('about.html.j2')
 
 
-@app.route('/contact', methods=["GET"])
+@app.route('/contact', methods=["GET", "POST"])
 def contact():
-    return render_template('contact.html.j2')
+    form = eval("Contact_Form")(request.form)
+    form.subject.choices = subject_list()
+    if request.method == 'POST' and form.validate():
+        formdata = []
+        for f, field in enumerate(form):
+            formdata.append(field.data)
+        try:
+            msg = Message(formdata[0] + ' [' + formdata[2] + ']',
+                          sender=os.environ['mailusername'],
+                          recipients=[formdata[1], os.environ['mailusername']])
+            msg.body = formdata[3] + '\n please note forwarding to appropriate emails not yet set up'
+            mail.send(msg)
+        except Exception as e:
+            flash(str(e), 'danger')
+        flash('Message sent', 'success')
+        return redirect(url_for('contact'))
+    return render_template('contact.html.j2', title='Contact Form',
+                           form=form)
 
 
 @app.route('/contribute', methods=["GET"])
