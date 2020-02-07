@@ -7,7 +7,7 @@
  <h1> <center> COMET VOLC DB </center> </h1>
 
  ![GitHub release](https://img.shields.io/github/release/cemac/COMET_VolcDB.svg) ![GitHub](https://img.shields.io/github/license/cemac/COMET_VolcDB.svg) [![GitHub top language](https://img.shields.io/github/languages/top/cemac/COMET_VolcDB.svg)](https://github.com/cemac/COMET_VolcDB) [![GitHub issues](https://img.shields.io/github/issues/cemac/COMET_VolcDB.svg)](https://github.com/cemac/COMET_VolcDB/issues) [![GitHub last commit](https://img.shields.io/github/last-commit/cemac/COMET_VolcDB.svg)](https://github.com/cemac/COMET_VolcDB/commits/master) [![GitHub All Releases](https://img.shields.io/github/downloads/cemac/COMET_VolcDB/total.svg)](https://github.com/cemac/COMET_VolcDB/releases)
- [![HitCount](http://hits.dwyl.io/{cemac}/{COMET_VolcDB}.svg)](http://hits.dwyl.io/{cemac}/{COMET_VolcDB})
+ [![HitCount](http://hits.dwyl.com/{cemac}/{COMET_VolcDB}.svg)](http://hits.dwyl.com/{cemac}/{COMET_VolcDB})
 
 :warning: *This repository is in **alpha phase** documentation is incomplete* :warning:
 
