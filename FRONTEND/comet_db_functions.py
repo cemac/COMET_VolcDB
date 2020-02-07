@@ -1,6 +1,7 @@
 import sqlite3
 import pandas as pd
 
+
 # Connect to DB
 def get_db():
     db = getattr(g, '_database', None)
@@ -28,10 +29,10 @@ def insertUser(username, password, conn):
 
 
 def retrieveUsers(conn):
-    cur = con.cursor()
+    cur = conn.cursor()
     cur.execute("SELECT id, username, password FROM users")
     users = cur.fetchall()
-    con.close()
+    conn.close()
     return users
 
 

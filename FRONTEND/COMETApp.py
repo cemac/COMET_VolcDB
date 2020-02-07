@@ -14,16 +14,12 @@ Attributes:
 '''
 from flask import Flask, render_template, flash, redirect, url_for, request
 from flask import g, session, abort, make_response
-from wtforms import Form, validators, StringField, SelectField, TextAreaField
-from wtforms import IntegerField, PasswordField, SelectMultipleField, widgets
 import sqlite3
 import pandas as pd
-import numpy as np
 import os
 import sys
 import io
 import json
-import smtplib
 from passlib.hash import sha256_crypt
 # Modules for this site
 from access import *

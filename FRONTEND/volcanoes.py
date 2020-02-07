@@ -9,17 +9,9 @@ Module for editing volcanoes
 * Map Volcanoes?
 
 """
-
-from flask import Flask, render_template, flash, redirect, url_for, request
-from flask import g, session, abort
 from wtforms import Form, validators, StringField, SelectField, TextAreaField
-from wtforms import IntegerField, PasswordField, SelectMultipleField, widgets
 from wtforms import DecimalField
-import datetime as dt
-import os
-import pandas as pd
-from functools import wraps
-from passlib.hash import sha256_crypt
+
 
 
 class Volcano_edit_Form(Form):
