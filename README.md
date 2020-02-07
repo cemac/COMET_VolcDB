@@ -21,6 +21,7 @@ Repository for the [COMET](comet.nerc.ac.uk) Volcano Database. [<insert future s
 
 * anaconda (reccomended) *see environment.yml*
 * SQLlite
+* git-crypt (or own .env file *see Developers Guide*)
 
 requirements.txt is provided for full package version information and installing via other means.
 
@@ -41,7 +42,7 @@ conda activate cometapp
 
 *Coming soon Recommended to write wiki for Developers and site Users*
 
-* [Developers]()
+* [Developer Guide](https://github.com/cemac/COMET_VolcDB/wiki/Developer_guide)
 * [Users]()
 
 <hr>

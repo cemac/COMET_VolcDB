@@ -32,13 +32,13 @@ from volcanoes import *
 from interactivemap import *
 from flask_mail import Mail, Message
 app = Flask(__name__)
-
+# app config must be edited here to correctly use mail
 app.config.update(
-MAIL_SERVER = 'smtp.gmail.com',
-MAIL_PORT = 465,
-MAIL_USE_SSL = True,
-MAIL_USERNAME = os.environ['mailusername'],
-MAIL_PASSWORD = os.environ['mailpassword'])
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=465,
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME=os.environ['mailusername'],
+    MAIL_PASSWORD=os.environ['mailpassword'])
 mail = Mail(app)
 # Connect to database
 DATABASE = 'volcano.db'
@@ -654,5 +654,4 @@ def unhandled_exception(e):
 
 
 if __name__ == '__main__':
-    #app.run(host='129.11.85.32', debug=True, port=5900)
     app.run(debug=True)
