@@ -7,6 +7,8 @@ function set_plot_vars(frame_id) {
       data_type: null,
       start_index: null,
       end_index: null,
+      x_indexes: null,
+      y_indexes: null,
       z_min_raw: null,
       z_max_raw: null,
       z_min_coh: 0,
@@ -188,6 +190,26 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   var disp_data_raw = disp_data['data_raw'];
   var coh_data = disp_data['coh'];
   var mask_data = disp_data['mask'];
+
+  /* create arrays of x and y indexes, if they don't exist. this should
+     help keep the spacing for the heatmap plot even.
+     x values: */
+  if (plot_vars[volcano_frame]['x_indexes'] == null) {
+    plot_vars[volcano_frame]['x_indexes'] = [];
+    for (var i = 0; i < x_data.length; i++) {
+      plot_vars[volcano_frame]['x_indexes'].push(i);
+    };
+  };
+  /* y values: */
+  if (plot_vars[volcano_frame]['y_indexes'] == null) {
+    plot_vars[volcano_frame]['y_indexes'] = [];
+    for (var i = 0; i < y_data.length; i++) {
+      plot_vars[volcano_frame]['y_indexes'].push(i);
+    };
+  };
+  /* vars for indexes: */
+  var x_indexes = plot_vars[volcano_frame]['x_indexes'];
+  var y_indexes = plot_vars[volcano_frame]['y_indexes'];
 
   /* presume nothing to be updated: */
   var update_heatmap_data_type = false;
@@ -427,13 +449,16 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     /* spin through ref area indexes: */
     for (var i = ref_data[0]; i < ref_data[1]; i++) {
       for (var j = ref_data[2]; j < ref_data[3]; j++) {
-        /* store lat and lon values: */
-        ref_y.push(y_data[i]);
-        ref_x.push(x_data[j]);
-        /* if raw data value is valid, add it to the sum: */
-        if (end_data_raw[i][j] != 'null' && start_data_raw[i][j] != 'null') {
-          ref_sum_raw += end_data_raw[i][j] - start_data_raw[i][j];
-          ref_count_raw += 1;
+        /* if the value is not masked: */
+        if (disp_data['mask'][i][j] == 1) {
+          /* store x and y index values: */
+          ref_y.push(i);
+          ref_x.push(j);
+          /* if raw data value is valid, add it to the sum: */
+          if (end_data_raw[i][j] != 'null' && start_data_raw[i][j] != 'null') {
+            ref_sum_raw += end_data_raw[i][j] - start_data_raw[i][j];
+            ref_count_raw += 1;
+          };
         };
       };
     };
@@ -466,7 +491,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
           z_data_raw[i][j] = ((end_data_raw[i][j] - start_data_raw[i][j])
                               - ref_mean_raw).toFixed(2);
         };
-        /* if this pixel is maksed ... : */
+        /* if this pixel is masked ... : */
         if (mask_data[i][j] == 0) {
           /* masked data values: */
           z_data_masked_raw[i][j] = 'null';
@@ -499,7 +524,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     /* end for i: */
     };
 
-    /* store caculated values; */
+    /* store calculated values; */
     plot_vars[volcano_frame]['heatmap_data'][range_key] = {};
     plot_vars[volcano_frame]['heatmap_data'][range_key]['raw'] = z_data_masked_raw;
     plot_vars[volcano_frame]['hover_data'][range_key] = {};
@@ -563,8 +588,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     /* set up the heatmap plot data: */
     var heatmap_disp = {
       type: 'heatmap',
-      x: x_data,
-      y: y_data,
+      x: x_indexes,
+      y: y_indexes,
       z: z_data,
       zmin: z_min,
       zmax: z_max,
@@ -574,12 +599,25 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       text: hover_data
     };
 
-    var hm_sc = {
+    /* plot to generate lat and lon axes: */
+    var hm_sca = {
       type: 'scatter',
       x: x_data[0],
       y: y_data[0],
       xaxis: 'x2',
       yaxis: 'y2',
+      showscale: false,
+      hoverinfo: 'none',
+      visible: false
+    };
+
+    /* plot to generate distance axes: */
+    var hm_scb = {
+      type: 'scatter',
+      x: x_indexes[0],
+      y: y_indexes[0],
+      xaxis: 'x3',
+      yaxis: 'y3',
       showscale: false,
       hoverinfo: 'none',
       visible: false
@@ -603,8 +641,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     var heatmap_selected = {
       type: 'scatter',
       mode: 'markers',
-      x: [x_data[ts_x]],
-      y: [y_data[ts_y]],
+      x: [x_indexes[ts_x]],
+      y: [y_indexes[ts_y]],
       marker: {
         color: '#00ff00',
         size: 7,
@@ -620,25 +658,48 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
         x: 0.04,
         y: 0.96
       },
+      /* axis based on index values: */
       xaxis: {
         title: 'longitude',
+        range: [x_indexes[0], x_indexes.slice(-1)[0]],
+        zeroline: false,
+        autorange: false,
+        scaleanchor: 'y',
+        scaleratio: 1,
+        constrain: 'domain',
+        visible: false
+      },
+      yaxis: {
+        title: 'latitude',
+        range: [y_indexes[0], y_indexes.slice(-1)[0]],
+        zeroline: false,
+        autorange: false,
+        constrain: 'domain',
+        visible: false
+      },
+      /* axis based on lat and lon values: */
+      xaxis2: {
+        title: 'longitude',
+        overlaying: 'x',
         range: [x_data[0], x_data.slice(-1)[0]],
         zeroline: false,
-        autorange: true,
-        scaleanchor: 'y',
+        autorange: false,
+        scaleanchor: 'y2',
         scaleratio: 1,
         constrain: 'domain',
         side: 'bottom'
       },
-      yaxis: {
+      yaxis2: {
         title: 'latitude',
+        overlaying: 'y',
         range: [y_data[0], y_data.slice(-1)[0]],
         zeroline: false,
-        autorange: true,
+        autorange: false,
         constrain: 'domain',
         side: 'left'
       },
-      xaxis2: {
+      /* axis based on distance values: */
+      xaxis3: {
         title: {
           text: 'km',
           font: {
@@ -650,9 +711,10 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
         range: [-x_dist / 2, x_dist / 2],
         zeroline: false,
         ticks: 'outside',
+        showgrid: false,
         side: 'top'
       },
-      yaxis2: {
+      yaxis3: {
         title: {
           text: 'km',
           font: {
@@ -664,6 +726,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
         range: [-y_dist / 2, y_dist / 2],
         zeroline: false,
         ticks: 'outside',
+        showgrid: false,
         side: 'right'
       },
       hovermode: 'closest',
@@ -686,7 +749,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     };
 
     /* data, in order of plotting: */
-    var heatmap_data = [heatmap_disp, heatmap_ref, heatmap_selected, hm_sc];
+    var heatmap_data = [heatmap_disp, heatmap_ref, heatmap_selected, hm_sca, hm_scb];
     /* create a new plot: */
     var heatmap_plot = Plotly.newPlot(heatmap_div, heatmap_data,
                                       heatmap_layout, heatmap_conf);
@@ -742,12 +805,28 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
         /* only if sel_Data is defined: */
         if (sel_data != undefined && sel_data.range != undefined) {
           /* get nearest x and y values: */
-          var ref_x0 = get_nearest_value(sel_data.range.x[0], x_data);
-          var ref_x1 = get_nearest_value(sel_data.range.x[1], x_data);
+          var ref_x0 = get_nearest_value(sel_data.range.x[0], x_indexes);
+          var ref_x1 = get_nearest_value(sel_data.range.x[1], x_indexes);
           ref_x1++;
-          var ref_y0 = get_nearest_value(sel_data.range.y[0], y_data);
-          var ref_y1 = get_nearest_value(sel_data.range.y[1], y_data);
+          var ref_y0 = get_nearest_value(sel_data.range.y[0], y_indexes);
+          var ref_y1 = get_nearest_value(sel_data.range.y[1], y_indexes);
           ref_y1++;
+          /* check if all values are masked. presume yes: */
+          var ref_masked = true;
+          /* loop through selected values: */
+          for (var i = ref_y0; i < ref_y1 ; i++) {
+            for (var j = ref_x0; j < ref_x1; j++) {
+              /* if any unmasked values, things are o.k.: */
+              if (disp_data['mask'][i][j] == 1) {
+                ref_masked = false;
+                break;
+              };
+            };
+          };
+          /* if all values masked, return: */
+          if (ref_masked) {
+            return;
+          }
           /* update plot: */
           disp_plot(plot_vars[volcano_frame]['data_type'],
                     plot_vars[volcano_frame]['start_index'], plot_vars[volcano_frame]['end_index'],
@@ -769,14 +848,14 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
              update_ref_data == true) {
     /* heatmap data update: */
     var heatmap_data_update = {
-      x: [x_data, ref_x, [x_data[ts_x]]],
-      y: [y_data, ref_y, [y_data[ts_y]]],
-      z: [z_data, null, null, null],
-      zmin: [z_min, null, null, null],
-      zmax: [z_max, null, null, null],
-      colorbar: [heatmap_colorbar, null, null, null],
-      colorscale: [heatmap_colorscale, null, null, null],
-      text: [hover_data, 'reference_area', 'selected pixel', null]
+      x: [x_indexes, ref_x, [x_indexes[ts_x]]],
+      y: [y_indexes, ref_y, [y_indexes[ts_y]]],
+      z: [z_data, null, null, null, null],
+      zmin: [z_min, null, null, null, null],
+      zmax: [z_max, null, null, null, null],
+      colorbar: [heatmap_colorbar, null, null, null, null],
+      colorscale: [heatmap_colorscale, null, null, null, null],
+      text: [hover_data, 'reference_area', 'selected pixel', null, null]
     };
     /* heatmap layout update: */
     var heatmap_layout_update = {
@@ -796,8 +875,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       update_heatmap_data_range == false && update_ref_data == false) {
     /* heatmap data update: */
     var heatmap_data_update = {
-      x: [x_data, ref_x, [x_data[ts_x]]],
-      y: [y_data, ref_y, [y_data[ts_y]]],
+      x: [x_indexes, ref_x, [x_indexes[ts_x]]],
+      y: [y_indexes, ref_y, [y_indexes[ts_y]]],
     };
     /* heatmap layout update: */
     var heatmap_layout_update = {
