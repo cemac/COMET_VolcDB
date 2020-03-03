@@ -559,7 +559,16 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       z_data = z_data_masked_raw;
       z_min = plot_vars[volcano_frame]['z_min_raw'];
       z_max = plot_vars[volcano_frame]['z_max_raw'];
-      heatmap_colorbar = { tickprefix: ' ', x: 1.10 };
+
+      heatmap_colorbar = { tickprefix: ' ', x: 1.10};
+      if (plot_vars[volcano_frame]['z_min_raw'] < -100) {
+        heatmap_colorbar = { tickprefix: ' ', x: 1.10};
+      } else if (plot_vars[volcano_frame]['z_max_raw'] > 100) {
+        heatmap_colorbar = { tickprefix: '  ', x: 1.10};
+      } else { 
+        heatmap_colorbar = { tickprefix: '   ', x: 1.10};
+      }
+
       heatmap_colorscale = [
         [0, 'rgb(26, 51, 153)'],
         [0.25, 'rgb(72, 152, 197)'],
@@ -572,12 +581,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       z_data = coh_data;
       z_min = plot_vars[volcano_frame]['z_min_coh'];
       z_max = plot_vars[volcano_frame]['z_max_coh'];
-      if (plot_vars[volcano_frame]['z_min_raw'] < -100 ||
-          plot_vars[volcano_frame]['z_max_raw'] > 100) {
-        heatmap_colorbar = { tickprefix: '    ', x: 1.10 };
-      } else {
-        heatmap_colorbar = { tickprefix: '  ', x: 1.10 };
-      }
+      heatmap_colorbar = { tickprefix: '    ', x: 1.10};
       heatmap_colorscale = 'Greys';
       heatmap_title = 'coherence';
     };
