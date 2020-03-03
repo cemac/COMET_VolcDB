@@ -19,6 +19,7 @@ function set_plot_vars(frame_id) {
       heatmap_data: {},
       hover_data: {},
       ts_data: {},
+      ts_data_raw: null,
       heatmap_plot: null,
       ts_plot: null,
       click_mode: 'select',
@@ -51,6 +52,37 @@ function set_click_mode(click_mode) {
       Plotly.update(heatmap_div, {}, {dragmode: 'zoom'});
     };
   };
+};
+
+/* function to save time series data as csv file: */
+function ts_to_csv() {
+  /* get dates in current range: */
+  var ts_dates = disp_data['dates'].slice(plot_vars[volcano_frame]['start_index'],
+                                          plot_vars[volcano_frame]['end_index'] + 1);
+  /* get displacement values: */
+  var ts_data = plot_vars[volcano_frame]['ts_data_raw'];
+  /* start csv content: */
+  var csv_data = 'data:text/csv;charset=utf-8,';
+  /* header line: */
+  csv_data += 'date,displacement (mm)\r\n';
+  /* loop through values: */
+  for (var i = 0; i < ts_dates.length - 1; i++) {
+    /* add line to csv: */
+    csv_data += ts_dates[i] + ',' +  ts_data[i].toFixed(2) + '\r\n';
+  }
+  /* encode csv data: */
+  var encoded_uri = encodeURI(csv_data);
+  /* name for csv file: */
+  var csv_name = volcano_name + '_' + volcano_frame + '.csv';
+  /* create a temporary link: */
+  var csv_link = document.createElement("a");
+  csv_link.setAttribute("href", encoded_uri);
+  csv_link.setAttribute("download", csv_name);
+  csv_link.style.visibility = 'hidden';
+  /* add link to document, click to init download, then remove: */
+  document.body.appendChild(csv_link);
+  csv_link.click();
+  document.body.removeChild(csv_link);
 };
 
 function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
@@ -381,7 +413,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   var ref_x = plot_vars[volcano_frame]['ref_x'];
 
   /* if data range has changed: */
-  if (update_heatmap_data == true) {
+  if (update_heatmap_data == true || update_ref_data == true) {
     /* get start and end data: */
     var start_data_raw = disp_data_raw[start_index];
     var end_data_raw = disp_data_raw[end_index];
@@ -676,14 +708,15 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       var click_x_val = click_data.x;
 
       /* don't do anything if this is a masked pixel: */
-      if (mask_data[click_y][click_x] == 0) {
+      if (disp_data['mask'][click_y][click_x] == 0) {
         {};
       /* don't do anything if this the currently selected pixel: */
-      } else if (click_y == ts_y && click_x == ts_x) {
+      } else if (click_y == plot_vars[volcano_frame]['ts_y'] &&
+                 click_x == plot_vars[volcano_frame]['ts_x']) {
         {};
       /* don't do anything if this is the reference area: */
-      } else if (ref_y.indexOf(click_y_val) > -1 &&
-                 ref_x.indexOf(click_x_val) > -1) {
+      } else if (plot_vars[volcano_frame]['ref_y'].indexOf(click_y_val) > -1 &&
+                 plot_vars[volcano_frame]['ref_x'].indexOf(click_x_val) > -1) {
         {};
       /* otherwise, update the plots: */
       } else {
@@ -808,6 +841,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     };
   /* end if ts update is true: */
   };
+  /* store ts data for csv file saving: */
+  plot_vars[volcano_frame]['ts_data_raw'] = ts_data_raw;
 
   /* if there is no time series plot ... : */
   if (plot_vars[volcano_frame]['ts_plot'] == null) {
