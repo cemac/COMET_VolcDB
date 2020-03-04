@@ -15,9 +15,10 @@ function set_plot_vars(frame_id) {
       z_max_coh: 1.0,
       ts_y: null,
       ts_x: null,
+      ts_area: null,
       ref_y: null,
       ref_x: null,
-      ref_data: null,
+      ref_area: null,
       heatmap_data: {},
       hover_data: {},
       ts_data: {},
@@ -51,7 +52,7 @@ function set_click_mode(click_mode) {
     button_ref.removeAttribute('disabled');
     plot_vars[volcano_frame]['click_mode'] = 'select';
     if (heatmap_div.data != undefined) {
-      Plotly.update(heatmap_div, {}, {dragmode: 'zoom'});
+      Plotly.update(heatmap_div, {}, {dragmode: 'select'});
     };
   };
 };
@@ -87,14 +88,14 @@ function ts_to_csv() {
   document.body.removeChild(csv_link);
 };
 
-function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
+function disp_plot(data_type, start_index, end_index, ts_area, ref_area) {
 
-  /* make sure ref_data is set: */
-  if (ref_data == undefined) {
-    if (plot_vars[volcano_frame]['ref_data'] != undefined) {
-      ref_data = plot_vars[volcano_frame]['ref_data'];
+  /* make sure ref_area is set: */
+  if (ref_area == undefined) {
+    if (plot_vars[volcano_frame]['ref_area'] != undefined) {
+      ref_area = plot_vars[volcano_frame]['ref_area'];
     } else {
-      ref_data = null;
+      ref_area = null;
     };
   };
 
@@ -102,9 +103,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   if (data_type && data_type == plot_vars[volcano_frame]['data_type'] &&
       start_index && start_index == plot_vars[volcano_frame]['start_index'] &&
       end_index && end_index == plot_vars[volcano_frame]['end_index'] &&
-      ts_y && ts_y == plot_vars[volcano_frame]['ts_y'] &&
-      ts_x && ts_x == plot_vars[volcano_frame]['ts_x'] &&
-      ref_data && ref_data == plot_vars[volcano_frame]['ref_data']) {
+      ts_area == plot_vars[volcano_frame]['ts_area'] &&
+      ref_area && ref_area == plot_vars[volcano_frame]['ref_area']) {
     /* return: */
     return;
   };
@@ -115,7 +115,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     var min_diff = 999999;
     /* return value: */
     var index;
-    /* loop through array: */ 
+    /* loop through array: */
     for (var i = 0; i < arr.length - 1; i++) {
       /* get the difference: */
       var diff = Math.abs(val - arr[i]);
@@ -146,28 +146,28 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     };
   };
 
-  /* function to get mean value of ref area from a set of data: */
-  function get_ref_mean(ref_area, ref_data) {
+  /* function to get mean value of specified area in a set of data: */
+  function get_area_mean(var_area, var_data) {
     /* init mean calculating variables: */
-    var ref_sum = 0;
-    var ref_count = 0;
-    var ref_mean;
-    /* loop through ref values, adding to sum if value is good: */
-    for (var i = ref_area[0]; i < ref_area[1]; i++) {
-      for (var j = ref_area[2]; j < ref_area[3]; j++) {
-        if (ref_data[i][j] != 'null') {
-          ref_sum += ref_data[i][j];
-          ref_count += 1;
+    var var_sum = 0;
+    var var_count = 0;
+    var var_mean;
+    /* loop through var values, adding to sum if value is good: */
+    for (var i = var_area[0]; i < var_area[1]; i++) {
+      for (var j = var_area[2]; j < var_area[3]; j++) {
+        if (var_data[i][j] != 'null') {
+          var_sum += var_data[i][j];
+          var_count += 1;
         };
       };
     };
     /* calculate mean, or return 0 if no values: */
-    if (ref_count > 0) {
-      ref_mean = ref_sum / ref_count;
+    if (var_count > 0) {
+      var_mean = var_sum / var_count;
     } else {
-      ref_mean = 0;
+      var_mean = 0;
     };
-    return ref_mean;
+    return var_mean;
   };
 
   /* get plot container divs: */
@@ -240,30 +240,31 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   set_click_mode(plot_vars[volcano_frame]['click_mode']);
 
   /* reference area data: */
-  if (ref_data == null) {
-    ref_data = disp_data['refarea'];
+  if (ref_area == null) {
+    ref_area = disp_data['refarea'];
   } else {
-    ref_data = ref_data;
+    ref_area = ref_area;
   };
   /* if reference area has updated: */
-  if (ref_data != plot_vars[volcano_frame]['ref_data']) {
+  if (ref_area != plot_vars[volcano_frame]['ref_area']) {
     /* heatmap and time series data is updating: */
     update_ref_data = true;
     update_ts_data = true;
   };
   /* store the value: */
-  plot_vars[volcano_frame]['ref_data'] = ref_data;
+  plot_vars[volcano_frame]['ref_area'] = ref_area;
 
   /* init vars for time series indexes: */
-  var ts_y, ts_x;
-  /* if time series indexes not specified: */
-  if (ts_y == null || ts_x == null) {
+  var ts_y = [];
+  var ts_x = [];
+  /* if time series area not specified: */
+  if (ts_area == null) {
     /* if time series indexes are also not in plot_vars[volcano_frame]: */
     if (plot_vars[volcano_frame]['ts_y'] == null || plot_vars[volcano_frame]['ts_x'] == null) {
       /* pick a pixel: */
       var ts_indexes = get_ts_indexes()
-      ts_y = ts_indexes[0];
-      ts_x = ts_indexes[1];
+      ts_y.push(ts_indexes[0]);
+      ts_x.push(ts_indexes[1]);
       /* time series data is updating: */
       update_ts_data = true;
     } else {
@@ -271,7 +272,37 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       ts_y = plot_vars[volcano_frame]['ts_y'];
       ts_x = plot_vars[volcano_frame]['ts_x'];
     };
+  /* time series area is specified: */
+  } else {
+    /* spin through ts area indexes: */
+    for (var i = ts_area[0]; i < ts_area[1]; i++) {
+      for (var j = ts_area[2]; j < ts_area[3]; j++) {
+        /* if the value is not masked: */
+        if (disp_data['mask'][i][j] == 1) {
+          /* store x and y index values: */
+          ts_y.push(i);
+          ts_x.push(j);
+        };
+      };
+    };
   };
+
+  /* get ts_area x and y values: */
+  if (ts_y.length == 1) {
+    var ts_area_y = [ts_y[0], ts_y[0] + 1];
+  } else {
+    var ts_area_y = [ts_y[0], ts_y.slice(-1)[0] + 1];
+  };
+  if (ts_x.length == 1) {
+    var ts_area_x = [ts_x[0], ts_x[0] + 1];
+  } else {
+    var ts_area_x = [ts_x[0], ts_x.slice(-1)[0] + 1];
+  };
+  /* check values: */
+  /* store ts_area values: */
+  ts_area = [ts_area_y[0], ts_area_y[1],
+             ts_area_x[0], ts_area_x[1]];
+  plot_vars[volcano_frame]['ts_area'] = ts_area;
 
   /* check if time series indexes have changed: */
   if (ts_y != plot_vars[volcano_frame]['ts_y'] || ts_x != plot_vars[volcano_frame]['ts_x']) {
@@ -281,13 +312,23 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     plot_vars[volcano_frame]['ts_y'] = ts_y;
     plot_vars[volcano_frame]['ts_x'] = ts_x;
   };
-  /* ts lat and lon values: */
-  var ts_lat = y_data[ts_y];
-  var ts_lon = x_data[ts_x];
+  /* ts lat and lon values for time series plot title: */
+  if (ts_y.length == 1) {
+    var ts_lat = y_data[ts_y[0]];
+  } else {
+    var ts_lat = y_data[Math.min.apply(Math, ts_y)] + ' - ' + y_data[Math.max.apply(Math, ts_y)];
+  };
+  if (ts_x.length == 1) {
+    var ts_lon = x_data[ts_x[0]];
+  } else {
+    var ts_lon = x_data[Math.min.apply(Math, ts_x)] + ' - ' + x_data[Math.max.apply(Math, ts_x)];
+  };
 
   /* key for this time series: */
-  var ts_key = ts_y + '_' + ts_x + '_' + ref_data[0] + '_' + ref_data[1] +
-               '_' + ref_data[2] + '_' + ref_data[3];
+  var ts_key = ts_area[0] + '_' + ts_area[1] + '_' +
+               ts_area[2] + '_' + ts_area[2] + '_' +
+               ref_area[0] + '_' + ref_area[1] + '_' +
+               ref_area[2] + '_' + ref_area[3];
 
   /* get start and indexes. check if values have updated: */
   if (start_index == null || end_index == null ||
@@ -322,8 +363,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
   plot_vars[volcano_frame]['start_index'] = start_index;
   plot_vars[volcano_frame]['end_index'] = end_index;
   /* key for this range in data: */
-  var range_key = start_index + '_' + end_index + '_' + ref_data[0] + '_' +
-                  ref_data[1] + '_' + ref_data[2] + '_' + ref_data[3];;
+  var range_key = start_index + '_' + end_index + '_' + ref_area[0] + '_' +
+                  ref_area[1] + '_' + ref_area[2] + '_' + ref_area[3];;
   /* create key for storing time series data: */
   if (plot_vars[volcano_frame]['ts_data'][range_key] == undefined) {
     plot_vars[volcano_frame]['ts_data'][range_key] = {};
@@ -387,8 +428,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       var slider_end_date = date_data[slider_end_index];
       /* update plotting: */
       disp_plot(null, slider_start_index, slider_end_index,
-                plot_vars[volcano_frame]['ts_y'], plot_vars[volcano_frame]['ts_x'],
-                plot_vars[volcano_frame]['ref_data']);
+                plot_vars[volcano_frame]['ts_area'],
+                plot_vars[volcano_frame]['ref_area']);
     });
     /* add slide listerner: */
     slider_div.noUiSlider.on('slide', function() {
@@ -447,8 +488,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     var ref_count_raw = 0;
     var ref_mean_raw;
     /* spin through ref area indexes: */
-    for (var i = ref_data[0]; i < ref_data[1]; i++) {
-      for (var j = ref_data[2]; j < ref_data[3]; j++) {
+    for (var i = ref_area[0]; i < ref_area[1]; i++) {
+      for (var j = ref_area[2]; j < ref_area[3]; j++) {
         /* if the value is not masked: */
         if (disp_data['mask'][i][j] == 1) {
           /* store x and y index values: */
@@ -565,7 +606,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
         heatmap_colorbar = { tickprefix: ' ', x: 1.10};
       } else if (plot_vars[volcano_frame]['z_max_raw'] > 100) {
         heatmap_colorbar = { tickprefix: '  ', x: 1.10};
-      } else { 
+      } else {
         heatmap_colorbar = { tickprefix: '   ', x: 1.10};
       }
 
@@ -645,8 +686,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
     var heatmap_selected = {
       type: 'scatter',
       mode: 'markers',
-      x: [x_indexes[ts_x]],
-      y: [y_indexes[ts_y]],
+      x: ts_x,
+      y: ts_y,
       marker: {
         color: '#00ff00',
         size: 7,
@@ -734,6 +775,7 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
         side: 'right'
       },
       hovermode: 'closest',
+      dragmode: 'select',
       showlegend: false
     };
 
@@ -769,20 +811,24 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       if (click_y == undefined || click_x == undefined) {
         return;
       };
-
-      /* x and y values of clicked point: */
-      var click_y_val = click_data.y;
-      var click_x_val = click_data.x;
-
+      /* x and y values of clicked point are grid indexes: */
+      var click_y_val = click_y;
+      var click_x_val = click_x;
       /* don't do anything if this is a masked pixel: */
       if (disp_data['mask'][click_y][click_x] == 0) {
         {};
-      /* don't do anything if this the currently selected pixel: */
-      } else if (click_y == plot_vars[volcano_frame]['ts_y'] &&
-                 click_x == plot_vars[volcano_frame]['ts_x']) {
+      /* don't do anything if this the currently selected pixel, and time
+         only a single pixel is currently selected: */
+      } else if (plot_vars[volcano_frame]['ts_y'].length == 1 &&
+                 plot_vars[volcano_frame]['ts_x'].length == 1 &&
+                 plot_vars[volcano_frame]['ts_y'].indexOf(click_y_val) > -1 &&
+                 plot_vars[volcano_frame]['ts_x'].indexOf(click_x_val) > -1) {
         {};
-      /* don't do anything if this is the reference area: */
-      } else if (plot_vars[volcano_frame]['ref_y'].indexOf(click_y_val) > -1 &&
+      /* don't do anything if this is the reference area, and reference area
+         is a single pixel: */
+      } else if (plot_vars[volcano_frame]['ref_y'].length == 1 &&
+                 plot_vars[volcano_frame]['ref_x'].length == 1 &&
+                 plot_vars[volcano_frame]['ref_y'].indexOf(click_y_val) > -1 &&
                  plot_vars[volcano_frame]['ref_x'].indexOf(click_x_val) > -1) {
         {};
       /* otherwise, update the plots: */
@@ -797,45 +843,53 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
           /* presume selected pixel updating: */
           disp_plot(plot_vars[volcano_frame]['data_type'],
                     plot_vars[volcano_frame]['start_index'], plot_vars[volcano_frame]['end_index'],
-                    click_y, click_x, plot_vars[volcano_frame]['ref_data']);
+                    [click_y, click_y + 1, click_x, click_x + 1],
+                    plot_vars[volcano_frame]['ref_area']);
         };
       };
     });
 
     /* selecting a reference area when multiple points are selected: */
     heatmap_div.on('plotly_selected', function(sel_data){
-      /* f current click mode is reference area selecting: */
-      if (plot_vars[volcano_frame]['click_mode'] == 'ref') {
-        /* only if sel_Data is defined: */
-        if (sel_data != undefined && sel_data.range != undefined) {
-          /* get nearest x and y values: */
-          var ref_x0 = get_nearest_value(sel_data.range.x[0], x_indexes);
-          var ref_x1 = get_nearest_value(sel_data.range.x[1], x_indexes);
-          ref_x1++;
-          var ref_y0 = get_nearest_value(sel_data.range.y[0], y_indexes);
-          var ref_y1 = get_nearest_value(sel_data.range.y[1], y_indexes);
-          ref_y1++;
-          /* check if all values are masked. presume yes: */
-          var ref_masked = true;
-          /* loop through selected values: */
-          for (var i = ref_y0; i < ref_y1 ; i++) {
-            for (var j = ref_x0; j < ref_x1; j++) {
-              /* if any unmasked values, things are o.k.: */
-              if (disp_data['mask'][i][j] == 1) {
-                ref_masked = false;
-                break;
-              };
+      /* only if sel_Data is defined: */
+      if (sel_data != undefined && sel_data.range != undefined) {
+        /* get nearest x and y values: */
+        var sel_x0 = get_nearest_value(sel_data.range.x[0], x_indexes);
+        var sel_x1 = get_nearest_value(sel_data.range.x[1], x_indexes);
+        sel_x1++;
+        var sel_y0 = get_nearest_value(sel_data.range.y[0], y_indexes);
+        var sel_y1 = get_nearest_value(sel_data.range.y[1], y_indexes);
+        sel_y1++;
+        /* check if all values are masked. presume yes: */
+        var ref_masked = true;
+        /* loop through selected values: */
+        for (var i = sel_y0; i < sel_y1 ; i++) {
+          for (var j = sel_x0; j < sel_x1; j++) {
+            /* if any unmasked values, things are o.k.: */
+            if (disp_data['mask'][i][j] == 1) {
+              ref_masked = false;
+              break;
             };
           };
-          /* if all values masked, return: */
-          if (ref_masked) {
-            return;
-          }
+        };
+        /* if all values masked, return: */
+        if (ref_masked) {
+          return;
+        }
+        /* if current click mode is reference area selecting: */
+        if (plot_vars[volcano_frame]['click_mode'] == 'ref') {
           /* update plot: */
           disp_plot(plot_vars[volcano_frame]['data_type'],
                     plot_vars[volcano_frame]['start_index'], plot_vars[volcano_frame]['end_index'],
-                    plot_vars[volcano_frame]['ts_y'], plot_vars[volcano_frame]['ts_x'],
-                    [ref_y0, ref_y1, ref_x0, ref_x1]);
+                    plot_vars[volcano_frame]['ts_area'],
+                    [sel_y0, sel_y1, sel_x0, sel_x1]);
+        /* if current click mode is points to plot selecting: */
+        } else if (plot_vars[volcano_frame]['click_mode'] == 'select') {
+          /* update plot: */
+          disp_plot(plot_vars[volcano_frame]['data_type'],
+                    plot_vars[volcano_frame]['start_index'], plot_vars[volcano_frame]['end_index'],
+                    [sel_y0, sel_y1, sel_x0, sel_x1],
+                    plot_vars[volcano_frame]['ref_area']);
         };
       };
       /* make sure slected pixel and reference area are still 'selected',
@@ -852,8 +906,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
              update_ref_data == true) {
     /* heatmap data update: */
     var heatmap_data_update = {
-      x: [x_indexes, ref_x, [x_indexes[ts_x]]],
-      y: [y_indexes, ref_y, [y_indexes[ts_y]]],
+      x: [x_indexes, ref_x, ts_x],
+      y: [y_indexes, ref_y, ts_y],
       z: [z_data, null, null, null, null],
       zmin: [z_min, null, null, null, null],
       zmax: [z_max, null, null, null, null],
@@ -879,8 +933,8 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       update_heatmap_data_range == false && update_ref_data == false) {
     /* heatmap data update: */
     var heatmap_data_update = {
-      x: [x_indexes, ref_x, [x_indexes[ts_x]]],
-      y: [y_indexes, ref_y, [y_indexes[ts_y]]],
+      x: [x_indexes, ref_x, ts_x],
+      y: [y_indexes, ref_y, ts_y],
     };
     /* heatmap layout update: */
     var heatmap_layout_update = {
@@ -897,16 +951,16 @@ function disp_plot(data_type, start_index, end_index, ts_y, ts_x, ref_data) {
       var start_data_raw = disp_data_raw[start_index];
       var end_data_raw = disp_data_raw[end_index];
       /* get reference area data: */
-      var ts_ref_mean_raw = get_ref_mean(ref_data, start_data_raw);
-      var ts_ref_minus_raw = start_data_raw[ts_y][ts_x] - ts_ref_mean_raw;
+      var ts_ref_mean_raw = get_area_mean(ref_area, start_data_raw);
+      var ts_ref_minus_raw = get_area_mean(ts_area,  start_data_raw) - ts_ref_mean_raw;
       /* init vars for data: */
       var ts_data_raw = [];
       /* have loop through time series to get values: */
       for (var i = start_index; i < end_index + 1; i++) {
         /* raw data value: */
-        value_raw = disp_data_raw[i][ts_y][ts_x];
+        value_raw = get_area_mean(ts_area, disp_data_raw[i]);
         /* ref area mean: */
-        ref_mean_raw = get_ref_mean(ref_data, disp_data_raw[i]);
+        ref_mean_raw = get_area_mean(ref_area, disp_data_raw[i]);
         /* value is data value - ref area mean for time step - ref area mean
            for start data: */
         value_raw_out = value_raw - ref_mean_raw - ts_ref_minus_raw;
