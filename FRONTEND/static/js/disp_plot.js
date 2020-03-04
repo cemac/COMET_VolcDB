@@ -837,7 +837,7 @@ function disp_plot(data_type, start_index, end_index, ts_area, ref_area) {
         if (plot_vars[volcano_frame]['click_mode'] == 'ref') {
           disp_plot(plot_vars[volcano_frame]['data_type'],
                     plot_vars[volcano_frame]['start_index'], plot_vars[volcano_frame]['end_index'],
-                    plot_vars[volcano_frame]['ts_y'], plot_vars[volcano_frame]['ts_x'],
+                    plot_vars[volcano_frame]['ts_area'],
                     [click_y, click_y + 1, click_x, click_x + 1]);
         } else {
           /* presume selected pixel updating: */
