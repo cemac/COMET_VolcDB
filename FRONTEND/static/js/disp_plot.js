@@ -817,6 +817,9 @@ function disp_plot(data_type, start_index, end_index, ts_area, ref_area) {
       /* don't do anything if this is a masked pixel: */
       if (disp_data['mask'][click_y][click_x] == 0) {
         {};
+      /* don't do anything if this is a null pixel: */
+      } else if (plot_vars[volcano_frame]['heatmap_data'][range_key]['raw'][click_y][click_x] == 'null') {
+        {};
       /* don't do anything if this the currently selected pixel, and time
          only a single pixel is currently selected: */
       } else if (plot_vars[volcano_frame]['ts_y'].length == 1 &&
