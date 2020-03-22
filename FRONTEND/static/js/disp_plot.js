@@ -170,8 +170,7 @@ function scatter_to_csv() {
     /* header line: */
     csv_data += 'date,displacement (mm)\r\n';
     /* get dates in current range: */
-    var csv_x = plot_vars[fid]['dates'].slice(plot_vars[fid]['start_index'],
-                                              plot_vars[fid]['end_index'] + 1);
+    var csv_x = plot_vars[fid]['ts_dates'];
     /* get displacement values: */
     var csv_y = plot_vars[fid]['ts_disp'];
   } else {
@@ -754,6 +753,7 @@ function disp_plot(heatmap_type, scatter_type,
     var ts_ref_minus_disp = get_area_mean(ts_area,  start) - ts_ref_mean;
     /* init vars for data: */
     var ts_disp = [];
+    var ts_dates = [];
     var ts_hover = [];
     /* have loop through time series to get values: */
     for (var i = start_index; i < end_index + 1; i++) {
@@ -766,6 +766,8 @@ function disp_plot(heatmap_type, scatter_type,
       var value_disp_out = value_disp - ref_mean - ts_ref_minus_disp;
       /* add to ts data: */
       ts_disp.push(value_disp_out);
+      /* add to ts dates: */
+      ts_dates.push(dates[i]);
       /* add hover data: */
       ts_hover.push(dates[i] + ', ' + value_disp_out + ' mm');
     /* end loop through time series: */
@@ -773,10 +775,12 @@ function disp_plot(heatmap_type, scatter_type,
   } else {
     /* use stored values: */
     var ts_disp = plot_vars[fid]['ts_disp'];
+    var ts_dates = plot_vars[fid]['ts_dates'];
     var ts_hover = plot_vars[fid]['ts_hover'];
   };
   /* store values: */
   plot_vars[fid]['ts_disp'] = ts_disp;
+  plot_vars[fid]['ts_dates'] = ts_dates;
   plot_vars[fid]['ts_hover'] = ts_hover;
 
   /* check if profile data calculation is required: */
@@ -891,7 +895,7 @@ function disp_plot(heatmap_type, scatter_type,
     var selected_y = ts_y;
     var selected_mode = 'markers';
     var selected_hover = 'selected area';
-    var scatter_x = dates.slice(start_index, end_index + 1);
+    var scatter_x = ts_dates;
     var scatter_y = ts_disp;
     var scatter_hover = ts_hover;
     var scatter_mode = 'markers';
@@ -1137,6 +1141,8 @@ function disp_plot(heatmap_type, scatter_type,
 
   /* plot update, if updating: */
   var surf_update = {
+    'x': [x],
+    'y': [y],
     'z': [heatmap_disp_masked],
   };
 
