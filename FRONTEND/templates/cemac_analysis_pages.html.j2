@@ -78,23 +78,38 @@
            id="heatmap_plot">
       </div>
       <div class="disp_plot"
-           id="ts_plot">
+           id="scatter_plot">
       </div>
     </div>
+
     <!-- plot controls: -->
     <div class="plot_control_container"
          id="plot_control_container">
-      <div class="data_type_control"
-           id="data_type_control">
-          <button id="data_type_button_disp"
-                  onclick="disp_plot('raw');">
+
+      <div class="heatmap_type_control"
+           id="heatmap_type_control">
+          <button id="heatmap_type_button_disp"
+                  onclick="set_heatmap_type('disp');">
             displacement
           </button>
-          <button id="data_type_button_coh"
-                  onclick="disp_plot('coh');">
+          <button id="heatmap_type_button_coh"
+                  onclick="set_heatmap_type('coh');">
             coherence
           </button>
       </div>
+
+      <div class="scatter_type_control"
+           id="scatter_type_control">
+          <button id="scatter_type_button_ts"
+                  onclick="set_scatter_type('ts');">
+            time series
+          </button>
+          <button id="scatter_type_button_profile"
+                  onclick="set_scatter_type('profile');">
+            profile
+          </button>
+      </div>
+
       <div class="click_mode_control"
            id="click_mode_control">
           <button id="click_mode_button_select"
@@ -103,19 +118,29 @@
           </button>
           <button id="click_mode_button_ref"
                   onclick="set_click_mode('ref');">
-            reference pixel or area
+            reference area
+          </button>
+      </div>
+
+      <div class="extra_plot_control"
+           id="extra_plot_control">
+          <button id="surf_plot_button"
+                  onclick="display_surf_plot();">
+            surface plot
           </button>
           <button id="ts_to_csv_button"
-                  onclick="ts_to_csv();">
-            save time series as csv
+                  onclick="scatter_to_csv();">
+            save scatter data as csv
           </button>
       </div>
-      <div class="data_range_control"
-           id="data_range_control">
+
+      <div class="time_range_control"
+           id="time_range_control">
       </div>
-      <div class="data_range_value"
-           id="data_range_value">
+      <div class="time_range_value"
+           id="time_range_value">
       </div>
+
     </div>
 
     <hr>
@@ -152,6 +177,16 @@
         </table>
       </div>
 
+    </div>
+
+    <!-- surface plot: -->
+    <div class="surf_plot_container"
+         id="surf_plot_container">
+      <span id="surf_plot_close"
+            class="surf_plot_close">&times;</span>
+      <div class="surf_plot"
+           id="surf_plot">
+      </div>
     </div>
 
     <!-- full screen images: -->
