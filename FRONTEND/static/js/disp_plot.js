@@ -1,52 +1,60 @@
 /** variables: **/
 
-/* init plotting variables: */
-var plot_vars = {
-  /* default heatmap type: */
-  'heatmap_type': 'disp',
-  /* default scatter type: */
-  'scatter_type': 'ts',
-  /* html div elements: */
-  'heatmap_div': document.getElementById('heatmap_plot'),
-  'surf_div': document.getElementById('surf_plot'),
-  'scatter_div': document.getElementById('scatter_plot'),
-  'slider_div': document.getElementById('time_range_control'),
-  'slider_value_div': document.getElementById('time_range_value'),
-  /* html button elements: */
-  'button_disp': document.getElementById('heatmap_type_button_disp'),
-  'button_coh': document.getElementById('heatmap_type_button_coh'),
-  'button_ts': document.getElementById('scatter_type_button_ts'),
-  'button_profile': document.getElementById('scatter_type_button_profile'),
-  'button_select': document.getElementById('click_mode_button_select'),
-  'button_ref': document.getElementById('click_mode_button_ref'),
-  /* min and max for coherence heatmap: */
-  'heatmap_coh_z_min': 0,
-  'heatmap_coh_z_max': 1.0,
-  /* heatmap plotting variables: */
-  'heatmap_disp_title': 'displacement (mm)',
-  'heatmap_disp_colorscale' : [
-    [0, 'rgb(26, 51, 153)'],
-    [0.25, 'rgb(72, 152, 197)'],
-    [0.5, 'rgb(204, 235, 200)'],
-    [0.75, 'rgb(192, 159, 58)'],
-    [1, 'rgb(127, 25, 0)']
-  ],
-  'heatmap_coh_title': 'coherence',
-  'heatmap_coh_colorscale': 'Greys',
-  /* scatter plotting variables: */
-  'scatter_ts_mode': 'markers',
-  'scatter_ts_x_title': 'date',
-  'scatter_profile_mode': 'lines',
-  'scatter_profile_title': 'displacement profile',
-  'scatter_profile_title': 'distance (km)',
-  /* inital hover variables: */
-  'hover': false,
-  'hover_x': false,
-  'hover_y': false
+/* function to init plot variables: */
+function init_plot_vars() {
+  if (plot_vars == undefined) {
+    /* init plotting variables: */
+    var plot_vars = {
+      /* default heatmap type: */
+      'heatmap_type': 'disp',
+      /* default scatter type: */
+      'scatter_type': 'ts',
+      /* html div elements: */
+      'heatmap_div': document.getElementById('heatmap_plot'),
+      'surf_div': document.getElementById('surf_plot'),
+      'scatter_div': document.getElementById('scatter_plot'),
+      'slider_div': document.getElementById('time_range_control'),
+      'slider_value_div': document.getElementById('time_range_value'),
+      /* html button elements: */
+      'button_disp': document.getElementById('heatmap_type_button_disp'),
+      'button_coh': document.getElementById('heatmap_type_button_coh'),
+      'button_ts': document.getElementById('scatter_type_button_ts'),
+      'button_profile': document.getElementById('scatter_type_button_profile'),
+      'button_select': document.getElementById('click_mode_button_select'),
+      'button_ref': document.getElementById('click_mode_button_ref'),
+      /* min and max for coherence heatmap: */
+      'heatmap_coh_z_min': 0,
+      'heatmap_coh_z_max': 1.0,
+      /* heatmap plotting variables: */
+      'heatmap_disp_title': 'displacement (mm)',
+      'heatmap_disp_colorscale' : [
+        [0, 'rgb(26, 51, 153)'],
+        [0.25, 'rgb(72, 152, 197)'],
+        [0.5, 'rgb(204, 235, 200)'],
+        [0.75, 'rgb(192, 159, 58)'],
+        [1, 'rgb(127, 25, 0)']
+      ],
+      'heatmap_coh_title': 'coherence',
+      'heatmap_coh_colorscale': 'Greys',
+      /* scatter plotting variables: */
+      'scatter_ts_mode': 'markers',
+      'scatter_ts_x_title': 'date',
+      'scatter_profile_mode': 'lines',
+      'scatter_profile_title': 'displacement profile',
+      'scatter_profile_title': 'distance (km)',
+      /* inital hover variables: */
+      'hover': false,
+      'hover_x': false,
+      'hover_y': false
+    };
+  };
 };
 
-/* function to init plot variables: */
+/* function to init plot variables for this frame: */
 function set_plot_vars(fid) {
+  /* init plot variables if required: */
+  init_plot_vars();
+  /* init plot variables for this frame if requied: */
   if (plot_vars[fid] == undefined) {
     plot_vars[fid] = {
       /* heatmap type (displacement or coherence): */
@@ -1531,7 +1539,9 @@ function close_surf_plot() {
 };
 
 /* add listener for surf plot closing: */
-var surf_plot_close = document.getElementById("surf_plot_close");
-surf_plot_close.addEventListener('click', function() {
-  close_surf_plot();
+window.addEventListener('load', function() {
+  var surf_plot_close = document.getElementById("surf_plot_close");
+  surf_plot_close.addEventListener('click', function() {
+    close_surf_plot();
+  });
 });
