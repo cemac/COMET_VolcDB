@@ -1,10 +1,12 @@
 /** variables: **/
 
+var plot_vars = null;
+
 /* function to init plot variables: */
-function init_plot_vars() {
+function init_plot_vars(fid) {
   if (plot_vars == undefined) {
     /* init plotting variables: */
-    var plot_vars = {
+    plot_vars = {
       /* default heatmap type: */
       'heatmap_type': 'disp',
       /* default scatter type: */
@@ -48,13 +50,12 @@ function init_plot_vars() {
       'hover_y': false
     };
   };
+  /* set plot variables for this frame: */
+  set_plot_vars(fid);
 };
 
 /* function to init plot variables for this frame: */
 function set_plot_vars(fid) {
-  /* init plot variables if required: */
-  init_plot_vars();
-  /* init plot variables for this frame if requied: */
   if (plot_vars[fid] == undefined) {
     plot_vars[fid] = {
       /* heatmap type (displacement or coherence): */

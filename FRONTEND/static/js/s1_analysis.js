@@ -16,7 +16,7 @@ function s1_page_set_up(frame_index) {
     /* if global frame var is also unset: */
     if (volcano_frame == null) {
       /* use first frame: */
-    volcano_frame_index = 0;
+      volcano_frame_index = 0;
       volcano_frame = volcano_frames[0]['id'];
       volcano_track = volcano_frames[0]['track'];
     };
@@ -110,7 +110,7 @@ function s1_page_set_up(frame_index) {
     /* set disp_data variable: */
     disp_data = disp_req.response;
     /* set plot variables for the frame: */
-    set_plot_vars(volcano_frame);
+    init_plot_vars(volcano_frame);
     /* displacement plot: */
     disp_plot();
     /* then update licsar data: */
