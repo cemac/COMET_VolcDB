@@ -109,10 +109,9 @@ function s1_page_set_up(frame_index) {
   disp_req.onload = function() {
     /* set disp_data variable: */
     disp_data = disp_req.response;
-    /* set plot variables for the frame: */
-    init_plot_vars(volcano_frame);
-    /* displacement plot: */
-    disp_plot();
+    /* set plot variables for the frame, then run displacement plotting
+       function: */
+    init_plot_vars(volcano_frame, disp_plot);
     /* then update licsar data: */
     licsar_update();
   };

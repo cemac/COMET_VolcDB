@@ -3,7 +3,9 @@
 var plot_vars = null;
 
 /* function to init plot variables: */
-function init_plot_vars(fid) {
+function init_plot_vars(fid, call_back) {
+
+  /* if main plot_vars is undefined: */
   if (plot_vars == undefined) {
     /* init plotting variables: */
     plot_vars = {
@@ -50,12 +52,8 @@ function init_plot_vars(fid) {
       'hover_y': false
     };
   };
-  /* set plot variables for this frame: */
-  set_plot_vars(fid);
-};
 
-/* function to init plot variables for this frame: */
-function set_plot_vars(fid) {
+  /* if plot variables for this frame ae undefined: */
   if (plot_vars[fid] == undefined) {
     plot_vars[fid] = {
       /* heatmap type (displacement or coherence): */
@@ -123,6 +121,12 @@ function set_plot_vars(fid) {
       'refarea': disp_data['refarea'],
     };
   };
+
+  /* run call back function: */
+  if (call_back && typeof(call_back) === "function") {
+    call_back();
+  }
+
 };
 
 
