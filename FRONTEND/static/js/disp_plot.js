@@ -847,17 +847,24 @@ function disp_plot(heatmap_type, scatter_type,
   var heatmap_disp_title = plot_vars['heatmap_disp_title'];
   var heatmap_disp_colorscale = plot_vars['heatmap_disp_colorscale'];
   var heatmap_disp_colorbar = {
-    'titleside': 'right',
-    'x': 1.10
+    'x': 1.10,
+    'thickness': 25,
+    'len': 0.9,
+    'tickfont': {
+      'family': 'Consolas, Monaco, Lucida Console, Liberation Mono, ' +
+                'DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, ' +
+                'monospace',
+      'size': 10
+    }
   };
   /* try to add suitable prefix to maintain a consistent colorbar
      width ... : */
-  if (z_min < -100) {
-    heatmap_disp_colorbar['tickprefix'] = ' ';
-  } else if (z_max > 100) {
-    heatmap_disp_colorbar['tickprefix'] = '  ';
+  if (heatmap_disp_z_min < -100) {
+    var heatmap_disp_colorbar['tickprefix'] = ' ';
+  } else if (heatmap_disp_z_max > 100 || heatmap_disp_z_min < -10) {
+    var heatmap_disp_colorbar['tickprefix'] = '  ';
   } else {
-    heatmap_disp_colorbar['tickprefix'] = '   ';
+    var heatmap_disp_colorbar['tickprefix'] = '   ';
   };
 
   /* heatmap coherence variables: */
@@ -866,8 +873,16 @@ function disp_plot(heatmap_type, scatter_type,
   var heatmap_coh_z_min = plot_vars['heatmap_coh_z_min'];
   var heatmap_coh_z_max = plot_vars['heatmap_coh_z_max'];
   var heatmap_coh_colorbar = {
-    'tickprefix': '    ',
-    'x': 1.10
+    'tickprefix': '  ',
+    'x': 1.10,
+    'thickness': 25,
+    'len': 0.9,
+    'tickfont': {
+      'family': 'Consolas, Monaco, Lucida Console, Liberation Mono, ' +
+                'DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, ' +
+                'monospace',
+      'size': 10
+    }
   };
 
   /* if displacement heatmap plotting: */
@@ -1116,20 +1131,14 @@ function disp_plot(heatmap_type, scatter_type,
   /** surface plot: **/
 
 
-  /* set up the colorbar: */
-  var surf_colorbar = heatmap_colorbar;
-  surf_colorbar['len'] = 0.9;
-  surf_colorbar['thickness'] = 25;
-  surf_colorbar['xpad'] = 0;
-
   /* 3d surface plot: */
   var surf = {
     'type': 'surface',
     'x': x,
     'y': y,
     'z': heatmap_disp_masked,
-    'zmin': heatmap_disp_z_min,
-    'zmax': heatmap_disp_z_max,
+    'cmin': heatmap_disp_z_min,
+    'cmax': heatmap_disp_z_max,
     'colorbar': heatmap_disp_colorbar,
     'colorscale': heatmap_disp_colorscale,
     'hoverinfo': 'text',
@@ -1144,6 +1153,11 @@ function disp_plot(heatmap_type, scatter_type,
     'x': [x],
     'y': [y],
     'z': [heatmap_disp_masked],
+    'cmin': [heatmap_disp_z_min],
+    'cmax': [heatmap_disp_z_max],
+    'colorbar': [heatmap_disp_colorbar],
+    'colorscale': [heatmap_disp_colorscale],
+    'text': [heatmap_hover]
   };
 
   /* surface plot layout: */
@@ -1492,7 +1506,7 @@ function disp_plot(heatmap_type, scatter_type,
     plot_vars[fid]['surf_plot'] = surf_plot;
   } else {
     /* update the plot: */
-    Plotly.update(surf_div, surf_update);
+    Plotly.update(surf_div, surf_update, surf_layout);
   };
 
   /* scatter plot: */
