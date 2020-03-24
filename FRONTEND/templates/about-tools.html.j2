@@ -1,0 +1,22 @@
+<html lang="en">
+{% extends 'layout.html.j2' %}
+{% block body %}
+<h1>About our online analysis tools</h1>
+<div>
+<p>Our tools are designed to allow quick and easy interrogation of processed interferograms in the <a href="https://comet.nerc.ac.uk/comet-lics-portal/">LiCSAR</a> archive.  We combine the construction of interferograms and time series ‘on the fly’ according to user choices with flexibility in choice of point to plot and reference pixel.  These choices can be informed by consideration of interferogram coherence. We also provide access to the results of machine learning classification using Convolutional Neural Networks (CCN) for each interferogram plotted.
+<br>
+<p><b>Panel 1:</b>You can use the sliding bars on the ‘Explore Sentinel-1 Imagery’ tabs to select any first and second date of Sentinel-1 imagery acquired since 2015.  The down-sampled interferogram will then be displayed, along with a time series constructed using LiCSBAS (Morishita et al., 2019).  LiCSBAS is an open-source time series package that is integrated with the LiCSAR automated Sentinel-1 InSAR Processor to produce time series with corrections including the removal of interferograms with high numbers of unwrapping errors and masking according to noise.
+<p><b>Panel 2:</b>  Sliding bars allow the selection of individual interferograms already constructed by LiCSAR.  Four panels show (1) coherence, (2) line-of-sight wrapped range change in centimetres, (3) line-of-sight unwrapped range change in centimetres and (4) a heat map indicating the probability of any particular signal being magmatic in origin.
+<br>
+<p> These heat maps are the product of the application of a deep learning approach to CCN trained on a subset of real and synthetic interferograms classified as containing magmatic deformation or not (Anantrasirichai et al., 2019a, 2019b). <!--[This section will require development to match the final version of the scripts that Pui provides.]--> Interferograms containing signals with probabilities > 0.05 are indicated by a line next to the sliding bar. For an understanding of the uncertainties and implications of these probabilities, please refer to Anantrasirichai et al., 2019a, 2019b.
+<br>
+<h3> References </h3>
+<ul>
+<li>Anantrasirichai, N., Biggs, J., Albino, F., & Bull, D. (2019). The Application of Convolutional Neural Networks to Detect Slow, Sustained Deformation in InSAR Time Series. Geophysical Research Letters, 46(21), 11850-11858.</li>
+<li>Anantrasirichai, N., Biggs, J., Albino, F., & Bull, D. (2019). A deep learning approach to detecting volcano deformation from satellite imagery using synthetic datasets. Remote Sensing of Environment, 230, 111179.</li>
+<!--<li></li>[Milan Lazecky’s LiCSAR paper final reference]-->
+<li>Morishita, Y.; Lazecky, M.; Wright, T.J.; Weiss, J.R.; Elliott, J.R.; Hooper, A. LiCSBAS: An Open-Source InSAR Time Series Analysis Package Integrated with the LiCSAR Automated Sentinel-1 InSAR Processor. Remote Sens. 2020, 12, 424.</li>
+</ul>
+</div>
+{% endblock %}
+</html>

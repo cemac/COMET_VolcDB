@@ -1,3 +1,5 @@
+<html lang="en">
+
 {% extends 'layout.html.j2' %}
 {% block body %}
 
@@ -37,14 +39,60 @@
       <h1>{{data.name[0]}} {{data.ID[0]}} </h1>
     </header><!-- .entry-header -->
     <ul class="tabrow">
-      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}">Observations of Deformation</a></li>
-      <li class="selected">Explore Sentinel-1 imagery</li>
-      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/download">Export as CSV</a></li>
-      {% if session.usertype == 'Admins' or session.usertype == 'Collaborators' %}
-      <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Update Observations</a></li>
-      {% endif %}
-    </ul>
+			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}">Observations of Deformation</a></li>
+<!-- unnamed -->
+			{% if data.name[0] == 'Unnamed' %}
+				<li class="selected">Explore Sentinel-1 imagery</li>
+				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/download">Export as CSV</a></li>
+				<!-- logged in -->
+				{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
+					<!-- already updated -->
+					{% if pending != 'Y' %}
+						<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/edit">Add to this Entry</a></li>
+					{% else %}
+
+						{% if editor == True %}
+						<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/edit">Update Edited Entry</a></li>
+						{% endif %}
+					{% endif %}
+	<!-- already updated -->
+				{% else %}
+					<li><a href="/contact">Add to this Entry</a></li>
+				{% endif %}
+				<!-- logged in -->
+				<!-- named -->
+			{% else %}
+				<li class="selected">Explore Sentinel-1 imagery</li>
+				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/download">Export as CSV</a></li>
+				{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
+
+					{% if pending != 'Y' %}
+						<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Add to this Entry</a></li>
+					{% else %}
+
+						{% if editor == True %}
+							<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Add to this Entry</a></li>
+						{% endif %}
+					{% endif %}
+
+				{% else %}
+					<li><a href="/contact">Add to this Entry</a></li>
+				{% endif %}
+			{% endif %}
+		</ul>
    <div>
+<div style="width:100%; display:block; margin:auto;">
+  <p>These tools can be used to interrogate interferograms constructed by LiCSAR.
+     First select the Sentinel-1 frame you want to look at from the buttons at the
+     top of the page.  Then select a point to plot and a reference area.
+     You can display both average <!--[check definition!]-->phase coherence and
+     displacement to help with your choice. The cumulative displacement will be
+     shown as a downsampled interferogram in panel A, while the time series is
+     shown in panel B.  You can also inspect individual wrapped and unwrapped
+     interferograms, coherence and look a the automatically estimated probability
+     of the image containing a magmatic signal.  Algorithm details and references
+     can be found on the <a href="/about-tools">About</a> page.
+  </div>
 <div style="width:100%; display:block; margin:auto;">
 
     <script>

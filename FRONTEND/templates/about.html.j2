@@ -1,47 +1,46 @@
 <html lang="en">
 {% extends 'layout.html.j2' %}
 {% block body %}
-<div style="text-align:center; width:100%; display:block; margin:auto;">
-<a href="/">
-<img src="/static/volcano_image1.jpg" width="100%" height="auto" alt="" />
-</a>
-</div><!-- #branding -->
-<div >
-<p style="text-align: justify">This website provides a near-real time database of global volcano deformation,
-  measured using satellite-based radar (InSAR). This section of the site is in the development stage, and new
-  results for specific volcanoes are being updated as they become available. Additionally, we detail past observations
-  of deformation at all volcanoes in the world. You can find both of these records in the volcano
-  <a href="http://vccw.test/volcano-index/">database</a>, or by searching for your favourite volcano in the top-right search-box.</p>
-<p style="text-align: justify">The aim is to provide quick access to results for scientists, interested members of the public,
-  and, importantly, international project partners at volcano observatories. Measurements of volcano deformation are vital as
-  they can function as an eruption precursor, and constrain the character and status of the underlying magma reservoir.
-  This information informs valuable research into volcano plumbing and assessments of volcanic hazard. Further benefits of
-  volcanic deformation studies include research into the source of eruptions, intrusions of un-erupted material, structural
-  stability and regional variations in magma storage, amongst many others.</p>
-<p style="text-align: justify"><strong>Satellite data for volcano deformation </strong></p>
-<p style="text-align: justify">The European Space Agency (<a href="http://www.esa.int/ESA">ESA</a>) successfully launched the
-  first of a new family of satellites (‘<a href="http://www.esa.int/Our_Activities/Observing_the_Earth/Copernicus/Overview4">Sentinel’</a>)
-  on April 3<sup>rd</sup> 2014, which provide observations of almost every volcano in the world every 6-12 days. Sentinel operational
-  data is free and open access (see the ESA data policy <a href="http://earth.esa.int/web/guest/-/revised-esa-earth-observation-data-policy-7098">here</a>).
-  As new data becomes available, it will be automatically processed via the <a href="http://comet.nerc.ac.uk/COMET-LiCS-portal/">LiCSAR processor.</a>
-  For each volcano in the database, our website provides in the Section &#8220;Latest Sentinel-1 Data&#8221; the three most recent interferograms
-  and coherence maps, which can be used to track ongoing or new volcanic unrest.</p>
-<p style="text-align: justify"><strong>Past deformation episodes</strong></p>
-<p style="text-align: justify">The database section also compiles past observations of volcano deformation, from a range of
-  InSAR satellites and other ground-based methods (e.g., GPS, <span style="color: #333333">levelling or tilt</span>). Results from key studies
-  are summarised from the published literature for all volcanoes as listed in the <a href="http://www.volcano.si.edu/">Global Volcanism Program</a>
-  database. Entires highlight spatial and temporal deformation patterns, the <a href="http://vccw.test/measuring-deformation/" target="_blank" rel="noopener">
-  method(s) of measurement</a>, and inferred <a href="http://vccw.test/deformation-causes/" target="_blank" rel="noopener">causes of deformation</a>,
-  amongst others.</p>
-<p style="text-align: justify"><b>The team</b></p>
-<p style="text-align: justify">The University of Bristol is the lead institution for this database. Contributing researchers are
-  members of the NERC Centre for the Observation and Modeling of Earthquakes, Volcanoes &amp; Tectonics
-  (<a href="http://comet.nerc.ac.uk/index.html">COMET</a>). We are also involved in NERC IRNH project ‘Strengthening Resilience in Volcanic Areas’
-  (<a href="http://streva.ac.uk/">STREVA</a>) and the Committee on Earth Observation Satellites (<a href="http://ceos.org/">CEOS</a>).
-  This website is further supported by a NERC Impact Acceleration Award from the University of Bristol.</p>
-<p style="text-align: justify">Contributors: <a href="http://www.bristol.ac.uk/earthsciences/people/susanna-k-ebmeier/index.html">Susi Ebmeier</a>, <a href="https://jameshickey77.wordpress.com/">James Hickey</a>, <a href="http://www.bristol.ac.uk/earthsciences/people/
-fabien-c-albino/index.html">Fabien Albino</a>, <a href="http://www.bris.ac.uk/earthsciences/people/juliet-j-biggs/index.html">Juliet Biggs</a>, <a href="http://www.bristol.ac.uk/earthsciences/people/elspeth-robertson/index.html">Elspeth Robertson</a>, <a href="http://www.bristol.ac.uk/earthsciences/people/amy-l-parker/index.html">Amy Parker</a>, <a href="http://www.bristol.ac.uk/earthsciences/people/david-w-arnold/index.html">David Arnold</a> and <a href="http://www.bristol.ac.uk/earthsciences/people/ryan-lloyd/index.html">Ryan Lloyd</a>.</p>
-<p style="text-align: justify">
-</div><!-- .entry-content -->
+<h1>About the COMET Volcano deformation catalogue</h1>
+ <p>Accessible records of past volcanic eruptions, unrest and associated geophysical
+signals are important for understanding new activity.  The COMET Volcano Deformation
+Catalogue is an effort to bring together records of displacement at volcanoes, both
+published and unpublished.   As well as providing context for signals in Sentinel-1
+interferograms, we hope that the catalogue will provide a forum for the recording
+of observations for posterity, including those that are ambiguous or record a
+lack of deformation.  We consider good records of ‘null’ results (i.e. where
+measurement uncertainty and time span of observation are documented) to be critical
+for any future probabilistic analyses of relationships between deformation and unrest
+or eruption.
+<p> This website welcomes community contributions – if you would like to add an
+  entry please <a href="/contact">contact us</a> for a contributor login to the website.
+  We welcome contributions that could be referenced as ‘personal communications’,
+  unpublished student theses, conference abstracts and observatory reports.
+  We use the volcano names, numbers and locations as recorded in the GVP VOTW
+  database in an effort to ensure future compatibility (GVP, Global Volcanism
+  Program, 2013).  However, unlike the VOTW database most entries recorded here
+  are in ‘free text’ format, to allow maximum flexibility in the information that
+  can be recorded.
+<p> The motivation of the COMET Volcano Deformation Catalogue and relationship to
+  the deformation entries in the Smithsonian Institution Global Volcanism Program’s
+  Volcanoes of the World relational database is described in more detail by Ebmeier
+  et al., (2018).   A ‘snapshot’ of the catalogue after its last comprehensive update
+  showed that so far, InSAR detections of volcanic deformation characteristically last
+  more than a few months, but less than a decade, and extend between hundreds of metres
+  and hundreds of kilometres. However, short-lived, low rate and off-centre episodes of
+  volcano deformation are likely to be under-represented in historical InSAR and
+  ground-based deformation records. The abundance of deformation signals that occur
+  kilometres away from volcanic centres demonstrate the ubiquity of off-centre magma
+  storage (Ebmeier et al., 2018).
+  <figure>
+<img src="static/documentation.jpg" alt="documentation choices" width="70%" height="auto"></img>
+<figcaption>Figure 1:  Illustration of the documentation choices needed to systematically record historical episodes of volcanic deformation.  The orange path represents the system adopted for deformation records in the GVP VOTW database, where separate database entries are made for each episode of deformation identified.  On this website, we use the conventions for volcano names, numbers and locations established by the GVP. The structure for the COMET catalogue hosted here is shown by the red path and records deformation observations for each volcano, with an emphasis on recording null as well as positive results. Figure reproduced from an open access Journal of Applied Volcanology Article (Ebmeier et al., 2018).</figcaption>
+</figure>
+<br>
+<h3> References </h3>
+<ul>
+<li> Ebmeier, S.K., Andrews, B.J., Araya, M.C., Arnold, D.W.D., Biggs, J., Cooper, C., Cottrell, E., Furtney, M., Hickey, J., Jay, J.A.V., and Lloyd, R. (2018). Synthesis of global satellite observations of magmatic and volcanic deformation: implications for volcano monitoring & the lateral extent of magmatic domains. Journal of Applied Volcanology, 7(1), p.2.</li>
+<li> Global Volcanism Program, 2013. Venzke, E (ed.)., Volcanoes of the World, v. 4.6.0. Smithsonian Institution. <a href="https://doi.org/10.5479/si.GVP.VOTW4-2013">https://doi.org/10.5479/si.GVP.VOTW4-2013</a> </li>
+
 {% endblock %}
 </html>

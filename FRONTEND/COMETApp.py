@@ -571,6 +571,9 @@ def access(id):
 def about():
     return render_template('about.html.j2')
 
+@app.route('/about-tools', methods=["GET"])
+def abouttools():
+    return render_template('about-tools.html.j2')
 
 @app.route('/contact', methods=["GET", "POST"])
 def contact():
