@@ -1165,21 +1165,51 @@ function disp_plot(heatmap_type, scatter_type,
     'scene': {
       'aspectmode': 'cube',
       'xaxis': {
-        'title': 'longitude',
+        'title': {
+          'text': 'longitude',
+          'font': {
+            'family': 'sans-serif, Arial, Helvetica',
+            'size': 10
+          }
+        },
         'range': [x.slice(-1)[0], x[0]],
         'zeroline': false,
         'autorange': false,
-        'constrain': 'domain'
+        'constrain': 'domain',
+        'tickfont': {
+          'family': 'sans-serif, Arial, Helvetica',
+          'size': 10
+        }
       },
       'yaxis': {
-        'title': 'latitude',
+        'title': {
+          'text': 'latitude',
+          'font': {
+            'family': 'sans-serif, Arial, Helvetica',
+            'size': 10
+          }
+        },
         'range': [y.slice(-1)[0], y[0]],
         'zeroline': false,
         'autorange': false,
-        'constrain': 'domain'
+        'constrain': 'domain',
+        'tickfont': {
+          'family': 'sans-serif, Arial, Helvetica',
+          'size': 10
+        }
       },
       'zaxis': {
-        'title': heatmap_disp_title
+        'title': {
+          'text': heatmap_disp_title,
+          'font': {
+            'family': 'sans-serif, Arial, Helvetica',
+            'size': 10
+          }
+        },
+        'tickfont': {
+          'family': 'sans-serif, Arial, Helvetica',
+          'size': 10
+        }
       }
     },
     'margin': {
