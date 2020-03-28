@@ -42,40 +42,48 @@ function display_prob_image(index) {
   /* get image slider div: */
   var slider_div = document.getElementById('s1_image_control');
 
-  /* get data links span: */
-  var links_span = document.getElementById('s1_data_links');
+  /* get data links elements: */
+  var links_cc = document.getElementById('s1_cc_data_links');
+  var links_pha = document.getElementById('s1_pha_data_links');
+  var links_unw = document.getElementById('s1_unw_data_links');
 
   /* set data links: */
   var links_date = prob_data['dates'][image_index]
   links_date = links_date.replace(' - ', '_');
   links_date = links_date.replace(/-/g, '');
-  links_span.innerHTML = '<tr><td>Coherence</td>' +
-                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
-                         '/' + volcano_frame + '/products/' + links_date +
-                         '/' + links_date + '.geo.cc.tif">' + links_date +
-                         '.geo.cc.tif</a></td>' +
-                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
-                         '/' + volcano_frame + '/products/' + links_date +   
-                         '/' + links_date + '.geo.cc.png">' + links_date +
-                         '.geo.cc.png</a></td></tr>' +
-                         '<tr><td>LOS change</td>' +
-                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
+  links_cc.innerHTML = '<div class="div_data_links"><span>Coherence</span></div>' +
+                       '<div class="div_data_links"><a href="' +
+                       data_href_prefix + '/' + volcano_track +
+                       '/' + volcano_frame + '/products/' + links_date +
+                       '/' + links_date + '.geo.cc.tif">' + links_date +
+                       '.geo.cc.tif</a></div>' +
+                       '<div class="div_data_links"><a href="' +
+                       data_href_prefix + '/' + volcano_track +
+                       '/' + volcano_frame + '/products/' + links_date +   
+                       '/' + links_date + '.geo.cc.png">' + links_date +
+                       '.geo.cc.png</a></div>';
+   links_pha.innerHTML = '<div class="div_data_links"><span>LOS change</span></div>' +
+                         '<div class="div_data_links"><a href="' +
+                         data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
                          '/' + links_date + '.geo.diff_pha.tif">' + links_date +
-                         '.geo.diff_pha.tif</a></td>' +
-                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
+                         '.geo.diff_pha.tif</a></div>' +
+                         '<div class="div_data_links"><a href="' +
+                         data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
                          '/' + links_date + '.geo.diff.png">' + links_date +
-                         '.geo.diff.png</a></td></tr>' +
-                         '<tr><td>Unwrapped LOS change</td>' +
-                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
+                         '.geo.diff.png</a></div>';
+   links_unw.innerHTML = '<div class="div_data_links"><span>Unwrapped LOS change</span></div>' +
+                         '<div class="div_data_links"><a href="' +
+                         data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
                          '/' + links_date + '.geo.unw.tif">' + links_date +
-                         '.geo.unw.tif</a></td>' + 
-                         '<td><a href="' + data_href_prefix + '/' + volcano_track +
+                         '.geo.unw.tif</a></div>' + 
+                         '<div class="div_data_links"><a href="' +
+                         data_href_prefix + '/' + volcano_track +
                          '/' + volcano_frame + '/products/' + links_date +   
                          '/' + links_date + '.geo.unw.png">' + links_date +
-                         '.geo.unw.png</a></td></tr>';
+                         '.geo.unw.png</a></div>';
 
   /* function to set pips where probability is visible: */
   function filterPips(value, type) {

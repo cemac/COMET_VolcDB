@@ -738,10 +738,14 @@ function disp_plot(heatmap_type, scatter_type,
       var ts_lat = y[Math.min.apply(Math, ts_y)] + ' - ' +
                    y[Math.max.apply(Math, ts_y)];
     };
+    /* create the title: */
+    var ts_title = 'lat : ' + ts_lat +
+                   ', lon : ' + ts_lon;
+  } else {
+    /* use saved title: */
+    var ts_title = plot_vars[fid]['ts_title'];
   };
   /* store the title: */
-  var ts_title = 'lat : ' + ts_lat +
-                 ', lon : ' + ts_lon;
   plot_vars[fid]['ts_title'] = ts_title;
 
   /* if time series data needs to be updated: */
@@ -914,7 +918,7 @@ function disp_plot(heatmap_type, scatter_type,
     var scatter_y = ts_disp;
     var scatter_hover = ts_hover;
     var scatter_mode = 'markers';
-    var scatter_title = 'lat : ' + ts_lat + ', lon : ' + ts_lon;
+    var scatter_title = ts_title;
     var scatter_x_title = 'date';
   } else {
     /* profile plotting: */

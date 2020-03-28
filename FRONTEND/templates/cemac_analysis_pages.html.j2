@@ -110,32 +110,53 @@
       var data_href_prefix = 'http://gws-access.ceda.ac.uk/public/nceo_geohazards/LiCSAR_products';
     </script>
 
+
     <!-- frame selection: -->
-    <div class="s1_frame"
-         id="s1_frame">
-      <h2>Sentinel 1 Frame</h2>
-      <div class="frame_id_control"
-           id="frame_id_control">
+    <div class="row_s1_frame flex_row flex_grow"
+         id="row_s1_frame">
+      <div class="col_s1_frame flex_column"
+           id="col_s1_frame">
+        <h2>Sentinel 1 Frame</h2>
+        <div class="s1_frame_control flex_row_wrap flex_grow"
+             id="s1_frame_control">
+        </div>
       </div>
     </div>
+    <!-- end frame selection. -->
 
-    <!-- plots: -->
-    <div class="disp_plot_container"
-         id="disp_plot_container">
-      <div class="disp_plot"
-           id="heatmap_plot">
-      </div>
-      <div class="disp_plot"
-           id="scatter_plot">
-      </div>
+
+    <!--- no data message: -->
+    <div class="disp_error"
+         id="no_disp_error">
+      No displacement data available for this frame.
     </div>
 
-    <!-- plot controls: -->
-    <div class="plot_control_container"
-         id="plot_control_container">
 
-      <div class="heatmap_type_control"
-           id="heatmap_type_control">
+    <!-- displacement plots: -->
+    <div class="row_disp_plot flex_row_wrap flex_justify flex_grow"
+         id="row_disp_plot">
+
+      <!-- heatmap plot: -->
+      <div class="disp_plot_box flex_half flex_grow"
+           id="heatmap_plot_box">
+        <div class="disp_plot"
+             id="heatmap_plot">
+        </div>
+      </div>
+
+      <!-- scatter plot: -->
+      <div class="disp_plot_box flex_half flex_grow"
+           id="scatter_plot_box">
+        <div class="disp_plot"
+             id="scatter_plot">
+        </div>
+      </div>
+
+      <!-- heatmap plot controls: -->
+      <div class="col_plot_control flex_column flex_half flex_grow"
+           id="col_heatmap_control">
+        <!-- heatmap type buttons: -->
+        <div>
           <button id="heatmap_type_button_disp"
                   onclick="set_heatmap_type('disp');">
             displacement
@@ -144,22 +165,9 @@
                   onclick="set_heatmap_type('coh');">
             coherence
           </button>
-      </div>
-
-      <div class="scatter_type_control"
-           id="scatter_type_control">
-          <button id="scatter_type_button_ts"
-                  onclick="set_scatter_type('ts');">
-            time series
-          </button>
-          <button id="scatter_type_button_profile"
-                  onclick="set_scatter_type('profile');">
-            profile
-          </button>
-      </div>
-
-      <div class="click_mode_control"
-           id="click_mode_control">
+        </div>
+        <!-- heatmap click type buttons: -->
+        <div>
           <button id="click_mode_button_select"
                   onclick="set_click_mode('select');">
             point to plot
@@ -168,64 +176,138 @@
                   onclick="set_click_mode('ref');">
             reference area
           </button>
-      </div>
-
-      <div class="extra_plot_control"
-           id="extra_plot_control">
+        </div>
+        <!-- surface plot button: -->
+        <div>
           <button id="surf_plot_button"
+                  class="disp_action_button"
                   onclick="display_surf_plot();">
             surface plot
           </button>
-          <button id="ts_to_csv_button"
-                  onclick="scatter_to_csv();">
-            save scatter data as csv
-          </button>
+        </div>
       </div>
+      <!-- end heatmap plot controls. -->
 
-      <div class="time_range_control"
-           id="time_range_control">
+      <!-- scatter plot controls: -->
+      <div class="col_plot_control flex_column flex_half flex_grow"
+           id="col_scatter_control">
+        <!-- scatter type buttons: -->
+        <div>
+          <button id="scatter_type_button_ts"
+                  onclick="set_scatter_type('ts');">
+            time series
+          </button>
+          <button id="scatter_type_button_profile"
+                  onclick="set_scatter_type('profile');">
+            profile
+          </button>
+        </div>
+        <!-- save csv button: -->
+        <div>
+          <button id="ts_to_csv_button"
+                  class="disp_action_button"
+                  onclick="scatter_to_csv();">
+            save data as csv
+          </button>
+        </div>
       </div>
-      <div class="time_range_value"
-           id="time_range_value">
-      </div>
+      <!-- end scatter plot controls. -->
 
     </div>
+    <!-- end displacement plots. -->
 
-    <hr>
 
-    <!-- s1 images: -->
-    <div class="s1_image_container"
-         id="s1_image_container">
-      <div class="s1_imgs"
-           id="s1_imgs">
-        <img class="s1_img fs_img"
+    <!-- displacement plot time range control: -->
+    <div class="row_disp_range flex_row flex_center flex_grow"
+         id="row_disp_range">
+      <div class="col_disp_range flex_column flex_grow"
+           id="col_disp_range">
+        <div class="time_range_control"
+             id="time_range_control">
+        </div>
+        <div class="time_range_value"
+             id="time_range_value">
+        </div>
+      </div>
+    </div>
+    <!-- end displacement plot time range control. -->
+
+    <hr id="hr_disp_plot">
+
+
+    <!--- no data message: -->
+    <div class="disp_error"
+         id="no_s1_error">
+      <!-- No Sentinel-1 data available for this frame. -->
+    </div>
+
+
+    <!-- sentinel 1 images: -->
+    <div class="row_s1_images flex_row_wrap flex_justify flex_grow"
+         id="row_s1_images">
+      <div class="s1_img_box flex_half flex_grow"
+           id="s1_cc_img_box">
+        <img class="s1_img flex_half fs_img"
              id="s1_cc_img"
              src="">
-        <img class="s1_img fs_img"
+      </div>
+      <div class="s1_img_box flex_half flex_grow"
+           id="s1_pha_img_box">
+        <img class="s1_img flex_half fs_img"
              id="s1_pha_img"
              src="">
-        <img class="s1_img fs_img"
+      </div>
+      <div class="s1_img_box flex_half flex_grow"
+           id="s1_unw_img_box">
+        <img class="s1_img flex_half fs_img"
              id="s1_unw_img"
              src="">
-        <img class="s1_img fs_img"
+      </div>
+      <div class="s1_img_box flex_half flex_grow"
+           id="s1_prob_img_box">
+        <img class="s1_img flex_half fs_img"
              id="s1_prob_img"
              src="">
       </div>
-      <div class="s1_image_control"
-           id="s1_image_control">
-      </div>
-      <div class="s1_image_value"
-           id="s1_image_value">
-      </div>
-      <div class="s1_data"
-           id="s1_data">
-        <h2>Data Downloads</h2>
-        <table class="s1_data_links"
-              id="s1_data_links">
-        </table>
-      </div>
-
     </div>
+    <!-- end sentinel 1 images. -->
+
+
+    <!-- sentinel 1 images time range control: -->
+    <div class="row_s1_img_range flex_row flex_center flex_grow"
+         id="row_s1_img_range">
+      <div class="col_s1_img_range flex_column flex_grow"
+           id="col_s1_img_range">
+        <div class="s1_image_control"
+             id="s1_image_control">
+        </div>
+        <div class="s1_image_value"
+             id="s1_image_value">
+        </div>
+      </div>
+    </div>
+    <!-- end sentinel 1 images time range control. -->
+
+
+    <!-- data downloads: -->
+    <div class="row_data_downloads flex_row flex_grow"
+         id="row_data_downloads">
+      <div class="col_data_downloads flex_column"
+           id="col_data_downloads">
+        <h2>Data Downloads</h2>
+        <div class="s1_data_links flex_row_wrap flex_grow"
+             id="s1_cc_data_links">
+        </div>
+        <div class="s1_data_links flex_row_wrap flex_grow"
+             id="s1_pha_data_links">
+        </div>
+        <div class="s1_data_links flex_row_wrap flex_grow"
+             id="s1_unw_data_links">
+        </div>
+      </div>
+    </div>
+    <!-- end data downloads. -->
+
 
     <!-- surface plot: -->
     <div class="surf_plot_container"
@@ -236,6 +318,7 @@
            id="surf_plot">
       </div>
     </div>
+    <!-- end surface plot. -->
 
     <!-- full screen images: -->
     <div id="fs_img_div"
@@ -246,6 +329,7 @@
            class="fs_img_img"
            src="">
     </div>
+    <!-- end full screen images. -->
 
 
     </div><!-- .entry-content -->
