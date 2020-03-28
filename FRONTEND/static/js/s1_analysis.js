@@ -137,6 +137,8 @@ function s1_page_set_up(frame_index) {
     s1_img_el.style.display = 'none';
     s1_range_el.style.display = 'none';
     data_down_el.style.display = 'none';
+    /* display error element: */
+    s1_error_el.style.display = 'inline';
   };
 
   function licsar_update() {
