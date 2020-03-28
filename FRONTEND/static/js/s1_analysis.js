@@ -81,6 +81,16 @@ function s1_page_set_up(frame_index) {
     frame_id_control.innerHTML += frame_html;
   };
 
+  /* probability data load error function: */
+  function prob_req_error() {
+    /* hide s1 img html elements are visible: */
+    s1_img_el.style.display = 'none';
+    s1_range_el.style.display = 'none';
+    data_down_el.style.display = 'none';
+    /* display error element: */
+    s1_error_el.style.display = 'inline';
+  };
+
   function prob_update() {
     /* get prob data: */
     var prob_data_url = js_data_prefix + prob_data_prefix + '/' +
@@ -92,33 +102,41 @@ function s1_page_set_up(frame_index) {
     prob_req.open('GET', prob_data_url, true);
     /* on data download: */
     prob_req.onload = function() {
-      /* set prob_data variable: */
-      prob_data = prob_req.response;
-      /* set image prefix variable: */
-      prob_img_prefix = prob_imgs_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
-      /* hide error element: */
-      s1_error_el.style.display = 'none';
-      /* make sure html elements are visible: */
-      s1_img_el.style.display = s1_img_el_display;
-      s1_range_el.style.display = s1_range_el_display;
-      data_down_el.style.display = data_down_el_display;
-      /* display images: */
-      display_licsar_images();
-      display_prob_image();
-      /* page is updated: */
-      page_update = false;
+      /* if not successful: */
+      if (prob_req.status != 200) { 
+        prob_req_error();
+      } else {
+        /* set prob_data variable: */
+        prob_data = prob_req.response;
+        /* set image prefix variable: */
+        prob_img_prefix = prob_imgs_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
+        /* hide error element: */
+        s1_error_el.style.display = 'none';
+        /* make sure html elements are visible: */
+        s1_img_el.style.display = s1_img_el_display;
+        s1_range_el.style.display = s1_range_el_display;
+        data_down_el.style.display = data_down_el_display;
+        /* display images: */
+        display_licsar_images();
+        display_prob_image();
+        /* page is updated: */
+        page_update = false;
+      };
     };
     /* if probability data load fails: */
     prob_req.onerror = function() {
-      /* hide s1 img html elements are visible: */
-      s1_img_el.style.display = 'none';
-      s1_range_el.style.display = 'none';
-      data_down_el.style.display = 'none';
-      /* display error element: */
-      s1_error_el.style.display = 'inline';
+      prob_req_error();
     };
     /* send the request: */
     prob_req.send(null);
+  };
+
+  /* licsar data load error function: */
+  function licsar_req_error() {
+    /* hide s1 img html elements are visible: */
+    s1_img_el.style.display = 'none';
+    s1_range_el.style.display = 'none';
+    data_down_el.style.display = 'none';
   };
 
   function licsar_update() {
@@ -132,30 +150,44 @@ function s1_page_set_up(frame_index) {
     licsar_req.open('GET', licsar_data_url, true);
     /* on data download: */
     licsar_req.onload = function() {
-      /* set licsar_data variable: */
-      licsar_data = licsar_req.response;
-      /* set image prefix variable: */
-      licsar_img_prefix = licsar_imgs_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
-      /* hide error element: */
-      s1_error_el.style.display = 'none';
-      /* make sure html elements are visible: */
-      s1_img_el.style.display = s1_img_el_display;
-      s1_range_el.style.display = s1_range_el_display;
-      data_down_el.style.display = data_down_el_display;
-      /* display error element: */
-      s1_error_el.style.display = 'inline';
-      /* then update probability data: */
-      prob_update();
+      /* if not successful: */
+      if (licsar_req.status != 200) { 
+        licsar_req_error();
+      } else {
+        /* set licsar_data variable: */
+        licsar_data = licsar_req.response;
+        /* set image prefix variable: */
+        licsar_img_prefix = licsar_imgs_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
+        /* hide error element: */
+        s1_error_el.style.display = 'none';
+        /* make sure html elements are visible: */
+        s1_img_el.style.display = s1_img_el_display;
+        s1_range_el.style.display = s1_range_el_display;
+        data_down_el.style.display = data_down_el_display;
+        /* display error element: */
+        s1_error_el.style.display = 'inline';
+        /* then update probability data: */
+        prob_update();
+      };
     };
     /* if licsar data retrival fails: */
     licsar_req.onerror = function() {
-      /* hide s1 img html elements are visible: */
-      s1_img_el.style.display = 'none';
-      s1_range_el.style.display = 'none';
-      data_down_el.style.display = 'none';
+      licsar_req_error();
     };
     /* send the request: */
     licsar_req.send(null);
+  };
+
+  /* displacement data load error function: */
+  function disp_req_error() {
+    /* hide displacement plotting elements: */
+    disp_plot_el.style.display = 'none';
+    disp_range_el.style.display = 'none';
+    disp_hr_el.style.display = 'none';
+    /* display error element: */
+    disp_error_el.style.display = 'inline';
+    /* update licsar: */
+    licsar_update();
   };
 
   /* get displacement data: */
@@ -168,30 +200,28 @@ function s1_page_set_up(frame_index) {
   disp_req.open('GET', disp_data_url, true);
   /* on data download: */
   disp_req.onload = function() {
-    /* set disp_data variable: */
-    disp_data = disp_req.response;
-    /* hide error element: */
-    disp_error_el.style.display = 'none';
-    /* make sure displacement elements are visible: */
-    disp_plot_el.style.display = disp_plot_el_display;
-    disp_range_el.style.display = disp_range_el_display;
-    disp_hr_el.style.display = disp_hr_el_display;
-    /* set plot variables for the frame, then run displacement plotting
-       function: */
-    init_plot_vars(volcano_frame, disp_plot);
-    /* then update licsar data: */
-    licsar_update();
+    /* if not successful: */
+    if (disp_req.status != 200) { 
+      disp_req_error();
+    } else {
+      /* set disp_data variable: */
+      disp_data = disp_req.response;
+      /* hide error element: */
+      disp_error_el.style.display = 'none';
+      /* make sure displacement elements are visible: */
+      disp_plot_el.style.display = disp_plot_el_display;
+      disp_range_el.style.display = disp_range_el_display;
+      disp_hr_el.style.display = disp_hr_el_display;
+      /* set plot variables for the frame, then run displacement plotting
+         function: */
+      init_plot_vars(volcano_frame, disp_plot);
+      /* then update licsar data: */
+      licsar_update();
+    };
   };
   /* if displacement data retrival fails: */
   disp_req.onerror = function() {
-    /* hide displacement plotting elements: */
-    disp_plot_el.style.display = 'none';
-    disp_range_el.style.display = 'none';
-    disp_hr_el.style.display = 'none';
-    /* display error element: */
-    disp_error_el.style.display = 'inline';
-    /* update licsar: */
-    licsar_update();
+    disp_req_error();
   };
   /* send the request: */
   disp_req.send(null);
