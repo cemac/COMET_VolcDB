@@ -321,7 +321,7 @@ body {
 
 /* re-ordering, etc. on resize: */
 
-@media only screen and (max-width: 920px) {
+@media only screen and (max-width: 1000px) {
   #s1_cc_data_links div {
     background-color: #ffffff;
     -webkit-flex-basis: 51%;
@@ -346,6 +346,7 @@ body {
 }
 
 /** full screen surface plot: **/
+
 .surf_plot_container {
   display: block;
   position: fixed;
