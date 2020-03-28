@@ -321,7 +321,7 @@ body {
 
 /* re-ordering, etc. on resize: */
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1020px) {
   #s1_cc_data_links div {
     background-color: #ffffff;
     -webkit-flex-basis: 51%;
