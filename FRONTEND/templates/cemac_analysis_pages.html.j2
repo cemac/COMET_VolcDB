@@ -96,7 +96,12 @@
 <div style="width:100%; display:block; margin:auto;">
 
     <script>
+
+      {% if frame == None %}
+      var this_frame = {'region': '', 'frames': [{'id': '', 'track': ''}]};
+      {% else %}
       var this_frame = {{ frame }};
+      {% endif %}
       var volcano_name = '{{ volcano }}';
       var volcano_region = this_frame['region'];
       var volcano_frames = this_frame['frames'];
