@@ -113,7 +113,7 @@ body {
 }
 
 .s1_frame_control {
-  padding-left: 5%;
+  padding-left: 2%;
 }
 
 .s1_frame_control button {
@@ -293,7 +293,7 @@ body {
 /** dat download links: **/
 
 .s1_data_links {
-  padding-left: 2.5%;
+  padding-left: 2%;
 }
 
 #s1_cc_data_links div {
@@ -321,7 +321,7 @@ body {
 
 /* re-ordering, etc. on resize: */
 
-@media only screen and (max-width: 1020px) {
+@media only screen and (max-width: 1000px) {
   #s1_cc_data_links div {
     background-color: #ffffff;
     -webkit-flex-basis: 51%;
