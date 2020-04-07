@@ -36,6 +36,17 @@ except FileNotFoundError:
 raw_data = rawDF.drop([rawDF.columns.values[0], 'api_endpoint', 'date_added',
                        'last_modified', 'uri', 'images', 'location'], axis=1)
 
+# Now map to jasmin names
+mapping = pd.read_csv('data_raw/mappings.csv') 
+mapping.db_name.fillna(mapping.jasmin_name, inplace=True)
+mapping.loc[mapping['db_volcano_number'].isna()]
+def fillNaN_with_unifrand(df):
+    a = df['db_volcano_number'].values
+    m = df['db_volcano_number'].isna()
+    a[m] = random.sample(range(2900011,3000000), m.sum())
+    return df
+mapping=fillNaN_with_unifrand(mapping)
+mapping=mapping.astype({'db_volcano_number':'int32'})
 # For now add the url so can have images on test site
 # NOT REQUIRED
 # raw_data['image_url'] = raw_images.url
