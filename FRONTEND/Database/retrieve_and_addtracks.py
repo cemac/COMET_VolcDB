@@ -15,6 +15,7 @@ Memebers:
 """
 from pandas.io.json import json_normalize
 import json
+import random
 import pandas as pd
 
 # volcanoes.json was obtained by
@@ -37,16 +38,19 @@ raw_data = rawDF.drop([rawDF.columns.values[0], 'api_endpoint', 'date_added',
                        'last_modified', 'uri', 'images', 'location'], axis=1)
 
 # Now map to jasmin names
-mapping = pd.read_csv('data_raw/mappings.csv') 
+mapping = pd.read_csv('data_raw/mappings.csv')
+mapping=mapping.rename(columns={"db_volcano_number":"volcano_number"})
 mapping.db_name.fillna(mapping.jasmin_name, inplace=True)
-mapping.loc[mapping['db_volcano_number'].isna()]
 def fillNaN_with_unifrand(df):
-    a = df['db_volcano_number'].values
-    m = df['db_volcano_number'].isna()
+    a = df['volcano_number'].values
+    m = df['volcano_number'].isna()
     a[m] = random.sample(range(2900011,3000000), m.sum())
     return df
 mapping=fillNaN_with_unifrand(mapping)
-mapping=mapping.astype({'db_volcano_number':'int32'})
+mapping=mapping.astype({'volcano_number':'int32'})
+mapping.set_index('volcano_number', inplace=True)
+jname = mapping['jasmin_name']
+raw_data = pd.merge(raw_data, jname, on='volcano_number',how='outer')
 # For now add the url so can have images on test site
 # NOT REQUIRED
 # raw_data['image_url'] = raw_images.url
@@ -69,21 +73,22 @@ locationdf.to_csv('volcano_location_data.csv', encoding='utf-8')
 raw_data['Area'] = locationdf.name
 # re index by name and prepare to put in frame info
 raw_data_names = raw_data.copy()
-raw_data.set_index('name', inplace=True)
+raw_data.set_index('jasmin_name', inplace=True)
+raw_data = raw_data.drop(['ID'], axis=1)
 raw_data['frames'] = ''
 # For each volcano check if there is corresponding frame information
 with open('all_volcs.json') as json_file:
         data = json.load(json_file)
         for i in range(len(raw_data_names)):
-            vnameraw = raw_data_names.name[i]
-            vname = str(vnameraw).lower().replace(' ', '_')
-            vname = vname.replace('-', '_')
+            vname = raw_data_names.jasmin_name[i]
+            #vname = str(vnameraw).lower().replace(' ', '_')
+            #vname = vname.replace('-', '_')
             try:
                 #framesdf = json_normalize(data[vname])
                 framesdf = data[vname]
-                raw_data.loc[vnameraw].frames = framesdf
+                raw_data.loc[vname].frames = framesdf
             except KeyError:
-                print('skipping ' + vname)
+                print('skipping ' + str(vname))
 # put the name back into dataframe and index by number
 raw_data = raw_data.reset_index()
 # Save to csv

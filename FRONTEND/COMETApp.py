@@ -62,6 +62,7 @@ def index():
     df = df[df.Area != 'none']
     df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
     volcinfo = df[['name', 'latitude', 'longitude', 'Area', 'country']]
+    volcinfo = volcinfo[volcinfo['latitude'].notna()]
     return render_template('home.html.j2',
                            volcinfo=json.dumps(volcinfo.values.tolist()))
 
@@ -170,7 +171,7 @@ def volcano_analysis(country, region, volcano):
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
-    volcano_name = str(volcano).replace(" ", "_").lower()
+    volcano_name = df.jasmin_name.values
     frame = df.frames[0]
     if frame == '':
         frame = 'none'
