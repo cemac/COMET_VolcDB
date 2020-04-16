@@ -171,7 +171,7 @@ def volcano_analysis(country, region, volcano):
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
-    volcano_name = df.jasmin_name.values
+    volcano_name = df.jasmin_name.values[0]
     frame = df.frames[0]
     if frame == '':
         frame = 'none'
