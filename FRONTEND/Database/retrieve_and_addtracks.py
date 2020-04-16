@@ -50,7 +50,8 @@ mapping=fillNaN_with_unifrand(mapping)
 mapping=mapping.astype({'volcano_number':'int32'})
 mapping.set_index('volcano_number', inplace=True)
 jname = mapping['jasmin_name']
-raw_data = pd.merge(raw_data, jname, on='volcano_number',how='outer')
+raw_data = pd.merge(raw_data, jname, on='volcano_number', how='outer')
+raw_data.name.fillna(raw_data.jasmin_name, inplace=True)
 # For now add the url so can have images on test site
 # NOT REQUIRED
 # raw_data['image_url'] = raw_images.url
@@ -86,7 +87,7 @@ with open('all_volcs.json') as json_file:
             try:
                 #framesdf = json_normalize(data[vname])
                 framesdf = data[vname]
-                raw_data.loc[vname].frames = framesdf
+                raw_data.loc[str(vname)].frames = framesdf
             except KeyError:
                 print('skipping ' + str(vname))
 # put the name back into dataframe and index by number
