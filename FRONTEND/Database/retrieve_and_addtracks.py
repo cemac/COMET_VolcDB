@@ -87,7 +87,7 @@ with open('all_volcs.json') as json_file:
             try:
                 #framesdf = json_normalize(data[vname])
                 framesdf = data[vname]
-                raw_data.loc[str(vname)].frames = framesdf
+                raw_data.at[str(vname),'frames']=str(framesdf)
             except KeyError:
                 print('skipping ' + str(vname))
 # put the name back into dataframe and index by number
