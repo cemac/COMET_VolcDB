@@ -97,7 +97,7 @@ def AcceptVolcEdit(id, conn):
     df_edits = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
                                  "ID = '" + str(id) + "';", conn)
     df_edits['Review needed'] = 'N'
-    df.fillna(value='Unknown', inplace=True)
+    df_edits.fillna(value='Unknown', inplace=True)
     cur = conn.cursor()
     sql = 'DELETE FROM VolcDB1 WHERE id is ? ;'
     cur.execute(sql, (id,))
