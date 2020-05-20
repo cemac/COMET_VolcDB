@@ -248,6 +248,8 @@ def volcano_edit(country, region, volcano):
     title = "Edit Volcano"
     # Pre-populate form fields with existing data:
     noedit = ['ID', 'Area', 'country']
+    if session['usertype'] == 'Admins':
+        noedit = ['ID']
     yesnocheck = ['geodetic_measurements', 'deformation_observation']
     for field in form:
         if not request.method == 'POST':
