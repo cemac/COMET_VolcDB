@@ -85,6 +85,7 @@ def volcanodb():
     df2['Area_name'] = df2.index.values
     df2 = df2.reset_index(drop=True)
     df2.columns = ['freq', 'Area']
+    df2.Area.fillna(value='Unknown', inplace=True)
     total = df2.freq.sum()
     return render_template('volcano-index.html.j2', tableClass='index',
                            data=df2, total=total)
@@ -135,6 +136,8 @@ def volcanodb_all():
     df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1;", conn)
     df = df[df.Area != 'none']
+    df.Area.fillna(value='Unknown', inplace=True)
+    df.country.fillna(value='Unknown', inplace=True)
     total = len(df.index)
     return render_template('volcano-index_all.html.j2', data=df, total=total,
                            tableclass='all')
