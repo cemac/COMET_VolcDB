@@ -151,9 +151,8 @@ def volcano(country, region, volcano):
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
-    # fill in missing region and country                           
-    df.Area.fillna(value='Unknown', inplace=True)
-    df.country.fillna(value='Unknown', inplace=True)
+    # fill in missing region and country
+    df.fillna(value='Unknown', inplace=True)
     # If there is a pending update
     pending = df['Review needed'].values
     editor = False
