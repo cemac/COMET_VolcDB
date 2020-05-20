@@ -1,2 +1,2 @@
 *.env filter=git-crypt diff=git-crypt
-FRONTEND/user.db filter=git-crypt diff=git-crypt
+FRONTEND/users.db filter=git-crypt diff=git-crypt
