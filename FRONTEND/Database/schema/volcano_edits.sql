@@ -3,6 +3,7 @@ alter table VolcDB1 add column "date_edited" DATE;
 alter table VolcDB1 add column "owner_id" TEXT;
 
 create table VolcDB1_edits (
+jasmin_name TEXT,
 ID INTEGER NOT NULL,
 characteristics_of_deformation TEXT,
 country TEXT  NOT NULL,

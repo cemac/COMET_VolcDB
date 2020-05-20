@@ -228,6 +228,10 @@ def volcano_edit(country, region, volcano):
         df['owner_id'] = session['username']
         addrowedits('VolcDB1_edits', df, conn)
         for field in form:
+            # make sure null constraint not broken
+            if field.data is None:
+                if field.name is in ['Area','country']:
+                    field.data = 'Unknonw'
             editrow('VolcDB1_edits', df.ID[0],
                     field.name, str(field.data), conn)
         # Save to edit database
