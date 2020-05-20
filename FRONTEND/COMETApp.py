@@ -218,7 +218,8 @@ def volcano_edit(country, region, volcano):
         if len(df.index) == 0:
             df = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
                                    "ID = '" + str(volcano) + "';", conn)
-    df.fillna(value='Unknown', inplace=True)
+    df.Area.fillna(value='Unknown', inplace=True)
+    df.country.fillna(value='Unknown', inplace=True)
     form = eval("Volcano_edit_Form")(request.form)
     form.geodetic_measurements.choices = yesno_list()
     form.deformation_observation.choices = yesno_list()
