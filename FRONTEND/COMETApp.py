@@ -163,7 +163,7 @@ def volcano(country, region, volcano):
                            editor=editor, edits=dfeds)
 
 
-@app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/cemac_analysis_pages',
+@app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/S1_analysis',
            methods=["GET"])
 def volcano_analysis(country, region, volcano):
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
