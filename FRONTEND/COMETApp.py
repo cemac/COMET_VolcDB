@@ -368,9 +368,12 @@ def volcano_review(volcano):
     df_old = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
     newvolc = 'False'
+    df_old.fillna(value='Unknown', inplace=True)
+    df_edits.fillna(value='Unknown', inplace=True)
     if df_old.empty:
         df_old = df_edits
         newvolc = 'True'
+
     df_diffs = df_old.copy()
     for (columnName, columnData) in df_old.iteritems():
         new = df_edits[str(columnName)].values
