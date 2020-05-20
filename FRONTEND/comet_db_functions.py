@@ -98,6 +98,10 @@ def AcceptVolcEdit(id, conn):
                                  "ID = '" + str(id) + "';", conn)
     df_edits['Review needed'] = 'N'
     df_edits.fillna(value='Unknown', inplace=True)
+    if df_edits.country='':
+        df_edits.country='Unknown'
+    if df_edits.Area='':
+        df_edits.Area='Unknown'
     cur = conn.cursor()
     sql = 'DELETE FROM VolcDB1 WHERE id is ? ;'
     cur.execute(sql, (id,))
