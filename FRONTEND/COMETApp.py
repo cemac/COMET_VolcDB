@@ -150,8 +150,7 @@ def volcano(country, region, volcano):
     if "'" not in str(volcano):
         pass
     elif "'" in str(volcano):
-        volcano=str(volcano).replace("'","''")
-
+        volcano=str(volcano).replace("'","&#039;")
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                 "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:
@@ -180,7 +179,7 @@ def volcano_analysis(country, region, volcano):
     if "'" not in str(volcano):
         pass
     elif "'" in str(volcano):
-        volcano=str(volcano).replace("'","''")
+        volcano=str(volcano).replace("'","&#039;")
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:
@@ -201,7 +200,7 @@ def export_as_csv(region, country, volcano):
     if "'" not in str(volcano):
         pass
     elif "'" in str(volcano):
-        volcano=str(volcano).replace("'","''")
+        volcano=str(volcano).replace("'","&#039;")
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:
@@ -223,7 +222,7 @@ def volcano_edit(country, region, volcano):
     if "'" not in str(volcano):
         pass
     elif "'" in str(volcano):
-        volcano=str(volcano).replace("'","''")
+        volcano=str(volcano).replace("'","&#039;")
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:
