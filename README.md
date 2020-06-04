@@ -11,7 +11,7 @@
 
 :warning: *This repository is in **alpha phase** documentation is incomplete* :warning:
 
-Repository for the [COMET](comet.nerc.ac.uk) Volcano Database. [https://comet.nerc.ac.uk/comet-volcano-portal](https://comet-volcanodb.org/)
+Repository for the [COMET](www.comet.nerc.ac.uk) Volcano Database hosted at [comet.nerc.ac.uk/comet-volcano-portal](https://comet-volcanodb.org/)
 
 [![DOI](https://zenodo.org/badge/197738447.svg)](https://zenodo.org/badge/latestdoi/197738447)
 
