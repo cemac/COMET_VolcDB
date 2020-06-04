@@ -146,8 +146,14 @@ def volcanodb_all():
 @app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>',
            methods=["GET", "POST"])
 def volcano(country, region, volcano):
+
+    if "'" not in str(volcano):
+        pass
+    elif "'" in str(volcano):
+        volcano=str(volcano).replace("'","''")
+
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
-                           "name = '" + str(volcano) + "';", conn)
+                                "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
@@ -171,6 +177,10 @@ def volcano(country, region, volcano):
 @app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/S1_analysis',
            methods=["GET"])
 def volcano_analysis(country, region, volcano):
+    if "'" not in str(volcano):
+        pass
+    elif "'" in str(volcano):
+        volcano=str(volcano).replace("'","''")
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:
@@ -188,6 +198,10 @@ def volcano_analysis(country, region, volcano):
 @app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/download',
            methods=["GET", "POST"])
 def export_as_csv(region, country, volcano):
+    if "'" not in str(volcano):
+        pass
+    elif "'" in str(volcano):
+        volcano=str(volcano).replace("'","''")
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:
@@ -206,6 +220,10 @@ def export_as_csv(region, country, volcano):
            methods=["GET", "POST"])
 @is_logged_in_as_editor
 def volcano_edit(country, region, volcano):
+    if "'" not in str(volcano):
+        pass
+    elif "'" in str(volcano):
+        volcano=str(volcano).replace("'","''")
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                            "name = '" + str(volcano) + "';", conn)
     if len(df.index) == 0:

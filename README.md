@@ -11,7 +11,9 @@
 
 :warning: *This repository is in **alpha phase** documentation is incomplete* :warning:
 
-Repository for the [COMET](comet.nerc.ac.uk) Volcano Database. [<insert future site address here>]()
+Repository for the [COMET](www.comet.nerc.ac.uk) Volcano Database hosted at [comet.nerc.ac.uk/comet-volcano-portal](https://comet-volcanodb.org/)
+
+[![DOI](https://zenodo.org/badge/197738447.svg)](https://zenodo.org/badge/latestdoi/197738447)
 
 ![map](docs/github_images/map.png)
 
@@ -59,8 +61,8 @@ conda activate cometapp
 
 |  Version            | Release          |
 |---------------------|------------------|
-|  Beta               | [![GitHubrelease](https://img.shields.io/badge/release-v.0.0-red.svg)](https://github.com/cemac/COMET_VolcDB/releases/tag/0.0)|
-|  Fist Stable (Jan 2020?)  |  [![GitHubrelease](https://img.shields.io/badge/release-v.1.0-red.svg)](https://github.com/cemac/COMET_VolcDB/releases/tag/1.0)  |
+|  Beta               | [![GitHubrelease](https://img.shields.io/badge/release-v.1.0-red.svg)](https://github.com/cemac/COMET_VolcDB/releases/tag/1.0-beta)|
+
 <!--- table --->
 
 ## License Information
