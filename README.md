@@ -61,7 +61,7 @@ conda activate cometapp
 
 |  Version            | Release          |
 |---------------------|------------------|
-|  Beta               | [![GitHubrelease](https://img.shields.io/badge/release-v.1.0-beta-red.svg)](https://github.com/cemac/COMET_VolcDB/releases/tag/1.0-beta)|
+|  Beta               | [![GitHubrelease](https://img.shields.io/badge/release-v.1.0-red.svg)](https://github.com/cemac/COMET_VolcDB/releases/tag/1.0-beta)|
 
 <!--- table --->
 
