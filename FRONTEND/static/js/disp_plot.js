@@ -213,8 +213,16 @@ function get_ts_indexes() {
   var mid_y = Math.floor(plot_vars[fid]['y'].length / 2) - 1;
   var mid_x = Math.floor(plot_vars[fid]['x'].length / 2) - 1;
   /* find the first value near center which is not masked: */
-  for (var i = mid_y; i < plot_vars[fid]['mask'].length; i ++) {
-    for (var j = mid_x; j < plot_vars[fid]['mask'].length; j ++) {
+  for (var i = mid_y; i < plot_vars[fid]['mask'].length; i++) {
+    for (var j = mid_x; j < plot_vars[fid]['mask'].length; j++) {
+      if (plot_vars[fid]['mask'][i][j] == 1) {
+        return[i, j];
+      };
+    };
+  };
+  /* nothing found ... try the other half of the data: */
+  for (var i = mid_y; i > -1; i--) {
+    for (var j = mid_x; j > -1; j--) {
       if (plot_vars[fid]['mask'][i][j] == 1) {
         return[i, j];
       };
