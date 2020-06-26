@@ -54,34 +54,34 @@ function display_prob_image(index) {
   links_cc.innerHTML = '<div class="div_data_links"><span>Coherence</span></div>' +
                        '<div class="div_data_links"><a href="' +
                        data_href_prefix + '/' + volcano_track +
-                       '/' + volcano_frame + '/products/' + links_date +
+                       '/' + volcano_frame + '/interferograms/' + links_date +
                        '/' + links_date + '.geo.cc.tif">' + links_date +
                        '.geo.cc.tif</a></div>' +
                        '<div class="div_data_links"><a href="' +
                        data_href_prefix + '/' + volcano_track +
-                       '/' + volcano_frame + '/products/' + links_date +   
+                       '/' + volcano_frame + '/interferograms/' + links_date +   
                        '/' + links_date + '.geo.cc.png">' + links_date +
                        '.geo.cc.png</a></div>';
    links_pha.innerHTML = '<div class="div_data_links"><span>LOS change</span></div>' +
                          '<div class="div_data_links"><a href="' +
                          data_href_prefix + '/' + volcano_track +
-                         '/' + volcano_frame + '/products/' + links_date +   
+                         '/' + volcano_frame + '/interferograms/' + links_date +   
                          '/' + links_date + '.geo.diff_pha.tif">' + links_date +
                          '.geo.diff_pha.tif</a></div>' +
                          '<div class="div_data_links"><a href="' +
                          data_href_prefix + '/' + volcano_track +
-                         '/' + volcano_frame + '/products/' + links_date +   
+                         '/' + volcano_frame + '/interferograms/' + links_date +   
                          '/' + links_date + '.geo.diff.png">' + links_date +
                          '.geo.diff.png</a></div>';
    links_unw.innerHTML = '<div class="div_data_links"><span>Unwrapped LOS change</span></div>' +
                          '<div class="div_data_links"><a href="' +
                          data_href_prefix + '/' + volcano_track +
-                         '/' + volcano_frame + '/products/' + links_date +   
+                         '/' + volcano_frame + '/interferograms/' + links_date +   
                          '/' + links_date + '.geo.unw.tif">' + links_date +
                          '.geo.unw.tif</a></div>' + 
                          '<div class="div_data_links"><a href="' +
                          data_href_prefix + '/' + volcano_track +
-                         '/' + volcano_frame + '/products/' + links_date +   
+                         '/' + volcano_frame + '/interferograms/' + links_date +   
                          '/' + links_date + '.geo.unw.png">' + links_date +
                          '.geo.unw.png</a></div>';
 
