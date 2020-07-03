@@ -8,13 +8,12 @@ var disp_data = null;
 var licsar_data = null;
 var prob_data = null;
 
-var disp_plot_el_display = null;
-var disp_range_el_display = null;
-var disp_hr_el_display = null;
 var s1_frame_el_display = null;
 var s1_img_el_display = null;
 var s1_range_el_display = null;
 var data_down_el_display = null;
+var disp_plot_el_display = null;
+var disp_range_el_display = null;
 
 /* page set up function: */
 function s1_page_set_up(frame_index) {
@@ -26,7 +25,6 @@ function s1_page_set_up(frame_index) {
   var data_down_el = document.getElementById('row_data_downloads');
   var disp_plot_el = document.getElementById('row_disp_plot');
   var disp_range_el = document.getElementById('row_disp_range');
-  var disp_hr_el = document.getElementById('hr_disp_plot');
   /* error elements: */
   var s1_error_el = document.getElementById('no_s1_error');
   var disp_error_el = document.getElementById('no_disp_error');
@@ -44,8 +42,6 @@ function s1_page_set_up(frame_index) {
     disp_plot_el.style.display : disp_plot_el_display;
   disp_range_el_display == (disp_range_el_display === null) ?
     disp_range_el.style.display : disp_range_el_display;
-  disp_hr_el_display == (disp_hr_el_display === null) ?
-    disp_hr_el.style.display : disp_hr_el_display;
 
   /* check if frame index is set: */
   if (frame_index == undefined) {
@@ -199,7 +195,6 @@ function s1_page_set_up(frame_index) {
     /* hide displacement plotting elements: */
     disp_plot_el.style.display = 'none';
     disp_range_el.style.display = 'none';
-    disp_hr_el.style.display = 'none';
     /* display error element: */
     disp_error_el.style.display = 'inline';
     /* update licsar: */
@@ -227,7 +222,6 @@ function s1_page_set_up(frame_index) {
       /* make sure displacement elements are visible: */
       disp_plot_el.style.display = disp_plot_el_display;
       disp_range_el.style.display = disp_range_el_display;
-      disp_hr_el.style.display = disp_hr_el_display;
       /* set plot variables for the frame, then run displacement plotting
          function: */
       init_plot_vars(volcano_frame, disp_plot);

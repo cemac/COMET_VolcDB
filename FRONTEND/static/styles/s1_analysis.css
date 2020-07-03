@@ -113,6 +113,13 @@ body {
   flex-basis: 67%;
 }
 
+/** section titles: **/
+
+.s1_page_hdr {
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+}
+
 /** sentinel 1 frame selection: **/
 
 .row_s1_frame {
