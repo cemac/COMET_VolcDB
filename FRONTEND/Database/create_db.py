@@ -16,6 +16,7 @@ Memebers:
 
 import pandas as pd
 import sqlite3
+import random
 from sqlalchemy import create_engine
 
 # connect to volcano.db
@@ -23,5 +24,17 @@ conn = sqlite3.connect('volcano.db')
 df = pd.read_csv('VolcDB_df.csv')
 # NB pandas is due to change behaviour to not underscore column names
 # Replace table VolcDB1
+def fillNaN_with_unifrand(df):
+    a = df['ID']
+    m = df['ID'].isnull()
+    a[m.values] = random.sample(range(3450502,3460601), m.sum())
+    return df
+df=fillNaN_with_unifrand(df)
+def fillNaN_with_unifrand(df):
+    dups = df[df.duplicated('ID')]
+    a= df['ID']
+    a[a.isin(dups.ID)] = random.sample(range(3460602,3470601), 2*len(dups))
+    return df
+
 df.to_sql('VolcDB1', con=conn, if_exists='replace', index=False)
 conn.close()

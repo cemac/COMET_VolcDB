@@ -37,25 +37,6 @@ except FileNotFoundError:
 raw_data = rawDF.drop([rawDF.columns.values[0], 'api_endpoint', 'date_added',
                        'last_modified', 'uri', 'images', 'location'], axis=1)
 
-# Now map to jasmin names
-mapping = pd.read_csv('data_raw/mappings.csv')
-mapping=mapping.rename(columns={"db_volcano_number":"volcano_number"})
-mapping.db_name.fillna(mapping.jasmin_name, inplace=True)
-def fillNaN_with_unifrand(df):
-    a = df['volcano_number'].values
-    m = df['volcano_number'].isna()
-    a[m] = random.sample(range(2900011,3000000), m.sum())
-    return df
-mapping=fillNaN_with_unifrand(mapping)
-mapping=mapping.astype({'volcano_number':'int32'})
-mapping.set_index('volcano_number', inplace=True)
-jname = mapping['jasmin_name']
-raw_data = pd.merge(raw_data, jname, on='volcano_number', how='outer')
-raw_data.name.fillna(raw_data.jasmin_name, inplace=True)
-# For now add the url so can have images on test site
-# NOT REQUIRED
-# raw_data['image_url'] = raw_images.url
-
 # Now for each volcano get location information!
 # Really I'm just extracting the region
 with open('volcanoes.json') as json_file:
@@ -69,11 +50,30 @@ with open('volcanoes.json') as json_file:
                 row[:] = 'none'
             locationdf = locationdf.append(row)
 
-locationdf = locationdf.reset_index(drop=True)
+#locationdf = locationdf.reset_index(drop=True)
 locationdf.to_csv('volcano_location_data.csv', encoding='utf-8')
-print(len(raw_data))
-print(len(locationdf.name.values))
-raw_data['Area'] = locationdf.name.values
+raw_data['Area'] = locationdf.name.vlaues
+# Now map to jasmin names
+mapping = pd.read_csv('data_raw/mappings.csv')
+mapping=mapping.rename(columns={"db_volcano_number":"volcano_number"})
+mapping.db_name.fillna(mapping.jasmin_name, inplace=True)
+def fillNaN_with_unifrand(df):
+    a = df['volcano_number'].values
+    m = df['volcano_number'].isnull()
+    a[m.values] = random.sample(range(2900011,3000000), m.sum())
+    return df
+mapping=fillNaN_with_unifrand(mapping)
+mapping=mapping.astype({'volcano_number':'int32'})
+mapping.set_index('volcano_number', inplace=True)
+jname = pd.DataFrame()
+jname['jasmin_name'] = mapping['jasmin_name']
+jname.reset_index(inplace=True)
+raw_data = pd.merge(raw_data, jname, on='volcano_number', how='outer')
+raw_data.name.fillna(raw_data.jasmin_name, inplace=True)
+# For now add the url so can have images on test site
+# NOT REQUIRED
+# raw_data['image_url'] = raw_images.url
+
 # re index by name and prepare to put in frame info
 raw_data_names = raw_data.copy()
 raw_data.set_index('jasmin_name', inplace=True)
