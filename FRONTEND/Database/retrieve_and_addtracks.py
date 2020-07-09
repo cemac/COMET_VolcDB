@@ -69,9 +69,11 @@ with open('volcanoes.json') as json_file:
                 row[:] = 'none'
             locationdf = locationdf.append(row)
 
-#locationdf = locationdf.reset_index(drop=True)
+locationdf = locationdf.reset_index(drop=True)
 locationdf.to_csv('volcano_location_data.csv', encoding='utf-8')
-raw_data['Area'] = locationdf.name
+print(len(raw_data))
+print(len(locationdf.name.values))
+raw_data['Area'] = locationdf.name.values
 # re index by name and prepare to put in frame info
 raw_data_names = raw_data.copy()
 raw_data.set_index('jasmin_name', inplace=True)

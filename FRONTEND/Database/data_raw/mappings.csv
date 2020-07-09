@@ -745,7 +745,7 @@ Piratkovsky,300054,piratkovsky,piratkovsky
 Planchón-Peteroa,357040,planchón-peteroa,planchon-peteroa
 Platanar,345034,platanar,platanar
 Plosky,300310,plosky,plosky
-Poás,345050,poás,poas
+Poás,3450501,poás,poas
 Pocdol Mountains,273020,pocdol_mountains,pocdol_mountains
 NULL,NULL,NULL,poco_leok
 Pogranychny,300470,pogranychny,pogranychny
@@ -913,7 +913,7 @@ Tambo Quemado,355021,tambo_quemado,tambo_quemado
 Tambora,264040,tambora,tambora
 Tampomas,263131,tampomas,tampomas
 Tana,311241,tana,tana
-Tanaga,311080,tanaga,tanaga
+Tanaga,3110801,tanaga,tanaga
 Tandikat-Singgalang,261150,tandikat-singgalang,tandikat-singgalang
 Tangkoko-Duasudara,266130,tangkoko-duasudara,tangkoko-duasudara
 Tangkubanparahu,263090,tangkubanparahu,tangkubanparahu
@@ -1015,7 +1015,7 @@ Uzon,300170,uzon,uzon
 Veer,300121,veer,veer
 Verkhovoy,300440,verkhovoy,verkhovoy
 Vestmannaeyjar,372010,vestmannaeyjar,vestmannaeyjar
-Vesuvius,211010,vesuvius,vesuvius
+Vesuvius,2110101,vesuvius,vesuvius
 NULL,NULL,NULL,victory
 Viedma,358061,viedma,viedma
 Villarrica,357120,villarrica,villarrica
@@ -1029,14 +1029,14 @@ Vulsini,211003,vulsini,vulsini
 Vysoky,300221,vysoky,vysoky
 NULL,NULL,NULL,waiowa
 Wai Sano,264060,wai_sano,wai_sano
-Wapi Lava Field,324030,wapi_lava_field,wapi_lava_field
+Wapi Lava Field,3240301,wapi_lava_field,wapi_lava_field
 NULL,NULL,NULL,washiba-kumonotaira
 Wells Gray-Clearwater,320150,wells_gray-clearwater,wells_gray-clearwater
 West Crater,321060,west_crater,west_crater
 Westdahl,311340,westdahl,westdahl
 West Eifel Volcanic Field,210010,west_eifel_volcanic_field,west_eifel_volcanic_field
 Whangarei,241011,whangarei,whangarei
-White Island,241040,white_island,white_island
+White Island,2410401,white_island,white_island
 Wilis,263270,wilis,wilis
 NULL,NULL,NULL,witori
 NULL,NULL,NULL,wolf

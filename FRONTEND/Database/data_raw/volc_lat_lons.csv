@@ -1,5 +1,5 @@
 ,name,latitude,longitude
-0,Acamarachi,-23.291999999999998,-67.618
+0,Acamarachi,-23.292,-67.618
 1,Acatenango,14.501,-90.876
 2,Acigol-Nevsehir,38.57,34.52
 3,Acotango,-18.37,-69.05
@@ -12,22 +12,22 @@
 10,Aguas Delgadas,-24.45,-68.4
 11,Aguilera,-50.33,-73.75
 12,Agung,-8.342,115.508
-13,Aira,31.593000000000004,130.657
+13,Aira,31.593,130.657
 14,Akademia Nauk,53.98,159.45
 15,Akhtang,55.43,158.65
-16,Akutan,54.13399999999999,-165.986
+16,Akutan,54.134,-165.986
 17,Al Harrah,31.08,38.42
 18,Harrat Ash Shamah,37.583,1100.0
-19,Alaid,50.861000000000004,155.565
+19,Alaid,50.861,155.565
 20,Alayta,12.888,40.573
 21,Alban Hills,41.73,12.7
 22,Alcedo,-0.43,-91.12
 23,Ale Bagu,13.52,40.63
-24,Alexander Selkirk,-33.763000000000005,-80.811
+24,Alexander Selkirk,-33.763,-80.811
 25,Alid,14.88,39.92
 26,Aliso,-0.53,-78.0
 27,Alligator Lake,60.42,-135.42
-28,Almolonga,14.797,-91.51899999999999
+28,Almolonga,14.797,-91.519
 29,Alney-Chashakondzha,56.7,159.65
 30,Alngey,57.7,160.4
 31,Alu-Dalafilla,13.793,40.55
@@ -51,23 +51,23 @@
 49,Ankaizina Field,-14.3,48.67
 50,Ankaratra Field,-19.4,47.2
 51,Antillanca Group,-40.771,-72.153
-52,Antisana,-0.48100000000000004,-78.141
+52,Antisana,-0.481,-78.141
 53,Antofagasta Volcanic Field,-26.12,-67.4
 54,Antofalla,-25.55,-67.92
-55,Antuco,-37.406,-71.34899999999999
+55,Antuco,-37.406,-71.349
 56,Aoba,-15.4,167.83
 57,Apagado,-22.05,-67.97
 58,Apagado,-41.88,-72.58
-59,Apaneca Range,13.890999999999998,-89.786
+59,Apaneca Range,13.891,-89.786
 60,Apastepeque Field,13.72,-88.77
-61,Apo,6.989,125.26899999999999
-62,Apoyeque,12.242,-86.34200000000001
+61,Apo,6.989,125.269
+62,Apoyeque,12.242,-86.342
 63,Aracar,-24.29,-67.783
 64,Aragats,40.53,44.2
 65,Ararat,39.7,44.3
 66,Arayat,15.2,120.742
 67,Ardoukoba,11.58,42.47
-68,Arenal,10.463,-84.70299999999999
+68,Arenal,10.463,-84.703
 69,Arenales,-47.2,-47.2
 70,Arintica,-18.75,-69.05
 71,Arjuno-Welirang,-7.733,112.575
@@ -82,28 +82,28 @@
 80,Atitlán,14.583,-91.186
 81,Atka,52.332,-174.137
 82,Atlin Volcanic Field,59.68,-133.32
-83,Auca Mahuida Volcanic Field,-37.738,-68.92399999999999
+83,Auca Mahuida Volcanic Field,-37.738,-68.924
 84,Aucanquilcha,-21.22,-68.47
 85,Auckland Field,-36.9,174.87
 86,Augustine,59.363,-153.43
 87,Avachinsky,53.256,158.836
-88,Awu,3.6889999999999996,125.447
+88,Awu,3.689,125.447
 89,Axial Seamount,45.95,-130.0
 90,Ayelu,10.082,40.702
 91,Azas Plateau,52.52,98.6
 92,Azufral,1.08,-77.68
 93,Babuyan Claro,19.523,121.94
-94,Bachelor,43.979,-121.68799999999999
-95,Bagana,-6.1370000000000005,155.196
+94,Bachelor,43.979,-121.688
+95,Bagana,-6.137,155.196
 96,Newer Volcanic Province,-37.77,142.5
 97,Bakening,53.905,158.07
-98,Baker,48.777,-121.81299999999999
+98,Baker,48.777,-121.813
 99,Balatukan,8.77,124.98
 100,Balbi,-5.92,154.98
 101,Baluan,-2.57,147.28
 102,Baluran,-7.85,114.37
 103,Balut,5.4,125.375
-104,Bam,-3.613,144.81799999999998
+104,Bam,-3.613,144.818
 105,Bamus,-5.2,151.23
 106,Banahaw,14.07,121.48
 107,Banda Api,-4.523,129.881
@@ -111,1412 +111,1407 @@
 109,Bárcena,19.3,-110.82
 110,Bardarbunga,64.42,-17.33
 111,Barkhatnaya Sopka,52.823,158.27
-112,Barú,8.808,-82.54299999999999
+112,Barú,8.808,-82.543
 113,Barva,10.135,-84.1
-114,Barva,10.135,-84.1
-115,Poás,10.2,-84.23299999999999
-116,Poás,10.2,-84.23299999999999
-117,Bas Dong Nai,10.8,107.2
-118,Batu Tara,-7.791,123.585
-119,Batur,-8.242,115.375
-120,Bayuda Volcanic Field,18.33,32.75
-121,Bazman,28.07,60.0
-122,Behm Canal-Rudyerd Bay,55.32,-131.05
-123,Belenkaya,51.75,157.27
-124,Belirang-Beriti,-2.82,102.18
-125,Belknap,44.285,-121.84100000000001
-126,Bely,57.88,160.53
-127,Berlin,-76.05,-136.0
-128,Beru,8.95,39.75
-129,Berutarubesan [Berutarube],44.461999999999996,146.93200000000002
-130,Besar,-4.43,103.67
-131,Bezymianny,55.972,160.595
-132,Bibinoi,-0.77,127.72
-133,Bilate River Field,7.07,38.1
-134,Biliran,11.523,124.535
-135,Billy Mitchell,-6.0920000000000005,155.225
-136,Bir Borhut,15.55,50.63
-137,Bishoftu Volcanic Field,8.78,38.98
-138,Biu Plateau,10.75,12.0
-139,Biu Plateau,10.75,12.088
-140,Black Butte Crater Lava Field,43.183,-114.352
-141,Black Peak,56.552,-158.785
-142,Black Rock Desert,38.97,-112.5
-143,Black Rock Desert,38.97,-112.5
-144,Bliznets,56.97,159.78
-145,Bliznetsy,57.35,161.37
-146,Blue Lake Crater,44.411,-121.774
-147,Bobrof,51.91,-177.438
-148,Bogoria,0.25,36.08
-149,Bogoslof,53.93,-168.03
-150,Bolshe-Bannaya,52.9,157.78
-151,Bolshoi Payalpan,55.88,157.78
-152,Bolshoi Semiachik,54.32,160.02
-153,Bolshoi-Kekuknaysky,56.47,157.8
-154,Boomerang Seamount,-37.721,77.825
-155,Bora Ale,13.725,40.6
-156,Bora-Bericcio,8.27,39.03
-157,Borawli,11.63,41.45
-158,Boset Bericha,8.558,39.475
-159,Bouvet,-54.42,3.35
-160,Brava,14.85,-24.72
-161,Brennisteinsfjoll,63.92,-21.83
-162,Bridge River Cones,50.8,-123.4
-163,Bridgeman Island,-62.06100000000001,-56.93
-164,Bristol Island,-59.063,-26.587
-165,Brothers,-34.875,179.075
-166,Buckle Island,-66.78,163.25
-167,Bufumbira,-1.23,29.72
-168,Bukit Daun,-3.38,102.37
-169,Bukit Lumut Balai,-4.22,103.62
-170,Buldir,52.35,175.922
-171,Bulusan,12.77,124.05
-172,Bunyaruguru,-0.2,30.08
-173,Bur ni Telong,4.769,96.821
-174,Bus-Obo,47.12,109.08
-175,Butajiri-Silti Field,8.05,38.35
-176,Buyan-Bratan,-8.283,115.133
-177,Buzzard Creek,64.07,-148.42
-178,Cabalian,10.285,125.21799999999999
-179,Caburgua-Huelemolle,-39.25,-71.75
-180,Cagua,18.222,122.12299999999999
-181,Caichinque,-23.949,-67.74
-182,Calabozos,-35.558,-70.49600000000001
-183,Calatrava Volcanic Field,38.87,4.02
-184,Calbuco,-41.326,-72.61399999999999
-185,Caldera del Atuel,-34.65,-70.05
-186,Callaqui,-37.92,-71.45
-187,Cameroon,4.203,9.17
-188,Camiguin,9.203,124.67299999999999
-189,Camiguin de Babuyanes,18.83,121.86
-190,Campi Flegrei,40.827,14.139000000000001
-191,Campi Flegrei,40.827,14.139000000000001
-192,Vesuvius,40.821,14.425999999999998
-193,Vesuvius,40.821,14.425999999999998
-194,Cañapa,-21.5,-68.12
-195,Candlemas Island,-57.08,-26.67
-196,Cápur,-24.02,-67.85
-197,Caquena,-18.07,-69.22
-198,Carlisle,52.894,-170.054
-199,Carrán-Los Venados,-40.35,-72.07
-200,Carrizozo,33.78,-105.93
-201,Cay,-45.059,-72.984
-202,Cayambe,0.028999999999999998,-77.986
-203,Cayley Volcanic Field,50.12,-123.28
-204,Cayutué-La Viguería,-41.25,-72.27
-205,Ceboruco,21.125,-104.508
-206,"Cendres, Ile des",10.158,109.014
-207,Central Island,3.5,36.042
-208,Cereme,-6.892,108.4
-209,Cerro Ascotán,-21.68,-68.12
-210,Cerro Auquihuato,-15.07,-73.18
-211,Cerro Azul,-0.92,-91.40799999999999
-212,Cerro Azul,-35.653,-70.76100000000001
-213,Cerro Bayo Gorbea,-25.414,-68.58800000000001
-214,Cerro Blanco,-26.789,-67.765
-215,Cerro Bravo,5.091,-75.293
-216,Cerro Cariquima,-19.55,-68.68
-217,Cerro Chascon,-21.88,-67.9
-218,Cerro Cinotepeque,14.02,-89.25
-219,Cerro Colorado,-26.18,-68.37
-220,Cerro Copa,-20.63,-68.45
-221,Cerro de la Niebla,-25.25,-68.63
-222,Cerro de Río Negro,-23.398000000000003,-67.582
-223,Cerro del Azufre,-21.787,-68.237
-224,Cerro del Leon,-22.142,-68.108
-225,Cerro el Ciguatepe,12.53,-86.14200000000001
-226,Cerro Galán,-25.93,-66.92
-227,Cerro Hudson,-45.9,-72.97
-228,Cerro Maichín,-39.35,-71.55
-229,Cerro Moiro,-21.68,-67.47
-230,Cerro Napa,-20.52,-68.68
-231,Cerro Negro,12.505999999999998,-86.70200000000001
-232,Cerro Nevado,-35.58,-68.48899999999999
-233,Cerro Nicholson,-16.261,-71.75399999999999
-234,Cerro Overo,-23.52,-67.67
-235,Cerro Pantojo,-40.768,-71.943
-236,Cerro Prieto,32.418,115.305
-237,Cerro Pucara,-16.236,-69.471
-238,Cerro San Agustín,-21.25,-67.75
-239,Cerro Santiago,14.33,-89.87
-240,Cerro Singüil,14.05,-89.65
-241,Cerro Tatajachura,-19.5,-69.12
-242,Cerro Trautrén,-39.17,-71.4
-243,Cerro Tujle,-23.83,-67.95
-244,Cerro Zapaleri,-22.82,-67.18
-245,Cerros de Tocorpuri,-22.439,-67.888
-246,Cerros Purupuruni,-17.32,-69.9
-247,Ch&#039;uga-ryrong,38.33,127.33
-248,Chacana,-0.375,-78.25
-249,Chachadake [Tiatia],44.353,146.252
-250,Chachimbiro,0.46799999999999997,-78.28699999999999
-251,Chagulak,52.577,-171.13
-252,Chaine des Puys,45.775,2.97
-253,Chaiten,-42.833,-72.646
-254,Changbaishan,41.98,128.08
-255,Cherny,56.82,159.67
-256,Cherpuk Group,55.55,157.47
-257,Chichinautzin,19.08,-99.13
-258,Chiginagak,57.135,-156.99
-259,Chikurachki,50.324,155.461
-260,Chiles-Cerro Negro,0.8170000000000001,-77.938
-261,Chiliques,-23.58,-67.7
-262,Chimborazo,-1.464,-78.815
-263,Chinameca,13.478,-88.33
-264,Chingo,14.12,-89.73
-265,Chiquimula Volcanic Field,14.83,-89.55
-266,Chiracha,6.712000000000001,38.085
-267,Chirinkotan,48.98,153.48
-268,Chirippusan [Chirip],45.338,147.92
-269,Chirpoi,46.525,150.875
-270,Churchill,61.38,-141.75
-271,Chyulu Hills,2.68,37.88
-272,Cinnamon Butte,43.24100000000001,-122.10799999999999
-273,Clark,-36.446,177.83900000000003
-274,Clear Lake,38.97,-122.77
-275,Cleft Segment,44.83,-130.3
-276,Cleveland,52.825,-169.94400000000002
-277,Coatepeque Caldera,13.87,-89.55
-278,CoAxial Segment,46.52,-129.58
-279,Cobb Segment,46.88,-129.33
-280,Cochiquito Volcanic Group,-36.739000000000004,-69.834
-281,Cofre de Perote,19.492,-97.15
-282,Colachi,-23.236,-67.645
-283,Colima,19.514,-103.62
-284,Colo,-0.162,121.601
-285,Comondú-La Purísima,26.0,111.92
-286,Concepción,11.538,-85.62200000000001
-287,Copahue,-37.856,-71.183
-288,Copiapó,-27.3,-69.13
-289,Corbetti,7.18,38.43
-290,Corcovado,-43.18899999999999,-72.794
-291,Cordón de Puntas Negras,-23.743000000000002,-67.53399999999999
-292,Cordon del Azufre,-25.336,-68.521
-293,Coronado,29.08,-113.51299999999999
-294,Coropuna,-15.52,-72.65
-295,Corvo,39.699,-31.111
-296,Cosigüina,12.98,-87.57
-297,Coso Volcanic Field,36.03,-117.82
-298,Cotopaxi,-0.677,-78.436
-299,Crater Basalt Volcanic Field,-42.018,-70.194
-300,Crater Lake,42.93,-122.12
-301,Craters of the Moon,43.42,-113.5
-302,Crow Lagoon,54.7,-130.23
-303,Cu-Lao Re Group,15.38,109.12
-304,Cuernos de Negros,9.25,123.17
-305,Cuernos del Diablo,-41.363,-72.005
-306,Cuicocha,0.308,-78.36399999999999
-307,Cuilapa-Barbarena,14.33,-90.4
-308,Cumbal,0.95,-77.87
-309,Curtis Island,-30.541999999999998,-178.56099999999998
-310,Curutú,-23.17,-67.07
-311,Dabbahu,12.595,40.48
-312,Dabbayra,12.38,40.07
-313,Dacht-i-Navar Group,33.95,67.92
-314,Dama Ali,11.28,41.63
-315,Damavand,35.951,52.108999999999995
-316,Dana,55.641000000000005,-161.214
-317,Dar-Alages,39.704,45.551
-318,Dariganga Volcanic Field,45.33,114.0
-319,Davidof,51.97,178.33
-320,Davis Lake,43.57,-170.82
-321,Deception Island,-63.001000000000005,-60.652
-322,Dempo,-4.03,103.13
-323,Denison,58.418,-154.44899999999998
-324,Descabezado Grande,-35.58,-70.75
-325,Deslinde,-22.27,-67.97
-326,Devils Garden,43.512,-120.861
-327,Diamond Craters,43.1,-118.75
-328,Didicas,19.077,122.20200000000001
-329,Dieng Volcanic Complex,-7.2,109.92
-330,Diky Greben,51.452,156.97799999999998
-331,Dofan,9.78,40.33
-332,Domuyo,-36.638000000000005,-70.432
-333,Don Joao de Castro Bank,38.23,-26.63
-334,Doña Juana,1.5,-76.936
-335,Dotsero,39.661,-107.035
-336,Douglas,58.855,-153.542
-337,Dubbi,13.579,41.809
-338,Dukono,1.693,127.89399999999999
-339,Duncan Canal,56.5,-133.1
-340,Durango Volcanic Field,24.15,104.45
-341,Dutton,55.183,-162.276
-342,Dzenzursky,53.637,158.922
-343,East Blanco Depression,44.266999999999996,-129.879
-344,East Gakkel Ridge at 85 E,85.60799999999999,85.25
-345,East Zway,7.95,38.93
-346,Easter Island,-27.15,-109.38
-347,Ebeko,50.68600000000001,156.014
-348,Ebulobo,-8.82,121.18
-349,Edgecumbe,57.05,-135.75
-350,Edziza,57.72,-130.63
-351,Eggella,56.57,158.52
-352,Egon,-8.676,122.455
-353,Ekarma,48.958,153.93
-354,El Aguajito,27.554000000000002,-112.552
-355,El Azufre,-25.37,-68.88
-356,El Chichón,17.36,-93.228
-357,El Cóndor,-26.631999999999998,-68.361
-358,El Misti,-16.294,-71.40899999999999
-359,El Negrillar,-24.18,-68.25
-360,El Solo,-27.105,-68.71300000000001
-361,El Tigre,13.47,-88.43
-362,El Valle,8.58,-80.17
-363,El Volcán,-22.33,-67.97
-364,Elbrus,43.351000000000006,42.442
-365,Elmenteita Badlands,-0.52,36.27
-366,Elovsky,57.55,160.53
-367,Emi Koussi,19.8,18.53
-368,Emmons Lake,55.341,-162.07299999999998
-369,Emuruangogolak,1.5,36.33
-370,Endeavour Segment,47.95,-129.1
-371,Erciyes Dagi,38.52,35.48
-372,Erebus,-77.53,167.17
-373,Erta Ale,13.6,40.67
-374,Es Safa,33.25,37.07
-375,Escala,-21.6,-66.88
-376,Escanaba Segment,40.98,-127.5
-377,Escorial,-25.083000000000002,-68.367
-378,Esjufjoll,64.27,-16.65
-379,Estelí,13.17,-86.4
-380,Etna,37.734,15.004000000000001
-381,Etorofu-Atosanupuri,44.808,147.131
-382,Etorofu-Yakeyama,45.012,147.871
-383,Evlanov Seamount,48.38399999999999,-35.132
-384,Eyjafjallajökull,63.63,-19.62
-385,Falso Azufre,-26.8,-68.37
-386,Fayal,38.6,-28.73
-387,Fedotych,57.13,160.4
-388,Fentale,8.975,39.93
-389,Fernandina,-0.37,-91.55
-390,Fisher,54.65,-164.43
-391,Flores,14.308,-89.992
-392,Flores,39.461999999999996,-31.215999999999998
-393,Fogo,14.95,-24.35
-394,Fort Portal,0.7,30.25
-395,Fort Selkirk,62.93,-137.38
-396,Fourpeaked,58.77,-153.672
-397,Fremrinamur,65.43,-16.65
-398,Frosty,55.067,-162.835
-399,Fuego,14.472999999999999,-90.88
-400,Fueguino,-54.97,-70.262
-401,Fuerteventura,28.358,-147.02
-402,Furnas,37.77,-25.32
-403,Fuss Peak,50.266999999999996,155.246
-404,Gabillema,11.08,41.27
-405,Gada Ale,13.975,40.408
-406,Galeras,1.22,-77.37
-407,Galunggung,-7.25,108.05799999999999
-408,Gamalama Mount,0.8,127.33
-409,Gamchen,54.974,160.703
-410,Gamkonora,1.38,127.53
-411,Gareloi,51.79,-178.794
-412,Garibaldi,49.85,-123.0
-413,Garibaldi Lake,49.92,-123.03
-414,Gedamsa,8.35,39.18
-415,Gede-Pangrango,-6.77,106.965
-416,Gemelos-Saladillo,-24.75,-66.17
-417,Geodesistoy,56.33,158.67
-418,Geureudong,4.813,96.82
-419,Geysir,64.32,-20.3
-420,Ghegam Ridge,40.275,44.75
-421,Giggenbach,-30.035999999999998,-178.71200000000002
-422,Glacier Peak,48.111999999999995,-121.113
-423,Golan Heights,33.1,35.97
-424,Golaya,52.263000000000005,157.787
-425,Golden Trout Creek,36.358000000000004,-118.32
-426,Gollu Dag,38.35,34.57
-427,Gordon,62.13,-143.08
-428,Gorely,52.559,158.03
-429,Gorny Institute,57.33,160.2
-430,Graciosa,39.02,-27.97
-431,Gran Canaria,28.0,-15.58
-432,Granada,11.92,-85.98
-433,Great Sitkin,52.076,-176.13
-434,Grensdalur,64.02,-21.17
-435,Griggs,58.354,-155.092
-436,Grimsnes,64.03,-20.87
-437,Grimsvotn,64.416,-17.316
-438,Groppo,11.73,40.25
-439,Guadalupe,29.07,-118.28
-440,Guagua Pichinca,-0.171,-78.598
-441,Guallatiri,-18.42,-69.092
-442,Guayaques,-22.895,-67.566
-443,Guazapa,13.9,-89.12
-444,Gufa,12.55,42.53
-445,Guntur,-7.143,107.84
-446,Gunungapi Wetar,-6.642,126.65
-447,Hainan Dao,19.7,110.1
-448,Haleakala,20.708000000000002,-156.25
-449,Halla,33.361,126.53
-450,Hanish,13.72,42.73
-451,Harra Es-Sawad,13.58,46.12
-452,Harra of Arhab,15.63,44.08
-453,Harra of Bal Haf,14.05,48.33
-454,Harras of Dhamar,14.57,44.67
-455,Harrat al Birk,18.37,41.63
-456,Harrat ar Rahah,27.8,36.17
-457,Harrat Ithnayn,26.58,40.2
-458,Harrat Khaybar,25.0,39.92
-459,Harrat Kishb,22.8,41.38
-460,Harrat Lunayyir,25.17,37.75
-461,Harrat Rahat,23.08,39.78
-462,Harrat Uwayrid,27.08,37.25
-463,Haruj,27.25,17.5
-464,Hasan Dagi,38.13,34.17
-465,Haut Dong Nai,11.6,108.2
-466,Havre Seamount,-31.11,179.04
-467,Hayes,61.64,-152.411
-468,Hayli Gubbi,13.5,40.72
-469,Healy,-35.004,178.97299999999998
-470,Heard,-53.106,73.513
-471,Heart Peaks,58.6,-131.97
-472,Hécar,-23.23,-67.75
-473,Hekla,63.98,-19.7
-474,Helgrindur,64.87,-23.25
-475,Hell&#039;s Half Acre,43.5,-112.45
-476,Hengill,64.08,-21.32
-477,Herbert,52.742,-170.111
-478,Hertali,9.78,40.33
-479,Hierro,27.73,-18.03
-480,Hiri,0.9,127.32
-481,Hodson,-56.711999999999996,-27.176
-482,Hofsjokull,64.78,-18.92
-483,Homa Mountain,-0.38,34.5
-484,Honggeertu,41.47,113.0
-485,Hood,45.373999999999995,-121.695
-486,Hoodoo Mountain,56.78,-131.28
-487,Hornopirén,-41.873999999999995,-72.431
-488,Hromundartindur,64.07300000000001,-21.201999999999998
-489,Hualalai,19.692,-155.87
-490,Hualalai,19.692,-155.87
-491,Huambo,-15.83,-72.13
-492,Huambutillo-Rumicola,13.58,-71.72
-493,Huanquihue Group,-39.887,-71.58
-494,Huaynaputina,-16.608,70.85
-495,Hudson Mountains,-74.33,-99.42
-496,Huequi,-42.376999999999995,72.578
-497,Hulubelu,-5.334,104.59
-498,Hutapanjang,-2.33,101.6
-499,Hveravellir,64.75,-19.98
-500,Ibu,1.4880000000000002,127.63
-501,Ichinsky,55.578,157.718
-502,Igwisi Hills,-4.891,31.93
-503,Ijen,-8.058,114.242
-504,Iktunup,58.08,160.77
-505,Ile aux Cochons,-46.1,50.23
-506,Ile de l&#039;Est,-46.43,52.2
-507,Ile de la Possession,-46.42,51.75
-508,Iliamna,60.032,-153.09
-509,Iliboleng,-8.342,123.258
-510,Iliinsky,51.498000000000005,157.203
-511,Ililabalekan,-8.55,123.38
-512,Ilimuda,-8.479,122.76100000000001
-513,Iliwerung,-8.53,123.57
-514,Illiniza,-0.659,-78.714
-515,Ilopango,13.672,-89.053
-516,Imbabura,0.258,-78.183
-517,Imuruk Lake,65.6,-163.92
-518,In Ezzane Volcanic Field,23.0,10.83
-519,Inacalari,-21.980999999999998,-68.071
-520,Incaguasi,-24.03,-67.53
-521,Incapillo,-27.9,-68.8
-522,Indian Heaven,45.93,-121.82
-523,Infiernillo,-35.123000000000005,-69.9
-524,Ingakslugwat Hills,61.43,-164.47
-525,Inielika,-8.73,120.98
-526,Inierie,-8.875,120.95
-527,Inyo Craters,37.692,-119.02
-528,Ipala,14.55,-89.63
-529,Iraya,20.469,122.01
-530,Irazú,9.979,-83.852
-531,Iriga,13.457,123.45700000000001
-532,Irruputuncu,-20.73,-68.55
-533,Isanotski,54.765,-163.72299999999998
-534,Isarog,13.658,123.38
-535,Ischia,40.73,13.897
-536,Iskut-Unuk River Cones,56.58,-130.55
-537,Isla el Tigre,13.272,-87.641
-538,Isla Isabel,21.848000000000003,-105.88600000000001
-539,Isla San Luis,29.97,-114.4
-540,Isla Tortuga,27.438000000000002,-111.881
-541,Isla Zacate Grande,13.33,-87.63
-542,Isluga,-19.15,-68.83
-543,Itasy Volcanic Field,-19.0,46.77
-544,Ivao Group,45.77,149.68
-545,Ixtepeque,14.42,-89.68
-546,Iya,-8.897,121.645
-547,Iyang-Argapura,-7.97,113.57
-548,Izalco,13.812999999999999,-89.633
-549,Iztaccíhuatl,19.179000000000002,-98.64200000000001
-550,Izumbwe-Mpoli,-8.976,33.38
-551,Jabal ad Druze,32.658,36.425
-552,Jabal el-Marha,15.245,44.236000000000004
-553,Jabal Haylan,15.43,44.78
-554,Jabal Yar,17.05,42.83
-555,Jackson Segment,42.15,-127.05
-556,Jailolo,1.08,127.439
-557,Jalua,15.042,39.82
-558,James Ross Island,-64.15,-57.75
-559,Jan Mayen,71.08,-8.17
-560,Jaraguay Volcanic Field,29.33,-114.5
-561,Jatun Mundo Quri Warani,-19.78,-66.48
-562,Jebel at Tair,15.55,41.83
-563,Jebel Marra,12.95,24.27
-564,Jebel Zubair Group,15.05,42.18
-565,Jefferson,44.674,-121.8
-566,Jingbo,44.08,128.83
-567,Jocotitlán,19.73,-99.758
-568,Jolo,6.013,121.057
-569,Jom-Bolok,52.7,98.98
-570,Jorcada,-22.08,-67.77
-571,Jordan Craters,43.147,-117.46
-572,Jumaytepeque,14.335999999999999,-90.26899999999999
-573,Kaba,-3.52,102.62
-574,Kagamil,60.974,-169.72
-575,Kaguyak,58.608000000000004,-154.028
-576,Kaikohe-Bay of Islands,-35.3,173.9
-577,Kaileney,57.8,160.67
-578,Kalatungan,7.95,124.8
-579,Kambalny,51.306000000000004,156.875
-580,Kamen,56.02,160.593
-581,Kanaga,51.923,-177.168
-582,Kanlaon,10.412,123.132
-583,Karaca Dag,37.67,39.83
-584,Karang,-6.27,106.042
-585,Karangetang,2.781,125.40700000000001
-586,Karapinar Field,37.67,33.65
-587,Karisimbi,-1.506,29.45
-588,Karpinsky Group,50.148,155.373
-589,Karthala,-11.75,43.38
-590,Karymsky,54.049,159.44299999999998
-591,Kasatochi,52.177,-175.50799999999998
-592,Katla,63.63,-19.05
-593,Katmai,58.28,-154.963
-594,Katunga,-0.47100000000000003,30.191
-595,Katwe-Kikorongo,-0.08,29.92
-596,Kawi-Butak,-7.92,112.45
-597,Kazbek,42.7,44.5
-598,Kebeney,57.1,159.93
-599,Kekurny,56.4,158.85
-600,Kelimutu,-8.77,121.82
-601,Kell,51.65,157.35
-602,Keluo Group,49.37,125.92
-603,Kelut,-7.93,112.30799999999999
-604,Kembar,3.85,97.664
-605,Kendang,-7.245,107.709
-606,Kerguelen Islands,-49.58,69.5
-607,Kerinci,-1.6969999999999998,101.264
-608,Ketoi,47.35,152.475
-609,Khangar,54.761,157.407
-610,Khanuy Gol,48.67,102.75
-611,Kharimkotan,49.12,154.50799999999998
-612,Khodutka,52.062,157.711
-613,Kialagvik,57.203,-156.745
-614,Kikhpinych,54.489,160.251
-615,Kilauea,19.421,-155.287
-616,Kilimanjaro,3.07,37.35
-617,Kinenin,57.35,160.97
-618,Kiska,52.103,177.602
-619,Kizimen,55.131,160.32
-620,Klabat,1.454,125.031
-621,Klyuchevskoy,56.056000000000004,160.642
-622,Kolbeinsey Ridge,66.67,-18.5
-623,Kolokol Group,46.042,150.05
-624,Komarov,55.033,160.725
-625,Kone,8.8,39.692
-626,Koniuji,52.22,-175.13
-627,Kookooligit Mountains,63.6,-170.43
-628,Korath Range,5.1,35.88
-629,Korosi,0.77,36.12
-630,Korovin,52.332,-174.137
-631,Koryaksky,53.321000000000005,158.71200000000002
-632,Kos,36.852,27.250999999999998
-633,Koshelev,51.356,156.753
-634,Kostakan,53.83,158.05
-635,Kozyrevsky,55.58,158.38
-636,Krafla,65.73,-16.78
-637,Krainy,56.37,159.03
-638,Krakatau,-6.102,105.42299999999999
-639,Krasheninnikov,54.596000000000004,160.27
-640,Kronotsky,54.753,160.533
-641,Krysuvik,63.93,-22.1
-642,Ksudach,51.843999999999994,157.572
-643,Kukak,58.453,-154.355
-644,Kula,38.58,28.52
-645,Kulkev,56.37,158.37
-646,Kunlun Volcanic Group,35.52,80.2
-647,Kuntomintar,48.75,154.02
-648,Kunyit,-2.274,101.48299999999999
-649,Kupreanof,56.011,-159.797
-650,Kurile Lake,51.45,15.12
-651,Kurub,11.88,41.21
-652,Kutum Volcanic Field,14.57,25.85
-653,Kverkfjoll,64.65,-1.72
-654,Kyatwa,0.45,30.25
-655,Kyejo,-9.229,33.792
-656,La Grille,-11.47,43.33
-657,La Malinche,19.230999999999998,-98.03200000000001
-658,La Negrillar,-24.319000000000003,-68.59
-659,La Palma,28.57,-17.83
-660,La Yeguada,8.47,-80.82
-661,"La, Gloria",19.33,-97.25
-662,Labo,14.02,122.792
-663,Laco,-23.8,-67.5
-664,Laguna Aramuaca,12.427999999999999,-88.105
-665,Laguna Blanca,-39.02,-70.37
-666,Laguna Caldera,14.42,121.27
-667,Laguna del Maule,-36.058,-70.492
-668,Laguna Jayu Khota,-19.463,-67.432
-669,Laguna Mariñaqui,-38.255,-71.167
-670,Laguna Verde,-23.252,-67.71
-671,Lake Yojoa,14.98,-87.98
-672,Lamongan,-7.979,113.34200000000001
-673,Langjokull,64.85,-19.7
-674,Langjokull,64.85,-19.7
-675,Tanaga,51.885,-178.146
-676,Tanaga,51.885,-178.146
-677,Lanín,-39.637,-71.502
-678,Lanzarote,29.03,-13.63
-679,Larancagua,-18.02,-69.08
-680,Lardello,43.25,10.87
-681,Larderello,43.25,10.87
-682,Las Cumbres,19.15,-97.27
-683,Las Lajas,12.3,-85.73
-684,Las Pilas,12.495,-86.68799999999999
-685,Lascar,-23.37,-67.73
-686,Lassen Volcanic Center,40.492,-121.508
-687,Lastarria,-25.168000000000003,-68.507
-688,Latukan,7.65,124.45
-689,Lautaro,-49.02,-73.55
-690,Lavic Lake,34.75,-116.625
-691,Lawu,-7.625,111.19200000000001
-692,Leizhou Bandao,20.78,110.17
-693,Lejía,-23.55,-67.77
-694,Leonard Range,7.382000000000001,126.04700000000001
-695,Leroboleng,-8.365,122.833
-696,Leskov Island,-56.656000000000006,-28.14
-697,Lettunup,58.4,58.4
-698,Leutongey,57.3,159.83
-699,Level Mountain,58.42,-131.35
-700,Lewotobi,-8.542,122.775
-701,Lewotolo,-8.272,123.505
-702,Lexone,-17.87,-69.48
-703,Liamuiga,17.37,-62.8
-704,Licancabur,-22.83,-67.88
-705,Licto,-1.78,-78.613
-706,Linzor,-22.18,-67.95
-707,Lipari,38.48,14.95
-708,Little Sitkin,51.95,178.543
-709,Ljosufjoll,64.87,-22.23
-710,Llaima,-38.692,-71.729
-711,Llancanelo Volcanic Field,-35.75,-69.25
-712,Llullaillaco,-24.72,-68.53
-713,Loihi,18.92,-155.27
-714,Lokon-Empung,1.358,124.792
-715,Lomas Blancas,-36.286,-71.009
-716,Long Valley,37.7,-118.87
-717,Longgang Group,42.33,126.5
-718,Longonot,-0.914,36.446
-719,Lonquimay,-38.379,-71.586
-720,Los Atlixcos,19.809,-96.52600000000001
-721,Los Azufres,19.85,-100.63
-722,Los Humeros,19.68,-97.45
-723,Los Patos,-27.27,-69.0
-724,Losloyo,-23.13,-67.37
-725,Lower Chindwin,22.28,95.1
-726,Lubukraya,1.4780000000000002,99.209
-727,Ma Alalta,13.013,40.185
-728,Macá,-45.1,-73.17
-729,Macauley,-30.2,-178.47
-730,Macdonald,-28.98,-140.25
-731,Machín,4.487,-75.389
-732,Madeira,32.73,-16.97
-733,Mageik,58.195,-155.253
-734,Mahagnao,10.882,124.88799999999999
-735,Mahawu,1.3519999999999999,124.865
-736,Maipo,-34.164,-69.832
-737,Makaturing,7.647,124.32
-738,Makian,0.32,127.4
-739,Makushin,53.891000000000005,-166.923
-740,Malinao,13.415999999999999,123.60799999999999
-741,Malindang,8.22,123.63
-742,Malindig,13.24,122.01799999999999
-743,Malintang,0.47,99.67
-744,Maly Payalpan,55.82,157.98
-745,Maly Semyachik,54.135,159.674
-746,Mammoth Mountain,37.631,-119.03200000000001
-747,Manda Gargori,11.75,41.48
-748,Manda Hararo,12.17,40.82
-749,Manda-Inakir,12.38,42.2
-750,Mandalagan,10.65,123.25
-751,Manuk,-5.542999999999999,130.303
-752,Manzaz Volcanic Field,23.92,5.83
-753,Marapi,-0.381,100.473
-754,Mare,0.57,127.4
-755,Marion Island,-46.9,37.75
-756,Mariveles,14.52,120.47
-757,Markagunt Plateau,37.58,-122.67
-758,Maroa,-38.42,176.33
-759,Marsabit,2.32,37.97
-760,Martin,58.172,-155.361
-761,Masaraga,13.32,123.6
-762,Masaya,11.984000000000002,-86.161
-763,Mascota Volcanic Field,20.62,-104.83
-764,Mashkovtsev,51.1,156.72
-765,Mat Ala,13.106,41.161
-766,Matutum,6.37,125.07
-767,Mauna Kea,19.82,-155.47
-768,Mauna Loa,19.475,-155.608
-769,Mayon,13.257,123.685
-770,Mayor Island,-37.28,176.25
-771,Mayotte Island,-12.83,45.17
-772,McDonald Islands,-53.03,72.6
-773,Meager,50.63,-1235.0
-774,Medicine Lake,41.611000000000004,-121.554
-775,Mega Basalt Field,4.08,37.42
-776,Mehetia,-17.874000000000002,-148.06799999999998
-777,Meidob Volcanic Field,15.32,26.47
-778,Melbourne,-74.35,149.7
-779,Melimoyu,-44.08,-72.88
-780,Melville,-62.02,-57.67
-781,Menengai,-0.2,36.07
-782,Mentolat,-44.7,-73.08
-783,Merapi,-7.54,110.446
-784,Merbabu,-7.454,110.44
-785,Meru,-3.25,36.75
-786,Methana,37.615,23.336
-787,Meullín,-45.22,-73.05
-788,Mezhdusopochny,57.47,126.25
-789,Michael,-57.787,-26.46
-790,Saunders,-57.8,-26.483
-791,Michinmahuida,-42.799,-72.445
-792,Michoacán-Guanajuato,19.85,-101.75
-793,Middle Gobi,45.28,106.7
-794,Milbanke Sound Group,52.5,-128.73
-795,Milna,46.815,151.786
-796,Milos,36.699,24.439
-797,Miñiques,-23.82,-67.77
-798,Miravalles,10.748,-85.15299999999999
-799,Miscanti,-23.67,-67.72
-800,Mocho-Choshuenco,-39.927,-72.027
-801,Moekeshiwan [Lvinaya Past],44.608000000000004,146.994
-802,Moffett,51.943999999999996,-176.747
-803,Mojanda,0.13,-78.27
-804,Mombacho,11.825999999999999,-85.96799999999999
-805,Momotombo,12.422,-86.54
-806,Monaco Bank,37.6,-25.88
-807,Mono Craters,37.88,-119.0
-808,Mono Lake Volcanic Field,38.0,-119.03
-809,Monowai,-25.886999999999997,-177.188
-810,Montagu Island,-58.42,-26.33
-811,Monte Burney,-52.33,-73.4
-812,Morne aux Diables,15.612,-61.43
-813,Morne Diablotins,15.503,-61.397
-814,Morne Plat Pays,15.255,-61.341
-815,Morne Trois Pitons,15.37,-61.33
-816,Morne Watt,15.307,-61.305
-817,"Morning, Mount",-78.5,163.53
-818,Moti,0.45399999999999996,127.411
-819,Moua Pihaa,-18.325,-148.525
-820,Mousa Ali,12.47,42.4
-821,Moutohora Island,-37.858000000000004,176.98
-822,Moyorodake [Medvezhia],45.388999999999996,148.838
-823,Moyuta,14.03,-90.1
-824,Muhavura,-1.383,29.678
-825,Muria,-6.62,110.88
-826,Musuan,7.877000000000001,125.068
-827,Mutnovsky,52.449,158.196
-828,Nabro,13.37,41.7
-829,Namarunu,1.98,36.43
-830,Naolinco Volcanic Field,19.67,-96.75
-831,Natib,14.72,120.4
-832,Nazko,52.9,-123.72
-833,Nejapa-Miraflores,12.12,-86.32
-834,Nemo Peak,49.57,154.808
-835,Nemrut Dagi,38.654,42.229
-836,Nevado Anallajsi,-17.92,-68.92
-837,Nevado Chachani,-16.191,-71.53
-838,Nevado de Incahuasi,-27.033,-68.296
-839,Nevado de Longaví,-36.193000000000005,-71.161
-840,Nevado de los Piuquenes,-33.52,-69.83
-841,Nevado de Toluca,19.108,-99.758
-842,Nevado del Huila,2.93,-76.03
-843,Nevado del Ruiz,4.8919999999999995,-75.324
-844,Nevado del Sajama,-18.1,-68.88
-845,Nevado del Tolima,4.658,-75.33
-846,Nevado Queva,-24.309,-66.732
-847,Nevados Casiri,-17.47,-69.813
-848,Nevados de Caburgua,-39.17,-70.53
-849,Nevados de Chillan,-36.863,-71.377
-850,Nevados Firura,-15.23,-72.63
-851,Nevados Ojos del Salado,-27.109,-68.541
-852,Nevis Peak,17.15,-62.58
-853,Newberry,43.722,-121.229
-854,Ngaoundere Plateau,7.25,13.67
-855,Ngozi,-8.988999999999999,33.554
-856,Nightingale Island,-37.42,-12.48
-857,Nila,-6.73,129.5
-858,Nishihitokappuyama,44.833,147.342
-859,Nisyros,36.586,27.16
-860,North Gorda Ridge Segment,42.67,-126.78
-861,North Island,4.07,36.05
-862,Northern EPR-Segment RO2,16.55,-105.32
-863,Northern EPR-Segment RO3,15.83,-105.43
-864,Northern Mendoza Volcanic Field,-34.67,-69.0
-865,Nosy-Be,-13.32,48.48
-866,Novarupta,58.27,-155.157
-867,Nunivak Island,60.02,-166.33
-868,Nyambeni Hills,0.23,37.87
-869,Nyamuragira,-1.4080000000000001,29.2
-870,Nyiragongo,-1.52,29.25
-871,Nylgimelkin,57.97,160.65
-872,O&#039;a Caldera,7.47,38.58
-873,Ocaña,-20.58,-68.45
-874,Odamoisan [Tebenkov],45.026,147.922
-875,Okataina,-38.12,176.5
-876,Okmok,53.43,-168.13
-877,Oku Volcanic Field,6.25,10.5
-878,Ol Doinyo Eburru,-0.65,36.22
-879,Ol Doinyo Lengai,-2.764,35.914
-880,Ol Kokwe,0.62,36.075
-881,Olca-Paruma,-20.939,-68.413
-882,Olkaria,-0.904,36.292
-883,Olkoviy Volcanic Group,52.02,157.53
-884,Ollagüe,-21.3,-68.18
-885,Olot Volcanic Field,42.17,2.53
-886,Opala,52.543,157.339
-887,Oraefajokull,64.0,-16.65
-888,Orosí,10.98,-85.473
-889,Osorno,-41.105,-72.49600000000001
-890,Ostanets,52.146,157.322
-891,Ostry,58.18,160.82
-892,Otdelniy,52.22,157.428
-893,Ozernoy,5.88,157.38
-894,Pacaya,14.380999999999998,-90.601
-895,Paco-Maniayao,9.593,125.52
-896,Paka,0.92,36.18
-897,Palena Volcanic Group,-43.78,-72.47
-898,Pali-Aike Volcanic Field,-52.082,-69.69800000000001
-899,Palinuro,39.48,14.83
-900,Palomo,-34.608000000000004,-70.295
-901,Paluweh,-8.32,121.708
-902,Pampa Luxsar,-20.85,-68.2
-903,Panarea,38.63,15.07
-904,Panay,13.722999999999999,120.89299999999999
-905,Paniri,-22.059,-68.22800000000001
-906,Pantelleria,36.77,12.02
-907,Papandayan,-7.32,107.73
-908,Papayo,19.308,-98.7
-909,Parinacota,-18.166,-69.142
-910,Parker,6.1129999999999995,124.89200000000001
-911,Patah,-4.27,103.3
-912,Patilla Pata,-18.05,-69.03
-913,Patoc,17.147000000000002,120.98
-914,Patuha,-7.16,107.4
-915,Paulet,-63.57899999999999,-55.78
-916,Pavlof,55.417,-161.894
-917,Pavlof Sister,55.457,-161.85399999999998
-918,Payún Matrú,-36.422,-69.241
-919,Peinado,-26.623,-68.116
-920,Pelée,14.809000000000001,-61.165
-921,Penanggungan,-7.6160000000000005,112.62
-922,Pendan,-2.82,102.02
-923,Penguin Island,-62.1,-84.93
-924,Perbakti-Gagak,-6.75,106.7
-925,Petacas,1.666,-76.814
-926,Peter I Island,-68.85,-90.58
-927,Peuet Sague,4.914,96.329
-928,Pico,38.47,-28.4
-929,Pico de Orizaba,19.03,-97.27
-930,Pico Fracture Zone,38.75,-38.08
-931,Picos Volcanic System,37.78,-25.67
-932,Piedra Parada,-26.4,-68.75
-933,Piip,55.42,167.33
-934,Pinacate,31.772,-113.49799999999999
-935,Pinatubo,15.13,120.35
-936,Pino Hachado,-38.679,-70.814
-937,Piratkovsky,52.113,157.849
-938,Piton de la Fournaise,-21.244,55.708
-939,Planchón-Peteroa,-35.223,-70.568
-940,Platanar,10.3,-84.366
-941,"Pleiades, The",-72.67,159.5
-942,Plosky,55.2,158.47
-943,Plosky,57.83,160.25
-944,Pocdol Mountains,13.05,123.958
-945,Pogranychny,56.85,159.8
-946,Popa,20.92,95.25
-947,Popocatépetl,19.023,-98.62200000000001
-948,Poquis,-23.02,-67.05
-949,Porak,40.028,45.74
-950,Porquesa,-19.958,-68.73
-951,Potor,-23.2,-67.67
-952,Prestahnukur,64.6,-20.58
-953,Prevo Peak,47.02,152.12
-954,Prince Edward Island,-46.63,37.95
-955,Protector Shoal,-56.013999999999996,-28.246
-956,Puelche Volcanic Field,-35.78,-70.48
-957,Pular,-24.188000000000002,-68.054
-958,Pulau Weh,5.82,95.28
-959,Pulosari,-6.3420000000000005,105.975
-960,Pululagua,0.038,-78.46300000000001
-961,Punta Púlpito,26.517,-111.444
-962,Puntiagudo-Cordón Cenizos,-40.968999999999994,-72.264
-963,Puracé,2.32,-76.4
-964,Purico Complex,-23.0,-67.75
-965,Putana,-22.557,-67.85300000000001
-966,Puyehue - Cordon Caulle,-40.59,-72.117
-967,Puyuhuapi,-44.3,-72.53
-968,Qal&#039;eh Hasan Ali,29.4,57.57
-969,Qualibou,13.83,-61.06
-970,Quetena,-22.25,-67.42
-971,Quetrupillan,-39.5,-71.7
-972,Quezaltepeque,14.57,-89.45
-973,"Quill, The",17.477999999999998,-62.96
-974,Quilotoa,-0.85,-78.9
-975,Quimsachata,-14.2,-71.33
-976,Quinchilca,-39.68,-72.008
-977,Ragang,7.7,124.5
-978,Raikoke,48.292,153.25
-979,Rainier,46.853,-121.76
-980,Rajabasa,-5.78,105.625
-981,Rakkibetsudake [Demon],45.5,148.85
-982,Ranakah,-8.62,120.52
-983,Ranau,-4.83,103.92
-984,Raoul Island,-29.27,-201.92
-985,Rasshua,47.77,153.02
-986,Raung,-8.119,114.056
-987,Raususan [Mendeleev],43.979,145.733
-988,Recheschnoi,53.157,-168.53900000000002
-989,Reclus,-50.964,-73.585
-990,Redoubt,60.485,-152.74200000000002
-991,Reporoa,-38.42,176.33
-992,Reporoa,-38.42,176.33
-993,White Island,-37.52,158.18
-994,White Island,-37.52,158.18
-995,Resago,-36.45,-70.92
-996,Reventador,-0.077,-77.656
-997,Reykjanes,63.88,-22.5
-998,Riendengan-Sempu,1.13,124.758
-999,Rincón de la Vieja,10.83,-85.324
-1000,Rinjani,-8.42,116.47
-1001,Río Murta,-46.17,-72.708
-1002,Risco Plateado,-34.917,-69.98100000000001
-1003,"Ritmann, Mount",-73.45,165.5
-1004,Robinson Crusoe,-33.658,-78.85
-1005,Rocard,-17.662,-148.586
-1006,Rochaculla-Inca Camacha,-18.8,-68.3
-1007,Romanche Fracture Zone,-0.433,-19.596
-1008,Romanovka,55.65,158.8
-1009,Romeral,5.202999999999999,-75.363
-1010,Rota,12.55,-86.75
-1011,Rotorua,-38.08,176.27
-1012,Roundtop,54.8,-163.589
-1013,Royal Society Range,-78.25,163.33
-1014,Ruang,2.3,125.37
-1015,Ruapehu,-39.28,175.57
-1016,Rucharuyama,45.25,148.35
-1017,Rudakov,45.873999999999995,149.819
-1018,Rumble II West,-35.353,178.52700000000002
-1019,Rumble III,-35.745,178.47799999999998
-1020,Rumble IV,-36.13,178.05
-1021,Rumble V,-36.141999999999996,178.196
-1022,Rungwe,-9.135,33.67
-1023,Ruruidake [Smirnov],44.45399999999999,146.139
-1024,Saba,17.63,-63.23
-1025,Sabalan,38.268,47.835
-1026,Sabancaya,-15.787,-71.857
-1027,Sahand,37.75,46.43
-1028,Sairecábur,-22.72,-67.892
-1029,Sala y Gómez,-26.47,-105.47
-1030,Salak,-6.72,106.73
-1031,Salton Buttes,33.2,-115.62
-1032,Samsari Volcanic Center,41.542,43.7
-1033,San Borja Volcanic Field,28.5,-113.75
-1034,San Carlos,3.35,8.52
-1035,San Cristóbal,12.702,-87.00399999999999
-1036,San Diego,14.27,-89.48
-1037,San Félix,-26.294,-80.112
-1038,San Francisco,-26.9,-68.27
-1039,San Francisco Volcanic Field,35.347,-111.678
-1040,San Joaquin,3.35,8.63
-1041,San Jorge,38.65,-28.08
-1042,San José,-33.789,-69.895
-1043,San Martín,18.57,-95.2
-1044,San Miguel,13.434000000000001,-88.26899999999999
-1045,San Pablo Volcanic Field,14.12,121.3
-1046,San Pedro-Pellado,-35.989000000000004,-70.84899999999999
-1047,San Pedro-San Pablo,-21.888,-68.391
-1048,San Quintín Volcanic Field,30.468000000000004,-115.99600000000001
-1049,San Salvador,13.734000000000002,-89.294
-1050,San Vicente,13.595,-88.837
-1051,Sand Mountain Field,44.38,121.93
-1052,Sanford,62.22,-144.13
-1053,Sanganguey,21.45,-104.73
-1054,Sangay,-2.005,-78.34100000000001
-1055,Sangeang Api,-8.2,119.07
-1056,Santa Ana,13.853,-89.63
-1057,Santa Isabel,3.58,8.75
-1058,Santa Isabel,4.8180000000000005,-75.365
-1059,Santa Maria,14.755999999999998,-91.552
-1060,Santa Maria,14.755999999999998,-91.552
-1061,Wapi Lava Field,42.88,-113.22
-1062,Wapi Lava Field,42.88,-113.22
-1063,Santo Tomas,14.71,-91.479
-1064,Santo Tomas,16.33,120.55
-1065,Santorini,36.404,25.396
-1066,Sao Vicente,16.85,-24.97
-1067,Sara Sara,-15.33,-73.45
-1068,Sarik-Gajah,0.08,100.2
-1069,Sarychev Peak,48.092,153.2
-1070,Sashiusudake [Baransky],45.1,148.019
-1071,Satah Mountain,52.47,-124.7
-1072,Schmidt,54.92,160.63
-1073,Seal Nunataks Group,-65.03,-60.05
-1074,Sedankinsky,57.27,160.08
-1075,Segererua Plateau,1.57,37.9
-1076,Segererua Plateau,1.57,37.9
-1077,Seguam,52.315,-172.51
-1078,Segula,52.015,178.136
-1079,Sekincau Belirang,-5.107,104.31700000000001
-1080,Semeru,-8.107999999999999,112.92200000000001
-1081,Semisopochnoi,51.93,179.58
-1082,Serdán-Oriental,19.27,-97.47
-1083,Sergief,52.05,-174.95
-1084,Serua,-6.312,130.017
-1085,Sete Cidades,37.87,-25.78
-1086,Seulawah Agam,5.4479999999999995,95.65799999999999
-1087,Severny,58.28,160.87
-1088,Sharat Kovakab,36.53,40.85
-1089,Shasta,41.409,-122.193
-1090,Sheveluch,56.653,161.36
-1091,Shirinki,50.2,154.98
-1092,Shishaldin,54.756,-163.97
-1093,Shisheika,57.15,161.08
-1094,Shishel,57.45,160.37
-1095,Sibualbuali,1.556,99.255
-1096,Sierra la Primavera,20.62,-103.52
-1097,Sierra Negra,-0.83,-91.17
-1098,Sierra Nevada,-38.58,-71.58
-1099,Sierra Nevada,-26.48,-68.58
-1100,Sikhote-Alin,47.0,137.5
-1101,Silali,1.15,36.23
-1102,Silay,10.77,123.23
-1103,Silver Lake,40.731,-121.84100000000001
-1104,Silverthrone,51.43,-126.3
-1105,Sinabung,3.17,98.39200000000001
-1106,Sinarka,48.875,154.175
-1107,Singkut,3.248,98.501
-1108,Singu Plateau,22.7,95.98
-1109,Siple,-73.43,-126.67
-1110,Sirung,-8.508,124.13
-1111,Slamet,-7.242000000000001,109.208
-1112,Snaefellsjokull,64.8,-23.78
-1113,Snegovoy,58.2,160.97
-1114,Snezhniy,58.02,160.8
-1115,Snowy Mountain,58.336000000000006,-154.68200000000002
-1116,Soche,0.552,-77.58
-1117,Socompa,-24.396,-68.24600000000001
-1118,Socorro,18.78,-110.95
-1119,Soda Lakes,39.53,-118.87
-1120,Soda Lakes,39.53,-118.87
-1121,Sodore,8.43,39.35
-1122,Solimana,15.4,-72.9
-1123,Sollipulli,-38.97,-71.52
-1124,Soputan,1.112,124.73700000000001
-1125,Sordo Lucas,-34.986999999999995,-70.456
-1126,Sorikmarapi,0.6859999999999999,99.539
-1127,Sotará,2.108,-76.592
-1128,Soufrière Guadeloupe,16.044,-61.663999999999994
-1129,Soufrière Hills,16.72,-62.18
-1130,Soufrière St. Vincent,13.33,-61.18
-1131,South Island,2.63,36.6
-1132,Southern Thule,-59.442,-27.225
-1133,Thule Islands,-59.458,-27.186
-1134,Spectrum Range,57043.0,-130.68
-1135,Spokoiny,58.13,160.82
-1136,Spurr,61.299,-152.251
-1137,Srednii,47.6,140.92
-1138,St. Catherine,12.15,-61.67
-1139,St. Helens,46.2,-122.18
-1140,St. Michael,63.45,-162.12
-1141,St. Paul,-38.72,77.53
-1142,St. Paul Island,57.18,-170.3
-1143,Steamboat Springs,39.375,-119.72
-1144,Stellar,58.43,-154.4
-1145,Stepovak Bay 2,55.913000000000004,-160.041
-1146,Stepovak Bay 3,55.928999999999995,-160.002
-1147,Stepovak Bay 4,55.95399999999999,-159.797
-1148,Stromboli,38.789,15.213
-1149,Sturge Island,-67.4,164.83
-1150,Suchitán,14.4,-89.78
-1151,Sukaria Caldera,-8.792,121.77
-1152,Sumaco,-0.5379999999999999,-77.626
-1153,Sumbing,-2.414,101.728
-1154,Sumbing,-7.3839999999999995,110.07
-1155,Sundoro,-7.3,109.992
-1156,Sunequera,-21.98,-67.23
-1157,Suoh,-5.25,104.27
-1158,Suswa,-1.175,36.35
-1159,SW Usangu Basin,-8.75,33.8
-1160,Taal,14.002,120.993
-1161,Taapaca,-18.1,-69.5
-1162,Taburete,13.435,-88.53200000000001
-1163,Tacaná,15.132,-92.109
-1164,Tacora,-17.72,-69.77
-1165,Taftan,28.6,61.13
-1166,Tahalra Volcanic Field,22.67,5.0
-1167,Tahual,14.43,-89.9
-1168,Tajumulco,15.043,-91.90299999999999
-1169,Takahe,-76.28,-112.08
-1170,Takawangha,51.873000000000005,-178.00599999999997
-1171,Talagabodas,-7.207999999999999,108.07
-1172,Talakmau,0.079,99.98
-1173,Talang,-0.978,100.679
-1174,Tambo Quemado,-18.62,-68.75
-1175,Tambora,-8.25,118.0
-1176,Tampomas,-6.77,107.95
-1177,Tana,52.83,-169.77
-1178,Tandikat-Singgalang,-0.39,100.331
-1179,Tangaroa,-36.321,178.028
-1180,Tangkoko-Duasudara,1.518,125.185
-1181,Tangkubanparahu,-6.77,107.6
-1182,Tao-Rusyr Caldera,49.35,154.7
-1183,Tarakan,1.83,127.83
-1184,Taranaki [Egmont],-39.3,174.07
-1185,Tarso Toh,21.33,16.33
-1186,Tarso Tousside,21.03,16.45
-1187,Tarso Voon,20.92,17.28
-1188,Taryatu-Chulutu,48.17,99.7
-1189,Tat Ali,13.284,41.063
-1190,Tata Sabaya,-19.13,-68.53
-1191,Taunshits,54.528,159.804
-1192,Taupo,-38.82,176.0
-1193,Teahitia,-17.564,-148.821
-1194,Tecapa,13.494000000000002,-88.50200000000001
-1195,Tecuamburro,14.155999999999999,-90.40700000000001
-1196,Telica,12.602,-86.845
-1197,Telomoyo,-7.37,110.4
-1198,Tenduruk Dagi,39.356,43.873999999999995
-1199,Tenerife,28.271,-16.641
-1200,Tengchong,25.23,98.5
-1201,Tengger Caldera,-7.942,112.95
-1202,Tenorio,10.673,-85.015
-1203,Teon,-6.976,129.144
-1204,Tepi,7.42,35.43
-1205,Terceira,38.73,-27.32
-1206,Terpuk,57.2,159.83
-1207,The Barrier,2.32,36.57
-1208,Theistareykjarbunga,65.88,-16.83
-1209,Three Sisters,44.17,-121.77
-1210,Tianshan Volcanic Group,42.5,82.5
-1211,Ticsani,-16.755,-70.595
-1212,Tidore,0.6579999999999999,127.4
-1213,Tigalalu,0.07,127.42
-1214,Tilocalar,-23.97,-68.13
-1215,Tin Zaouatene Volcanic Field,19.83,2.83
-1216,Tindfjallajokull,63.78,-19.57
-1217,Tinguiririca,-34.814,-70.352
-1218,Tipas,-27.195999999999998,-68.561
-1219,Titila,57.4,160.1
-1220,Tjornes Fracture Zone,66.3,-17.1
-1221,Tlevak Strait-Suemez Is.,55.25,-133.3
-1222,Toba,2.58,98.83
-1223,Tobaru,1.63,127.67
-1224,Tocomar,-24.2,-66.5
-1225,Todoko-Ranu,1.25,127.47
-1226,Todra Volcanic Field,17.68,8.5
-1227,Tolbachik,55.832,160.326
-1228,Tolhuaca,-38.31,-71.645
-1229,Tolimán,14.612,-91.189
-1230,Tolmachev Dol,52.63,157.58
-1231,Tomariyama [Golovnin],43.843999999999994,145.504
-1232,Tombel Graben,4.75,9.67
-1233,Tondano,1.23,124.83
-1234,Toney Mountain,-75.8,-115.83
-1235,Tongariro,-39.157,175.632
-1236,Tor Zawar,30.479,67.492
-1237,Torfajokull,63.92,-19.17
-1238,Toroeng Prong,14.93,108.0
-1239,Tosa Sucha,5.93,37.57
-1240,Tralihue,-38.509,-70.898
-1241,Tres Cruces,-27.08,-68.8
-1242,Tres Vírgenes,27.47,-112.59100000000001
-1243,Tri Sestry,45.93,149.92
-1244,Trident,58.236000000000004,-155.1
-1245,Trindade,-20.514,-29.331
-1246,Tristan da Cunha,-37.092,-12.28
-1247,Trolon,-37.738,-70.906
-1248,Tromen,-37.144,-70.033
-1249,Tronador,-41.157,-71.885
-1250,Tseax River Cone,55.12,-128.9
-1251,Tshibinda,-2.32,28.75
-1252,Tskhouk-Karckar,39.73,46.02
-1253,Tullu Moje,8.158,39.13
-1254,Tumisa,-23.45,-67.82
-1255,Tungnafellsjokull,64.73,-17.92
-1256,Tungnafellsjokull,64.75,-17.916
-1257,Tungurahua,-1.4669999999999999,-78.442
-1258,Tunkin Depression,51.5,102.5
-1259,Tupungatito,-33.425,-69.797
-1260,Tupungato,-33.359,-69.77
-1261,Turrialba,10.025,-83.76700000000001
-1262,Tutupaca,17.026,70.372
-1263,Tuya Volcanic Field,59.37,-130.58
-1264,Tuya Volcanic Field,59.37,-130.58
-1265,Tuzgle,-24.05,-66.48
-1266,Tuzovsky,57.32,159.97
-1267,Ubehebe Craters,37.02,-117.45
-1268,Ubinas,-16.355,-70.903
-1269,Udina,55.755,160.52700000000002
-1270,Udokan Plateau,56.28,117.77
-1271,Ugashik-Peulik,57.751000000000005,-156.368
-1272,Uinkaret Field,36.38,-133.13
-1273,Uka,57.7,160.58
-1274,Ukinrek Maars,57.832,-156.51
-1275,Uksichan,56.08,158.38
-1276,Uliaga,53.065,-169.77
-1277,Ulreung,37.5,130.87
-1278,Ungaran,-7.18,110.33
-1279,Unnamed,57.87,-155.42
-1280,Unnamed,36.67,37.0
-1281,Unnamed,33.0,36.63
-1282,Unnamed,5.62,38.95
-1283,Unnamed,8.7,39.63
-1284,Unnamed,39.38,44.988
-1285,Unnamed,28.17,60.67
-1286,Unnamed,8.07,39.07
-1287,Unnamed,5.65,37.67
-1288,Unnamed,45.022,147.019
-1289,Unnamed,-76.83,163.0
-1290,Unnamed,-73.45,164.58
-1291,Unnamed,52.57,157.02
-1292,Unnamed,10.73,-103.58
-1293,Unnamed,9.83,-104.3
-1294,Unnamed,52.92,158.52
-1295,Unnamed,-8.27,-107.95
-1296,Unnamed,52.88,158.3
-1297,Unnamed,-25.078000000000003,-68.266
-1298,Unnamed,56.82,158.95
-1299,Unnamed,46.47,151.28
-1300,Unnamed,48.08,153.33
-1301,Unnamed,20.33,121.75
-1302,Unnamed,-32.958,-5.22
-1303,Unnamed,55.92,161.75
-1304,Unnamed_ 222162,-8.624,33.583
-1305,Uratman,47.12,152.25
-1306,Ushishur,47.52,152.8
-1307,Ushkovsky,56.113,160.509
-1308,Usulután,13.419,-88.471
-1309,Utila Island,16.12,-86.882
-1310,Uturuncu,-22.27,-67.18
-1311,Uzon,54.5,159.97
-1312,Vakak Group,34.25,67.97
-1313,Valles Caldera,35.87,-106.57
-1314,Veer,53.75,158.45
-1315,Veniaminof,56.17,-159.38
-1316,Verkhovoy,56.52,159.53
-1317,Vernadskii Ridge,50.55,155.97
-1318,Vestmannaeyjar,63.43,-20.28
-1319,Veteran,9.83,109.05
-1320,Viedma,-49.358000000000004,-73.28
-1321,Vilacollo,-18.241,-69.307
-1322,Villarrica,-39.42,-71.93
-1323,Vilyuchik,52.7,158.28
-1324,Visoke,-1.4580000000000002,29.485
-1325,Visokiy,52.43,157.93
-1326,Vitim Plateau,53.7,113.3
-1327,Volcán Azul,12.53,-83.87
-1328,Volcán Tatio,-22.42,-68.02
-1329,Voyampolsky,58.37,160.62
-1330,Vsevidof,53.13,-168.69299999999998
-1331,Vulcano,38.404,14.962
-1332,Vulsini,42.6,11.93
-1333,Vysoky,55.06399999999999,160.765
-1334,Waesche,-77.17,-126.88
-1335,Wai Sano,-8.72,120.02
-1336,Wayang-Windu,-7.212999999999999,107.637
-1337,Wells Gray-Clearwater,52.33,-1230.57
-1338,West Crater,45.88,-122.08
-1339,West Eifel Volcanic Field,50.17,6.85
-1340,West Valley Segment,48.78,-128.64
-1341,Westdahl,54.518,-164.65
-1342,Whangarei,-35.75,174.27
-1343,Wilis,-7.808,111.758
-1344,Wrangell,62.0,-144.02
-1345,Wright,-31.85,-179.18
-1346,Wudalianchi,48.72,126.12
-1347,Wurlali,-7.125,128.675
-1348,Xianjindao,41.33,128.0
-1349,Yali,36.671,27.14
-1350,Yangudi,10.58,41.042
-1351,Yantarni,57.019,-157.185
-1352,Yanteles,43.497,72.81
-1353,Yate,-41.755,-72.396
-1354,Yavinsky,51.57,156.6
-1355,Yellowstone,44.43,-110.67
-1356,Young Island,-66.42,163.25
-1357,Yucamane,-17.184,-70.196
-1358,Yunaska,52.643,-170.62900000000002
-1359,Zaozerny,56.88,159.95
-1360,Zapatera,11.73,-85.82
-1361,Zavaritsky,53.905,158.385
-1362,Zavaritzki Caldera,46.925,151.95
-1363,Zavodovski,-56.3,-27.57
-1364,Zheltovsky,51.577,157.328
-1365,Zhupanovsky,53.589,159.15
-1366,Zimina,55.861999999999995,160.60299999999998
-1367,Zitácuaro-Valle de Bravo,19.4,-100.25
-1368,Zukur,14.02,42.75
-1369,Zuni-Bandera,34.8,-108.0
-1370,abu,,
-1371,adatarayama,,
-1372,afdera,,
-1373,akagisan,,
-1374,akan,,
-1375,akandanayama,,
-1376,akita-komagatake,,
-1377,akita-yakeyama,,
-1378,akuseki-jima,,
-1379,aogashima,,
-1380,asamayama,,
-1381,asosan,,
-1382,ata,,
-1383,atitlan,,
-1384,azul,,
-1385,azumayama,,
-1386,bandaisan,,
-1387,blup_blup,,
-1388,bola,,
-1389,chokaisan,,
-1390,chuga-ryong,,
-1391,colli_albani,,
-1392,dakataua,,
-1393,dallol,,
-1394,darwin,,
-1395,dawson_strait_group,,
-1396,ecuador,,
-1397,esan,,
-1398,fujisan,,
-1399,fukue,,
-1400,garove,,
-1401,genovesa,,
-1402,goodenough,,
-1403,hachijojima,,
-1404,hachimantai,,
-1405,hakkodasan,,
-1406,hakoneyama,,
-1407,hakusan,,
-1408,hargy,,
-1409,harunasan,,
-1410,hijiori,,
-1411,hiuchigatake,,
-1412,hobicha_caldera,,
-1413,hokkaido-komagatake,,
-1414,hornopiren,,
-1415,hydrographers_range,,
-1416,iamalele,,
-1417,iettunup,,
-1418,io-torishima,,
-1419,iwakisan,,
-1420,iwatesan,,
-1421,izu-oshima,,
-1422,izu-tobu,,
-1423,jocotitlan,,
-1424,kadovar,,
-1425,karkar,,
-1426,kikai,,
-1427,kirishimayama,,
-1428,kogaja-jima,,
-1429,koranga,,
-1430,kozushima,,
-1431,krummel-garbuna-welcker,,
-1432,kuchinoerabujima,,
-1433,kuchinoshima,,
-1434,kuh-e_nader,,
-1435,kujusan,,
-1436,kurikomayama,,
-1437,kusatsu-shiranesan,,
-1438,kussharo,,
-1439,kuttara,,
-1440,laacher_see_maar,,
-1441,la_gloria,,
-1442,lamington,,
-1443,langila,,
-1444,lanin,,
-1445,liado_hayk,,
-1446,lihir,,
-1447,lolobau,,
-1448,loloru,,
-1449,long_island,,
-1450,malang_plain,,
-1451,mallahle,,
-1452,managlase_plateau,,
-1453,marchena,,
-1454,maruyama,,
-1455,mashu,,
-1456,megata,,
-1457,midagahara,,
-1458,mikurajima,,
-1459,miyakejima,,
-1460,mundua,,
-1461,myokosan,,
-1462,nakanoshima,,
-1463,nantai,,
-1464,naruko,,
-1465,nasudake,,
-1466,niigata-yakeyama,,
-1467,niijima,,
-1468,nikko-shiranesan,,
-1469,niseko,,
-1470,norikuradake,,
-1471,numazawa,,
-1472,oki-dogo,,
-1473,omanago_group,,
-1474,ontakesan,,
-1475,oshima-oshima,,
-1476,osorezan,,
-1477,poco_leok,,
-1478,rabaul,,
-1479,rausudake,,
-1480,red_hill,,
-1481,ritter_island,,
-1482,sanbesan,,
-1483,santa_cruz,,
-1484,santiago,,
-1485,sessagara,,
-1486,shiga,,
-1487,shikaribetsu_group,,
-1488,shikotsu,,
-1489,shiretoko-iozan,,
-1490,sork_ale,,
-1491,sulu_range,,
-1492,suwanosejima,,
-1493,taisetsuzan,,
-1494,takaharayama,,
-1495,takuan_group,,
-1496,tavui,,
-1497,tenchozan,,
-1498,theistareykir,,
-1499,tokachidake,,
-1500,tore,,
-1501,toshima,,
-1502,towada,,
-1503,toya,,
-1504,traitors_head,,
-1505,ulawun,,
-1506,umboi,,
-1507,unzendake,,
-1508,victory,,
-1509,waiowa,,
-1510,washiba-kumonotaira,,
-1511,witori,,
-1512,wolf,,
-1513,yakedake,,
-1514,yasur,,
-1515,yokoate-jima,,
-1516,yokodake,,
-1517,yonemaru-sumiyoshiike,,
-1518,yoteizan,,
-1519,yufu-tsurumi,,
-1520,zaozan,,
+114,Poás,10.2,-84.233
+115,Bas Dong Nai,10.8,107.2
+116,Batu Tara,-7.791,123.585
+117,Batur,-8.242,115.375
+118,Bayuda Volcanic Field,18.33,32.75
+119,Bazman,28.07,60.0
+120,Behm Canal-Rudyerd Bay,55.32,-131.05
+121,Belenkaya,51.75,157.27
+122,Belirang-Beriti,-2.82,102.18
+123,Belknap,44.285,-121.841
+124,Bely,57.88,160.53
+125,Berlin,-76.05,-136.0
+126,Beru,8.95,39.75
+127,Berutarubesan [Berutarube],44.462,146.932
+128,Besar,-4.43,103.67
+129,Bezymianny,55.972,160.595
+130,Bibinoi,-0.77,127.72
+131,Bilate River Field,7.07,38.1
+132,Biliran,11.523,124.535
+133,Billy Mitchell,-6.092,155.225
+134,Bir Borhut,15.55,50.63
+135,Bishoftu Volcanic Field,8.78,38.98
+136,Biu Plateau,10.75,12.0
+137,Biu Plateau,10.75,12.088
+138,Black Butte Crater Lava Field,43.183,-114.352
+139,Black Peak,56.552,-158.785
+140,Black Rock Desert,38.97,-112.5
+141,Black Rock Desert,38.97,-112.5
+142,Bliznets,56.97,159.78
+143,Bliznetsy,57.35,161.37
+144,Blue Lake Crater,44.411,-121.774
+145,Bobrof,51.91,-177.438
+146,Bogoria,0.25,36.08
+147,Bogoslof,53.93,-168.03
+148,Bolshe-Bannaya,52.9,157.78
+149,Bolshoi Payalpan,55.88,157.78
+150,Bolshoi Semiachik,54.32,160.02
+151,Bolshoi-Kekuknaysky,56.47,157.8
+152,Boomerang Seamount,-37.721,77.825
+153,Bora Ale,13.725,40.6
+154,Bora-Bericcio,8.27,39.03
+155,Borawli,11.63,41.45
+156,Boset Bericha,8.558,39.475
+157,Bouvet,-54.42,3.35
+158,Brava,14.85,-24.72
+159,Brennisteinsfjoll,63.92,-21.83
+160,Bridge River Cones,50.8,-123.4
+161,Bridgeman Island,-62.061,-56.93
+162,Bristol Island,-59.063,-26.587
+163,Brothers,-34.875,179.075
+164,Buckle Island,-66.78,163.25
+165,Bufumbira,-1.23,29.72
+166,Bukit Daun,-3.38,102.37
+167,Bukit Lumut Balai,-4.22,103.62
+168,Buldir,52.35,175.922
+169,Bulusan,12.77,124.05
+170,Bunyaruguru,-0.2,30.08
+171,Bur ni Telong,4.769,96.821
+172,Bus-Obo,47.12,109.08
+173,Butajiri-Silti Field,8.05,38.35
+174,Buyan-Bratan,-8.283,115.133
+175,Buzzard Creek,64.07,-148.42
+176,Cabalian,10.285,125.218
+177,Caburgua-Huelemolle,-39.25,-71.75
+178,Cagua,18.222,122.123
+179,Caichinque,-23.949,-67.74
+180,Calabozos,-35.558,-70.496
+181,Calatrava Volcanic Field,38.87,4.02
+182,Calbuco,-41.326,-72.614
+183,Caldera del Atuel,-34.65,-70.05
+184,Callaqui,-37.92,-71.45
+185,Cameroon,4.203,9.17
+186,Camiguin,9.203,124.673
+187,Camiguin de Babuyanes,18.83,121.86
+188,Campi Flegrei,40.827,14.139
+189,Vesuvius,40.821,14.426
+190,Cañapa,-21.5,-68.12
+191,Candlemas Island,-57.08,-26.67
+192,Cápur,-24.02,-67.85
+193,Caquena,-18.07,-69.22
+194,Carlisle,52.894,-170.054
+195,Carrán-Los Venados,-40.35,-72.07
+196,Carrizozo,33.78,-105.93
+197,Cay,-45.059,-72.984
+198,Cayambe,0.029,-77.986
+199,Cayley Volcanic Field,50.12,-123.28
+200,Cayutué-La Viguería,-41.25,-72.27
+201,Ceboruco,21.125,-104.508
+202,"Cendres, Ile des",10.158,109.014
+203,Central Island,3.5,36.042
+204,Cereme,-6.892,108.4
+205,Cerro Ascotán,-21.68,-68.12
+206,Cerro Auquihuato,-15.07,-73.18
+207,Cerro Azul,-0.92,-91.408
+208,Cerro Azul,-35.653,-70.761
+209,Cerro Bayo Gorbea,-25.414,-68.588
+210,Cerro Blanco,-26.789,-67.765
+211,Cerro Bravo,5.091,-75.293
+212,Cerro Cariquima,-19.55,-68.68
+213,Cerro Chascon,-21.88,-67.9
+214,Cerro Cinotepeque,14.02,-89.25
+215,Cerro Colorado,-26.18,-68.37
+216,Cerro Copa,-20.63,-68.45
+217,Cerro de la Niebla,-25.25,-68.63
+218,Cerro de Río Negro,-23.398,-67.582
+219,Cerro del Azufre,-21.787,-68.237
+220,Cerro del Leon,-22.142,-68.108
+221,Cerro el Ciguatepe,12.53,-86.142
+222,Cerro Galán,-25.93,-66.92
+223,Cerro Hudson,-45.9,-72.97
+224,Cerro Maichín,-39.35,-71.55
+225,Cerro Moiro,-21.68,-67.47
+226,Cerro Napa,-20.52,-68.68
+227,Cerro Negro,12.506,-86.702
+228,Cerro Nevado,-35.58,-68.489
+229,Cerro Nicholson,-16.261,-71.754
+230,Cerro Overo,-23.52,-67.67
+231,Cerro Pantojo,-40.768,-71.943
+232,Cerro Prieto,32.418,115.305
+233,Cerro Pucara,-16.236,-69.471
+234,Cerro San Agustín,-21.25,-67.75
+235,Cerro Santiago,14.33,-89.87
+236,Cerro Singüil,14.05,-89.65
+237,Cerro Tatajachura,-19.5,-69.12
+238,Cerro Trautrén,-39.17,-71.4
+239,Cerro Tujle,-23.83,-67.95
+240,Cerro Zapaleri,-22.82,-67.18
+241,Cerros de Tocorpuri,-22.439,-67.888
+242,Cerros Purupuruni,-17.32,-69.9
+243,Ch&#039;uga-ryrong,38.33,127.33
+244,Chacana,-0.375,-78.25
+245,Chachadake [Tiatia],44.353,146.252
+246,Chachimbiro,0.468,-78.287
+247,Chagulak,52.577,-171.13
+248,Chaine des Puys,45.775,2.97
+249,Chaiten,-42.833,-72.646
+250,Changbaishan,41.98,128.08
+251,Cherny,56.82,159.67
+252,Cherpuk Group,55.55,157.47
+253,Chichinautzin,19.08,-99.13
+254,Chiginagak,57.135,-156.99
+255,Chikurachki,50.324,155.461
+256,Chiles-Cerro Negro,0.817,-77.938
+257,Chiliques,-23.58,-67.7
+258,Chimborazo,-1.464,-78.815
+259,Chinameca,13.478,-88.33
+260,Chingo,14.12,-89.73
+261,Chiquimula Volcanic Field,14.83,-89.55
+262,Chiracha,6.712,38.085
+263,Chirinkotan,48.98,153.48
+264,Chirippusan [Chirip],45.338,147.92
+265,Chirpoi,46.525,150.875
+266,Churchill,61.38,-141.75
+267,Chyulu Hills,2.68,37.88
+268,Cinnamon Butte,43.241,-122.108
+269,Clark,-36.446,177.839
+270,Clear Lake,38.97,-122.77
+271,Cleft Segment,44.83,-130.3
+272,Cleveland,52.825,-169.944
+273,Coatepeque Caldera,13.87,-89.55
+274,CoAxial Segment,46.52,-129.58
+275,Cobb Segment,46.88,-129.33
+276,Cochiquito Volcanic Group,-36.739,-69.834
+277,Cofre de Perote,19.492,-97.15
+278,Colachi,-23.236,-67.645
+279,Colima,19.514,-103.62
+280,Colo,-0.162,121.601
+281,Comondú-La Purísima,26.0,111.92
+282,Concepción,11.538,-85.622
+283,Copahue,-37.856,-71.183
+284,Copiapó,-27.3,-69.13
+285,Corbetti,7.18,38.43
+286,Corcovado,-43.189,-72.794
+287,Cordón de Puntas Negras,-23.743,-67.534
+288,Cordon del Azufre,-25.336,-68.521
+289,Coronado,29.08,-113.513
+290,Coropuna,-15.52,-72.65
+291,Corvo,39.699,-31.111
+292,Cosigüina,12.98,-87.57
+293,Coso Volcanic Field,36.03,-117.82
+294,Cotopaxi,-0.677,-78.436
+295,Crater Basalt Volcanic Field,-42.018,-70.194
+296,Crater Lake,42.93,-122.12
+297,Craters of the Moon,43.42,-113.5
+298,Crow Lagoon,54.7,-130.23
+299,Cu-Lao Re Group,15.38,109.12
+300,Cuernos de Negros,9.25,123.17
+301,Cuernos del Diablo,-41.363,-72.005
+302,Cuicocha,0.308,-78.364
+303,Cuilapa-Barbarena,14.33,-90.4
+304,Cumbal,0.95,-77.87
+305,Curtis Island,-30.542,-178.561
+306,Curutú,-23.17,-67.07
+307,Dabbahu,12.595,40.48
+308,Dabbayra,12.38,40.07
+309,Dacht-i-Navar Group,33.95,67.92
+310,Dama Ali,11.28,41.63
+311,Damavand,35.951,52.109
+312,Dana,55.641,-161.214
+313,Dar-Alages,39.704,45.551
+314,Dariganga Volcanic Field,45.33,114.0
+315,Davidof,51.97,178.33
+316,Davis Lake,43.57,-170.82
+317,Deception Island,-63.001,-60.652
+318,Dempo,-4.03,103.13
+319,Denison,58.418,-154.449
+320,Descabezado Grande,-35.58,-70.75
+321,Deslinde,-22.27,-67.97
+322,Devils Garden,43.512,-120.861
+323,Diamond Craters,43.1,-118.75
+324,Didicas,19.077,122.202
+325,Dieng Volcanic Complex,-7.2,109.92
+326,Diky Greben,51.452,156.978
+327,Dofan,9.78,40.33
+328,Domuyo,-36.638,-70.432
+329,Don Joao de Castro Bank,38.23,-26.63
+330,Doña Juana,1.5,-76.936
+331,Dotsero,39.661,-107.035
+332,Douglas,58.855,-153.542
+333,Dubbi,13.579,41.809
+334,Dukono,1.693,127.894
+335,Duncan Canal,56.5,-133.1
+336,Durango Volcanic Field,24.15,104.45
+337,Dutton,55.183,-162.276
+338,Dzenzursky,53.637,158.922
+339,East Blanco Depression,44.267,-129.879
+340,East Gakkel Ridge at 85 E,85.608,85.25
+341,East Zway,7.95,38.93
+342,Easter Island,-27.15,-109.38
+343,Ebeko,50.686,156.014
+344,Ebulobo,-8.82,121.18
+345,Edgecumbe,57.05,-135.75
+346,Edziza,57.72,-130.63
+347,Eggella,56.57,158.52
+348,Egon,-8.676,122.455
+349,Ekarma,48.958,153.93
+350,El Aguajito,27.554,-112.552
+351,El Azufre,-25.37,-68.88
+352,El Chichón,17.36,-93.228
+353,El Cóndor,-26.632,-68.361
+354,El Misti,-16.294,-71.409
+355,El Negrillar,-24.18,-68.25
+356,El Solo,-27.105,-68.713
+357,El Tigre,13.47,-88.43
+358,El Valle,8.58,-80.17
+359,El Volcán,-22.33,-67.97
+360,Elbrus,43.351,42.442
+361,Elmenteita Badlands,-0.52,36.27
+362,Elovsky,57.55,160.53
+363,Emi Koussi,19.8,18.53
+364,Emmons Lake,55.341,-162.073
+365,Emuruangogolak,1.5,36.33
+366,Endeavour Segment,47.95,-129.1
+367,Erciyes Dagi,38.52,35.48
+368,Erebus,-77.53,167.17
+369,Erta Ale,13.6,40.67
+370,Es Safa,33.25,37.07
+371,Escala,-21.6,-66.88
+372,Escanaba Segment,40.98,-127.5
+373,Escorial,-25.083,-68.367
+374,Esjufjoll,64.27,-16.65
+375,Estelí,13.17,-86.4
+376,Etna,37.734,15.004
+377,Etorofu-Atosanupuri,44.808,147.131
+378,Etorofu-Yakeyama,45.012,147.871
+379,Evlanov Seamount,48.384,-35.132
+380,Eyjafjallajökull,63.63,-19.62
+381,Falso Azufre,-26.8,-68.37
+382,Fayal,38.6,-28.73
+383,Fedotych,57.13,160.4
+384,Fentale,8.975,39.93
+385,Fernandina,-0.37,-91.55
+386,Fisher,54.65,-164.43
+387,Flores,14.308,-89.992
+388,Flores,39.462,-31.216
+389,Fogo,14.95,-24.35
+390,Fort Portal,0.7,30.25
+391,Fort Selkirk,62.93,-137.38
+392,Fourpeaked,58.77,-153.672
+393,Fremrinamur,65.43,-16.65
+394,Frosty,55.067,-162.835
+395,Fuego,14.473,-90.88
+396,Fueguino,-54.97,-70.262
+397,Fuerteventura,28.358,-147.02
+398,Furnas,37.77,-25.32
+399,Fuss Peak,50.267,155.246
+400,Gabillema,11.08,41.27
+401,Gada Ale,13.975,40.408
+402,Galeras,1.22,-77.37
+403,Galunggung,-7.25,108.058
+404,Gamalama Mount,0.8,127.33
+405,Gamchen,54.974,160.703
+406,Gamkonora,1.38,127.53
+407,Gareloi,51.79,-178.794
+408,Garibaldi,49.85,-123.0
+409,Garibaldi Lake,49.92,-123.03
+410,Gedamsa,8.35,39.18
+411,Gede-Pangrango,-6.77,106.965
+412,Gemelos-Saladillo,-24.75,-66.17
+413,Geodesistoy,56.33,158.67
+414,Geureudong,4.813,96.82
+415,Geysir,64.32,-20.3
+416,Ghegam Ridge,40.275,44.75
+417,Giggenbach,-30.036,-178.712
+418,Glacier Peak,48.112,-121.113
+419,Golan Heights,33.1,35.97
+420,Golaya,52.263,157.787
+421,Golden Trout Creek,36.358,-118.32
+422,Gollu Dag,38.35,34.57
+423,Gordon,62.13,-143.08
+424,Gorely,52.559,158.03
+425,Gorny Institute,57.33,160.2
+426,Graciosa,39.02,-27.97
+427,Gran Canaria,28.0,-15.58
+428,Granada,11.92,-85.98
+429,Great Sitkin,52.076,-176.13
+430,Grensdalur,64.02,-21.17
+431,Griggs,58.354,-155.092
+432,Grimsnes,64.03,-20.87
+433,Grimsvotn,64.416,-17.316
+434,Groppo,11.73,40.25
+435,Guadalupe,29.07,-118.28
+436,Guagua Pichinca,-0.171,-78.598
+437,Guallatiri,-18.42,-69.092
+438,Guayaques,-22.895,-67.566
+439,Guazapa,13.9,-89.12
+440,Gufa,12.55,42.53
+441,Guntur,-7.143,107.84
+442,Gunungapi Wetar,-6.642,126.65
+443,Hainan Dao,19.7,110.1
+444,Haleakala,20.708,-156.25
+445,Halla,33.361,126.53
+446,Hanish,13.72,42.73
+447,Harra Es-Sawad,13.58,46.12
+448,Harra of Arhab,15.63,44.08
+449,Harra of Bal Haf,14.05,48.33
+450,Harras of Dhamar,14.57,44.67
+451,Harrat al Birk,18.37,41.63
+452,Harrat ar Rahah,27.8,36.17
+453,Harrat Ithnayn,26.58,40.2
+454,Harrat Khaybar,25.0,39.92
+455,Harrat Kishb,22.8,41.38
+456,Harrat Lunayyir,25.17,37.75
+457,Harrat Rahat,23.08,39.78
+458,Harrat Uwayrid,27.08,37.25
+459,Haruj,27.25,17.5
+460,Hasan Dagi,38.13,34.17
+461,Haut Dong Nai,11.6,108.2
+462,Havre Seamount,-31.11,179.04
+463,Hayes,61.64,-152.411
+464,Hayli Gubbi,13.5,40.72
+465,Healy,-35.004,178.973
+466,Heard,-53.106,73.513
+467,Heart Peaks,58.6,-131.97
+468,Hécar,-23.23,-67.75
+469,Hekla,63.98,-19.7
+470,Helgrindur,64.87,-23.25
+471,Hell&#039;s Half Acre,43.5,-112.45
+472,Hengill,64.08,-21.32
+473,Herbert,52.742,-170.111
+474,Hertali,9.78,40.33
+475,Hierro,27.73,-18.03
+476,Hiri,0.9,127.32
+477,Hodson,-56.712,-27.176
+478,Hofsjokull,64.78,-18.92
+479,Homa Mountain,-0.38,34.5
+480,Honggeertu,41.47,113.0
+481,Hood,45.374,-121.695
+482,Hoodoo Mountain,56.78,-131.28
+483,Hornopirén,-41.874,-72.431
+484,Hromundartindur,64.073,-21.202
+485,Hualalai,19.692,-155.87
+486,Hualalai,19.692,-155.87
+487,Huambo,-15.83,-72.13
+488,Huambutillo-Rumicola,13.58,-71.72
+489,Huanquihue Group,-39.887,-71.58
+490,Huaynaputina,-16.608,70.85
+491,Hudson Mountains,-74.33,-99.42
+492,Huequi,-42.377,72.578
+493,Hulubelu,-5.334,104.59
+494,Hutapanjang,-2.33,101.6
+495,Hveravellir,64.75,-19.98
+496,Ibu,1.488,127.63
+497,Ichinsky,55.578,157.718
+498,Igwisi Hills,-4.891,31.93
+499,Ijen,-8.058,114.242
+500,Iktunup,58.08,160.77
+501,Ile aux Cochons,-46.1,50.23
+502,Ile de l&#039;Est,-46.43,52.2
+503,Ile de la Possession,-46.42,51.75
+504,Iliamna,60.032,-153.09
+505,Iliboleng,-8.342,123.258
+506,Iliinsky,51.498,157.203
+507,Ililabalekan,-8.55,123.38
+508,Ilimuda,-8.479,122.761
+509,Iliwerung,-8.53,123.57
+510,Illiniza,-0.659,-78.714
+511,Ilopango,13.672,-89.053
+512,Imbabura,0.258,-78.183
+513,Imuruk Lake,65.6,-163.92
+514,In Ezzane Volcanic Field,23.0,10.83
+515,Inacalari,-21.981,-68.071
+516,Incaguasi,-24.03,-67.53
+517,Incapillo,-27.9,-68.8
+518,Indian Heaven,45.93,-121.82
+519,Infiernillo,-35.123,-69.9
+520,Ingakslugwat Hills,61.43,-164.47
+521,Inielika,-8.73,120.98
+522,Inierie,-8.875,120.95
+523,Inyo Craters,37.692,-119.02
+524,Ipala,14.55,-89.63
+525,Iraya,20.469,122.01
+526,Irazú,9.979,-83.852
+527,Iriga,13.457,123.457
+528,Irruputuncu,-20.73,-68.55
+529,Isanotski,54.765,-163.723
+530,Isarog,13.658,123.38
+531,Ischia,40.73,13.897
+532,Iskut-Unuk River Cones,56.58,-130.55
+533,Isla el Tigre,13.272,-87.641
+534,Isla Isabel,21.848,-105.886
+535,Isla San Luis,29.97,-114.4
+536,Isla Tortuga,27.438,-111.881
+537,Isla Zacate Grande,13.33,-87.63
+538,Isluga,-19.15,-68.83
+539,Itasy Volcanic Field,-19.0,46.77
+540,Ivao Group,45.77,149.68
+541,Ixtepeque,14.42,-89.68
+542,Iya,-8.897,121.645
+543,Iyang-Argapura,-7.97,113.57
+544,Izalco,13.813,-89.633
+545,Iztaccíhuatl,19.179,-98.642
+546,Izumbwe-Mpoli,-8.976,33.38
+547,Jabal ad Druze,32.658,36.425
+548,Jabal el-Marha,15.245,44.236
+549,Jabal Haylan,15.43,44.78
+550,Jabal Yar,17.05,42.83
+551,Jackson Segment,42.15,-127.05
+552,Jailolo,1.08,127.439
+553,Jalua,15.042,39.82
+554,James Ross Island,-64.15,-57.75
+555,Jan Mayen,71.08,-8.17
+556,Jaraguay Volcanic Field,29.33,-114.5
+557,Jatun Mundo Quri Warani,-19.78,-66.48
+558,Jebel at Tair,15.55,41.83
+559,Jebel Marra,12.95,24.27
+560,Jebel Zubair Group,15.05,42.18
+561,Jefferson,44.674,-121.8
+562,Jingbo,44.08,128.83
+563,Jocotitlán,19.73,-99.758
+564,Jolo,6.013,121.057
+565,Jom-Bolok,52.7,98.98
+566,Jorcada,-22.08,-67.77
+567,Jordan Craters,43.147,-117.46
+568,Jumaytepeque,14.336,-90.269
+569,Kaba,-3.52,102.62
+570,Kagamil,60.974,-169.72
+571,Kaguyak,58.608,-154.028
+572,Kaikohe-Bay of Islands,-35.3,173.9
+573,Kaileney,57.8,160.67
+574,Kalatungan,7.95,124.8
+575,Kambalny,51.306,156.875
+576,Kamen,56.02,160.593
+577,Kanaga,51.923,-177.168
+578,Kanlaon,10.412,123.132
+579,Karaca Dag,37.67,39.83
+580,Karang,-6.27,106.042
+581,Karangetang,2.781,125.407
+582,Karapinar Field,37.67,33.65
+583,Karisimbi,-1.506,29.45
+584,Karpinsky Group,50.148,155.373
+585,Karthala,-11.75,43.38
+586,Karymsky,54.049,159.443
+587,Kasatochi,52.177,-175.508
+588,Katla,63.63,-19.05
+589,Katmai,58.28,-154.963
+590,Katunga,-0.471,30.191
+591,Katwe-Kikorongo,-0.08,29.92
+592,Kawi-Butak,-7.92,112.45
+593,Kazbek,42.7,44.5
+594,Kebeney,57.1,159.93
+595,Kekurny,56.4,158.85
+596,Kelimutu,-8.77,121.82
+597,Kell,51.65,157.35
+598,Keluo Group,49.37,125.92
+599,Kelut,-7.93,112.308
+600,Kembar,3.85,97.664
+601,Kendang,-7.245,107.709
+602,Kerguelen Islands,-49.58,69.5
+603,Kerinci,-1.697,101.264
+604,Ketoi,47.35,152.475
+605,Khangar,54.761,157.407
+606,Khanuy Gol,48.67,102.75
+607,Kharimkotan,49.12,154.508
+608,Khodutka,52.062,157.711
+609,Kialagvik,57.203,-156.745
+610,Kikhpinych,54.489,160.251
+611,Kilauea,19.421,-155.287
+612,Kilimanjaro,3.07,37.35
+613,Kinenin,57.35,160.97
+614,Kiska,52.103,177.602
+615,Kizimen,55.131,160.32
+616,Klabat,1.454,125.031
+617,Klyuchevskoy,56.056,160.642
+618,Kolbeinsey Ridge,66.67,-18.5
+619,Kolokol Group,46.042,150.05
+620,Komarov,55.033,160.725
+621,Kone,8.8,39.692
+622,Koniuji,52.22,-175.13
+623,Kookooligit Mountains,63.6,-170.43
+624,Korath Range,5.1,35.88
+625,Korosi,0.77,36.12
+626,Korovin,52.332,-174.137
+627,Koryaksky,53.321,158.712
+628,Kos,36.852,27.251
+629,Koshelev,51.356,156.753
+630,Kostakan,53.83,158.05
+631,Kozyrevsky,55.58,158.38
+632,Krafla,65.73,-16.78
+633,Krainy,56.37,159.03
+634,Krakatau,-6.102,105.423
+635,Krasheninnikov,54.596,160.27
+636,Kronotsky,54.753,160.533
+637,Krysuvik,63.93,-22.1
+638,Ksudach,51.844,157.572
+639,Kukak,58.453,-154.355
+640,Kula,38.58,28.52
+641,Kulkev,56.37,158.37
+642,Kunlun Volcanic Group,35.52,80.2
+643,Kuntomintar,48.75,154.02
+644,Kunyit,-2.274,101.483
+645,Kupreanof,56.011,-159.797
+646,Kurile Lake,51.45,15.12
+647,Kurub,11.88,41.21
+648,Kutum Volcanic Field,14.57,25.85
+649,Kverkfjoll,64.65,-1.72
+650,Kyatwa,0.45,30.25
+651,Kyejo,-9.229,33.792
+652,La Grille,-11.47,43.33
+653,La Malinche,19.231,-98.032
+654,La Negrillar,-24.319,-68.59
+655,La Palma,28.57,-17.83
+656,La Yeguada,8.47,-80.82
+657,"La, Gloria",19.33,-97.25
+658,Labo,14.02,122.792
+659,Laco,-23.8,-67.5
+660,Laguna Aramuaca,12.428,-88.105
+661,Laguna Blanca,-39.02,-70.37
+662,Laguna Caldera,14.42,121.27
+663,Laguna del Maule,-36.058,-70.492
+664,Laguna Jayu Khota,-19.463,-67.432
+665,Laguna Mariñaqui,-38.255,-71.167
+666,Laguna Verde,-23.252,-67.71
+667,Lake Yojoa,14.98,-87.98
+668,Lamongan,-7.979,113.342
+669,Langjokull,64.85,-19.7
+670,Tanaga,51.885,-178.146
+671,Lanín,-39.637,-71.502
+672,Lanzarote,29.03,-13.63
+673,Larancagua,-18.02,-69.08
+674,Lardello,43.25,10.87
+675,Larderello,43.25,10.87
+676,Las Cumbres,19.15,-97.27
+677,Las Lajas,12.3,-85.73
+678,Las Pilas,12.495,-86.688
+679,Lascar,-23.37,-67.73
+680,Lassen Volcanic Center,40.492,-121.508
+681,Lastarria,-25.168,-68.507
+682,Latukan,7.65,124.45
+683,Lautaro,-49.02,-73.55
+684,Lavic Lake,34.75,-116.625
+685,Lawu,-7.625,111.192
+686,Leizhou Bandao,20.78,110.17
+687,Lejía,-23.55,-67.77
+688,Leonard Range,7.382,126.047
+689,Leroboleng,-8.365,122.833
+690,Leskov Island,-56.656,-28.14
+691,Lettunup,58.4,58.4
+692,Leutongey,57.3,159.83
+693,Level Mountain,58.42,-131.35
+694,Lewotobi,-8.542,122.775
+695,Lewotolo,-8.272,123.505
+696,Lexone,-17.87,-69.48
+697,Liamuiga,17.37,-62.8
+698,Licancabur,-22.83,-67.88
+699,Licto,-1.78,-78.613
+700,Linzor,-22.18,-67.95
+701,Lipari,38.48,14.95
+702,Little Sitkin,51.95,178.543
+703,Ljosufjoll,64.87,-22.23
+704,Llaima,-38.692,-71.729
+705,Llancanelo Volcanic Field,-35.75,-69.25
+706,Llullaillaco,-24.72,-68.53
+707,Loihi,18.92,-155.27
+708,Lokon-Empung,1.358,124.792
+709,Lomas Blancas,-36.286,-71.009
+710,Long Valley,37.7,-118.87
+711,Longgang Group,42.33,126.5
+712,Longonot,-0.914,36.446
+713,Lonquimay,-38.379,-71.586
+714,Los Atlixcos,19.809,-96.526
+715,Los Azufres,19.85,-100.63
+716,Los Humeros,19.68,-97.45
+717,Los Patos,-27.27,-69.0
+718,Losloyo,-23.13,-67.37
+719,Lower Chindwin,22.28,95.1
+720,Lubukraya,1.478,99.209
+721,Ma Alalta,13.013,40.185
+722,Macá,-45.1,-73.17
+723,Macauley,-30.2,-178.47
+724,Macdonald,-28.98,-140.25
+725,Machín,4.487,-75.389
+726,Madeira,32.73,-16.97
+727,Mageik,58.195,-155.253
+728,Mahagnao,10.882,124.888
+729,Mahawu,1.352,124.865
+730,Maipo,-34.164,-69.832
+731,Makaturing,7.647,124.32
+732,Makian,0.32,127.4
+733,Makushin,53.891,-166.923
+734,Malinao,13.416,123.608
+735,Malindang,8.22,123.63
+736,Malindig,13.24,122.018
+737,Malintang,0.47,99.67
+738,Maly Payalpan,55.82,157.98
+739,Maly Semyachik,54.135,159.674
+740,Mammoth Mountain,37.631,-119.032
+741,Manda Gargori,11.75,41.48
+742,Manda Hararo,12.17,40.82
+743,Manda-Inakir,12.38,42.2
+744,Mandalagan,10.65,123.25
+745,Manuk,-5.543,130.303
+746,Manzaz Volcanic Field,23.92,5.83
+747,Marapi,-0.381,100.473
+748,Mare,0.57,127.4
+749,Marion Island,-46.9,37.75
+750,Mariveles,14.52,120.47
+751,Markagunt Plateau,37.58,-122.67
+752,Maroa,-38.42,176.33
+753,Marsabit,2.32,37.97
+754,Martin,58.172,-155.361
+755,Masaraga,13.32,123.6
+756,Masaya,11.984,-86.161
+757,Mascota Volcanic Field,20.62,-104.83
+758,Mashkovtsev,51.1,156.72
+759,Mat Ala,13.106,41.161
+760,Matutum,6.37,125.07
+761,Mauna Kea,19.82,-155.47
+762,Mauna Loa,19.475,-155.608
+763,Mayon,13.257,123.685
+764,Mayor Island,-37.28,176.25
+765,Mayotte Island,-12.83,45.17
+766,McDonald Islands,-53.03,72.6
+767,Meager,50.63,-1235.0
+768,Medicine Lake,41.611,-121.554
+769,Mega Basalt Field,4.08,37.42
+770,Mehetia,-17.874,-148.068
+771,Meidob Volcanic Field,15.32,26.47
+772,Melbourne,-74.35,149.7
+773,Melimoyu,-44.08,-72.88
+774,Melville,-62.02,-57.67
+775,Menengai,-0.2,36.07
+776,Mentolat,-44.7,-73.08
+777,Merapi,-7.54,110.446
+778,Merbabu,-7.454,110.44
+779,Meru,-3.25,36.75
+780,Methana,37.615,23.336
+781,Meullín,-45.22,-73.05
+782,Mezhdusopochny,57.47,126.25
+783,Michael,-57.787,-26.46
+784,Saunders,-57.8,-26.483
+785,Michinmahuida,-42.799,-72.445
+786,Michoacán-Guanajuato,19.85,-101.75
+787,Middle Gobi,45.28,106.7
+788,Milbanke Sound Group,52.5,-128.73
+789,Milna,46.815,151.786
+790,Milos,36.699,24.439
+791,Miñiques,-23.82,-67.77
+792,Miravalles,10.748,-85.153
+793,Miscanti,-23.67,-67.72
+794,Mocho-Choshuenco,-39.927,-72.027
+795,Moekeshiwan [Lvinaya Past],44.608,146.994
+796,Moffett,51.944,-176.747
+797,Mojanda,0.13,-78.27
+798,Mombacho,11.826,-85.968
+799,Momotombo,12.422,-86.54
+800,Monaco Bank,37.6,-25.88
+801,Mono Craters,37.88,-119.0
+802,Mono Lake Volcanic Field,38.0,-119.03
+803,Monowai,-25.887,-177.188
+804,Montagu Island,-58.42,-26.33
+805,Monte Burney,-52.33,-73.4
+806,Morne aux Diables,15.612,-61.43
+807,Morne Diablotins,15.503,-61.397
+808,Morne Plat Pays,15.255,-61.341
+809,Morne Trois Pitons,15.37,-61.33
+810,Morne Watt,15.307,-61.305
+811,"Morning, Mount",-78.5,163.53
+812,Moti,0.454,127.411
+813,Moua Pihaa,-18.325,-148.525
+814,Mousa Ali,12.47,42.4
+815,Moutohora Island,-37.858,176.98
+816,Moyorodake [Medvezhia],45.389,148.838
+817,Moyuta,14.03,-90.1
+818,Muhavura,-1.383,29.678
+819,Muria,-6.62,110.88
+820,Musuan,7.877,125.068
+821,Mutnovsky,52.449,158.196
+822,Nabro,13.37,41.7
+823,Namarunu,1.98,36.43
+824,Naolinco Volcanic Field,19.67,-96.75
+825,Natib,14.72,120.4
+826,Nazko,52.9,-123.72
+827,Nejapa-Miraflores,12.12,-86.32
+828,Nemo Peak,49.57,154.808
+829,Nemrut Dagi,38.654,42.229
+830,Nevado Anallajsi,-17.92,-68.92
+831,Nevado Chachani,-16.191,-71.53
+832,Nevado de Incahuasi,-27.033,-68.296
+833,Nevado de Longaví,-36.193,-71.161
+834,Nevado de los Piuquenes,-33.52,-69.83
+835,Nevado de Toluca,19.108,-99.758
+836,Nevado del Huila,2.93,-76.03
+837,Nevado del Ruiz,4.892,-75.324
+838,Nevado del Sajama,-18.1,-68.88
+839,Nevado del Tolima,4.658,-75.33
+840,Nevado Queva,-24.309,-66.732
+841,Nevados Casiri,-17.47,-69.813
+842,Nevados de Caburgua,-39.17,-70.53
+843,Nevados de Chillan,-36.863,-71.377
+844,Nevados Firura,-15.23,-72.63
+845,Nevados Ojos del Salado,-27.109,-68.541
+846,Nevis Peak,17.15,-62.58
+847,Newberry,43.722,-121.229
+848,Ngaoundere Plateau,7.25,13.67
+849,Ngozi,-8.989,33.554
+850,Nightingale Island,-37.42,-12.48
+851,Nila,-6.73,129.5
+852,Nishihitokappuyama,44.833,147.342
+853,Nisyros,36.586,27.16
+854,North Gorda Ridge Segment,42.67,-126.78
+855,North Island,4.07,36.05
+856,Northern EPR-Segment RO2,16.55,-105.32
+857,Northern EPR-Segment RO3,15.83,-105.43
+858,Northern Mendoza Volcanic Field,-34.67,-69.0
+859,Nosy-Be,-13.32,48.48
+860,Novarupta,58.27,-155.157
+861,Nunivak Island,60.02,-166.33
+862,Nyambeni Hills,0.23,37.87
+863,Nyamuragira,-1.408,29.2
+864,Nyiragongo,-1.52,29.25
+865,Nylgimelkin,57.97,160.65
+866,O&#039;a Caldera,7.47,38.58
+867,Ocaña,-20.58,-68.45
+868,Odamoisan [Tebenkov],45.026,147.922
+869,Okataina,-38.12,176.5
+870,Okmok,53.43,-168.13
+871,Oku Volcanic Field,6.25,10.5
+872,Ol Doinyo Eburru,-0.65,36.22
+873,Ol Doinyo Lengai,-2.764,35.914
+874,Ol Kokwe,0.62,36.075
+875,Olca-Paruma,-20.939,-68.413
+876,Olkaria,-0.904,36.292
+877,Olkoviy Volcanic Group,52.02,157.53
+878,Ollagüe,-21.3,-68.18
+879,Olot Volcanic Field,42.17,2.53
+880,Opala,52.543,157.339
+881,Oraefajokull,64.0,-16.65
+882,Orosí,10.98,-85.473
+883,Osorno,-41.105,-72.496
+884,Ostanets,52.146,157.322
+885,Ostry,58.18,160.82
+886,Otdelniy,52.22,157.428
+887,Ozernoy,5.88,157.38
+888,Pacaya,14.381,-90.601
+889,Paco-Maniayao,9.593,125.52
+890,Paka,0.92,36.18
+891,Palena Volcanic Group,-43.78,-72.47
+892,Pali-Aike Volcanic Field,-52.082,-69.698
+893,Palinuro,39.48,14.83
+894,Palomo,-34.608,-70.295
+895,Paluweh,-8.32,121.708
+896,Pampa Luxsar,-20.85,-68.2
+897,Panarea,38.63,15.07
+898,Panay,13.723,120.893
+899,Paniri,-22.059,-68.228
+900,Pantelleria,36.77,12.02
+901,Papandayan,-7.32,107.73
+902,Papayo,19.308,-98.7
+903,Parinacota,-18.166,-69.142
+904,Parker,6.113,124.892
+905,Patah,-4.27,103.3
+906,Patilla Pata,-18.05,-69.03
+907,Patoc,17.147,120.98
+908,Patuha,-7.16,107.4
+909,Paulet,-63.579,-55.78
+910,Pavlof,55.417,-161.894
+911,Pavlof Sister,55.457,-161.854
+912,Payún Matrú,-36.422,-69.241
+913,Peinado,-26.623,-68.116
+914,Pelée,14.809,-61.165
+915,Penanggungan,-7.616,112.62
+916,Pendan,-2.82,102.02
+917,Penguin Island,-62.1,-84.93
+918,Perbakti-Gagak,-6.75,106.7
+919,Petacas,1.666,-76.814
+920,Peter I Island,-68.85,-90.58
+921,Peuet Sague,4.914,96.329
+922,Pico,38.47,-28.4
+923,Pico de Orizaba,19.03,-97.27
+924,Pico Fracture Zone,38.75,-38.08
+925,Picos Volcanic System,37.78,-25.67
+926,Piedra Parada,-26.4,-68.75
+927,Piip,55.42,167.33
+928,Pinacate,31.772,-113.498
+929,Pinatubo,15.13,120.35
+930,Pino Hachado,-38.679,-70.814
+931,Piratkovsky,52.113,157.849
+932,Piton de la Fournaise,-21.244,55.708
+933,Planchón-Peteroa,-35.223,-70.568
+934,Platanar,10.3,-84.366
+935,"Pleiades, The",-72.67,159.5
+936,Plosky,55.2,158.47
+937,Plosky,57.83,160.25
+938,Pocdol Mountains,13.05,123.958
+939,Pogranychny,56.85,159.8
+940,Popa,20.92,95.25
+941,Popocatépetl,19.023,-98.622
+942,Poquis,-23.02,-67.05
+943,Porak,40.028,45.74
+944,Porquesa,-19.958,-68.73
+945,Potor,-23.2,-67.67
+946,Prestahnukur,64.6,-20.58
+947,Prevo Peak,47.02,152.12
+948,Prince Edward Island,-46.63,37.95
+949,Protector Shoal,-56.014,-28.246
+950,Puelche Volcanic Field,-35.78,-70.48
+951,Pular,-24.188,-68.054
+952,Pulau Weh,5.82,95.28
+953,Pulosari,-6.342,105.975
+954,Pululagua,0.038,-78.463
+955,Punta Púlpito,26.517,-111.444
+956,Puntiagudo-Cordón Cenizos,-40.969,-72.264
+957,Puracé,2.32,-76.4
+958,Purico Complex,-23.0,-67.75
+959,Putana,-22.557,-67.853
+960,Puyehue - Cordon Caulle,-40.59,-72.117
+961,Puyuhuapi,-44.3,-72.53
+962,Qal&#039;eh Hasan Ali,29.4,57.57
+963,Qualibou,13.83,-61.06
+964,Quetena,-22.25,-67.42
+965,Quetrupillan,-39.5,-71.7
+966,Quezaltepeque,14.57,-89.45
+967,"Quill, The",17.478,-62.96
+968,Quilotoa,-0.85,-78.9
+969,Quimsachata,-14.2,-71.33
+970,Quinchilca,-39.68,-72.008
+971,Ragang,7.7,124.5
+972,Raikoke,48.292,153.25
+973,Rainier,46.853,-121.76
+974,Rajabasa,-5.78,105.625
+975,Rakkibetsudake [Demon],45.5,148.85
+976,Ranakah,-8.62,120.52
+977,Ranau,-4.83,103.92
+978,Raoul Island,-29.27,-201.92
+979,Rasshua,47.77,153.02
+980,Raung,-8.119,114.056
+981,Raususan [Mendeleev],43.979,145.733
+982,Recheschnoi,53.157,-168.539
+983,Reclus,-50.964,-73.585
+984,Redoubt,60.485,-152.742
+985,Reporoa,-38.42,176.33
+986,White Island,-37.52,158.18
+987,Resago,-36.45,-70.92
+988,Reventador,-0.077,-77.656
+989,Reykjanes,63.88,-22.5
+990,Riendengan-Sempu,1.13,124.758
+991,Rincón de la Vieja,10.83,-85.324
+992,Rinjani,-8.42,116.47
+993,Río Murta,-46.17,-72.708
+994,Risco Plateado,-34.917,-69.981
+995,"Ritmann, Mount",-73.45,165.5
+996,Robinson Crusoe,-33.658,-78.85
+997,Rocard,-17.662,-148.586
+998,Rochaculla-Inca Camacha,-18.8,-68.3
+999,Romanche Fracture Zone,-0.433,-19.596
+1000,Romanovka,55.65,158.8
+1001,Romeral,5.203,-75.363
+1002,Rota,12.55,-86.75
+1003,Rotorua,-38.08,176.27
+1004,Roundtop,54.8,-163.589
+1005,Royal Society Range,-78.25,163.33
+1006,Ruang,2.3,125.37
+1007,Ruapehu,-39.28,175.57
+1008,Rucharuyama,45.25,148.35
+1009,Rudakov,45.874,149.819
+1010,Rumble II West,-35.353,178.527
+1011,Rumble III,-35.745,178.478
+1012,Rumble IV,-36.13,178.05
+1013,Rumble V,-36.142,178.196
+1014,Rungwe,-9.135,33.67
+1015,Ruruidake [Smirnov],44.454,146.139
+1016,Saba,17.63,-63.23
+1017,Sabalan,38.268,47.835
+1018,Sabancaya,-15.787,-71.857
+1019,Sahand,37.75,46.43
+1020,Sairecábur,-22.72,-67.892
+1021,Sala y Gómez,-26.47,-105.47
+1022,Salak,-6.72,106.73
+1023,Salton Buttes,33.2,-115.62
+1024,Samsari Volcanic Center,41.542,43.7
+1025,San Borja Volcanic Field,28.5,-113.75
+1026,San Carlos,3.35,8.52
+1027,San Cristóbal,12.702,-87.004
+1028,San Diego,14.27,-89.48
+1029,San Félix,-26.294,-80.112
+1030,San Francisco,-26.9,-68.27
+1031,San Francisco Volcanic Field,35.347,-111.678
+1032,San Joaquin,3.35,8.63
+1033,San Jorge,38.65,-28.08
+1034,San José,-33.789,-69.895
+1035,San Martín,18.57,-95.2
+1036,San Miguel,13.434,-88.269
+1037,San Pablo Volcanic Field,14.12,121.3
+1038,San Pedro-Pellado,-35.989,-70.849
+1039,San Pedro-San Pablo,-21.888,-68.391
+1040,San Quintín Volcanic Field,30.468,-115.996
+1041,San Salvador,13.734,-89.294
+1042,San Vicente,13.595,-88.837
+1043,Sand Mountain Field,44.38,121.93
+1044,Sanford,62.22,-144.13
+1045,Sanganguey,21.45,-104.73
+1046,Sangay,-2.005,-78.341
+1047,Sangeang Api,-8.2,119.07
+1048,Santa Ana,13.853,-89.63
+1049,Santa Isabel,3.58,8.75
+1050,Santa Isabel,4.818,-75.365
+1051,Santa Maria,14.756,-91.552
+1052,Wapi Lava Field,42.88,-113.22
+1053,Santo Tomas,14.71,-91.479
+1054,Santo Tomas,16.33,120.55
+1055,Santorini,36.404,25.396
+1056,Sao Vicente,16.85,-24.97
+1057,Sara Sara,-15.33,-73.45
+1058,Sarik-Gajah,0.08,100.2
+1059,Sarychev Peak,48.092,153.2
+1060,Sashiusudake [Baransky],45.1,148.019
+1061,Satah Mountain,52.47,-124.7
+1062,Schmidt,54.92,160.63
+1063,Seal Nunataks Group,-65.03,-60.05
+1064,Sedankinsky,57.27,160.08
+1065,Segererua Plateau,1.57,37.9
+1066,Segererua Plateau,1.57,37.9
+1067,Seguam,52.315,-172.51
+1068,Segula,52.015,178.136
+1069,Sekincau Belirang,-5.107,104.317
+1070,Semeru,-8.108,112.922
+1071,Semisopochnoi,51.93,179.58
+1072,Serdán-Oriental,19.27,-97.47
+1073,Sergief,52.05,-174.95
+1074,Serua,-6.312,130.017
+1075,Sete Cidades,37.87,-25.78
+1076,Seulawah Agam,5.448,95.658
+1077,Severny,58.28,160.87
+1078,Sharat Kovakab,36.53,40.85
+1079,Shasta,41.409,-122.193
+1080,Sheveluch,56.653,161.36
+1081,Shirinki,50.2,154.98
+1082,Shishaldin,54.756,-163.97
+1083,Shisheika,57.15,161.08
+1084,Shishel,57.45,160.37
+1085,Sibualbuali,1.556,99.255
+1086,Sierra la Primavera,20.62,-103.52
+1087,Sierra Negra,-0.83,-91.17
+1088,Sierra Nevada,-38.58,-71.58
+1089,Sierra Nevada,-26.48,-68.58
+1090,Sikhote-Alin,47.0,137.5
+1091,Silali,1.15,36.23
+1092,Silay,10.77,123.23
+1093,Silver Lake,40.731,-121.841
+1094,Silverthrone,51.43,-126.3
+1095,Sinabung,3.17,98.392
+1096,Sinarka,48.875,154.175
+1097,Singkut,3.248,98.501
+1098,Singu Plateau,22.7,95.98
+1099,Siple,-73.43,-126.67
+1100,Sirung,-8.508,124.13
+1101,Slamet,-7.242,109.208
+1102,Snaefellsjokull,64.8,-23.78
+1103,Snegovoy,58.2,160.97
+1104,Snezhniy,58.02,160.8
+1105,Snowy Mountain,58.336,-154.682
+1106,Soche,0.552,-77.58
+1107,Socompa,-24.396,-68.246
+1108,Socorro,18.78,-110.95
+1109,Soda Lakes,39.53,-118.87
+1110,Soda Lakes,39.53,-118.87
+1111,Sodore,8.43,39.35
+1112,Solimana,15.4,-72.9
+1113,Sollipulli,-38.97,-71.52
+1114,Soputan,1.112,124.737
+1115,Sordo Lucas,-34.987,-70.456
+1116,Sorikmarapi,0.686,99.539
+1117,Sotará,2.108,-76.592
+1118,Soufrière Guadeloupe,16.044,-61.664
+1119,Soufrière Hills,16.72,-62.18
+1120,Soufrière St. Vincent,13.33,-61.18
+1121,South Island,2.63,36.6
+1122,Southern Thule,-59.442,-27.225
+1123,Thule Islands,-59.458,-27.186
+1124,Spectrum Range,57043.0,-130.68
+1125,Spokoiny,58.13,160.82
+1126,Spurr,61.299,-152.251
+1127,Srednii,47.6,140.92
+1128,St. Catherine,12.15,-61.67
+1129,St. Helens,46.2,-122.18
+1130,St. Michael,63.45,-162.12
+1131,St. Paul,-38.72,77.53
+1132,St. Paul Island,57.18,-170.3
+1133,Steamboat Springs,39.375,-119.72
+1134,Stellar,58.43,-154.4
+1135,Stepovak Bay 2,55.913,-160.041
+1136,Stepovak Bay 3,55.929,-160.002
+1137,Stepovak Bay 4,55.954,-159.797
+1138,Stromboli,38.789,15.213
+1139,Sturge Island,-67.4,164.83
+1140,Suchitán,14.4,-89.78
+1141,Sukaria Caldera,-8.792,121.77
+1142,Sumaco,-0.538,-77.626
+1143,Sumbing,-2.414,101.728
+1144,Sumbing,-7.384,110.07
+1145,Sundoro,-7.3,109.992
+1146,Sunequera,-21.98,-67.23
+1147,Suoh,-5.25,104.27
+1148,Suswa,-1.175,36.35
+1149,SW Usangu Basin,-8.75,33.8
+1150,Taal,14.002,120.993
+1151,Taapaca,-18.1,-69.5
+1152,Taburete,13.435,-88.532
+1153,Tacaná,15.132,-92.109
+1154,Tacora,-17.72,-69.77
+1155,Taftan,28.6,61.13
+1156,Tahalra Volcanic Field,22.67,5.0
+1157,Tahual,14.43,-89.9
+1158,Tajumulco,15.043,-91.903
+1159,Takahe,-76.28,-112.08
+1160,Takawangha,51.873,-178.006
+1161,Talagabodas,-7.208,108.07
+1162,Talakmau,0.079,99.98
+1163,Talang,-0.978,100.679
+1164,Tambo Quemado,-18.62,-68.75
+1165,Tambora,-8.25,118.0
+1166,Tampomas,-6.77,107.95
+1167,Tana,52.83,-169.77
+1168,Tandikat-Singgalang,-0.39,100.331
+1169,Tangaroa,-36.321,178.028
+1170,Tangkoko-Duasudara,1.518,125.185
+1171,Tangkubanparahu,-6.77,107.6
+1172,Tao-Rusyr Caldera,49.35,154.7
+1173,Tarakan,1.83,127.83
+1174,Taranaki [Egmont],-39.3,174.07
+1175,Tarso Toh,21.33,16.33
+1176,Tarso Tousside,21.03,16.45
+1177,Tarso Voon,20.92,17.28
+1178,Taryatu-Chulutu,48.17,99.7
+1179,Tat Ali,13.284,41.063
+1180,Tata Sabaya,-19.13,-68.53
+1181,Taunshits,54.528,159.804
+1182,Taupo,-38.82,176.0
+1183,Teahitia,-17.564,-148.821
+1184,Tecapa,13.494,-88.502
+1185,Tecuamburro,14.156,-90.407
+1186,Telica,12.602,-86.845
+1187,Telomoyo,-7.37,110.4
+1188,Tenduruk Dagi,39.356,43.874
+1189,Tenerife,28.271,-16.641
+1190,Tengchong,25.23,98.5
+1191,Tengger Caldera,-7.942,112.95
+1192,Tenorio,10.673,-85.015
+1193,Teon,-6.976,129.144
+1194,Tepi,7.42,35.43
+1195,Terceira,38.73,-27.32
+1196,Terpuk,57.2,159.83
+1197,The Barrier,2.32,36.57
+1198,Theistareykjarbunga,65.88,-16.83
+1199,Three Sisters,44.17,-121.77
+1200,Tianshan Volcanic Group,42.5,82.5
+1201,Ticsani,-16.755,-70.595
+1202,Tidore,0.658,127.4
+1203,Tigalalu,0.07,127.42
+1204,Tilocalar,-23.97,-68.13
+1205,Tin Zaouatene Volcanic Field,19.83,2.83
+1206,Tindfjallajokull,63.78,-19.57
+1207,Tinguiririca,-34.814,-70.352
+1208,Tipas,-27.196,-68.561
+1209,Titila,57.4,160.1
+1210,Tjornes Fracture Zone,66.3,-17.1
+1211,Tlevak Strait-Suemez Is.,55.25,-133.3
+1212,Toba,2.58,98.83
+1213,Tobaru,1.63,127.67
+1214,Tocomar,-24.2,-66.5
+1215,Todoko-Ranu,1.25,127.47
+1216,Todra Volcanic Field,17.68,8.5
+1217,Tolbachik,55.832,160.326
+1218,Tolhuaca,-38.31,-71.645
+1219,Tolimán,14.612,-91.189
+1220,Tolmachev Dol,52.63,157.58
+1221,Tomariyama [Golovnin],43.844,145.504
+1222,Tombel Graben,4.75,9.67
+1223,Tondano,1.23,124.83
+1224,Toney Mountain,-75.8,-115.83
+1225,Tongariro,-39.157,175.632
+1226,Tor Zawar,30.479,67.492
+1227,Torfajokull,63.92,-19.17
+1228,Toroeng Prong,14.93,108.0
+1229,Tosa Sucha,5.93,37.57
+1230,Tralihue,-38.509,-70.898
+1231,Tres Cruces,-27.08,-68.8
+1232,Tres Vírgenes,27.47,-112.591
+1233,Tri Sestry,45.93,149.92
+1234,Trident,58.236,-155.1
+1235,Trindade,-20.514,-29.331
+1236,Tristan da Cunha,-37.092,-12.28
+1237,Trolon,-37.738,-70.906
+1238,Tromen,-37.144,-70.033
+1239,Tronador,-41.157,-71.885
+1240,Tseax River Cone,55.12,-128.9
+1241,Tshibinda,-2.32,28.75
+1242,Tskhouk-Karckar,39.73,46.02
+1243,Tullu Moje,8.158,39.13
+1244,Tumisa,-23.45,-67.82
+1245,Tungnafellsjokull,64.73,-17.92
+1246,Tungnafellsjokull,64.75,-17.916
+1247,Tungurahua,-1.467,-78.442
+1248,Tunkin Depression,51.5,102.5
+1249,Tupungatito,-33.425,-69.797
+1250,Tupungato,-33.359,-69.77
+1251,Turrialba,10.025,-83.767
+1252,Tutupaca,17.026,70.372
+1253,Tuya Volcanic Field,59.37,-130.58
+1254,Tuya Volcanic Field,59.37,-130.58
+1255,Tuzgle,-24.05,-66.48
+1256,Tuzovsky,57.32,159.97
+1257,Ubehebe Craters,37.02,-117.45
+1258,Ubinas,-16.355,-70.903
+1259,Udina,55.755,160.527
+1260,Udokan Plateau,56.28,117.77
+1261,Ugashik-Peulik,57.751,-156.368
+1262,Uinkaret Field,36.38,-133.13
+1263,Uka,57.7,160.58
+1264,Ukinrek Maars,57.832,-156.51
+1265,Uksichan,56.08,158.38
+1266,Uliaga,53.065,-169.77
+1267,Ulreung,37.5,130.87
+1268,Ungaran,-7.18,110.33
+1269,Unnamed,57.87,-155.42
+1270,Unnamed,36.67,37.0
+1271,Unnamed,33.0,36.63
+1272,Unnamed,5.62,38.95
+1273,Unnamed,8.7,39.63
+1274,Unnamed,39.38,44.988
+1275,Unnamed,28.17,60.67
+1276,Unnamed,8.07,39.07
+1277,Unnamed,5.65,37.67
+1278,Unnamed,45.022,147.019
+1279,Unnamed,-76.83,163.0
+1280,Unnamed,-73.45,164.58
+1281,Unnamed,52.57,157.02
+1282,Unnamed,10.73,-103.58
+1283,Unnamed,9.83,-104.3
+1284,Unnamed,52.92,158.52
+1285,Unnamed,-8.27,-107.95
+1286,Unnamed,52.88,158.3
+1287,Unnamed,-25.078,-68.266
+1288,Unnamed,56.82,158.95
+1289,Unnamed,46.47,151.28
+1290,Unnamed,48.08,153.33
+1291,Unnamed,20.33,121.75
+1292,Unnamed,-32.958,-5.22
+1293,Unnamed,55.92,161.75
+1294,Unnamed_ 222162,-8.624,33.583
+1295,Uratman,47.12,152.25
+1296,Ushishur,47.52,152.8
+1297,Ushkovsky,56.113,160.509
+1298,Usulután,13.419,-88.471
+1299,Utila Island,16.12,-86.882
+1300,Uturuncu,-22.27,-67.18
+1301,Uzon,54.5,159.97
+1302,Vakak Group,34.25,67.97
+1303,Valles Caldera,35.87,-106.57
+1304,Veer,53.75,158.45
+1305,Veniaminof,56.17,-159.38
+1306,Verkhovoy,56.52,159.53
+1307,Vernadskii Ridge,50.55,155.97
+1308,Vestmannaeyjar,63.43,-20.28
+1309,Veteran,9.83,109.05
+1310,Viedma,-49.358,-73.28
+1311,Vilacollo,-18.241,-69.307
+1312,Villarrica,-39.42,-71.93
+1313,Vilyuchik,52.7,158.28
+1314,Visoke,-1.458,29.485
+1315,Visokiy,52.43,157.93
+1316,Vitim Plateau,53.7,113.3
+1317,Volcán Azul,12.53,-83.87
+1318,Volcán Tatio,-22.42,-68.02
+1319,Voyampolsky,58.37,160.62
+1320,Vsevidof,53.13,-168.693
+1321,Vulcano,38.404,14.962
+1322,Vulsini,42.6,11.93
+1323,Vysoky,55.064,160.765
+1324,Waesche,-77.17,-126.88
+1325,Wai Sano,-8.72,120.02
+1326,Wayang-Windu,-7.213,107.637
+1327,Wells Gray-Clearwater,52.33,-1230.57
+1328,West Crater,45.88,-122.08
+1329,West Eifel Volcanic Field,50.17,6.85
+1330,West Valley Segment,48.78,-128.64
+1331,Westdahl,54.518,-164.65
+1332,Whangarei,-35.75,174.27
+1333,Wilis,-7.808,111.758
+1334,Wrangell,62.0,-144.02
+1335,Wright,-31.85,-179.18
+1336,Wudalianchi,48.72,126.12
+1337,Wurlali,-7.125,128.675
+1338,Xianjindao,41.33,128.0
+1339,Yali,36.671,27.14
+1340,Yangudi,10.58,41.042
+1341,Yantarni,57.019,-157.185
+1342,Yanteles,43.497,72.81
+1343,Yate,-41.755,-72.396
+1344,Yavinsky,51.57,156.6
+1345,Yellowstone,44.43,-110.67
+1346,Young Island,-66.42,163.25
+1347,Yucamane,-17.184,-70.196
+1348,Yunaska,52.643,-170.629
+1349,Zaozerny,56.88,159.95
+1350,Zapatera,11.73,-85.82
+1351,Zavaritsky,53.905,158.385
+1352,Zavaritzki Caldera,46.925,151.95
+1353,Zavodovski,-56.3,-27.57
+1354,Zheltovsky,51.577,157.328
+1355,Zhupanovsky,53.589,159.15
+1356,Zimina,55.862,160.603
+1357,Zitácuaro-Valle de Bravo,19.4,-100.25
+1358,Zukur,14.02,42.75
+1359,Zuni-Bandera,34.8,-108.0
+1360,abu,,
+1361,adatarayama,,
+1362,afdera,,
+1363,akagisan,,
+1364,akan,,
+1365,akandanayama,,
+1366,akita-komagatake,,
+1367,akita-yakeyama,,
+1368,akuseki-jima,,
+1369,aogashima,,
+1370,asamayama,,
+1371,asosan,,
+1372,ata,,
+1373,atitlan,,
+1374,azul,,
+1375,azumayama,,
+1376,bandaisan,,
+1377,blup_blup,,
+1378,bola,,
+1379,chokaisan,,
+1380,chuga-ryong,,
+1381,colli_albani,,
+1382,dakataua,,
+1383,dallol,,
+1384,darwin,,
+1385,dawson_strait_group,,
+1386,ecuador,,
+1387,esan,,
+1388,fujisan,,
+1389,fukue,,
+1390,garove,,
+1391,genovesa,,
+1392,goodenough,,
+1393,hachijojima,,
+1394,hachimantai,,
+1395,hakkodasan,,
+1396,hakoneyama,,
+1397,hakusan,,
+1398,hargy,,
+1399,harunasan,,
+1400,hijiori,,
+1401,hiuchigatake,,
+1402,hobicha_caldera,,
+1403,hokkaido-komagatake,,
+1404,hornopiren,,
+1405,hydrographers_range,,
+1406,iamalele,,
+1407,iettunup,,
+1408,io-torishima,,
+1409,iwakisan,,
+1410,iwatesan,,
+1411,izu-oshima,,
+1412,izu-tobu,,
+1413,jocotitlan,,
+1414,kadovar,,
+1415,karkar,,
+1416,kikai,,
+1417,kirishimayama,,
+1418,kogaja-jima,,
+1419,koranga,,
+1420,kozushima,,
+1421,krummel-garbuna-welcker,,
+1422,kuchinoerabujima,,
+1423,kuchinoshima,,
+1424,kuh-e_nader,,
+1425,kujusan,,
+1426,kurikomayama,,
+1427,kusatsu-shiranesan,,
+1428,kussharo,,
+1429,kuttara,,
+1430,laacher_see_maar,,
+1431,la_gloria,,
+1432,lamington,,
+1433,langila,,
+1434,lanin,,
+1435,liado_hayk,,
+1436,lihir,,
+1437,lolobau,,
+1438,loloru,,
+1439,long_island,,
+1440,malang_plain,,
+1441,mallahle,,
+1442,managlase_plateau,,
+1443,marchena,,
+1444,maruyama,,
+1445,mashu,,
+1446,megata,,
+1447,midagahara,,
+1448,mikurajima,,
+1449,miyakejima,,
+1450,mundua,,
+1451,myokosan,,
+1452,nakanoshima,,
+1453,nantai,,
+1454,naruko,,
+1455,nasudake,,
+1456,niigata-yakeyama,,
+1457,niijima,,
+1458,nikko-shiranesan,,
+1459,niseko,,
+1460,norikuradake,,
+1461,numazawa,,
+1462,oki-dogo,,
+1463,omanago_group,,
+1464,ontakesan,,
+1465,oshima-oshima,,
+1466,osorezan,,
+1467,poco_leok,,
+1468,rabaul,,
+1469,rausudake,,
+1470,red_hill,,
+1471,ritter_island,,
+1472,sanbesan,,
+1473,santa_cruz,,
+1474,santiago,,
+1475,sessagara,,
+1476,shiga,,
+1477,shikaribetsu_group,,
+1478,shikotsu,,
+1479,shiretoko-iozan,,
+1480,sork_ale,,
+1481,sulu_range,,
+1482,suwanosejima,,
+1483,taisetsuzan,,
+1484,takaharayama,,
+1485,takuan_group,,
+1486,tavui,,
+1487,tenchozan,,
+1488,theistareykir,,
+1489,tokachidake,,
+1490,tore,,
+1491,toshima,,
+1492,towada,,
+1493,toya,,
+1494,traitors_head,,
+1495,ulawun,,
+1496,umboi,,
+1497,unzendake,,
+1498,victory,,
+1499,waiowa,,
+1500,washiba-kumonotaira,,
+1501,witori,,
+1502,wolf,,
+1503,yakedake,,
+1504,yasur,,
+1505,yokoate-jima,,
+1506,yokodake,,
+1507,yonemaru-sumiyoshiike,,
+1508,yoteizan,,
+1509,yufu-tsurumi,,
+1510,zaozan,,
+1511,poas,,
+1512,tanaga,,
+1513,vesuvius,,
+1514,wapi_lava_field,,
+1515,white_island,,
