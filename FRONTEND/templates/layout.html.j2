@@ -22,28 +22,9 @@
     {% include 'includes/_messages.html.j2' %}
     {% block body %}{% endblock %}
   </div>
-  <script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-}
-</script>
-
   {% include 'includes/_footer.html.j2' %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src=
-"https://translate.google.com/translate_a/element.js?
-        cb=googleTranslateElementInit">
-    </script>
-  <script>
-
-  function resizeIframe(obj) {
-
-    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-
-  }
-
-</script>
   {% block scripts %}{% endblock %}
 </body>
 
