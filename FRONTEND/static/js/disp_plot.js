@@ -212,9 +212,17 @@ function get_ts_indexes() {
   /* get x and y midpoint indexes: */
   var mid_y = Math.floor(plot_vars[fid]['y'].length / 2) - 1;
   var mid_x = Math.floor(plot_vars[fid]['x'].length / 2) - 1;
-  /* find the first value near center which is not masked: */
-  for (var i = mid_y; i < plot_vars[fid]['mask'].length; i++) {
-    for (var j = mid_x; j < plot_vars[fid]['mask'].length; j++) {
+  /* find the first value near center which is not masked.
+     search through the data, one quarter at a time: */
+  for (var i = mid_y; i < plot_vars[fid]['y'].length; i++) {
+    for (var j = mid_x; j < plot_vars[fid]['x'].length; j++) {
+      if (plot_vars[fid]['mask'][i][j] == 1) {
+        return[i, j];
+      };
+    };
+  };
+  for (var i = mid_y; i < plot_vars[fid]['y'].length; i++) {
+    for (var j = mid_x; j > -1; j--) {
       if (plot_vars[fid]['mask'][i][j] == 1) {
         return[i, j];
       };
@@ -223,6 +231,13 @@ function get_ts_indexes() {
   /* nothing found ... try the other half of the data: */
   for (var i = mid_y; i > -1; i--) {
     for (var j = mid_x; j > -1; j--) {
+      if (plot_vars[fid]['mask'][i][j] == 1) {
+        return[i, j];
+      };
+    };
+  };
+  for (var i = mid_y; i > -1; i--) {
+    for (var j = mid_x; j < plot_vars[fid]['x'].length; j++) {
       if (plot_vars[fid]['mask'][i][j] == 1) {
         return[i, j];
       };
