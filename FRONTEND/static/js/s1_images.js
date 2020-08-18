@@ -101,7 +101,6 @@ function display_prob_image(index) {
     /* range min and max values: */
     var slider_range_min = 0;
     var slider_range_max = prob_data['count'] - 1;
-
     /* if slider does not exist: */
     if (slider_div.noUiSlider == undefined) {
       /* create slider: */
@@ -117,6 +116,38 @@ function display_prob_image(index) {
         },
         step: 1,
         tooltips: false
+      });
+      /* add change listener: */
+      slider_div.noUiSlider.on('change', function() {
+        /* get slider value: */
+        var slider_value = slider_div.noUiSlider.get();
+        /* index to int: */
+        var slider_index = parseInt(slider_value);
+        /* label: */
+        var slider_date = prob_data['dates'][slider_index];
+        /* mean: */
+        var slider_mean = prob_data['means'][slider_index];
+        /* update image: */
+        display_prob_image(slider_index);
+        display_licsar_images(slider_index);
+      });
+      /* add slide listener: */
+      slider_div.noUiSlider.on('slide', function() {
+        /* get slider value: */
+        var slider_value = slider_div.noUiSlider.get();
+        /* index to int: */
+        var slider_index = parseInt(slider_value);
+        /* label: */
+        var slider_date = prob_data['dates'][slider_index];
+        /* mean: */
+        var slider_mean = prob_data['means'][slider_index];
+        /* set labels: */
+        image_label_div.innerHTML = '<label>' +
+          slider_date + 
+          ' (' + 
+          slider_mean + 
+          ')' + 
+          '</label>';
       });
     } else {
       /* update slider: */
@@ -134,39 +165,6 @@ function display_prob_image(index) {
         tooltips: false
       });
     };
-
-    /* add change listerner: */
-    slider_div.noUiSlider.on('change', function() {
-      /* get slider value: */
-      var slider_value = slider_div.noUiSlider.get();
-      /* index to int: */
-      var slider_index = parseInt(slider_value);
-      /* label: */
-      var slider_date = prob_data['dates'][slider_index];
-      /* mean: */
-      var slider_mean = prob_data['means'][slider_index];
-      /* update image: */
-      display_prob_image(slider_index);
-      display_licsar_images(slider_index);
-    });
-    /* add slide listerner: */
-    slider_div.noUiSlider.on('slide', function() {
-      /* get slider value: */
-      var slider_value = slider_div.noUiSlider.get();
-      /* index to int: */
-      var slider_index = parseInt(slider_value);
-      /* label: */
-      var slider_date = prob_data['dates'][slider_index];
-      /* mean: */
-      var slider_mean = prob_data['means'][slider_index];
-      /* set labels: */
-      image_label_div.innerHTML = '<label>' +
-        slider_date + 
-        ' (' + 
-        slider_mean + 
-        ')' + 
-        '</label>';
-    });
   }; 
 };
 

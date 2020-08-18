@@ -40,12 +40,15 @@ function init_plot_vars(fid, call_back) {
       ],
       'heatmap_coh_title': 'coherence',
       'heatmap_coh_colorscale': 'Greys',
+      /* surface plotting variables: */
+      'surf_elev_colorscale': [
+        [0, 'rgb(196, 196, 196)'],
+        [1, 'rgb(196, 196, 196)']
+      ],
       /* scatter plotting variables: */
       'scatter_ts_mode': 'markers',
       'scatter_ts_x_title': 'date',
       'scatter_profile_mode': 'lines',
-      'scatter_profile_title': 'displacement profile',
-      'scatter_profile_title': 'distance (km)',
       /* inital hover variables: */
       'hover': false,
       'hover_x': false,
@@ -81,6 +84,9 @@ function init_plot_vars(fid, call_back) {
       'heatmap_hover': null,
       'heatmap_disp_z_min': null,
       'heatmap_disp_z_max': null,
+      /* current elevation data: */
+      'surf_elev': null,
+      'surf_elev_masked': null,
       /* current time series data: */
       'ts_disp': null,
       'ts_dates': null,
@@ -89,6 +95,7 @@ function init_plot_vars(fid, call_back) {
       'ts_title': null,
       /* current profile data: */
       'profile_disp': null,
+      'profile_elev': null,
       'profile_dist': null,
       'profile_hover': null,
       'profile_x': null,
@@ -119,6 +126,8 @@ function init_plot_vars(fid, call_back) {
       'mask': disp_data['mask'],
       /* reference area: */
       'refarea': disp_data['refarea'],
+      /* elevation data: */
+      'elev': disp_data['elev']
     };
   };
 
@@ -173,20 +182,29 @@ function scatter_to_csv() {
     var csv_x = plot_vars[fid]['ts_dates'];
     /* get displacement values: */
     var csv_y = plot_vars[fid]['ts_disp'];
+    /* null y2: */
+    var csv_y2 = null;
   } else {
     /* profile plot ... start csv content: */
     var csv_data = 'data:text/csv;charset=utf-8,';
     /* header line: */
-    csv_data += 'distance (km),displacement (mm)\r\n';
+    csv_data += 'distance (km),displacement (mm),elevation (m)\r\n';
     /* get profile distances: */
     var csv_x = plot_vars[fid]['profile_dist'];
     /* get profile displacements: */
     var csv_y = plot_vars[fid]['profile_disp'];
+    /* get profile elevations: */
+    var csv_y2 = plot_vars[fid]['profile_elev'];
   };
   /* loop through values: */
   for (var i = 0; i < csv_x.length - 1; i++) {
     /* add line to csv: */
-    csv_data += csv_x[i] + ',' +  parseFloat(csv_y[i]).toFixed(2) + '\r\n';
+    if (csv_y2 != null) {
+      csv_data += csv_x[i] + ',' +  parseFloat(csv_y[i]).toFixed(2) + ',' +
+                  parseFloat(csv_y2[i]).toFixed(2) + '\r\n';
+    } else {
+      csv_data += csv_x[i] + ',' +  parseFloat(csv_y[i]).toFixed(2) + '\r\n';
+    };
   };
   /* encode csv data: */
   var encoded_uri = encodeURI(csv_data);
@@ -516,28 +534,67 @@ function disp_plot(heatmap_type, scatter_type,
     if (slider_div.noUiSlider == undefined) {
       /* create slider: */
       noUiSlider.create(slider_div, {
-        start: [start_index, end_index],
-        range: {
-          min: slider_range_min,
-          max: slider_range_max
+        'start': [start_index, end_index],
+        'range': {
+          'min': slider_range_min,
+          'max': slider_range_max
         },
-        connect: true,
-        step: 1,
-        margin: 1,
-        tooltips: false
+        'connect': true,
+        'step': 1,
+        'margin': 1,
+        'tooltips': false
+      });
+      /* add change listener: */
+      slider_div.noUiSlider.on('change', function() {
+        /* volcano frame: */
+        var fid = volcano_frame;
+        /* get slider value: */
+        var slider_value = slider_div.noUiSlider.get();
+        /* indexes to ints: */
+        var slider_start_index = parseInt(slider_value[0]);
+        var slider_end_index = parseInt(slider_value[1]);
+        /* start and end dates: */
+        var slider_start_date = plot_vars[fid]['dates'][slider_start_index];
+        var slider_end_date = plot_vars[fid]['dates'][slider_end_index];
+        /* update plotting: */
+        disp_plot(plot_vars[fid]['heatmap_type'],
+                  plot_vars[fid]['scatter_type'],
+                  slider_start_index, slider_end_index,
+                  plot_vars[fid]['ts_area'],
+                  plot_vars[fid]['profile_area'],
+                  plot_vars[fid]['ref_area']);
+      });
+      /* add slide listener: */
+      slider_div.noUiSlider.on('slide', function() {
+        /* volcano frame: */
+        var fid = volcano_frame;
+        /* get slider value: */
+        var slider_value = slider_div.noUiSlider.get();
+        /* indexes to ints: */
+        var slider_start_index = parseInt(slider_value[0]);
+        var slider_end_index = parseInt(slider_value[1]);
+        /* start and end dates: */
+        var slider_start_date = plot_vars[fid]['dates'][slider_start_index];
+        var slider_end_date = plot_vars[fid]['dates'][slider_end_index];
+        /* set labels: */
+        slider_value_div.innerHTML = '<label>' +
+                                     slider_start_date +
+                                     ' - ' +
+                                     slider_end_date +
+                                     '</label>';
       });
     } else {
       /* update slider: */
       slider_div.noUiSlider.updateOptions({
-        start: [start_index, end_index],
-        range: {
-          min: slider_range_min,
-          max: slider_range_max
+        'start': [start_index, end_index],
+        'range': {
+          'min': slider_range_min,
+          'max': slider_range_max
         },
-        connect: true,
-        step: 1,
-        margin: 1,
-        tooltips: false
+        'connect': true,
+        'step': 1,
+        'margin': 1,
+        'tooltips': false
       });
     };
     /* start and end dates: */
@@ -549,45 +606,6 @@ function disp_plot(heatmap_type, scatter_type,
                                  ' - ' +
                                  slider_end_date +
                                  '</label>';
-    /* add change listerner: */
-    slider_div.noUiSlider.on('change', function() {
-      /* volcano frame: */
-      var fid = volcano_frame;
-      /* get slider value: */
-      var slider_value = slider_div.noUiSlider.get();
-      /* indexes to ints: */
-      var slider_start_index = parseInt(slider_value[0]);
-      var slider_end_index = parseInt(slider_value[1]);
-      /* start and end dates: */
-      var slider_start_date = plot_vars[fid]['dates'][slider_start_index];
-      var slider_end_date = plot_vars[fid]['dates'][slider_end_index];
-      /* update plotting: */
-      disp_plot(plot_vars[fid]['heatmap_type'],
-                plot_vars[fid]['scatter_type'],
-                slider_start_index, slider_end_index,
-                plot_vars[fid]['ts_area'],
-                plot_vars[fid]['profile_area'],
-                plot_vars[fid]['ref_area']);
-    });
-    /* add slide listerner: */
-    slider_div.noUiSlider.on('slide', function() {
-      /* volcano frame: */
-      var fid = volcano_frame;
-      /* get slider value: */
-      var slider_value = slider_div.noUiSlider.get();
-      /* indexes to ints: */
-      var slider_start_index = parseInt(slider_value[0]);
-      var slider_end_index = parseInt(slider_value[1]);
-      /* start and end dates: */
-      var slider_start_date = plot_vars[fid]['dates'][slider_start_index];
-      var slider_end_date = plot_vars[fid]['dates'][slider_end_index];
-      /* set labels: */
-      slider_value_div.innerHTML = '<label>' +
-                                   slider_start_date +
-                                   ' - ' +
-                                   slider_end_date +
-                                   '</label>';
-    });
   /* end slider creation: */
   };
 
@@ -641,6 +659,9 @@ function disp_plot(heatmap_type, scatter_type,
     var heatmap_disp = [];
     var heatmap_disp_masked = [];
     var heatmap_hover = [];
+    /* init surface elevation data variables: */
+    var surf_elev = [];
+    var surf_elev_masked = [];
     /* variable for displacement value storing: */
     var heatmap_disp_values = [];
 
@@ -650,11 +671,19 @@ function disp_plot(heatmap_type, scatter_type,
       heatmap_disp[i] = [];
       heatmap_disp_masked[i] = [];
       heatmap_hover[i] = [];
+      surf_elev[i] = [];
+      surf_elev_masked[i] = [];
       /* for each row: */
       for (var j = 0; j < end_disp[0].length; j++) {
+        /* elevation values: */
+        surf_elev[i][j] = plot_vars[fid]['elev'][i][j];
+        surf_elev_masked[i][j] = plot_vars[fid]['elev'][i][j];
+        elev_hover_label = plot_vars[fid]['elev'][i][j] + ' m';
         /* calculate raw data value. if start / end values are null: */
         if (end_disp[i][j] == 'null' || start_disp[i][j] == 'null') {
           heatmap_disp[i][j] = 'null';
+          /* mask elevation value: */
+          surf_elev_masked[i][j] = 'null';
         } else {
           heatmap_disp[i][j] = ((end_disp[i][j] - start_disp[i][j]) -
                                 ref_mean).toFixed(2);
@@ -665,6 +694,8 @@ function disp_plot(heatmap_type, scatter_type,
           heatmap_disp_masked[i][j] = 'null';
           var disp_hover_label = 'masked';
           var coh_hover_label = coh[i][j];
+          /* mask elevation value: */
+          surf_elev_masked[i][j] = 'null';
           /* add zeros to lists of raw values for min / max: */
           heatmap_disp_values.push(0);
         } else {
@@ -678,8 +709,10 @@ function disp_plot(heatmap_type, scatter_type,
             /* set hover label: */
             var disp_hover_label = heatmap_disp[i][j] + ' mm';
           } else {
-            /* set hover label to null: */
+            /* set value and hover label to null: */
             var disp_hover_label = 'null';
+            /* mask elevation value: */
+            surf_elev_masked[i][j] = 'null';
           };
         };
         /* hover data values: */
@@ -687,7 +720,8 @@ function disp_plot(heatmap_type, scatter_type,
           'lat : ' + plot_vars[fid]['y'][i] + '<br>' +
           'lon : ' + plot_vars[fid]['x'][j] + '<br>' +
           'displacement : ' + disp_hover_label + '<br>' +
-          'coherence : ' + coh_hover_label;
+          'coherence : ' + coh_hover_label + '<br>' +
+          'elevation : ' + elev_hover_label;
       /* end for j: */
       };
     /* end for i: */
@@ -696,6 +730,8 @@ function disp_plot(heatmap_type, scatter_type,
     plot_vars[fid]['heatmap_disp'] = heatmap_disp;
     plot_vars[fid]['heatmap_disp_masked'] = heatmap_disp_masked;
     plot_vars[fid]['heatmap_hover'] = heatmap_hover;
+    plot_vars[fid]['surf_elev'] = surf_elev;
+    plot_vars[fid]['surf_elev_masked'] = surf_elev_masked;
 
     /* if z min or max values are not set: */
     if (plot_vars[fid]['heatmap_disp_z_min'] == null ||
@@ -796,7 +832,7 @@ function disp_plot(heatmap_type, scatter_type,
       /* add to ts dates: */
       ts_dates.push(dates[i]);
       /* add hover data: */
-      ts_hover.push(dates[i] + ', ' + value_disp_out + ' mm');
+      ts_hover.push(dates[i] + ', ' + value_disp_out.toFixed(2) + ' mm');
     /* end loop through time series: */
     };
   } else {
@@ -818,6 +854,7 @@ function disp_plot(heatmap_type, scatter_type,
     var p_x_inc = (profile_area[3] - profile_area[1]) / p_step;
     /* init profile data variables: */
     var profile_disp = [];
+    var profile_elev = [];
     var profile_dist = [0];
     var profile_hover = [];
     /* init lists for lat / lon storage: */
@@ -829,8 +866,8 @@ function disp_plot(heatmap_type, scatter_type,
       var p_y_step_ix = Math.round(profile_area[0] + (i * p_y_inc));
       var p_x_step_ix = Math.round(profile_area[1] + (i * p_x_inc));
       /* get displacement value and to profile data: */
-      profile_disp.push(heatmap_disp_masked[p_y_step_ix][p_x_step_ix]
-      );
+      profile_disp.push(heatmap_disp_masked[p_y_step_ix][p_x_step_ix]);
+      profile_elev.push(surf_elev[p_y_step_ix][p_x_step_ix]);
       /* get lat and lon values: */
       p_lat.push(y[p_y_step_ix]);
       p_lon.push(x[p_x_step_ix]);
@@ -838,15 +875,16 @@ function disp_plot(heatmap_type, scatter_type,
       if (i > 0) {
         /* get step distance: */
         var p_step_dist = get_distance(
-          {latitude: p_lat[i - 1], longitude: p_lon[i - 1]},
-          {latitude: p_lat[i], longitude: p_lon[i]}
+          {'latitude': p_lat[i - 1], 'longitude': p_lon[i - 1]},
+          {'latitude': p_lat[i], 'longitude': p_lon[i]}
         ) + profile_dist[i - 1];
         /* add to array: */
         profile_dist.push(+parseFloat(p_step_dist).toFixed(2));
       };
       /* update hover data: */
       profile_hover.push(profile_dist[i] + ' km, ' +
-                         profile_disp[i] + ' mm');
+                         profile_disp[i] + ' mm, ' +
+                         profile_elev[i] + ' m');
       };
       /* profile x and y are profile area points: */
       var profile_x = [profile_area[1], profile_area[3]];
@@ -854,6 +892,7 @@ function disp_plot(heatmap_type, scatter_type,
   } else {
     /* get stored values: */
     var profile_disp = plot_vars[fid]['profile_disp'];
+    var profile_elev = plot_vars[fid]['profile_elev'];
     var profile_dist = plot_vars[fid]['profile_dist'];
     var profile_hover = plot_vars[fid]['profile_hover'];
     var profile_x = plot_vars[fid]['profile_x'];
@@ -861,6 +900,7 @@ function disp_plot(heatmap_type, scatter_type,
   };
   /* store values: */
   plot_vars[fid]['profile_disp'] = profile_disp;
+  plot_vars[fid]['profile_elev'] = profile_elev;
   plot_vars[fid]['profile_dist'] = profile_dist;
   plot_vars[fid]['profile_hover'] = profile_hover;
   plot_vars[fid]['profile_x'] = profile_x;
@@ -877,6 +917,13 @@ function disp_plot(heatmap_type, scatter_type,
     'x': 1.10,
     'thickness': 25,
     'len': 0.9,
+    'title': {
+      'text': heatmap_disp_title,
+      'side': 'right',
+      'font': {
+        'size': 14
+      },
+    },
     'tickfont': {
       'family': 'Consolas, Monaco, Lucida Console, Liberation Mono, ' +
                 'DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, ' +
@@ -887,7 +934,7 @@ function disp_plot(heatmap_type, scatter_type,
   /* try to add suitable prefix to maintain a consistent colorbar
      width ... : */
   if (heatmap_disp_z_min < -100) {
-    heatmap_disp_colorbar['tickprefix'] = ' ';
+    heatmap_disp_colorbar['tickprefix'] = '  ';
   } else if (heatmap_disp_z_max > 100 || heatmap_disp_z_min < -10) {
     heatmap_disp_colorbar['tickprefix'] = '  ';
   } else {
@@ -904,6 +951,13 @@ function disp_plot(heatmap_type, scatter_type,
     'x': 1.10,
     'thickness': 25,
     'len': 0.9,
+    'title': {
+      'text': heatmap_coh_title,
+      'side': 'right',
+      'font': {
+        'size': 14
+      },
+    },
     'tickfont': {
       'family': 'Consolas, Monaco, Lucida Console, Liberation Mono, ' +
                 'DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, ' +
@@ -911,6 +965,9 @@ function disp_plot(heatmap_type, scatter_type,
       'size': 10
     }
   };
+
+  /* surface elevation variables: */
+  var surf_elev_colorscale = plot_vars['surf_elev_colorscale'];
 
   /* if displacement heatmap plotting: */
   if (heatmap_type == 'disp') {
@@ -938,11 +995,15 @@ function disp_plot(heatmap_type, scatter_type,
     var selected_mode = 'markers';
     var selected_hover = 'selected area';
     var scatter_x = ts_dates;
-    var scatter_y = ts_disp;
+    var scatter_y1 = ts_disp;
+    var scatter_y2 = [];
     var scatter_hover = ts_hover;
     var scatter_mode = 'markers';
     var scatter_title = ts_title;
     var scatter_x_title = 'date';
+    var scatter_y1_title = 'displacement (mm)';
+    var scatter_y2_title = null;
+    var scatter_y2_showticklabels = false;
   } else {
     /* profile plotting: */
     var selected_x = profile_x;
@@ -950,11 +1011,15 @@ function disp_plot(heatmap_type, scatter_type,
     var selected_mode = 'lines+markers';
     var selected_hover = '';
     var scatter_x = profile_dist;
-    var scatter_y = profile_disp;
+    var scatter_y1 = profile_disp;
+    var scatter_y2 = profile_elev;
     var scatter_hover = profile_hover;
     var scatter_mode = 'lines';
     var scatter_title = 'displacement profile';
     var scatter_x_title = 'distance (km)';
+    var scatter_y1_title = 'displacement (mm)';
+    var scatter_y2_title = 'elevation (m)';
+    var scatter_y2_showticklabels = true;
   };
   /* store current scatter x and y values: */
   plot_vars[fid]['selected_x'] = selected_x;
@@ -1157,13 +1222,33 @@ function disp_plot(heatmap_type, scatter_type,
 
   /** surface plot: **/
 
+  /* calculate x axis distance: */
+  var surf_x_distance = get_distance(
+    {'latitude': y[0], 'longitude': x[0]},
+    {'latitude': y[0], 'longitude': x.slice(-1)[0]}
+  ) * 1000;
+  /* z range, to be roughly equal to x and y range: */
+  var surf_z_range = [0 - (surf_x_distance / 3),
+                      0 + (surf_x_distance / 3)];
 
   /* 3d surface plot: */
-  var surf = {
+  var surface_elev = {
     'type': 'surface',
     'x': x,
     'y': y,
-    'z': heatmap_disp_masked,
+    'z': surf_elev,
+    'showscale': false,
+    'colorscale': surf_elev_colorscale,
+    'hoverinfo': 'text',
+    'text': heatmap_hover
+  };
+
+  var surface_disp = {
+    'type': 'surface',
+    'x': x,
+    'y': y,
+    'z': surf_elev_masked,
+    'surfacecolor': heatmap_disp_masked,
     'cmin': heatmap_disp_z_min,
     'cmax': heatmap_disp_z_max,
     'colorbar': heatmap_disp_colorbar,
@@ -1173,18 +1258,16 @@ function disp_plot(heatmap_type, scatter_type,
   };
 
   /* plot data, in order of plotting: */
-  var surf_data = [surf];
+  var surf_data = [surface_elev, surface_disp];
 
   /* plot update, if updating: */
   var surf_update = {
-    'x': [x],
-    'y': [y],
-    'z': [heatmap_disp_masked],
-    'cmin': [heatmap_disp_z_min],
-    'cmax': [heatmap_disp_z_max],
-    'colorbar': [heatmap_disp_colorbar],
-    'colorscale': [heatmap_disp_colorscale],
-    'text': [heatmap_hover]
+    'z': [surf_elev, surf_elev_masked],
+    'surfacecolor': [null, heatmap_disp_masked],
+    'cmin': [null, heatmap_disp_z_min],
+    'cmax': [null, heatmap_disp_z_max],
+    'colorscale': [surf_elev_colorscale, heatmap_disp_colorscale],
+    'text': [heatmap_hover, heatmap_hover]
   };
 
   /* surface plot layout: */
@@ -1227,12 +1310,15 @@ function disp_plot(heatmap_type, scatter_type,
       },
       'zaxis': {
         'title': {
-          'text': heatmap_disp_title,
+          'text': 'elevation (m)',
           'font': {
             'family': 'sans-serif, Arial, Helvetica',
             'size': 10
           }
         },
+        'range': surf_z_range,
+        'tickmode': 'array',
+        'tickvals': [0, 2500, 5000, 7500],
         'tickfont': {
           'family': 'sans-serif, Arial, Helvetica',
           'size': 10
@@ -1269,8 +1355,9 @@ function disp_plot(heatmap_type, scatter_type,
   /* scatter plot: */
   var scatter = {
     'type': 'scatter',
+    'name': 'displacement',
     'x': scatter_x,
-    'y': scatter_y,
+    'y': scatter_y1,
     'mode': scatter_mode,
     'marker': {
       'color': '#ff6666'
@@ -1279,15 +1366,29 @@ function disp_plot(heatmap_type, scatter_type,
     'hovertext': scatter_hover
   };
 
+  var scatter2 = {
+    'type': 'scatter',
+    'name': 'elevation',
+    'x': scatter_x,
+    'y': scatter_y2,
+    'yaxis': 'y2',
+    'mode': scatter_mode,
+    'marker': {
+      'color': '#6666ff'
+    },
+    'hoverinfo': 'text',
+    'hovertext': scatter_hover
+  };
+
   /* plot data, in order of plotting: */
-  var scatter_data = [scatter];
+  var scatter_data = [scatter, scatter2];
 
   /* plot update, if updating: */
   var scatter_update = {
-    'x': [scatter_x],
-    'y': [scatter_y],
-    'mode': [scatter_mode],
-    'hovertext': [scatter_hover]
+    'x': [scatter_x, scatter_x],
+    'y': [scatter_y1, scatter_y2],
+    'mode': [scatter_mode, scatter_mode],
+    'hovertext': [scatter_hover, scatter_hover]
   };
 
   /* scatter plot layout: */
@@ -1302,8 +1403,21 @@ function disp_plot(heatmap_type, scatter_type,
       'zeroline': false
     },
     'yaxis': {
-      'title': 'displacement (mm)',
+      'title': scatter_y1_title,
       'zeroline': false
+    },
+    'yaxis2': {
+      'title': scatter_y2_title,
+      'showticklabels': scatter_y2_showticklabels,
+      'zeroline': false,
+      'overlaying': 'y',
+      'showgrid': false,
+      'side': 'right'
+    },
+    'legend': {
+      'x': 1,
+      'y': 1,
+      'xanchor': 'right'
     },
     'hovermode': 'closest'
   };
@@ -1318,6 +1432,23 @@ function disp_plot(heatmap_type, scatter_type,
     'xaxis': {
       'title': scatter_x_title,
       'zeroline': false
+    },
+    'yaxis': {
+      'title': scatter_y1_title,
+      'zeroline': false
+    },
+    'yaxis2': {
+      'title': scatter_y2_title,
+      'showticklabels': scatter_y2_showticklabels,
+      'zeroline': false,
+      'overlaying': 'y',
+      'showgrid': false,
+      'side': 'right'
+    },
+    'legend': {
+      'x': 1,
+      'y': 1,
+      'xanchor': 'right'
     },
   };
 
