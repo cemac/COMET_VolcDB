@@ -933,12 +933,10 @@ function disp_plot(heatmap_type, scatter_type,
   };
   /* try to add suitable prefix to maintain a consistent colorbar
      width ... : */
-  if (heatmap_disp_z_min < -100) {
-    heatmap_disp_colorbar['tickprefix'] = '  ';
-  } else if (heatmap_disp_z_max > 100 || heatmap_disp_z_min < -10) {
-    heatmap_disp_colorbar['tickprefix'] = '  ';
-  } else {
+  if (heatmap_disp_z_min < -100 || heatmap_disp_z_max > 100) {
     heatmap_disp_colorbar['tickprefix'] = '   ';
+  } else {
+    heatmap_disp_colorbar['tickprefix'] = '  ';
   };
 
   /* heatmap coherence variables: */
