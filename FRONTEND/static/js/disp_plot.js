@@ -935,10 +935,18 @@ function disp_plot(heatmap_type, scatter_type,
   };
   /* try to add suitable prefix to maintain a consistent colorbar
      width ... : */
-  if (heatmap_disp_cmax > 100) {
-    heatmap_disp_colorbar['tickprefix'] = '   ';
-  } else {
+  if (heatmap_disp_cmax > 290) {
+    heatmap_disp_colorbar['tickprefix'] = '';
+  } else if (heatmap_disp_cmax > 280) {
     heatmap_disp_colorbar['tickprefix'] = ' ';
+  } else if (heatmap_disp_cmax > 250) {
+    heatmap_disp_colorbar['tickprefix'] = '   ';
+  } else if (heatmap_disp_cmax > 150) {
+    heatmap_disp_colorbar['tickprefix'] = ' ';
+  } else if (heatmap_disp_cmax > 140) {
+    heatmap_disp_colorbar['tickprefix'] = '  ';
+  } else {
+    heatmap_disp_colorbar['tickprefix'] = '   ';
   };
 
   /* heatmap coherence variables: */
