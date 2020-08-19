@@ -945,6 +945,10 @@ function disp_plot(heatmap_type, scatter_type,
     heatmap_disp_colorbar['tickprefix'] = ' ';
   } else if (heatmap_disp_cmax > 140) {
     heatmap_disp_colorbar['tickprefix'] = '  ';
+  } else if (heatmap_disp_cmax > 100) {
+    heatmap_disp_colorbar['tickprefix'] = '   ';
+  } else if (heatmap_disp_cmax > 60) {
+    heatmap_disp_colorbar['tickprefix'] = ' ';
   } else {
     heatmap_disp_colorbar['tickprefix'] = '   ';
   };
