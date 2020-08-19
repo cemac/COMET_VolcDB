@@ -913,9 +913,13 @@ function disp_plot(heatmap_type, scatter_type,
   /* heatmap displacement variables: */
   var heatmap_disp_cmax = Math.max(Math.abs(heatmap_disp_z_min),
                           Math.abs(heatmap_disp_z_max));
+  var heatmap_disp_tickmax = Math.round((0.9 * heatmap_disp_cmax) / 10) * 10;
+  heatmap_disp_tickmax = Math.max(heatmap_disp_tickmax, 10);
   var heatmap_disp_title = plot_vars['heatmap_disp_title'];
   var heatmap_disp_colorscale = plot_vars['heatmap_disp_colorscale'];
   var heatmap_disp_colorbar = {
+    'tickprefix': '   ',
+    'tickvals': [-heatmap_disp_tickmax, 0, heatmap_disp_tickmax],
     'x': 1.10,
     'thickness': 25,
     'len': 0.9,
@@ -932,25 +936,6 @@ function disp_plot(heatmap_type, scatter_type,
                 'monospace',
       'size': 10
     }
-  };
-  /* try to add suitable prefix to maintain a consistent colorbar
-     width ... : */
-  if (heatmap_disp_cmax > 290) {
-    heatmap_disp_colorbar['tickprefix'] = '';
-  } else if (heatmap_disp_cmax > 280) {
-    heatmap_disp_colorbar['tickprefix'] = ' ';
-  } else if (heatmap_disp_cmax > 250) {
-    heatmap_disp_colorbar['tickprefix'] = '   ';
-  } else if (heatmap_disp_cmax > 150) {
-    heatmap_disp_colorbar['tickprefix'] = ' ';
-  } else if (heatmap_disp_cmax > 140) {
-    heatmap_disp_colorbar['tickprefix'] = '  ';
-  } else if (heatmap_disp_cmax > 100) {
-    heatmap_disp_colorbar['tickprefix'] = '   ';
-  } else if (heatmap_disp_cmax > 60) {
-    heatmap_disp_colorbar['tickprefix'] = ' ';
-  } else {
-    heatmap_disp_colorbar['tickprefix'] = '   ';
   };
 
   /* heatmap coherence variables: */
