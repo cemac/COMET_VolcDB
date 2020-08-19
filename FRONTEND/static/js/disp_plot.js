@@ -911,6 +911,8 @@ function disp_plot(heatmap_type, scatter_type,
 
 
   /* heatmap displacement variables: */
+  var heatmap_disp_cmax = Math.max(Math.abs(heatmap_disp_z_min),
+                          Math.abs(heatmap_disp_z_max));
   var heatmap_disp_title = plot_vars['heatmap_disp_title'];
   var heatmap_disp_colorscale = plot_vars['heatmap_disp_colorscale'];
   var heatmap_disp_colorbar = {
@@ -922,7 +924,7 @@ function disp_plot(heatmap_type, scatter_type,
       'side': 'right',
       'font': {
         'size': 14
-      },
+      }
     },
     'tickfont': {
       'family': 'Consolas, Monaco, Lucida Console, Liberation Mono, ' +
@@ -933,10 +935,10 @@ function disp_plot(heatmap_type, scatter_type,
   };
   /* try to add suitable prefix to maintain a consistent colorbar
      width ... : */
-  if (heatmap_disp_z_min < -10 && heatmap_disp_z_max > 100) {
+  if (heatmap_disp_cmax > 100) {
     heatmap_disp_colorbar['tickprefix'] = '   ';
   } else {
-    heatmap_disp_colorbar['tickprefix'] = '  ';
+    heatmap_disp_colorbar['tickprefix'] = ' ';
   };
 
   /* heatmap coherence variables: */
@@ -945,7 +947,7 @@ function disp_plot(heatmap_type, scatter_type,
   var heatmap_coh_z_min = plot_vars['heatmap_coh_z_min'];
   var heatmap_coh_z_max = plot_vars['heatmap_coh_z_max'];
   var heatmap_coh_colorbar = {
-    'tickprefix': '  ',
+    'tickprefix': ' ',
     'x': 1.10,
     'thickness': 25,
     'len': 0.9,
@@ -971,8 +973,8 @@ function disp_plot(heatmap_type, scatter_type,
   if (heatmap_type == 'disp') {
     /* z variables: */
     var z = heatmap_disp_masked;
-    var z_min = heatmap_disp_z_min
-    var z_max = heatmap_disp_z_max
+    var z_min = -heatmap_disp_cmax;
+    var z_max = heatmap_disp_cmax;
     var heatmap_title = heatmap_disp_title;
     var heatmap_colorbar = heatmap_disp_colorbar;
     var heatmap_colorscale = heatmap_disp_colorscale;
@@ -1247,8 +1249,8 @@ function disp_plot(heatmap_type, scatter_type,
     'y': y,
     'z': surf_elev_masked,
     'surfacecolor': heatmap_disp_masked,
-    'cmin': heatmap_disp_z_min,
-    'cmax': heatmap_disp_z_max,
+    'cmin': -heatmap_disp_cmax,
+    'cmax': heatmap_disp_cmax,
     'colorbar': heatmap_disp_colorbar,
     'colorscale': heatmap_disp_colorscale,
     'hoverinfo': 'text',
@@ -1262,8 +1264,8 @@ function disp_plot(heatmap_type, scatter_type,
   var surf_update = {
     'z': [surf_elev, surf_elev_masked],
     'surfacecolor': [null, heatmap_disp_masked],
-    'cmin': [null, heatmap_disp_z_min],
-    'cmax': [null, heatmap_disp_z_max],
+    'cmin': [null, -heatmap_disp_cmax],
+    'cmax': [null, heatmap_disp_cmax],
     'colorscale': [surf_elev_colorscale, heatmap_disp_colorscale],
     'text': [heatmap_hover, heatmap_hover]
   };
