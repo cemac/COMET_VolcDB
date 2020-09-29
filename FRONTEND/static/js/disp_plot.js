@@ -385,7 +385,11 @@ function disp_plot(heatmap_type, scatter_type,
   plot_vars[fid]['scatter_type'] = scatter_type;
 
   /* get start and end indexes. set defaults if not set: */
-  var start_index = start_index || plot_vars[fid]['start_index'] || 0;
+  if (start_index === 0) {
+    var start_index = 0;
+  } else {
+    var start_index = start_index || plot_vars[fid]['start_index'] || 0;
+  };
   var end_index = end_index || plot_vars[fid]['end_index'] ||
                   dates.length - 1;
   /* check if indexes have changed: */
