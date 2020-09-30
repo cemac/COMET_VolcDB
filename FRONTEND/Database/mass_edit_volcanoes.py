@@ -28,60 +28,71 @@ dball = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
 # Task 1 check agains smithonian db
 # make sure integers to match
 dball.ID = dball.ID.astype(int)
-smiths['Volcano Name'].str.lower()
+#smiths['Volcano Name']=smiths['Volcano Name'].str.lower()
 smiths.set_index('Volcano Name',inplace=True)
-for row in dball.iterrows(): 
+count=0
+count2=0
+for row in dball.iterrows():
     vname = row[1]['name']
     if vname=='Unnamed':
         continue
     try:
-        volc = smiths.loc[vname.lower()]
+        volc = smiths.loc[vname]
         if len(volc) > 1:
             volc=volc.where(volc['Volcano Number']==row[1]['ID'])
-            volc.dropna(inplace=True) 
+            volc.dropna(inplace=True)
     except:
         try:
-            volc = smiths.loc[vname.lower().replace('_', ' ')]
+            volc = smiths.loc[vname.replace('_', ' ')]
             if len(volc) > 1:
                 volc=volc.where(volc['Volcano Number']==row[1]['ID'])
-                volc.dropna(inplace=True) 
+                volc.dropna(inplace=True)
         except:
+            count += 1
             print(vname .lower() + ' not in database')
-        continue
     # check
     try:
         if volc['Volcano Number']==row[1]['ID']:
             print('pass ID')
         else:
             print('fail ID')
+            count2 += 1
             dball.at[row[0],'ID']=volc['Volcano Number']
-        # country    
-        if volc['Country'].lower()==row[1]['country'].lower():
-            print('pass country')
-        else:
+        # country
+        try:
+            if volc['Country'].lower()==row[1]['country'].lower():
+                print('pass country')
+            else:
+                dball.at[row[0],'country']=volc['Country']
+            # region
+            if volc['Region'].lower()==row[1]['Area'].lower():
+                print('pass region')
+            else:
+                dball.at[row[0],'Area']=volc['Region']
+            # lat
+            if volc['Latitude']==row[1]['latitude']:
+                print('pass lat')
+            else:
+                dball.at[row[0],'latitude']=volc['Latitude']
+            # lon
+            if volc['Longitude']==row[1]['longitude']:
+                print('pass lon')
+            else:
+                dball.at[row[0],'longitude']=volc['Longitude']
+        except AttributeError:
+            print('AttributeError normally from missing info')
+            print('Replace VolcDB data with smithonian')
             dball.at[row[0],'country']=volc['Country']
-        # region
-        if volc['Region'].lower()==row[1]['Area'].lower():
-            print('pass region')
-        else:
             dball.at[row[0],'Area']=volc['Region']
-        # lat
-        if volc['Latitude']==row[1]['latitude']:
-            print('pass lat')
-        else:
             dball.at[row[0],'latitude']=volc['Latitude']
-        # lon
-        if volc['Longitude']==row[1]['longitude']:
-            print('pass lon')
-        else:
             dball.at[row[0],'longitude']=volc['Longitude']
     except ValueError:
-        if volc['Volcano Number'][0]==row[1]['ID']:
+        if int(volc['Volcano Number'][0])==row[1]['ID']:
             print('pass ID')
         else:
             print('fail ID')
             dball.at[row[0],'ID']=volc['Volcano Number'][0]
-        # country    
+        # country
         if volc['Country'][0].lower()==row[1]['country'].lower():
             print('pass country')
         else:
@@ -103,7 +114,7 @@ for row in dball.iterrows():
             dball.at[row[0],'longitude']=volc['Longitude'][0]
 # missing a bunch of volcanoes - test checking lower against lower
 raw_data_names = dball.copy()
-raw_data_names.set_index('jasmin_name', inplace=True)
+dball.set_index('jasmin_name', inplace=True)
 with open('jasmin_volcanoes_and_frames/all_volcs.json') as json_file:
         data = json.load(json_file)
         for i in range(len(raw_data_names)):
@@ -113,8 +124,9 @@ with open('jasmin_volcanoes_and_frames/all_volcs.json') as json_file:
             try:
                 #framesdf = json_normalize(data[vname])
                 framesdf = data[vname]
-                raw_data_names.at[str(vname),'frames']=str(framesdf)
+                dball.at[str(vname),'frames']=str(framesdf)
             except KeyError:
                 print('skipping ' + str(vname))
-raw_data = raw_data_names.copy()
-raw_data = raw_data.reset_index('volcano_number',inplace=True)
+dball.reset_index()
+dball.to_sql('VolcDB1', con=conn, if_exists='replace', index=False)
+conn.close()
