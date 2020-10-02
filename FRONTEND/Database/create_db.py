@@ -24,6 +24,8 @@ conn = sqlite3.connect('volcano.db')
 df = pd.read_csv('VolcDB_df.csv')
 # NB pandas is due to change behaviour to not underscore column names
 # Replace table VolcDB1
+# This should not be rquired, ID's are got from smithsonian DB
+# mass edit should fix
 def fillNaN_with_unifrand(df):
     a = df['ID']
     m = df['ID'].isnull()
@@ -36,5 +38,9 @@ def filldups_with_unifrand(df):
     a[a.isin(dups.ID)] = random.sample(range(3460602,3470601), 2*len(dups))
     return df
 df = filldups_with_unifrand(df)
+# Replace Nones with strings
+df.country.fillna('none', inplace=True)
+df.Area.fillna('none', inplace=True)
+df.frames.fillna('none', inplace=True)
 df.to_sql('VolcDB1', con=conn, if_exists='replace', index=False)
 conn.close()
