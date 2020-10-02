@@ -18,39 +18,44 @@ import pandas as pd
 import sqlite3
 import random
 import json
+import numpy as np
 from sqlalchemy import create_engine
 
 # connect to volcano.db
 conn = sqlite3.connect('volcano.db')
 # load in smithonian dataset nb encoding
-smiths=pd.read_csv('smithsonian_vols.csv', encoding='latin-1')
+smiths1=pd.read_csv('smithsonian_vols.csv', encoding='latin-1')
 # Create dataframe from db
 dball = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
 # Task 1 check agains smithonian db
 # make sure integers to match
 dball.ID = dball.ID.astype(int)
 #smiths['Volcano Name']=smiths['Volcano Name'].str.lower()
-smiths.set_index('Volcano Name',inplace=True)
 count=0
 count2=0
+smiths2=pd.read_csv('smithsonian_vols.csv', encoding='latin-1')
+smiths2['Volcano Name']=smiths2['Volcano Name'].str.lower()
+smiths3=pd.read_csv('smithsonian_vols.csv', encoding='latin-1')
+smiths3['Volcano Name']=smiths3['Volcano Name'].str.lower().str.replace(' ','_')
+smiths1.set_index('Volcano Name',inplace=True)
+smiths2.set_index('Volcano Name',inplace=True)
+smiths3.set_index('Volcano Name',inplace=True)
 for row in dball.iterrows():
     vname = row[1]['name']
     if vname=='Unnamed':
         continue
     try:
-        volc = smiths.loc[vname]
-        if len(volc) > 1:
-            volc=volc.where(volc['Volcano Number']==row[1]['ID'])
-            volc.dropna(inplace=True)
-    except:
+        volc = smiths1.loc[vname]
+    except KeyError:
         try:
-            volc = smiths.loc[vname.replace('_', ' ')]
-            if len(volc) > 1:
-                volc=volc.where(volc['Volcano Number']==row[1]['ID'])
-                volc.dropna(inplace=True)
-        except:
-            count += 1
-            print(vname .lower() + ' not in database')
+            volc = smiths2.loc[vname]
+        except KeyError:
+            try:
+                volc = smiths3.loc[vname]
+            except KeyError:
+                print(vname .lower() + ' not in database')
+                count += 1
+                continue
     # check
     try:
         if volc['Volcano Number']==row[1]['ID']:
@@ -113,13 +118,35 @@ for row in dball.iterrows():
             print('pass lon')
         else:
             dball.at[row[0],'longitude']=volc['Longitude'][0]
+ids=dball.ID
+print('duplicated')
+ndups=dball[ids.isin(ids[ids.duplicated()])]
+print(ndups)
+if len(ndups)>1:
+    # find IDs of those duplicated
+    dupids = dball[ids.isin(ids[ids.duplicated()])].sort_values('ID')
+    jasminpresent=dupids.jasmin_name.notnull()
+    missingjasmins=dupids.where(jasminpresent==False)
+    idxtodrop=missingjasmins.dropna(subset=['name']).index
+    dball.drop(idxtodrop, inplace=True)
+    print('duplicated')
+    ids=dball.ID
+    ndups=dball[ids.isin(ids[ids.duplicated()])]
+    print(ndups)
+    if len(ndups)>1:
+        idxtodrop=ndups.where(ndups.jasmin_name!=ndups.name).dropna(subset=['jasmin_name']).index
+        dball.drop(idxtodrop, inplace=True)
+        ids=dball.ID
+        print('duplicated')
+        ndups=dball[ids.isin(ids[ids.duplicated()])]
+        print(ndups)
 # missing a bunch of volcanoes - test checking lower against lower
 raw_data_names = dball.copy()
 dball.set_index('jasmin_name', inplace=True)
 with open('jasmin_volcanoes_and_frames/all_volcs.json') as json_file:
         data = json.load(json_file)
         for i in range(len(raw_data_names)):
-            vname = raw_data_names.jasmin_name[i]
+            vname = raw_data_names.iloc[i].jasmin_name
             #vname = str(vnameraw).lower().replace(' ', '_')
             #vname = vname.replace('-', '_')
             try:
