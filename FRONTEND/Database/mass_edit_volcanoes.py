@@ -156,5 +156,9 @@ with open('jasmin_volcanoes_and_frames/all_volcs.json') as json_file:
             except KeyError:
                 print('skipping ' + str(vname))
 dball.reset_index(inplace=True)
+# Replace nans with strings
+dball.country.fillna('none',inplace=True)
+dball.Area.fillna('none',inplace=True)
+dball.frames.fillna('none',inplace=True)
 dball.to_sql('VolcDB1', con=conn, if_exists='replace', index=False)
 conn.close()
