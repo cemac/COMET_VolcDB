@@ -493,8 +493,8 @@ function disp_plot(heatmap_type, scatter_type,
   /* store the values: */
   plot_vars[fid]['ts_area'] = ts_area;
   plot_vars[fid]['ts_latlon_area'] = [
-    y[ts_area[0]], y[ts_area[1]],
-    x[ts_area[2]], x[ts_area[3]]
+    y[ts_area[0]] - 0.0025, y[ts_area[1] - 1] + 0.0025,
+    x[ts_area[2]] - 0.0025, x[ts_area[3] - 1] + 0.0025
   ];
   plot_vars[fid]['ts_x'] = ts_x;
   plot_vars[fid]['ts_y'] = ts_y;
@@ -536,8 +536,8 @@ function disp_plot(heatmap_type, scatter_type,
   /* store the values: */
   plot_vars[fid]['ref_area'] = ref_area;
   plot_vars[fid]['ref_latlon_area'] = [
-    y[ref_area[0]], y[ref_area[1]],
-    x[ref_area[2]], x[ref_area[3]]
+    y[ref_area[0]] - 0.0025, y[ref_area[1] - 1] + 0.0025,
+    x[ref_area[2]] - 0.0025, x[ref_area[3] - 1] + 0.0025
   ];
 
   /* try to add polygons t s2 map: */
