@@ -186,11 +186,13 @@ def volcano_analysis(country, region, volcano):
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
     volcano_name = df.jasmin_name.values[0]
+    lat=df.latitude.values[0]
+    lon=df.longitude.values[0]
     frame = df.frames[0].replace(": u'", ": '").replace(", u'", ", '").replace("{u'", "{'")
     if frame == '':
         frame = 'none'
     return render_template('cemac_analysis_pages.html.j2', data=df,
-                           country=country, region=region,
+                           country=country, region=region,lat=lat,lon=lon,
                            frame=frame, volcano=volcano_name)
 
 
