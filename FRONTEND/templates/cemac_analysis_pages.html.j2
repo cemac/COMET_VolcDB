@@ -7,17 +7,17 @@
   <!-- no ui slider js: -->
   <script src="{{ url_for('static',filename='js/nouislider.min.js')}}" charset="utf-8">
   </script>
-  <!-- disp plotting: -->
-  <script src="{{ url_for('static',filename='js/disp_plot.js')}}" charset="utf-8">
-  </script>
-  <!-- prob images: -->
+  <!-- s1 images: -->
   <script src="{{ url_for('static',filename='js/s1_images.js')}}" charset="utf-8">
   </script>
   <!-- full screen images: -->
   <script src="{{ url_for('static',filename='js/fs_images.js')}}" charset="utf-8">
   </script>
+  <!-- disp plotting: -->
+  <script src="{{ url_for('static',filename='js/disp_plot.js')}}" charset="utf-8" defer>
+  </script>
   <!-- page set up / functions: -->
-  <script src="{{ url_for('static',filename='js/s1_analysis.js')}}" charset="utf-8">
+  <script src="{{ url_for('static',filename='js/s1_analysis.js')}}" charset="utf-8" defer>
   </script>
 
 <div>
@@ -30,8 +30,8 @@
         margin: 20px 0;
       }
     </style>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/nouislider.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/s1_analysis.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/nouislider.min.css')}}" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/s1_analysis.css')}}" media="all">
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <header>
       <h1>{{data.name[0]}} {{data.ID[0]}} </h1>
@@ -103,8 +103,8 @@
       var volcano_name = '{{ volcano }}';
       var volcano_region = this_frame['region'];
       var volcano_frames = this_frame['frames'];
-      var lat = '{{ lat }}';
-      var lon = '{{ lon }}';
+      var volcano_lat = '{{ lat }}';
+      var volcano_lon = '{{ lon }}';
       var js_data_prefix = '/data/';
       var disp_data_prefix = 'disp_data';
       var licsar_data_prefix = 'licsar_data';
@@ -148,51 +148,59 @@
         </div>
       </div>
 
-      <!-- scatter plot: -->
+      <!-- scatter plot / s2 map: -->
       <div class="disp_plot_box flex_half flex_grow"
            id="scatter_plot_box">
         <div class="disp_plot"
              id="scatter_plot">
+        </div>
+        <div class="disp_plot"
+             id="scatter_overlay">
+        </div>
+        <div class="disp_plot"
+             id="s2_map">
         </div>
       </div>
 
       <!-- heatmap plot controls: -->
       <div class="col_plot_control flex_column flex_half flex_grow"
            id="col_heatmap_control">
-        <!-- heatmap type buttons: -->
-        <div>
-          <button id="heatmap_type_button_disp"
-                  onclick="set_heatmap_type('disp');"
-                  title="Display displacement data">
-            displacement
-          </button>
-          <button id="heatmap_type_button_coh"
-                  onclick="set_heatmap_type('coh');"
-                  title="Display coherence data">
-            coherence
-          </button>
-        </div>
-        <!-- heatmap click type buttons: -->
-        <div>
-          <button id="click_mode_button_select"
-                  onclick="set_click_mode('select');"
-                  title="Select points for which the time series or profile will be plotted">
-            points to plot
-          </button>
-          <button id="click_mode_button_ref"
-                  onclick="set_click_mode('ref');"
-                  title="Select reference point or area for displacement calculation">
-            reference area
-          </button>
-        </div>
-        <!-- surface plot button: -->
-        <div>
-          <button id="surf_plot_button"
-                  class="disp_action_button"
-                  onclick="display_surf_plot();"
-                  title="Display 3D surface plot of displacement and elevation data">
-            surface plot
-          </button>
+        <div class="plot_control_content">
+          <!-- heatmap type buttons: -->
+          <div>
+            <button id="heatmap_type_button_disp"
+                    onclick="set_heatmap_type('disp');"
+                    title="Display displacement data">
+              displacement
+            </button>
+            <button id="heatmap_type_button_coh"
+                    onclick="set_heatmap_type('coh');"
+                    title="Display coherence data">
+              coherence
+            </button>
+          </div>
+          <!-- heatmap click type buttons: -->
+          <div>
+            <button id="click_mode_button_select"
+                    onclick="set_click_mode('select');"
+                    title="Select points for which the time series or profile will be plotted">
+              points to plot
+            </button>
+            <button id="click_mode_button_ref"
+                    onclick="set_click_mode('ref');"
+                    title="Select reference point or area for displacement calculation">
+              reference area
+            </button>
+          </div>
+          <!-- surface plot button: -->
+          <div>
+            <button id="surf_plot_button"
+                    class="disp_action_button"
+                    onclick="display_surf_plot();"
+                    title="Display 3D surface plot of displacement and elevation data">
+              surface plot
+            </button>
+          </div>
         </div>
       </div>
       <!-- end heatmap plot controls. -->
@@ -200,27 +208,48 @@
       <!-- scatter plot controls: -->
       <div class="col_plot_control flex_column flex_half flex_grow"
            id="col_scatter_control">
-        <!-- scatter type buttons: -->
-        <div>
-          <button id="scatter_type_button_ts"
-                  onclick="set_scatter_type('ts');"
-                  title="Display time series plot of displacement data">
-            time series
-          </button>
-          <button id="scatter_type_button_profile"
-                  onclick="set_scatter_type('profile');"
-                  title="Display profile plot of displacement and elevation data">
-            profile
-          </button>
+        <div class="plot_control_content">
+          <!-- select plot / s2 map: -->
+          <div>
+            <button id="scatter_select_button_plot"
+                    onclick="select_scatter_display('plot');"
+                    title="Display plot of displacement or profile data">
+              plot
+            </button>
+            <button id="scatter_select_button_s2"
+                    onclick="select_scatter_display('s2');"
+                    title="Display Sentinel-2 map of area">
+              sentinel-2 map
+            </button>
+          </div>
+          <!-- scatter type buttons: -->
+          <div>
+            <button id="scatter_type_button_ts"
+                    onclick="set_scatter_type('ts');"
+                    title="Display time series plot of displacement data">
+              time series
+            </button>
+            <button id="scatter_type_button_profile"
+                    onclick="set_scatter_type('profile');"
+                    title="Display profile plot of displacement and elevation data">
+              profile
+            </button>
+          </div>
+          <!-- save csv button: -->
+          <div>
+            <button id="ts_to_csv_button"
+                    class="disp_action_button"
+                    onclick="scatter_to_csv();"
+                    title="Save plot data as a CSV file">
+              save data as csv
+             </button>
+          </div>
         </div>
-        <!-- save csv button: -->
-        <div>
-          <button id="ts_to_csv_button"
-                  class="disp_action_button"
-                  onclick="scatter_to_csv();"
-                  title="Save plot data as a CSV file">
-            save data as csv
-          </button>
+        <!-- s2 tiles attribution: -->
+        <div class="plot_control_content" id="s2_tile_info">
+          Map tiles from <a href="https://s2maps.eu/">Sentinel-2 cloudless</a>
+          by <a href="https://eox.at/https://eox.at/">EOX IT Services GmbH</a><br>
+          (Contains modified Copernicus Sentinel data)
         </div>
       </div>
       <!-- end scatter plot controls. -->
@@ -243,6 +272,7 @@
       </div>
     </div>
     <!-- end displacement plot time range control. -->
+
 
     <hr id="hr_disp_plot">
 
@@ -322,6 +352,7 @@
       </div>
     </div>
     <!-- end sentinel 1 images time range control. -->
+
 
     <hr id="hr_s1_img">
 

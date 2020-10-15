@@ -143,6 +143,11 @@ body {
 
 .row_disp_plot {
   max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.row_s1_frame {
+  margin-bottom: 10px;
 }
 
 .disp_plot_box {
@@ -162,7 +167,40 @@ body {
 
 .col_plot_control {
   max-width: 50%;
+}
+
+.plot_control_content {
   padding-left: 5%;
+}
+
+/* scatter overlay: */
+#scatter_overlay {
+  background-color: #fff;
+  z-index: 0;
+}
+
+/** s2 map: **/
+
+#s2_map {
+  top: 100px;
+  width: 70%;
+  height: calc(100% - 175px);
+  z-index: -10;
+}
+
+.leaflet-container .leaflet-control-mouseposition {
+  min-width: 11em;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 5px #bbb;
+  padding: 0 5px;
+  margin:0;
+  color: #333;
+  font: 11px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+#s2_tile_info,
+#s2_tile_info, a {
+  font-size: smaller;
 }
 
 /* re-ordering, etc. on resize: */
@@ -210,6 +248,11 @@ body {
     -ms-flex-basis: 51%;
     flex-basis: 51%;
   }
+  #s2_map {
+    top: 15px;
+    width: 100%;
+    height: calc(100% - 30px);
+  }
   .col_plot_control {
     max-width: 100%;
   }
@@ -230,7 +273,7 @@ body {
 
 .row_disp_range {
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .col_disp_range {

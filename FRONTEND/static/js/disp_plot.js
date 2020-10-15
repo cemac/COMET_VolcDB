@@ -9,6 +9,12 @@ function init_plot_vars(fid, call_back) {
   if (plot_vars == undefined) {
     /* init plotting variables: */
     plot_vars = {
+      /* sentinel-2 leaflet map: */
+      's2_map': null,
+      /* s2 map overlays: */
+      's2_ts_poly': null,
+      's2_ref_poly': null,
+      's2_profile_line': null,
       /* default heatmap type: */
       'heatmap_type': 'disp',
       /* default scatter type: */
@@ -19,6 +25,7 @@ function init_plot_vars(fid, call_back) {
       'scatter_div': document.getElementById('scatter_plot'),
       'slider_div': document.getElementById('time_range_control'),
       'slider_value_div': document.getElementById('time_range_value'),
+      's2_div': document.getElementById('s2_map'),
       /* html button elements: */
       'button_disp': document.getElementById('heatmap_type_button_disp'),
       'button_coh': document.getElementById('heatmap_type_button_coh'),
@@ -26,6 +33,8 @@ function init_plot_vars(fid, call_back) {
       'button_profile': document.getElementById('scatter_type_button_profile'),
       'button_select': document.getElementById('click_mode_button_select'),
       'button_ref': document.getElementById('click_mode_button_ref'),
+      'button_select_plot': document.getElementById('scatter_select_button_plot'),
+      'button_select_s2': document.getElementById('scatter_select_button_s2'),
       /* min and max for coherence heatmap: */
       'heatmap_coh_z_min': 0,
       'heatmap_coh_z_max': 1.0,
@@ -68,13 +77,16 @@ function init_plot_vars(fid, call_back) {
       'end_index': null,
       /* time series area: */
       'ts_area': null,
+      'ts_latlon_area': null,
       /* time series x and y values for plotting: */
       'ts_x': null,
       'ts_y': null,
       /* profile area: */
       'profile_area': null,
+      'profile_latlon_area': null,
       /* reference area: */
       'ref_area': null,
+      'ref_latlon_area': null,
       /* reference area x and y values for plotting: */
       'ref_x': null,
       'ref_y': null,
@@ -135,6 +147,8 @@ function init_plot_vars(fid, call_back) {
   if (call_back && typeof(call_back) === "function") {
     call_back();
   }
+  /* create s2 map: */
+  draw_s2_map(volcano_lat, volcano_lon);
 
 };
 
@@ -165,6 +179,33 @@ function set_click_mode(click_mode) {
   /* make sure dragmode is set to 'select': */
   if (plot_vars['heatmap_div'].data != undefined) {
     Plotly.update(plot_vars['heatmap_div'], {}, {dragmode: 'select'});
+  };
+};
+
+/* function to select whether a scatter plot of displacement or profile data,
+   or a sentinel-2 map is displayed: */
+function select_scatter_display(display_type) {
+  /* volcano frame id: */
+  var fid = volcano_frame;
+  /* if 's2' is selected: */
+  if (display_type == 's2') {
+    /* disable button for active click mode: */
+    plot_vars['button_select_s2'].setAttribute('disabled', true);
+    plot_vars['button_select_plot'].removeAttribute('disabled');
+    /* display s2 element, hide plot element: */
+    plot_vars['scatter_div'].style.zIndex = '-10';
+    plot_vars['s2_div'].style.zIndex = '10';
+    /* store the selection: */
+    plot_vars[fid]['scatter_display'] = 's2';
+  } else {
+    /* 'plot' is selected ... disable button for active click mode: */
+    plot_vars['button_select_plot'].setAttribute('disabled', true);
+    plot_vars['button_select_s2'].removeAttribute('disabled');
+    /* display plot element, hide s2 element: */
+    plot_vars['s2_div'].style.zIndex = '-10';
+    plot_vars['scatter_div'].style.zIndex = '10';
+    /* store the selection: */
+    plot_vars[fid]['scatter_display'] = 'plot';
   };
 };
 
@@ -451,6 +492,10 @@ function disp_plot(heatmap_type, scatter_type,
   };
   /* store the values: */
   plot_vars[fid]['ts_area'] = ts_area;
+  plot_vars[fid]['ts_latlon_area'] = [
+    y[ts_area[0]], y[ts_area[1]],
+    x[ts_area[2]], x[ts_area[3]]
+  ];
   plot_vars[fid]['ts_x'] = ts_x;
   plot_vars[fid]['ts_y'] = ts_y;
 
@@ -472,6 +517,10 @@ function disp_plot(heatmap_type, scatter_type,
   };
   /* store the values: */
   plot_vars[fid]['profile_area'] = profile_area;
+  plot_vars[fid]['profile_latlon_area'] = [
+    y[profile_area[0]], y[profile_area[2]],
+    x[profile_area[1]], x[profile_area[3]]
+  ];
 
   /* get reference area value, set defaults if not set: */
   var ref_area = ref_area || plot_vars[fid]['ref_area'] || refarea ;
@@ -486,6 +535,13 @@ function disp_plot(heatmap_type, scatter_type,
   };
   /* store the values: */
   plot_vars[fid]['ref_area'] = ref_area;
+  plot_vars[fid]['ref_latlon_area'] = [
+    y[ref_area[0]], y[ref_area[1]],
+    x[ref_area[2]], x[ref_area[3]]
+  ];
+
+  /* try to add polygons t s2 map: */
+  draw_s2_map_polygons();
 
 
   /** html element variables: **/
@@ -509,6 +565,13 @@ function disp_plot(heatmap_type, scatter_type,
 
   /* set click mode: */
   set_click_mode(plot_vars[fid]['click_mode']);
+
+  /* display scatter plot or s2 map: */
+  if (plot_vars[fid]['scatter_display'] != undefined) {
+    select_scatter_display(plot_vars[fid]['scatter_display']);
+  } else {
+    select_scatter_display();
+  };
 
   /* disable button for active heatmap data type: */
   if (plot_vars[fid]['heatmap_type'] == 'disp') {
@@ -1714,7 +1777,217 @@ function disp_plot(heatmap_type, scatter_type,
 };
 
 
+/** sentinel-2 map bits: **/
+
+
+/* mouse position overlay: */
+L.Control.MousePosition = L.Control.extend({
+  options: {
+    position: 'bottomright',
+    separator: ', ',
+    emptyString: 'lat: --, lon: --',
+    lngFirst: false,
+    numDigits: 3,
+    lngFormatter: function(lon) {
+      return 'lon:' + lon.toFixed(3)
+    },
+    latFormatter: function(lat) {
+      return 'lat:' + lat.toFixed(3)
+    },
+    prefix: ''
+  },
+
+  onAdd: function (map) {
+    this._container = L.DomUtil.create('div', 'leaflet-control-mouseposition');
+    L.DomEvent.disableClickPropagation(this._container);
+    map.on('mousemove', this._onMouseMove, this);
+    this._container.innerHTML=this.options.emptyString;
+    return this._container;
+  },
+
+  onRemove: function (map) {
+    map.off('mousemove', this._onMouseMove)
+  },
+
+  _onMouseMove: function (e) {
+    var lng = this.options.lngFormatter ? this.options.lngFormatter(e.latlng.lng) : L.Util.formatNum(e.latlng.lng, this.options.numDigits);
+    var lat = this.options.latFormatter ? this.options.latFormatter(e.latlng.lat) : L.Util.formatNum(e.latlng.lat, this.options.numDigits);
+    var value = this.options.lngFirst ? lng + this.options.separator + lat : lat + this.options.separator + lng;
+    var prefixAndValue = this.options.prefix + ' ' + value;
+    this._container.innerHTML = prefixAndValue;
+  }
+
+});
+
+L.Map.mergeOptions({
+    positionControl: false
+});
+
+L.Map.addInitHook(function () {
+    if (this.options.positionControl) {
+        this.positionControl = new L.Control.MousePosition();
+        this.addControl(this.positionControl);
+    }
+});
+
+L.control.mousePosition = function (options) {
+    return new L.Control.MousePosition(options);
+};
+
+/* function to draw ts and ref polygons on map: */
+function draw_s2_map_polygons() {
+  /* volcano frame id: */
+  var fid = volcano_frame;
+  /* get variables from plot_vars .. leaflet map: */
+  var s2_map = plot_vars['s2_map'];
+  /* give up if no map: */
+  if (s2_map == null) {
+    return;
+  };
+  /* time series / ref area polygons and profile line: */
+  var s2_ts_poly = plot_vars['s2_ts_poly'];
+  var s2_ref_poly = plot_vars['s2_ref_poly'];
+  var s2_profile_line = plot_vars['s2_profile_line'];
+  /* ts / ref / profile areas: */
+  var ts_latlon_area = plot_vars[fid]['ts_latlon_area'];
+  var ref_latlon_area = plot_vars[fid]['ref_latlon_area'];
+  var profile_latlon_area = plot_vars[fid]['profile_latlon_area'];
+
+  /* if in time series plotting mode: */
+  if (plot_vars[fid]['scatter_type'] == 'ts') {
+
+    /* if ts_latlon_area is defined ... : */
+    if (ts_latlon_area != null) {
+      /* check for existing polygon and remove: */
+      if (s2_ts_poly != null) {
+        s2_map.removeLayer(s2_ts_poly);
+      };
+      /* check for existing polyline and remove: */
+      if (s2_profile_line != null) {
+        s2_map.removeLayer(s2_profile_line);
+      };
+      /* new polygon: */
+      s2_ts_poly = L.polygon([
+        [ts_latlon_area[0], ts_latlon_area[2]],
+        [ts_latlon_area[1], ts_latlon_area[2]],
+        [ts_latlon_area[1], ts_latlon_area[3]],
+        [ts_latlon_area[0], ts_latlon_area[3]]
+      ], {
+        'color': '#00ff00'
+      });
+      /* add to map and store in plot_vars: */
+      s2_map.addLayer(s2_ts_poly);
+      plot_vars['s2_ts_poly'] = s2_ts_poly;
+      plot_vars['s2_profile_line'] = null;
+    };
+
+  /* else in profile plotting mode: */
+  } else {
+
+    /* if ts_latlon_area is defined ... : */
+    if (profile_latlon_area != null) {
+      /* check for existing polyline and remove: */
+      if (s2_profile_line != null) {
+        s2_map.removeLayer(s2_profile_line);
+      };
+      /* check for existing polygon and remove: */
+      if (s2_ts_poly != null) {
+        s2_map.removeLayer(s2_ts_poly);
+      };
+      /* new polyline: */
+      s2_profile_line = L.polyline([
+        [profile_latlon_area[0], profile_latlon_area[2]],
+        [profile_latlon_area[1], profile_latlon_area[3]]
+      ], {
+        'color': '#00ff00'
+      });
+      /* add to map and store in plot_vars: */
+      s2_map.addLayer(s2_profile_line);
+      plot_vars['s2_profile_line'] = s2_profile_line;
+      plot_vars['s2_ts_poly'] = null;
+    };
+
+  };
+
+  /* if ref_latlon_area is defined ... : */
+  if (ref_latlon_area != null) {
+    /* check for existing polygon and remove: */
+    if (s2_ref_poly != null) {
+      s2_map.removeLayer(s2_ref_poly);
+    };
+    /* new polygon: */
+    s2_ref_poly = L.polygon([
+      [ref_latlon_area[0], ref_latlon_area[2]],
+      [ref_latlon_area[1], ref_latlon_area[2]],
+      [ref_latlon_area[1], ref_latlon_area[3]],
+      [ref_latlon_area[0], ref_latlon_area[3]]
+    ], {
+      'color': '#ff0000'
+    });
+    /* add to map and store in plot_vars: */
+    s2_map.addLayer(s2_ref_poly);
+    plot_vars['s2_ref_poly'] = s2_ref_poly;
+  };
+
+};
+
+/* function to draw map from proided lat and lon: */
+function draw_s2_map(aoi_lat, aoi_lon) {
+
+  /* map div id: */
+  var map_div = 's2_map';
+  /* check if map exists: */
+  if (document.getElementById(map_div)._leaflet_id != undefined) {
+    /* return if map exists: */
+    return;
+  };
+
+  /* define sentinel-2 layer: */
+  var s2_layer = L.tileLayer(
+    'http://{s}.s2maps-tiles.eu/wmts/1.0.0/s2cloudless/default/WGS84/{z}/{y}/{x}.jpg',
+    {}
+  );
+
+  /* define map: */
+  var s2_map = L.map(map_div, {
+    /* disable attribute display: */
+    attributionControl: false,
+    /* set crs: */
+    crs: L.CRS.EPSG4326,
+    /* map layers: */
+    layers: [
+      s2_layer
+    ],
+    /* map center: */
+    center: [
+      aoi_lat,
+      aoi_lon
+    ],
+    /* define bounds: */
+    maxBounds: [
+      [aoi_lat - 0.5, aoi_lon - 0.5],
+      [aoi_lat + 0.5, aoi_lon + 0.5]
+    ],
+    maxBoundsViscosity: 1.0,
+    /*  zoom levels: */
+    zoom:    10,
+    minZoom: 9,
+    maxZoom: 14
+  });
+  /* add scale: */
+  L.control.scale().addTo(s2_map);
+  /* add mouse pointer position: */
+  L.control.mousePosition().addTo(s2_map);
+  /* store map in plot_vars: */
+  plot_vars['s2_map'] = s2_map;
+  /* try to add polygons: */
+  draw_s2_map_polygons();
+
+};
+
+
 /** plot updating functions: **/
+
 
 /* function to update heatmap type: */
 function set_heatmap_type(heatmap_type) {
