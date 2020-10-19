@@ -1944,7 +1944,7 @@ function draw_s2_map(aoi_lat, aoi_lon) {
 
   /* define sentinel-2 layer: */
   var s2_layer = L.tileLayer(
-    'http://{s}.s2maps-tiles.eu/wmts/1.0.0/s2cloudless/default/WGS84/{z}/{y}/{x}.jpg',
+    'https://{s}.s2maps-tiles.eu/wmts/1.0.0/s2cloudless/default/WGS84/{z}/{y}/{x}.jpg',
     {}
   );
 
