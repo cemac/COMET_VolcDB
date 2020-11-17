@@ -98,14 +98,13 @@
 
     <script>
 
-      {% if frame == None %}
-      var this_frame = {'region': '', 'frames': [{'id': '', 'track': ''}]};
-      {% else %}
-      var this_frame = {{ frame }};
-      {% endif %}
       var volcano_name = '{{ volcano }}';
-      var volcano_region = this_frame['region'];
-      var volcano_frames = this_frame['frames'];
+      var this_volcano = volcanoes_frames[volcano_name];
+      if (this_volcano == undefined) {
+        var this_volcano = {'region': '', 'frames': [{'id': '', 'track': ''}]};
+      };
+      var volcano_region = this_volcano['region'];
+      var volcano_frames = this_volcano['frames'];
       var volcano_lat = {{ lat }};
       var volcano_lon = {{ lon }};
       var js_data_prefix = '/data/';
