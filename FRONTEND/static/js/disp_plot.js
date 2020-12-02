@@ -743,9 +743,17 @@ function disp_plot(heatmap_type, scatter_type,
       /* for each row: */
       for (var j = 0; j < end_disp[0].length; j++) {
         /* elevation values: */
-        surf_elev[i][j] = plot_vars[fid]['elev'][i][j];
-        surf_elev_masked[i][j] = plot_vars[fid]['elev'][i][j];
-        elev_hover_label = plot_vars[fid]['elev'][i][j] + ' m';
+        var surf_elev_value = plot_vars[fid]['elev'][i][j];
+        /* set null elevation values to 0: */
+        if (surf_elev_value == 'null') {
+          surf_elev[i][j] = 0;
+          surf_elev_masked[i][j] = 0;
+          elev_hover_label = 'null';
+        } else {
+          surf_elev[i][j] = surf_elev_value;
+          surf_elev_masked[i][j] = surf_elev_value;
+          elev_hover_label = surf_elev_value + ' m';
+        };
         /* calculate raw data value. if start / end values are null: */
         if (end_disp[i][j] == 'null' || start_disp[i][j] == 'null') {
           heatmap_disp[i][j] = 'null';
@@ -932,9 +940,9 @@ function disp_plot(heatmap_type, scatter_type,
       /* get y and x indexes: */
       var p_y_step_ix = Math.round(profile_area[0] + (i * p_y_inc));
       var p_x_step_ix = Math.round(profile_area[1] + (i * p_x_inc));
-      /* get displacement value and to profile data: */
+      /* get displacement value and profile value: */
       profile_disp.push(heatmap_disp_masked[p_y_step_ix][p_x_step_ix]);
-      profile_elev.push(surf_elev[p_y_step_ix][p_x_step_ix]);
+      profile_elev.push(plot_vars[fid]['elev'][p_y_step_ix][p_x_step_ix]);
       /* get lat and lon values: */
       p_lat.push(y[p_y_step_ix]);
       p_lon.push(x[p_x_step_ix]);
@@ -949,9 +957,15 @@ function disp_plot(heatmap_type, scatter_type,
         profile_dist.push(+parseFloat(p_step_dist).toFixed(2));
       };
       /* update hover data: */
-      profile_hover.push(profile_dist[i] + ' km, ' +
-                         profile_disp[i] + ' mm, ' +
-                         profile_elev[i] + ' m');
+      var profile_dist_value = profile_dist[i] == 'null' ? 'null, ' :
+                                                  profile_dist[i] + ' km, ';
+      var profile_disp_value = profile_disp[i] == 'null' ? 'null, ' :
+                                                  profile_disp[i] + ' mm, ';
+      var profile_elev_value = profile_elev[i] == 'null' ? 'null' :
+                                                  profile_elev[i] + ' m';
+      profile_hover.push(profile_dist_value +
+                         profile_disp_value +
+                         profile_elev_value);
       };
       /* profile x and y are profile area points: */
       var profile_x = [profile_area[1], profile_area[3]];
@@ -1548,10 +1562,14 @@ function disp_plot(heatmap_type, scatter_type,
     };
 
     /* don't do anything if this is a masked pixel: */
-    if (mask[click_y][click_x] == 0) {
+    if (mask[click_y][click_x] == 0 &&
+        plot_vars[fid]['click_mode'] != 'select' &&
+        plot_vars[fid]['scatter_type'] != 'profile') {
       {};
     /* don't do anything if this is a null pixel: */
-    } else if (plot_vars[fid]['heatmap_disp_masked'][click_y][click_x] == 'null') {
+    } else if (plot_vars[fid]['heatmap_disp_masked'][click_y][click_x] == 'null' &&
+               plot_vars[fid]['click_mode'] != 'select' &&
+               plot_vars[fid]['scatter_type'] != 'profile') {
       {};
     /* don't do anything if this the currently selected pixel, and time
        only a single pixel is currently selected: */
