@@ -131,6 +131,30 @@
     <!-- end frame selection. -->
 
 
+    <!-- displacement data type selection: -->
+    <div class="row_s1_type flex_row flex_grow"
+         id="row_s1_type">
+      <div class="col_s1_type flex_column flex_grow"
+           id="col_s1_type">
+        <h3 class="s1_page_hdr">Displacement Data Type</h3>
+        <div class="s1_type_control flex_row_wrap flex_grow"
+             id="s1_type_control">
+          <button id="disp_type_select_button_raw"
+                  onclick="set_disp_type('disp_raw');"
+                  title="Raw displacement data">
+            raw
+          </button>
+          <button id="disp_type_select_button_filt"
+                  onclick="set_disp_type('disp_filt');"
+                  title="Filtered displacement data">
+            filtered
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- end type selection. -->
+
+
     <!--- no data message: -->
     <div class="disp_error"
          id="no_disp_error">
@@ -169,7 +193,8 @@
            id="col_heatmap_control">
         <div class="plot_control_content">
           <!-- heatmap type buttons: -->
-          <div>
+          <div class="button_box"
+               id="heatmap_button_box">
             <button id="heatmap_type_button_disp"
                     onclick="set_heatmap_type('disp');"
                     title="Display displacement data">
@@ -183,25 +208,39 @@
           </div>
           <!-- heatmap click type buttons: -->
           <div>
-            <button id="click_mode_button_select"
-                    onclick="set_click_mode('select');"
-                    title="Select points for which the time series or profile will be plotted">
-              points to plot
-            </button>
-            <button id="click_mode_button_ref"
-                    onclick="set_click_mode('ref');"
-                    title="Select reference point or area for displacement calculation">
-              reference area
-            </button>
+            <div class="button_box"
+                 id="click_mode_button_box">
+              <button id="click_mode_button_select"
+                      onclick="set_click_mode('select');"
+                      title="Select points for which the time series or profile will be plotted">
+                points to plot
+              </button>
+              <button id="click_mode_button_ref"
+                      onclick="set_click_mode('ref');"
+                      title="Select reference point or area for displacement calculation">
+                reference area
+              </button>
+            </div>
           </div>
-          <!-- surface plot button: -->
+          <!-- csv / surface plot buttons: -->
           <div>
-            <button id="surf_plot_button"
-                    class="disp_action_button"
-                    onclick="display_surf_plot();"
-                    title="Display 3D surface plot of displacement and elevation data">
-              surface plot
-            </button>
+            <div class="action_button_box"
+                 id="surf_plot_button_box">
+              <!-- save csv button: -->
+              <button id="disp_to_csv_button"
+                      class="disp_action_button"
+                      onclick="disp_to_csv();"
+                      title="Save plot data as a CSV file">
+                save data as csv
+              </button>
+              <!-- surface plot button: -->
+              <button id="surf_plot_button"
+                      class="disp_action_button"
+                      onclick="display_surf_plot();"
+                      title="Display 3D surface plot of displacement and elevation data">
+                surface plot
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -213,38 +252,47 @@
         <div class="plot_control_content">
           <!-- select plot / s2 map: -->
           <div>
-            <button id="scatter_select_button_plot"
-                    onclick="select_scatter_display('plot');"
-                    title="Display plot of displacement or profile data">
-              plot
-            </button>
-            <button id="scatter_select_button_s2"
-                    onclick="select_scatter_display('s2');"
-                    title="Display Sentinel-2 map of area">
-              sentinel-2 map
-            </button>
+            <div class="button_box"
+                 id="scatter_select_button_box">
+              <button id="scatter_select_button_plot"
+                      onclick="select_scatter_display('plot');"
+                      title="Display plot of displacement or profile data">
+                plot
+              </button>
+              <button id="scatter_select_button_s2"
+                      onclick="select_scatter_display('s2');"
+                      title="Display Sentinel-2 map of area">
+                sentinel-2 map
+              </button>
+            </div>
           </div>
           <!-- scatter type buttons: -->
           <div>
-            <button id="scatter_type_button_ts"
-                    onclick="set_scatter_type('ts');"
-                    title="Display time series plot of displacement data">
-              time series
-            </button>
-            <button id="scatter_type_button_profile"
-                    onclick="set_scatter_type('profile');"
-                    title="Display profile plot of displacement and elevation data">
-              profile
-            </button>
+            <div class="button_box"
+                 id="scatter_type_button_box">
+              <button id="scatter_type_button_ts"
+                      onclick="set_scatter_type('ts');"
+                      title="Display time series plot of displacement data">
+                time series
+              </button>
+              <button id="scatter_type_button_profile"
+                      onclick="set_scatter_type('profile');"
+                      title="Display profile plot of displacement and elevation data">
+                profile
+              </button>
+            </div>
           </div>
           <!-- save csv button: -->
           <div>
-            <button id="ts_to_csv_button"
-                    class="disp_action_button"
-                    onclick="scatter_to_csv();"
-                    title="Save plot data as a CSV file">
-              save data as csv
-             </button>
+            <div class="action_button_box"
+                 id="ts_to_csv_button_box">
+              <button id="ts_to_csv_button"
+                      class="disp_action_button"
+                      onclick="scatter_to_csv();"
+                      title="Save plot data as a CSV file">
+                save data as csv
+               </button>
+            </div>
           </div>
         </div>
         <!-- s2 tiles attribution: -->

@@ -26,7 +26,8 @@ function display_prob_image(index) {
   var image_path = prob_img_prefix + prob_data['images'][image_index];
 
   /* get image label: */
-  var image_label = prob_data['dates'][image_index] + 
+  var image_label = ('0000' + (image_index + 1)).slice(-4) +
+                    ' : ' + prob_data['dates'][image_index] + 
                     ' (' +
                     prob_data['means'][image_index] + 
                     ')';
@@ -55,34 +56,34 @@ function display_prob_image(index) {
   links_date = links_date.replace(' - ', '_');
   links_date = links_date.replace(/-/g, '');
   links_cc.innerHTML = '<div class="div_data_links"><span>Coherence</span></div>' +
-                       '<div class="div_data_links"><a href="' +
+                       '<div class="div_data_links"><a target="_blank" href="' +
                        data_href_prefix + '/' + track_dir +
                        '/' + volcano_frame + '/interferograms/' + links_date +
                        '/' + links_date + '.geo.cc.tif">' + links_date +
                        '.geo.cc.tif</a></div>' +
-                       '<div class="div_data_links"><a href="' +
+                       '<div class="div_data_links"><a target="_blank" href="' +
                        data_href_prefix + '/' + track_dir +
                        '/' + volcano_frame + '/interferograms/' + links_date +   
                        '/' + links_date + '.geo.cc.png">' + links_date +
                        '.geo.cc.png</a></div>';
    links_pha.innerHTML = '<div class="div_data_links"><span>LOS change</span></div>' +
-                         '<div class="div_data_links"><a href="' +
+                         '<div class="div_data_links"><a target="_blank" href="' +
                          data_href_prefix + '/' + track_dir +
                          '/' + volcano_frame + '/interferograms/' + links_date +   
                          '/' + links_date + '.geo.diff_pha.tif">' + links_date +
                          '.geo.diff_pha.tif</a></div>' +
-                         '<div class="div_data_links"><a href="' +
+                         '<div class="div_data_links"><a target="_blank" href="' +
                          data_href_prefix + '/' + track_dir +
                          '/' + volcano_frame + '/interferograms/' + links_date +   
                          '/' + links_date + '.geo.diff.png">' + links_date +
                          '.geo.diff.png</a></div>';
    links_unw.innerHTML = '<div class="div_data_links"><span>Unwrapped LOS change</span></div>' +
-                         '<div class="div_data_links"><a href="' +
+                         '<div class="div_data_links"><a target="_blank" href="' +
                          data_href_prefix + '/' + track_dir +
                          '/' + volcano_frame + '/interferograms/' + links_date +   
                          '/' + links_date + '.geo.unw.tif">' + links_date +
                          '.geo.unw.tif</a></div>' + 
-                         '<div class="div_data_links"><a href="' +
+                         '<div class="div_data_links"><a target="_blank" href="' +
                          data_href_prefix + '/' + track_dir +
                          '/' + volcano_frame + '/interferograms/' + links_date +   
                          '/' + links_date + '.geo.unw.png">' + links_date +
@@ -145,7 +146,8 @@ function display_prob_image(index) {
         /* mean: */
         var slider_mean = prob_data['means'][slider_index];
         /* set labels: */
-        image_label_div.innerHTML = '<label>' +
+        image_label_div.innerHTML = ('0000' + (slider_index + 1)).slice(-4) +
+          ' : ' + '<label>' +
           slider_date + 
           ' (' + 
           slider_mean + 

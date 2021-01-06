@@ -15,6 +15,8 @@ function init_plot_vars(fid, call_back) {
       's2_ts_poly': null,
       's2_ref_poly': null,
       's2_profile_line': null,
+      /* default displacement data type: */
+      'disp_type': 'disp_raw',
       /* default heatmap type: */
       'heatmap_type': 'disp',
       /* default scatter type: */
@@ -27,6 +29,8 @@ function init_plot_vars(fid, call_back) {
       'slider_value_div': document.getElementById('time_range_value'),
       's2_div': document.getElementById('s2_map'),
       /* html button elements: */
+      'button_raw': document.getElementById('disp_type_select_button_raw'),
+      'button_filt': document.getElementById('disp_type_select_button_filt'),
       'button_disp': document.getElementById('heatmap_type_button_disp'),
       'button_coh': document.getElementById('heatmap_type_button_coh'),
       'button_ts': document.getElementById('scatter_type_button_ts'),
@@ -65,7 +69,7 @@ function init_plot_vars(fid, call_back) {
     };
   };
 
-  /* if plot variables for this frame ae undefined: */
+  /* if plot variables for this frame are undefined: */
   if (plot_vars[fid] == undefined) {
     plot_vars[fid] = {
       /* heatmap type (displacement or coherence): */
@@ -131,7 +135,9 @@ function init_plot_vars(fid, call_back) {
       /* date values: */
       'dates': disp_data['dates'],
       /* displacement data: */
-      'disp': disp_data['data_raw'],
+      'disp_raw': disp_data['data_raw'],
+      'disp_filt': null,
+      'disp_type': null,
       /* coherence data: */
       'coh': disp_data['coh'],
       /* mask data: */
@@ -142,6 +148,50 @@ function init_plot_vars(fid, call_back) {
       'elev': disp_data['elev']
     };
   };
+
+  /* function to enable / disable data type button: */
+  function enable_disp_data(data_button, data_enabled) {
+    /* hide button if no filtered data: */
+    if (data_enabled == true) {
+      data_button.style.display = 'inline';
+    } else {
+      data_button.setAttribute('disabled', true);
+      data_button.style.display = 'none';
+    };
+  };
+
+  /* function to check if displacement data exists: */
+  function check_disp_data(data_suffix, data_button) {
+    /* data url: */
+    var disp_data_url = js_data_prefix + disp_data_prefix + '/' +
+                        volcano_region + '/' + volcano_name + '_' +
+                        volcano_frame + '_' + data_suffix + '.json';
+    /* create new request: */
+    var disp_req = new XMLHttpRequest();
+    disp_req.responseType = 'json';
+    disp_req.open('HEAD', disp_data_url, true);
+    /* on data download: */
+    disp_req.onload = function() {
+      /* if not successful: */
+      if (disp_req.status != 200) {
+        /* disable button for this data type: */
+        enable_disp_data(data_button, false);
+      } else {
+        /* enable button for this data type: */
+        enable_disp_data(data_button, true);
+      };
+    };
+    /* if data check fails: */
+    disp_req.onerror = function() {
+      /* disable button for this data type: */
+      enable_disp_data(data_button, false);
+    };
+    /* send the request: */
+    disp_req.send(null);
+  };
+
+  /* check for and enable / disable filtered data: */
+  check_disp_data('filt', plot_vars['button_filt']);
 
   /* run call back function: */
   if (call_back && typeof(call_back) === "function") {
@@ -155,6 +205,38 @@ function init_plot_vars(fid, call_back) {
 
 /** helper functions: **/
 
+
+/* function to get displacement data: */
+function get_disp_data(disp_type, fid, disp_args) {
+  /* get data suffix: */
+  var disp_suffix = disp_type.replace('disp_', '');
+  /* data url: */
+  var disp_data_url = js_data_prefix + disp_data_prefix + '/' +
+                      volcano_region + '/' + volcano_name + '_' +
+                      volcano_frame + '_' + disp_suffix + '.json';
+  /* create new request: */
+  var disp_req = new XMLHttpRequest();
+  disp_req.responseType = 'json';
+  disp_req.open('GET', disp_data_url, true);
+  /* on data download: */
+  disp_req.onload = function() {
+    /* store the data: */
+    plot_vars[fid][disp_type] = disp_req.response['data_' + disp_suffix];
+    /* plot the data: */
+    disp_plot(
+      disp_args['disp_type'],
+      disp_args['heatmap_type'],
+      disp_args['scatter_type'],
+      disp_args['start_index'],
+      disp_args['end_index'],
+      disp_args['ts_area'],
+      disp_args['profile_area'],
+      disp_args['ref_area']
+    );
+  };
+  /* send the request: */
+  disp_req.send(null);
+};
 
 /* function to set the click mode to either 'select' (selected pixel) or
    'ref' (reference area): */
@@ -208,6 +290,51 @@ function select_scatter_display(display_type) {
     plot_vars[fid]['scatter_display'] = 'plot';
   };
 };
+
+
+
+/* function to save displacement plot data as csv file: */
+function disp_to_csv() {
+  /* volcano frame id: */
+  var fid = volcano_frame;
+  /* start csv content: */
+  var csv_data = 'data:text/csv;charset=utf-8,';
+  /* header line: */
+  csv_data += 'latitude,longitude,displacement (mm),coherence,elevation (m)\r\n';
+  /* get lat and lon values: */
+  var csv_lat = plot_vars[fid]['y'];
+  var csv_lon = plot_vars[fid]['x'];
+  var csv_disp = plot_vars[fid]['heatmap_disp_masked'];
+  var csv_coh = plot_vars[fid]['coh'];
+  var csv_elev = plot_vars[fid]['elev'];
+  /* loop through values: */
+  for (var i = 0; i < csv_disp.length - 1; i++) {
+    for (var j = 0; j < csv_disp[i].length - 1; j++) {
+      /* add line to csv: */
+      csv_data += parseFloat(csv_lat[i]).toFixed(3) + ',' +  
+                  parseFloat(csv_lon[j]).toFixed(3) + ',' +  
+                  parseFloat(csv_disp[i][j]).toFixed(2) + ',' +  
+                  parseFloat(csv_coh[i][j]).toFixed(2) + ',' +  
+                  parseFloat(csv_elev[i][j]).toFixed(2) + '\r\n';
+    };
+  };
+  /* encode csv data: */
+  var encoded_uri = encodeURI(csv_data);
+  /* name for csv file: */
+  var csv_name = volcano_name + '_' + fid + '_' +
+                 plot_vars[fid]['disp_type'] + '.csv';
+  /* create a temporary link element: */
+  var csv_link = document.createElement("a");
+  csv_link.setAttribute("href", encoded_uri);
+  csv_link.setAttribute("download", csv_name);
+  csv_link.style.visibility = 'hidden';
+  /* add link to document, click to init download, then remove: */
+  document.body.appendChild(csv_link);
+  csv_link.click();
+  document.body.removeChild(csv_link);
+};
+
+
 
 /* function to save scatter plot data as csv file: */
 function scatter_to_csv() {
@@ -372,7 +499,7 @@ function get_distance(coord_a, coord_b) {
 
 
 /* main displacement data plotting function: */
-function disp_plot(heatmap_type, scatter_type,
+function disp_plot(disp_type, heatmap_type, scatter_type,
                    start_index, end_index,
                    ts_area, profile_area, ref_area) {
 
@@ -386,22 +513,56 @@ function disp_plot(heatmap_type, scatter_type,
   var x_dist = plot_vars[fid]['x_dist'];
   var y_dist = plot_vars[fid]['y_dist'];
   var dates = plot_vars[fid]['dates'];
-  var disp = plot_vars[fid]['disp'];
   var coh = plot_vars[fid]['coh'];
   var mask = plot_vars[fid]['mask'];
   var refarea = plot_vars[fid]['refarea'];
+
+  /* get displacement data type value. set default value if not set: */
+  var disp_type = disp_type ||
+      plot_vars[fid]['disp_type'] || plot_vars['disp_type'];
+
+  /* if data is null, fetch it: */
+  if (plot_vars[fid][disp_type] == null) {
+    /* store function arguments: */
+    disp_args = {
+      'disp_type': disp_type,
+      'heatmap_type': heatmap_type,
+      'scatter_type': scatter_type,
+      'start_index': start_index,
+      'end_index': end_index,
+      'ts_area': ts_area,
+      'profile_area': profile_area,
+      'ref_area': ref_area
+    };
+    /* get the data: */
+    get_disp_data(disp_type, fid, disp_args);
+    /* return here. function will be re-run on data retrieval: */
+    return;
+  };
 
 
   /** get input values: **/
 
 
   /* presume nothing to be updated: */
+  var update_disp_type = false;
   var update_heatmap_type = false;
   var update_scatter_type = false;
   var update_time_range = false;
   var update_ts_area = false;
   var update_profile_area = false;
   var update_ref_area = false;
+
+  /* check if displacement data type has changed: */
+  if (disp_type != plot_vars[fid]['disp_type']) {
+    /* if so, set update flag: */
+    update_disp_type = true;
+  };
+  /* store the value: */
+  plot_vars[fid]['disp_type'] = disp_type;
+
+  /* set disp variable to selected data type: */
+  var disp = plot_vars[fid][disp_type];
 
   /* get heatmap type value. set default value if not set: */
   var heatmap_type = heatmap_type ||
@@ -552,6 +713,8 @@ function disp_plot(heatmap_type, scatter_type,
   var scatter_div = plot_vars['scatter_div'];
   var slider_div = plot_vars['slider_div'];
   var slider_value_div = plot_vars['slider_value_div'];
+  var button_raw = plot_vars['button_raw'];
+  var button_filt = plot_vars['button_filt'];
   var button_disp = plot_vars['button_disp'];
   var button_coh = plot_vars['button_coh'];
   var button_ts = plot_vars['button_ts'];
@@ -571,6 +734,15 @@ function disp_plot(heatmap_type, scatter_type,
     select_scatter_display(plot_vars[fid]['scatter_display']);
   } else {
     select_scatter_display();
+  };
+
+  /* disable button for active displacement data type: */
+  if (plot_vars[fid]['disp_type'] == 'disp_raw') {
+    button_raw.setAttribute('disabled', true);
+    button_filt.removeAttribute('disabled');
+  } else {
+    button_raw.removeAttribute('disabled');
+    button_filt.setAttribute('disabled', true);
   };
 
   /* disable button for active heatmap data type: */
@@ -624,7 +796,8 @@ function disp_plot(heatmap_type, scatter_type,
         var slider_start_date = plot_vars[fid]['dates'][slider_start_index];
         var slider_end_date = plot_vars[fid]['dates'][slider_end_index];
         /* update plotting: */
-        disp_plot(plot_vars[fid]['heatmap_type'],
+        disp_plot(plot_vars[fid]['disp_type'],
+                  plot_vars[fid]['heatmap_type'],
                   plot_vars[fid]['scatter_type'],
                   slider_start_index, slider_end_index,
                   plot_vars[fid]['ts_area'],
@@ -681,7 +854,7 @@ function disp_plot(heatmap_type, scatter_type,
 
 
   /* if heatmap disp data needs to be recalculated: */
-  if (update_time_range || update_ref_area ||
+  if (update_disp_type || update_time_range || update_ref_area ||
       plot_vars[fid]['heatmap_disp'] == null ||
       plot_vars[fid]['heatmap_coh'] == null) {
     /* get start and end data: */
@@ -883,7 +1056,8 @@ function disp_plot(heatmap_type, scatter_type,
   plot_vars[fid]['ts_title'] = ts_title;
 
   /* if time series data needs to be updated: */
-  if (update_time_range || update_ts_area || update_ref_area) {
+  if (update_disp_type || update_time_range || update_ts_area ||
+      update_ref_area) {
     /* get start data: */
     var start = disp[start_index];
     /* get reference area data: */
@@ -922,7 +1096,8 @@ function disp_plot(heatmap_type, scatter_type,
   plot_vars[fid]['ts_hover'] = ts_hover;
 
   /* check if profile data calculation is required: */
-  if (update_time_range || update_profile_area || update_ref_area) {
+  if (update_disp_type || update_time_range || update_profile_area ||
+      update_ref_area) {
     /* get profile values for 50 values, start point -> end_point: */
     var p_step = 50;
     var p_y_inc = (profile_area[2] - profile_area[0]) / p_step;
@@ -1099,6 +1274,16 @@ function disp_plot(heatmap_type, scatter_type,
     var scatter_y2_title = 'elevation (m)';
     var scatter_y2_showticklabels = true;
   };
+
+  /* if data is filtered: */
+  if (plot_vars[fid]['disp_type'] == 'disp_filt') {
+    var disp_scatter_color = '#6666ff';
+  } else {
+    var disp_scatter_color = '#ff6666';
+  };
+  /* elevation scatter color: */
+  var elev_scatter_color = '#32cd32';
+
   /* store current scatter x and y values: */
   plot_vars[fid]['selected_x'] = selected_x;
   plot_vars[fid]['selected_y'] = selected_y;
@@ -1438,7 +1623,7 @@ function disp_plot(heatmap_type, scatter_type,
     'y': scatter_y1,
     'mode': scatter_mode,
     'marker': {
-      'color': '#ff6666'
+      'color': disp_scatter_color
     },
     'hoverinfo': 'text',
     'hovertext': scatter_hover
@@ -1452,7 +1637,7 @@ function disp_plot(heatmap_type, scatter_type,
     'yaxis': 'y2',
     'mode': scatter_mode,
     'marker': {
-      'color': '#6666ff'
+      'color': elev_scatter_color
     },
     'hoverinfo': 'text',
     'hovertext': scatter_hover
@@ -1465,6 +1650,7 @@ function disp_plot(heatmap_type, scatter_type,
   var scatter_update = {
     'x': [scatter_x, scatter_x],
     'y': [scatter_y1, scatter_y2],
+    'marker.color': [disp_scatter_color, elev_scatter_color],
     'mode': [scatter_mode, scatter_mode],
     'hovertext': [scatter_hover, scatter_hover]
   };
@@ -1561,12 +1747,14 @@ function disp_plot(heatmap_type, scatter_type,
       return;
     };
 
-    /* don't do anything if this is a masked pixel: */
+    /* don't do anything if this is a masked pixel, unless selecting profile
+       to plot: */
     if (mask[click_y][click_x] == 0 &&
         plot_vars[fid]['click_mode'] != 'select' &&
         plot_vars[fid]['scatter_type'] != 'profile') {
       {};
-    /* don't do anything if this is a null pixel: */
+    /* don't do anything if this is a null pixel, unless slecting profile to
+       plot: */
     } else if (plot_vars[fid]['heatmap_disp_masked'][click_y][click_x] == 'null' &&
                plot_vars[fid]['click_mode'] != 'select' &&
                plot_vars[fid]['scatter_type'] != 'profile') {
@@ -1597,7 +1785,8 @@ function disp_plot(heatmap_type, scatter_type,
     } else {
       /* reference area updating: */
       if (plot_vars[fid]['click_mode'] == 'ref') {
-        disp_plot(plot_vars[fid]['heatmap_type'],
+        disp_plot(plot_vars[fid]['disp_type'],
+                  plot_vars[fid]['heatmap_type'],
                   plot_vars[fid]['scatter_type'],
                   plot_vars[fid]['start_index'], plot_vars[fid]['end_index'],
                   plot_vars[fid]['ts_area'],
@@ -1607,7 +1796,8 @@ function disp_plot(heatmap_type, scatter_type,
         /* if scatter type is 'ts: */
         if (plot_vars[fid]['scatter_type'] == 'ts') {
           /* selected pixel updating: */
-          disp_plot(plot_vars[fid]['heatmap_type'],
+          disp_plot(plot_vars[fid]['disp_type'],
+                    plot_vars[fid]['heatmap_type'],
                     plot_vars[fid]['scatter_type'],
                     plot_vars[fid]['start_index'], plot_vars[fid]['end_index'],
                     [click_y, click_y + 1, click_x, click_x + 1],
@@ -1619,7 +1809,8 @@ function disp_plot(heatmap_type, scatter_type,
             /* unset hover variable: */
             plot_vars['hover'] = false;
             /* update plot: */
-            disp_plot(plot_vars[fid]['heatmap_type'],
+            disp_plot(plot_vars[fid]['disp_type'],
+                      plot_vars[fid]['heatmap_type'],
                       plot_vars[fid]['scatter_type'],
                       plot_vars[fid]['start_index'], plot_vars[fid]['end_index'],
                       plot_vars[fid]['ts_area'],
@@ -1718,7 +1909,8 @@ function disp_plot(heatmap_type, scatter_type,
       if (plot_vars[fid]['click_mode'] == 'ref') {
 
         /* update plot: */
-        disp_plot(plot_vars[fid]['heatmap_type'],
+        disp_plot(plot_vars[fid]['disp_type'],
+                  plot_vars[fid]['heatmap_type'],
                   plot_vars[fid]['scatter_type'],
                   plot_vars[fid]['start_index'], plot_vars[fid]['end_index'],
                   plot_vars[fid]['ts_area'],
@@ -1729,7 +1921,8 @@ function disp_plot(heatmap_type, scatter_type,
       } else if (plot_vars[fid]['click_mode'] == 'select') {
 
         /* update plot: */
-        disp_plot(plot_vars[fid]['heatmap_type'],
+        disp_plot(plot_vars[fid]['disp_type'],
+                  plot_vars[fid]['heatmap_type'],
                   plot_vars[fid]['scatter_type'],
                   plot_vars[fid]['start_index'], plot_vars[fid]['end_index'],
                   [sel_y0, sel_y1, sel_x0, sel_x1],
@@ -2007,10 +2200,23 @@ function draw_s2_map(aoi_lat, aoi_lon) {
 /** plot updating functions: **/
 
 
+/* function to update displacement data type: */
+function set_disp_type(disp_type) {
+  var fid = volcano_frame;
+  disp_plot(disp_type,
+    plot_vars[fid]['heatmap_type'],
+    plot_vars[fid]['scatter_type'],
+    plot_vars[fid]['start_index'], plot_vars[fid]['end_index'],
+    plot_vars[fid]['ts_area'],
+    plot_vars[fid]['profile_area'],
+    plot_vars[fid]['ref_area']);
+};
+
 /* function to update heatmap type: */
 function set_heatmap_type(heatmap_type) {
   var fid = volcano_frame;
-  disp_plot(heatmap_type,
+  disp_plot(plot_vars[fid]['disp_type'],
+    heatmap_type,
     plot_vars[fid]['scatter_type'],
     plot_vars[fid]['start_index'], plot_vars[fid]['end_index'],
     plot_vars[fid]['ts_area'],
@@ -2021,7 +2227,8 @@ function set_heatmap_type(heatmap_type) {
 /* function to update scatter type: */
 function set_scatter_type(scatter_type) {
   var fid = volcano_frame;
-  disp_plot(plot_vars[fid]['heatmap_type'],
+  disp_plot(plot_vars[fid]['disp_type'],
+    plot_vars[fid]['heatmap_type'],
     scatter_type,
     plot_vars[fid]['start_index'], plot_vars[fid]['end_index'],
     plot_vars[fid]['ts_area'],

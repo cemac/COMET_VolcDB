@@ -120,17 +120,17 @@ body {
   padding-top: 0.5em;
 }
 
-/** sentinel 1 frame selection: **/
+/** sentinel 1 frame and data type selection: **/
 
-.row_s1_frame {
+.row_s1_frame, .row_s1_type {
   margin-bottom: 10px;
 }
 
-.s1_frame_control {
+.s1_frame_control, .s1_type_control {
   padding-left: 2%;
 }
 
-.s1_frame_control button {
+.s1_frame_control button, .s1_type_control button {
   margin: 2px;
 }
 
@@ -255,17 +255,6 @@ body {
   }
   .col_plot_control {
     max-width: 100%;
-  }
-}
-
-/* hide click buttons on narrow screens: */
-
-@media only screen and (max-width: 480px) {
-  #click_mode_button_select {
-    display: none;
-  }
-  #click_mode_button_ref {
-    display: none;
   }
 }
 
@@ -500,14 +489,18 @@ button {
   color: #494949;
   background-color: #c9c9c9;
   border: 1px solid #c9c9c9;
+  border-radius: 3px;
   padding: 3px;
-  margin: 2px 0px 2px 0px;
+  margin: 3px 0px 3px 0px;
   cursor: pointer;
+  transition-property: background-color;
+  transition-duration: 0.4s;
+  transition-timing-function: linear;
 }
 
 button:focus, button:active, button:hover {
   background-color: #d9d9d9;
-  border: 1px solid #494949;
+  border: 1px solid #a9a9a9;
   color: #494949;
 }
 
@@ -516,6 +509,32 @@ button:disabled, button[disabled] {
   border: 1px solid #494949;
   color: #ffffff;
   cursor: auto;
+}
+
+/** button boxes, for toggle like appearance: **/
+
+.button_box {
+  display: inline-block;
+  background-color: #ccc;
+  border-radius: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
+  margin: 2px;
+}
+
+.action_button_box {
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
+  margin: 2px;
+}
+
+@media only screen and (max-width: 450px) {
+  .button_box, .action_button_box {
+    max-width: 175px;
+  }
 }
 
 /** action buttons: **/
@@ -539,6 +558,11 @@ button, button:focus, button:active {
 }
 :focus {outline:none;}
 ::-moz-focus-inner {border:0;}
+
+/* hide additional data type buttons by default: */
+#disp_type_select_button_filt {
+  display: none;
+}
 
 /** sliders: **/
 

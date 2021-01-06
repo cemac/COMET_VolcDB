@@ -9,6 +9,7 @@ var licsar_data = null;
 var prob_data = null;
 
 var s1_frame_el_display = null;
+var s1_type_el_display = null;
 var s1_img_el_display = null;
 var s1_range_el_display = null;
 var data_down_el_display = null;
@@ -20,6 +21,7 @@ function s1_page_set_up(frame_index) {
 
   /* html elements of interest: */
   var s1_frame_el = document.getElementById('row_s1_frame');
+  var s1_type_el = document.getElementById('row_s1_type');
   var s1_img_el = document.getElementById('row_s1_images');
   var s1_range_el = document.getElementById('row_s1_img_range');
   var data_down_el = document.getElementById('row_data_downloads');
@@ -32,6 +34,8 @@ function s1_page_set_up(frame_index) {
   /* get display style of element: */
   s1_frame_el_display == (s1_frame_el_display === null) ?
     s1_frame_el.style.display : s1_frame_el_display;
+  s1_type_el_display == (s1_type_el_display === null) ?
+    s1_type_el.style.display : s1_type_el_display;
   s1_img_el_display == (s1_img_el_display === null) ?
     s1_img_el.style.display : s1_img_el_display;
   s1_range_el_display == (s1_range_el_display === null) ?
@@ -87,7 +91,7 @@ function s1_page_set_up(frame_index) {
     if (i == volcano_frame_index) {
       frame_html = frame_html + ' disabled="true"';
     };
-    frame_html = frame_html + '>' + volcano_frames[i]['id'] + '</button>';
+    frame_html = frame_html + '>' + volcano_frames[i]['id'] + '</button>\n';
     frame_id_control.innerHTML += frame_html;
   };
 
@@ -193,6 +197,7 @@ function s1_page_set_up(frame_index) {
   /* displacement data load error function: */
   function disp_req_error() {
     /* hide displacement plotting elements: */
+    s1_type_el.style.display = 'none';
     disp_plot_el.style.display = 'none';
     disp_range_el.style.display = 'none';
     /* display error element: */
@@ -220,6 +225,7 @@ function s1_page_set_up(frame_index) {
       /* hide error element: */
       disp_error_el.style.display = 'none';
       /* make sure displacement elements are visible: */
+      s1_type_el.style.display = s1_type_el_display;
       disp_plot_el.style.display = disp_plot_el_display;
       disp_range_el.style.display = disp_range_el_display;
       /* set plot variables for the frame, then run displacement plotting
