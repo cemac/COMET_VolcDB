@@ -6,13 +6,14 @@ var volcano_frame = null;
 var volcano_track = null;
 var disp_data = null;
 var licsar_data = null;
-var prob_data = null;
 
 var s1_frame_el_display = null;
 var s1_type_el_display = null;
-var s1_img_el_display = null;
-var s1_range_el_display = null;
+var licsar_img_el_display = null;
+var licsar_range_el_display = null;
 var data_down_el_display = null;
+var prob_data_el_display = null;
+var prob_range_el_display = null;
 var disp_plot_el_display = null;
 var disp_range_el_display = null;
 
@@ -22,13 +23,16 @@ function s1_page_set_up(frame_index) {
   /* html elements of interest: */
   var s1_frame_el = document.getElementById('row_s1_frame');
   var s1_type_el = document.getElementById('row_s1_type');
-  var s1_img_el = document.getElementById('row_s1_images');
-  var s1_range_el = document.getElementById('row_s1_img_range');
+  var licsar_img_el = document.getElementById('row_licsar_images');
+  var licsar_range_el = document.getElementById('row_licsar_img_range');
   var data_down_el = document.getElementById('row_data_downloads');
+  var prob_data_el = document.getElementById('row_prob_data');
+  var prob_range_el = document.getElementById('row_prob_range');
   var disp_plot_el = document.getElementById('row_disp_plot');
   var disp_range_el = document.getElementById('row_disp_range');
   /* error elements: */
-  var s1_error_el = document.getElementById('no_s1_error');
+  var licsar_error_el = document.getElementById('no_licsar_error');
+  var prob_error_el = document.getElementById('no_prob_error');
   var disp_error_el = document.getElementById('no_disp_error');
 
   /* get display style of element: */
@@ -36,12 +40,16 @@ function s1_page_set_up(frame_index) {
     s1_frame_el.style.display : s1_frame_el_display;
   s1_type_el_display == (s1_type_el_display === null) ?
     s1_type_el.style.display : s1_type_el_display;
-  s1_img_el_display == (s1_img_el_display === null) ?
-    s1_img_el.style.display : s1_img_el_display;
-  s1_range_el_display == (s1_range_el_display === null) ?
-    s1_range_el.style.display : s1_range_el_display;
+  licsar_img_el_display == (licsar_img_el_display === null) ?
+    licsar_img_el.style.display : licsar_img_el_display;
+  licsar_range_el_display == (licsar_range_el_display === null) ?
+    licsar_range_el.style.display : licsar_range_el_display;
   data_down_el_display == (data_down_el_display === null) ?
     data_down_el.style.display : data_down_el_display;
+  prob_data_el_display == (prob_data_el_display === null) ?
+    prob_data_el.style.display : prob_data_el_display;
+  prob_range_el_display == (prob_range_el_display === null) ?
+    prob_range_el.style.display : prob_range_el_display;
   disp_plot_el_display == (disp_plot_el_display === null) ?
     disp_plot_el.style.display : disp_plot_el_display;
   disp_range_el_display == (disp_range_el_display === null) ?
@@ -60,7 +68,7 @@ function s1_page_set_up(frame_index) {
     /* if frame index hasn't changed, return: */
     if (frame_index == volcano_frame_index) {
       return;
-    } 
+    }
     /* otherwise, use specified frame: */
     volcano_frame_index = frame_index;
     volcano_frame = volcano_frames[frame_index]['id'];
@@ -98,11 +106,10 @@ function s1_page_set_up(frame_index) {
   /* probability data load error function: */
   function prob_req_error() {
     /* hide s1 img html elements are visible: */
-    s1_img_el.style.display = 'none';
-    s1_range_el.style.display = 'none';
-    data_down_el.style.display = 'none';
+    prob_data_el.style.display = 'none';
+    prob_range_el.style.display = 'none';
     /* display error element: */
-    s1_error_el.style.display = 'inline';
+    prob_error_el.style.display = 'inline';
   };
 
   function prob_update() {
@@ -117,7 +124,7 @@ function s1_page_set_up(frame_index) {
     /* on data download: */
     prob_req.onload = function() {
       /* if not successful: */
-      if (prob_req.status != 200) { 
+      if (prob_req.status != 200) {
         prob_req_error();
       } else {
         /* set prob_data variable: */
@@ -125,14 +132,12 @@ function s1_page_set_up(frame_index) {
         /* set image prefix variable: */
         prob_img_prefix = prob_imgs_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
         /* hide error element: */
-        s1_error_el.style.display = 'none';
+        prob_error_el.style.display = 'none';
         /* make sure html elements are visible: */
-        s1_img_el.style.display = s1_img_el_display;
-        s1_range_el.style.display = s1_range_el_display;
-        data_down_el.style.display = data_down_el_display;
-        /* display images: */
-        display_licsar_images();
-        display_prob_image();
+        prob_data_el.style.display = prob_data_el_display;
+        prob_range_el.style.display = prob_range_el_display;
+        /* display probability data: */
+        display_prob_data();
         /* page is updated: */
         page_update = false;
       };
@@ -140,6 +145,8 @@ function s1_page_set_up(frame_index) {
     /* if probability data load fails: */
     prob_req.onerror = function() {
       prob_req_error();
+      /* page is updated: */
+      page_update = false;
     };
     /* send the request: */
     prob_req.send(null);
@@ -147,12 +154,14 @@ function s1_page_set_up(frame_index) {
 
   /* licsar data load error function: */
   function licsar_req_error() {
-    /* hide s1 img html elements are visible: */
-    s1_img_el.style.display = 'none';
-    s1_range_el.style.display = 'none';
+    /* hide licsar img html elements are visible: */
+    licsar_img_el.style.display = 'none';
+    licsar_range_el.style.display = 'none';
     data_down_el.style.display = 'none';
     /* display error element: */
-    s1_error_el.style.display = 'inline';
+    licsar_error_el.style.display = 'inline';
+    /* update probability: */
+    prob_update();
   };
 
   function licsar_update() {
@@ -167,7 +176,7 @@ function s1_page_set_up(frame_index) {
     /* on data download: */
     licsar_req.onload = function() {
       /* if not successful: */
-      if (licsar_req.status != 200) { 
+      if (licsar_req.status != 200) {
         licsar_req_error();
       } else {
         /* set licsar_data variable: */
@@ -175,14 +184,14 @@ function s1_page_set_up(frame_index) {
         /* set image prefix variable: */
         licsar_img_prefix = licsar_imgs_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
         /* hide error element: */
-        s1_error_el.style.display = 'none';
+        licsar_error_el.style.display = 'none';
         /* make sure html elements are visible: */
-        s1_img_el.style.display = s1_img_el_display;
-        s1_range_el.style.display = s1_range_el_display;
+        licsar_img_el.style.display = licsar_img_el_display;
+        licsar_range_el.style.display = licsar_range_el_display;
         data_down_el.style.display = data_down_el_display;
-        /* display error element: */
-        s1_error_el.style.display = 'inline';
-        /* then update probability data: */
+        /* display images: */
+        display_licsar_images();
+        /* update probability: */
         prob_update();
       };
     };
@@ -217,7 +226,7 @@ function s1_page_set_up(frame_index) {
   /* on data download: */
   disp_req.onload = function() {
     /* if not successful: */
-    if (disp_req.status != 200) { 
+    if (disp_req.status != 200) {
       disp_req_error();
     } else {
       /* set disp_data variable: */

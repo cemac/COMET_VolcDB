@@ -10,8 +10,11 @@
   <!-- no ui slider js: -->
   <script src="{{ url_for('static',filename='js/nouislider.min.js')}}" charset="utf-8">
   </script>
-  <!-- s1 images: -->
-  <script src="{{ url_for('static',filename='js/s1_images.js')}}" charset="utf-8">
+  <!-- licsar images: -->
+  <script src="{{ url_for('static',filename='js/licsar_images.js')}}" charset="utf-8">
+  </script>
+  <!-- probability data: -->
+  <script src="{{ url_for('static',filename='js/prob_data.js')}}" charset="utf-8">
   </script>
   <!-- full screen images: -->
   <script src="{{ url_for('static',filename='js/fs_images.js')}}" charset="utf-8">
@@ -329,82 +332,45 @@
 
     <!--- no data message: -->
     <div class="disp_error"
-         id="no_s1_error">
+         id="no_licsar_error">
       <p>No LiCSAR data available</p>
     </div>
 
 
-    <!-- sentinel 1 images: -->
-    <div class="row_s1_images flex_row_wrap flex_justify flex_grow"
-         id="row_s1_images">
+    <!-- licsar images: -->
+    <div class="row_licsar_images flex_row_wrap flex_justify flex_grow"
+         id="row_licsar_images">
       <div class="flex_full flex_grow">
-        <h3 class="s1_page_hdr">Individual interferograms and probability of magmatic deformation</h3>
+        <h3 class="s1_page_hdr">LiCSAR outputs</h3>
       </div>
-      <div class="s1_img_box flex_half flex_justify flex_grow">
-        <div class="flex_full flex_column">
-          <h5 class="s1_img_hdr">phase coherence</h5>
-          <div class="s1_img_container flex_row flex_grow">
-            <img class="s1_img flex_grow fs_img"
-                 id="s1_cc_img"
-                 title="phase coherence"
-                 src="">
-          </div>
-        </div>
-      </div>
-      <div class="s1_img_box flex_half flex_justify flex_grow">
-        <div class="flex_full flex_column">
-          <h5 class="s1_img_hdr">line-of-sight wrapped range change</h5>
-          <div class="s1_img_container flex_row flex_grow">
-            <img class="s1_img flex_grow fs_img"
-                 id="s1_pha_img"
-                 title="line-of-sight wrapped range change"
-                 src="">
-          </div>
-        </div>
-      </div>
-      <div class="s1_img_box flex_half flex_justify flex_grow">
-        <div class="flex_full flex_column">
-          <h5 class="s1_img_hdr">line-of-sight unwrapped range change</h5>
-          <div class="s1_img_container flex_row flex_grow">
-            <img class="s1_img flex_grow fs_img"
-                 id="s1_unw_img"
-                 title="line-of-sight unwrapped range change"
-                 src="">
-          </div>
-        </div>
-      </div>
-      <div class="s1_img_box flex_half flex_justify flex_grow">
-        <div class="flex_full flex_column">
-          <h5 class="s1_img_hdr">probability of magmatic origin</h5>
-          <div class="s1_img_container flex_row flex_grow">
-            <img class="s1_img flex_grow fs_img"
-                 id="s1_prob_img"
-                 title="probability of magmatic origin"
+      <div class="licsar_img_box flex_full flex_justify flex_grow">
+        <div class="flex_column flex_grow">
+          <div class="licsar_img_container flex_row flex_grow">
+            <img class="licsar_img flex_grow fs_img"
+                 id="licsar_if_img"
+                 title="wrapped los change / unwrapped los change / cherence"
                  src="">
           </div>
         </div>
       </div>
     </div>
-    <!-- end sentinel 1 images. -->
+    <!-- end licsar images. -->
 
 
-    <!-- sentinel 1 images time range control: -->
-    <div class="row_s1_img_range flex_row flex_center flex_grow"
-         id="row_s1_img_range">
-      <div class="col_s1_img_range flex_column flex_grow"
-           id="col_s1_img_range">
-        <div class="s1_image_control"
-             id="s1_image_control">
+    <!-- licsar images time range control: -->
+    <div class="row_licsar_img_range flex_row flex_center flex_grow"
+         id="row_licsar_img_range">
+      <div class="col_licsar_img_range flex_column flex_grow"
+           id="col_licsar_img_range">
+        <div class="licsar_image_control"
+             id="licsar_image_control">
         </div>
-        <div class="s1_image_value"
-             id="s1_image_value">
+        <div class="licsar_image_value"
+             id="licsar_image_value">
         </div>
       </div>
     </div>
-    <!-- end sentinel 1 images time range control. -->
-
-
-    <hr id="hr_s1_img">
+    <!-- licsar images time range control. -->
 
 
     <!-- data downloads: -->
@@ -413,18 +379,71 @@
       <div class="col_data_downloads flex_column flex_grow"
            id="col_data_downloads">
         <h3 class="s1_page_hdr">Data Downloads</h3>
-        <div class="s1_data_links flex_row_wrap flex_grow"
-             id="s1_cc_data_links">
+        <div class="licsar_data_links flex_row_wrap flex_grow"
+             id="licsar_pha_data_links">
         </div>
-        <div class="s1_data_links flex_row_wrap flex_grow"
-             id="s1_pha_data_links">
+        <div class="licsar_data_links flex_row_wrap flex_grow"
+             id="licsar_unw_data_links">
         </div>
-        <div class="s1_data_links flex_row_wrap flex_grow"
-             id="s1_unw_data_links">
+        <div class="licsar_data_links flex_row_wrap flex_grow"
+             id="licsar_cc_data_links">
         </div>
       </div>
     </div>
     <!-- end data downloads. -->
+
+
+    <hr id="hr_licsar_images">
+
+
+    <!--- no data message: -->
+    <div class="disp_error"
+         id="no_prob_error">
+      <p>No probability data available</p>
+    </div>
+
+    <!-- probability data: -->
+    <div class="row_prob_data flex_row_wrap flex_justify flex_grow"
+         id="row_prob_data">
+      <div class="flex_full flex_grow">
+        <h3 class="s1_page_hdr">Probability data</h3>
+      </div>
+      <!-- probability image: -->
+      <div class="prob_img_box flex_half flex_justify flex_grow">
+        <div class="flex_full flex_column">
+          <div class="prob_img_container flex_row flex_grow">
+            <img class="prob_img flex_grow fs_img"
+                 id="prob_prob_img"
+                 title="Probability of magmatic deformation"
+                 src="">
+          </div>
+        </div>
+      </div>
+      <!-- probability plot: -->
+      <div class="prob_plot_box flex_half flex_grow"
+           id="prob_plot_box">
+        <div class="prob_plot"
+             id="prob_plot">
+        </div>
+      </div>
+    </div>
+    <!-- end probability data. -->
+
+
+    <!-- probability images time range control: -->
+    <div class="row_prob_range flex_row flex_center flex_grow"
+         id="row_prob_range">
+      <div class="col_prob_range flex_column flex_grow"
+           id="col_prob_range">
+        <div class="prob_image_control"
+             id="prob_image_control">
+        </div>
+        <div class="prob_image_value"
+             id="prob_image_value">
+        </div>
+      </div>
+    </div>
+    <!-- licsar images time range control. -->
 
 
     <!-- surface plot: -->

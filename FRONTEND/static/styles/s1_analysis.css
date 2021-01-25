@@ -269,10 +269,10 @@ body {
   max-width: 90%;
 }
 
-/** sentinel 1 images: **/
+/** licsar images: **/
 
 @media only screen and (max-width: 500px) {
-  .s1_img_box {
+  .licsar_img_box {
     -webkit-flex-basis: 51%;
     -moz-flex-basis: 51%;
     -ms-flex-basis: 51%;
@@ -281,64 +281,38 @@ body {
   }
 }
 
-.s1_img_hdr {
-  padding-bottom: 2%;
-}
-
-@media only screen and (max-width: 850px) {
-  .s1_img_hdr {
-    display: none;
-  }
-}
-
-.s1_img_container {
+.licsar_img_container {
   height: 0;
   overflow: hidden;
-  padding-top: 105%;
+  padding-top: 45%;
   position: relative;
 }
 
-.s1_img {
+.licsar_img {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   max-width: 100%;
-  max-height: 100%;
+  max-height: 95%;
   object-fit: contain;
 }
 
-/** sentinel 1 images time range control: **/
+/** licsar images time range control: **/
 
-.row_s1_img_range {
+.row_licsar_img_range {
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-.col_s1_img_range {
+.col_licsar_img_range {
   max-width: 90%;
-}
-
-.s1_image_value {
-  margin: 15px;
 }
 
 /** data download links: **/
 
-.s1_data_links {
+.licsar_data_links {
   padding-left: 2%;
-}
-
-#s1_cc_data_links div {
-  background-color: #eeeeee;
-}
-
-#s1_pha_data_links div {
-  background-color: #fafafa;
-}
-
-#s1_unw_data_links div {
-  background-color: #eeeeee;
 }
 
 .div_data_links {
@@ -355,27 +329,104 @@ body {
 /* re-ordering, etc. on resize: */
 
 @media only screen and (max-width: 1000px) {
-  #s1_cc_data_links div {
+  #licsar_cc_data_links div {
     background-color: #ffffff;
     -webkit-flex-basis: 51%;
     -moz-flex-basis: 51%;
     -ms-flex-basis: 51%;
     flex-basis: 51%;
   }
-  #s1_pha_data_links div {
+  #licsar_pha_data_links div {
     background-color: #ffffff;
     -webkit-flex-basis: 51%;
     -moz-flex-basis: 51%;
     -ms-flex-basis: 51%;
     flex-basis: 51%;
   }
-  #s1_unw_data_links div {
+  #licsar_unw_data_links div {
     background-color: #ffffff;
     -webkit-flex-basis: 51%;
     -moz-flex-basis: 51%;
     -ms-flex-basis: 51%;
     flex-basis: 51%;
   }
+}
+
+/** probability data: **/
+
+.row_prob_data {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.prob_img_container {
+  height: 0;
+  overflow: hidden;
+  padding-top: 105%;
+  position: relative;
+}
+
+.prob_img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+.prob_plot_box {
+  height: 0;
+  overflow: hidden;
+  padding-top: 40%;
+  position: relative;
+}
+
+.prob_plot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 95%;
+}
+
+/* re-ordering, etc. on resize: */
+
+@media only screen and (max-width: 750px) {
+  #prob_plot_box {
+    -webkit-order: 1;
+    -moz-order: 1;
+    -ms-order: 1;
+    order: 1;
+    -webkit-flex-basis: 51%;
+    -moz-flex-basis: 51%;
+    -ms-flex-basis: 51%;
+    flex-basis: 51%;
+    padding-top: 85%;
+  }
+  .prob_img_box {
+    -webkit-order: 2;
+    -moz-order: 2;
+    -ms-order: 2;
+    order: 2;
+    -webkit-flex-basis: 51%;
+    -moz-flex-basis: 51%;
+    -ms-flex-basis: 51%;
+    flex-basis: 51%;
+    padding-bottom: 5%;
+  }
+}
+
+/** probability plot time range control: **/
+
+.row_prob_range {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.col_prob_range {
+  max-width: 90%;
 }
 
 /** full screen surface plot: **/
@@ -545,7 +596,7 @@ button:disabled, button[disabled] {
   border: 1px solid #333388;
 }
 
-.disp_action_button:focus, .disp_action_button:active, 
+.disp_action_button:focus, .disp_action_button:active,
 .disp_action_button:hover {
   background-color: #3333aa;
   border: 1px solid #333388;

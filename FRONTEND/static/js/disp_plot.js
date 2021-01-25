@@ -196,7 +196,7 @@ function init_plot_vars(fid, call_back) {
   /* run call back function: */
   if (call_back && typeof(call_back) === "function") {
     call_back();
-  }
+  };
   /* create s2 map: */
   draw_s2_map(volcano_lat, volcano_lon);
 
