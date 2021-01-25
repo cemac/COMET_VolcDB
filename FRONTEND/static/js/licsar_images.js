@@ -36,7 +36,7 @@ function display_licsar_images(index) {
 
   /* set image label: */
   image_label_div.innerHTML = '<label>' +
-    image_label + 
+    image_label +
     '</label>';
 
   /* get image slider div: */
@@ -57,23 +57,23 @@ function display_licsar_images(index) {
   links_pha.innerHTML = '<div class="div_data_links"><span>Wrapped LOS change</span></div>' +
                         '<div class="div_data_links"><a target="_blank" href="' +
                         data_href_prefix + '/' + track_dir +
-                        '/' + volcano_frame + '/interferograms/' + links_date +   
+                        '/' + volcano_frame + '/interferograms/' + links_date +
                         '/' + links_date + '.geo.diff_pha.tif">' + links_date +
                         '.geo.diff_pha.tif</a></div>' +
                         '<div class="div_data_links"><a target="_blank" href="' +
                         data_href_prefix + '/' + track_dir +
-                        '/' + volcano_frame + '/interferograms/' + links_date +   
+                        '/' + volcano_frame + '/interferograms/' + links_date +
                         '/' + links_date + '.geo.diff.png">' + links_date +
                         '.geo.diff.png</a></div>';
   links_unw.innerHTML = '<div class="div_data_links"><span>Unwrapped LOS change</span></div>' +
                         '<div class="div_data_links"><a target="_blank" href="' +
                         data_href_prefix + '/' + track_dir +
-                        '/' + volcano_frame + '/interferograms/' + links_date +   
+                        '/' + volcano_frame + '/interferograms/' + links_date +
                         '/' + links_date + '.geo.unw.tif">' + links_date +
-                        '.geo.unw.tif</a></div>' + 
+                        '.geo.unw.tif</a></div>' +
                         '<div class="div_data_links"><a target="_blank" href="' +
                         data_href_prefix + '/' + track_dir +
-                        '/' + volcano_frame + '/interferograms/' + links_date +   
+                        '/' + volcano_frame + '/interferograms/' + links_date +
                         '/' + links_date + '.geo.unw.png">' + links_date +
                         '.geo.unw.png</a></div>';
   links_cc.innerHTML = '<div class="div_data_links"><span>Coherence</span></div>' +
@@ -84,7 +84,7 @@ function display_licsar_images(index) {
                        '.geo.cc.tif</a></div>' +
                        '<div class="div_data_links"><a target="_blank" href="' +
                        data_href_prefix + '/' + track_dir +
-                       '/' + volcano_frame + '/interferograms/' + links_date +   
+                       '/' + volcano_frame + '/interferograms/' + links_date +
                        '/' + links_date + '.geo.cc.png">' + links_date +
                        '.geo.cc.png</a></div>';
 
@@ -140,5 +140,5 @@ function display_licsar_images(index) {
         tooltips: false
       });
     };
-  }; 
+  };
 };

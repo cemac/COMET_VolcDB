@@ -311,10 +311,10 @@ function disp_to_csv() {
   for (var i = 0; i < csv_disp.length - 1; i++) {
     for (var j = 0; j < csv_disp[i].length - 1; j++) {
       /* add line to csv: */
-      csv_data += parseFloat(csv_lat[i]).toFixed(3) + ',' +  
-                  parseFloat(csv_lon[j]).toFixed(3) + ',' +  
-                  parseFloat(csv_disp[i][j]).toFixed(2) + ',' +  
-                  parseFloat(csv_coh[i][j]).toFixed(2) + ',' +  
+      csv_data += parseFloat(csv_lat[i]).toFixed(3) + ',' +
+                  parseFloat(csv_lon[j]).toFixed(3) + ',' +
+                  parseFloat(csv_disp[i][j]).toFixed(2) + ',' +
+                  parseFloat(csv_coh[i][j]).toFixed(2) + ',' +
                   parseFloat(csv_elev[i][j]).toFixed(2) + '\r\n';
     };
   };

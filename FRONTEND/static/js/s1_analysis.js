@@ -136,8 +136,12 @@ function s1_page_set_up(frame_index) {
         /* make sure html elements are visible: */
         prob_data_el.style.display = prob_data_el_display;
         prob_range_el.style.display = prob_range_el_display;
-        /* display probability data: */
-        display_prob_data();
+        /* display probability data, if any: */
+        if (prob_data['count'] < 1) {
+          prob_req_error();
+        } else {
+          display_prob_data();
+        };
         /* page is updated: */
         page_update = false;
       };
@@ -189,10 +193,13 @@ function s1_page_set_up(frame_index) {
         licsar_img_el.style.display = licsar_img_el_display;
         licsar_range_el.style.display = licsar_range_el_display;
         data_down_el.style.display = data_down_el_display;
-        /* display images: */
-        display_licsar_images();
-        /* update probability: */
-        prob_update();
+        /* display images, if any: */
+        if (licsar_data['count'] < 1) {
+          licsar_req_error();
+        } else {
+          display_licsar_images();
+          prob_update();
+        };
       };
     };
     /* if licsar data retrival fails: */
