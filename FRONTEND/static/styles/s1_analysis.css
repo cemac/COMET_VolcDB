@@ -425,6 +425,10 @@ body {
   margin-bottom: 10px;
 }
 
+.prob_image_value {
+  margin-top: 10px;
+}
+
 .col_prob_range {
   max-width: 90%;
 }

@@ -208,8 +208,8 @@ function display_prob_data(index) {
   var image_path = prob_img_prefix + prob_data['images'][image_index];
 
   /* get image label: */
-  var image_label = (prob_data['dates'][image_index] + ' (' +
-                     ('0000' + (image_index)).slice(-4)) + ')<br>' +
+  var image_label = '<label>' +  prob_data['dates'][image_index] + '</label>' +
+                    ' (' + ('0000' + (image_index)).slice(-4) + ')<br>' +
                      'mean: ' +
                      prob_data['means'][image_index].toFixed(2) +
                      ', max: ' +
@@ -219,9 +219,7 @@ function display_prob_data(index) {
   image_img.src = image_path;
 
   /* set image label: */
-  image_label_div.innerHTML = '<label>' +
-    image_label +
-    '</label>';
+  image_label_div.innerHTML = image_label;
 
   /* get image slider div: */
   var slider_div = document.getElementById('prob_image_control');
@@ -287,8 +285,8 @@ function display_prob_data(index) {
         var slider_max = prob_data['maxs'][slider_index].toFixed(2);
         /* set labels: */
         image_label_div.innerHTML = (
-          '<label>' + slider_date + ' (' +
-          ('0000' + (slider_index + 1)).slice(-4)) + ')<br>' +
+          '<label>' + slider_date + '</label>' +
+          ' (' + ('0000' + (slider_index + 1)).slice(-4)) + ')<br>' +
           'mean: ' +
           slider_mean +
           ', max: ' +
