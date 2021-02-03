@@ -654,8 +654,10 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   /* store the values: */
   plot_vars[fid]['ts_area'] = ts_area;
   plot_vars[fid]['ts_latlon_area'] = [
-    y[ts_area[0]] - 0.0025, y[ts_area[1] - 1] + 0.0025,
-    x[ts_area[2]] - 0.0025, x[ts_area[3] - 1] + 0.0025
+    y[Math.min.apply(Math, ts_y)] - 0.0025,
+    y[Math.max.apply(Math, ts_y)] + 0.0025,
+    x[Math.min.apply(Math, ts_x)] - 0.0025,
+    x[Math.max.apply(Math, ts_x)] + 0.0025
   ];
   plot_vars[fid]['ts_x'] = ts_x;
   plot_vars[fid]['ts_y'] = ts_y;
