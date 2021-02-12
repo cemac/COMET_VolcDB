@@ -34,7 +34,7 @@
 <!-- unnamed -->
 			{% if data.name[0] == 'Unnamed' %}
 				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/S1_analysis">Explore Sentinel-1 imagery</a></li>
-				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/download">Export as CSV</a></li>
+
 				<!-- logged in -->
 				{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
 					<!-- already updated -->
@@ -54,7 +54,7 @@
 				<!-- named -->
 			{% else %}
 				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/S1_analysis">Explore Sentinel-1 imagery</a></li>
-				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/download">Export as CSV</a></li>
+
 				{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
 
 					{% if pending != 'Y' %}
@@ -120,6 +120,8 @@
 					<td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
 				</tr>
 			</table>
+
+			<a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/download"><button style="background-color: #008CBA;">Export as CSV</button></a>
 			<div class="acf-map">
 				<iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q={{data.latitude[0]}}%2C{{data.longitude[0]}}&t=k&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
 			</div>

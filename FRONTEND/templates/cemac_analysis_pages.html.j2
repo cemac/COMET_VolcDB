@@ -47,7 +47,7 @@
 <!-- unnamed -->
 			{% if data.name[0] == 'Unnamed' %}
 				<li class="selected">Explore Sentinel-1 imagery</li>
-				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/download">Export as CSV</a></li>
+
 				<!-- logged in -->
 				{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
 					<!-- already updated -->
@@ -67,7 +67,7 @@
 				<!-- named -->
 			{% else %}
 				<li class="selected">Explore Sentinel-1 imagery</li>
-				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/download">Export as CSV</a></li>
+
 				{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
 
 					{% if pending != 'Y' %}
