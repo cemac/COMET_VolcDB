@@ -115,6 +115,14 @@ body {
 
 /** section titles: **/
 
+.s1_section_hdr {
+  font-size: 1.8em;
+  color: #333333;
+  font-weight: 500;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+}
+
 .s1_page_hdr {
   padding-bottom: 0.5em;
   padding-top: 0.5em;
