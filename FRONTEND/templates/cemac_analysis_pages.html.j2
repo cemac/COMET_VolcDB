@@ -44,45 +44,7 @@
     </header><!-- .entry-header -->
     <ul class="tabrow">
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}">Observations of Deformation</a></li>
-<!-- unnamed -->
-			{% if data.name[0] == 'Unnamed' %}
-				<li class="selected">Explore Sentinel-1 imagery</li>
-
-				<!-- logged in -->
-				{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
-					<!-- already updated -->
-					{% if pending != 'Y' %}
-						<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/edit">Add to this Entry</a></li>
-					{% else %}
-
-						{% if editor == True %}
-						<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/edit">Update Edited Entry</a></li>
-						{% endif %}
-					{% endif %}
-	<!-- already updated -->
-				{% else %}
-					<li><a href="/contact">Add to this Entry</a></li>
-				{% endif %}
-				<!-- logged in -->
-				<!-- named -->
-			{% else %}
-				<li class="selected">Explore Sentinel-1 imagery</li>
-
-				{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
-
-					{% if pending != 'Y' %}
-						<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Add to this Entry</a></li>
-					{% else %}
-
-						{% if editor == True %}
-							<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Add to this Entry</a></li>
-						{% endif %}
-					{% endif %}
-
-				{% else %}
-					<li><a href="/contact">Add to this Entry</a></li>
-				{% endif %}
-			{% endif %}
+			<li class="selected">Explore Sentinel-1 imagery</li>
 		</ul>
    <div>
 <div style="width:100%; display:block; margin:auto;">
