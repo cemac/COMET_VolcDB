@@ -374,24 +374,31 @@
     </div>
 
     <!-- probability data: -->
+    <div class="row_s1_type flex_row flex_grow"
+         id="row_s1_type">
+      <div class="col_s1_type flex_column flex_grow"
+           id="col_s1_type">
+           <h3>Probability of high magnitude deformation</h3>
+           <br>
+           <p><b>Panel 3: Probability of high magnitude deformation.</b> Probability of
+           individual interferogram containing volcanic deformation, assessed using deep
+           learning methods. Probabilities are displayed on a scale of 0 to 1, where values
+           of >0.5 are flagged as potential deformation.  The implementation of machine
+           learning methods currently available through the portal is based on assessment
+           of individual interferograms.  We estimate that the detection threshold in an
+           individual interferogram is one fringe (2.8 cm), which equates to a minimum
+           rate of 28 cm/yr for a 36 day interferogram (85 cm/yr for a 12 day pair).
+           Please note that real deformation with lower rates is unlikely to be flagged.
+           Maximum (orange) and mean (blue) probabilities of deformation for each interferogram
+           are shown according to interferogram number, which is also indicated on the slider
+           for comparison. Where the mean is close to the maximum value, the deforming area is
+           likely to be large. Potential deformation is indicated above the slider as a grey bar.</p>
+      </div>
+      </div>
     <div class="row_prob_data flex_row_wrap flex_justify flex_grow"
          id="row_prob_data">
       <div class="col_s1_type flex_full flex_grow" id="col_s1_type">
-        <h3>Probability of high magnitude deformation</h3>
-        <br>
-        <p><b>Panel 3: Probability of high magnitude deformation.</b> Probability of
-        individual interferogram containing volcanic deformation, assessed using deep
-        learning methods. Probabilities are displayed on a scale of 0 to 1, where values
-        of >0.5 are flagged as potential deformation.  The implementation of machine
-        learning methods currently available through the portal is based on assessment
-        of individual interferograms.  We estimate that the detection threshold in an
-        individual interferogram is one fringe (2.8 cm), which equates to a minimum
-        rate of 28 cm/yr for a 36 day interferogram (85 cm/yr for a 12 day pair).
-        Please note that real deformation with lower rates is unlikely to be flagged.
-        Maximum (orange) and mean (blue) probabilities of deformation for each interferogram
-        are shown according to interferogram number, which is also indicated on the slider
-        for comparison. Where the mean is close to the maximum value, the deforming area is
-        likely to be large. Potential deformation is indicated above the slider as a grey bar.</p>
+        
 
       </div>
       <!-- probability image: -->
