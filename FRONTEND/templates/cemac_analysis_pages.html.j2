@@ -44,58 +44,16 @@
     </header><!-- .entry-header -->
     <ul class="tabrow">
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}">Observations of Deformation</a></li>
-<!-- unnamed -->
-			{% if data.name[0] == 'Unnamed' %}
-				<li class="selected">Explore Sentinel-1 imagery</li>
-				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/download">Export as CSV</a></li>
-				<!-- logged in -->
-				{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
-					<!-- already updated -->
-					{% if pending != 'Y' %}
-						<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/edit">Add to this Entry</a></li>
-					{% else %}
-
-						{% if editor == True %}
-						<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/edit">Update Edited Entry</a></li>
-						{% endif %}
-					{% endif %}
-	<!-- already updated -->
-				{% else %}
-					<li><a href="/contact">Add to this Entry</a></li>
-				{% endif %}
-				<!-- logged in -->
-				<!-- named -->
-			{% else %}
-				<li class="selected">Explore Sentinel-1 imagery</li>
-				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/download">Export as CSV</a></li>
-				{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
-
-					{% if pending != 'Y' %}
-						<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Add to this Entry</a></li>
-					{% else %}
-
-						{% if editor == True %}
-							<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/edit">Add to this Entry</a></li>
-						{% endif %}
-					{% endif %}
-
-				{% else %}
-					<li><a href="/contact">Add to this Entry</a></li>
-				{% endif %}
-			{% endif %}
+			<li class="selected">Explore Sentinel-1 imagery</li>
 		</ul>
    <div>
 <div style="width:100%; display:block; margin:auto;">
-  <p>These tools can be used to interrogate interferograms constructed by LiCSAR.
-     First select the Sentinel-1 frame you want to look at from the buttons at the
-     top of the page.  Then select a point to plot and a reference area.
-     You can display both average <!--[check definition!]-->phase coherence and
-     displacement to help with your choice. The cumulative displacement will be
-     shown as a downsampled interferogram in panel A, while the time series is
-     shown in panel B.  You can also inspect individual wrapped and unwrapped
-     interferograms, coherence and look a the automatically estimated probability
-     of the image containing a magmatic signal.  Algorithm details and references
-     can be found on the <a href="/about-tools">About</a> page.
+  <p>These tools can be used to interrogate interferograms constructed automatically
+  by LiCSAR – details of how to use them can be found <a href="/about-tools">here</a>.
+  Select the Sentinel-1 frame you want to interrogate from the buttons at the top of
+  the page (frame definitions can be found on the
+  <a href="https://comet.nerc.ac.uk/comet-lics-portal/">LiCSAR</a> portal).
+
   </div>
 <div style="width:100%; display:block; margin:auto;">
 
@@ -140,6 +98,15 @@
       <div class="col_s1_type flex_column flex_grow"
            id="col_s1_type">
         <span class="s1_section_hdr">Time series analysis</span>
+        <p><b>Panel 1: Time series Analysis.</b> Explore the LiCSBAS time series of
+        apparent displacement, selecting your point or area to plot (green) and
+        a reference area (red). You can examine both average phase coherence and
+        cumulative displacement to help with your choice. The time series for your
+        selected point can be displayed with and without temporal filtering, and
+        start and end points can be selected using the sliders. Use the profile
+        or surface plot tools to compare the shape of the apparent displacement
+        to underlying topography.
+
         <h3 class="s1_page_hdr">Displacement data type</h3>
         <div class="s1_type_control flex_row_wrap flex_grow"
              id="s1_type_control">
@@ -339,11 +306,18 @@
 
 
     <!-- licsar images: -->
+    <div class="row_s1_type flex_row flex_grow"
+         id="row_s1_type">
+      <div class="col_s1_type flex_column flex_grow"
+           id="col_s1_type">
+             <span class="s1_section_hdr">Individual LiCSAR interferograms</span>
+             <p><b>Panel 2: Individual LiCSAR Interferograms.</b> Inspect individual
+             wrapped and unwrapped interferograms (cm) and their coherence. Select your
+             interferogram using the slider.
+      </div>
+      </div>
     <div class="row_licsar_images flex_row_wrap flex_justify flex_grow"
          id="row_licsar_images">
-      <div class="flex_full flex_grow">
-        <span class="s1_section_hdr">Individual LiCSAR interferograms</span>
-      </div>
       <div class="licsar_img_box flex_full flex_justify flex_grow">
         <div class="flex_column flex_grow">
           <div class="licsar_img_container flex_row flex_grow">
@@ -404,11 +378,29 @@
     </div>
 
     <!-- probability data: -->
+    <div class="row_s1_type flex_row flex_grow"
+         id="row_s1_type">
+      <div class="col_s1_type flex_column flex_grow"
+           id="col_s1_type">
+           <span class="s1_section_hdr">Probability of high magnitude deformation</span>
+           <br>
+           <p><b>Panel 3: Probability of high magnitude deformation.</b> Probability of
+           individual interferogram containing volcanic deformation, assessed using deep
+           learning methods. Probabilities are displayed on a scale of 0 to 1, where values
+           of >0.5 are flagged as potential deformation.  The implementation of machine
+           learning methods currently available through the portal is based on assessment
+           of individual interferograms.  We estimate that the detection threshold in an
+           individual interferogram is one fringe (2.8 cm), which equates to a minimum
+           rate of 28 cm/yr for a 36 day interferogram (85 cm/yr for a 12 day pair).
+           Please note that real deformation with lower rates is unlikely to be flagged.
+           Maximum (orange) and mean (blue) probabilities of deformation for each interferogram
+           are shown according to interferogram number, which is also indicated on the slider
+           for comparison. Where the mean is close to the maximum value, the deforming area is
+           likely to be large. Potential deformation is indicated above the slider as a grey bar.</p>
+      </div>
+      </div>
     <div class="row_prob_data flex_row_wrap flex_justify flex_grow"
          id="row_prob_data">
-      <div class="flex_full flex_grow">
-        <span class="s1_section_hdr">Probability of high magnitude deformation</span>
-      </div>
       <!-- probability image: -->
       <div class="prob_img_box flex_half flex_justify flex_grow">
         <div class="flex_full flex_column">

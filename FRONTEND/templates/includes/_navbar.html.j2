@@ -5,12 +5,12 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav ">
+        <li><a href="/volcano-index/Search-All"><b>Volcano Index</b></a></li>
         {% if session.username == "admin" or session.usertype == "Admins" or session.usertype == "Reviewers"%}
         <li><a href="/review"><span style="color:#FF0000"><b>Awaiting Review</b></span></a></li>
         {% endif %}
         <li><a href="/about">About deformation catalogue</a></li>
         <li><a href="/about-tools">About online analysis tools</a></li>
-        <li><a href="/volcano-index/Search-All">Volcano Index</a></li>
         <li><a href="/glossary">Glossary</a></li>
         <li><a href="/contact">Contact/Give Feedback</a></li>
       </ul>
