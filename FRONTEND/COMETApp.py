@@ -82,16 +82,15 @@ def hitcounter():
 @app.route('/volcano-index', methods=["GET"])
 def volcanodb():
     if 'logged_in' not in session:
-        df = pd.read_sql_query("SELECT * FROM VolcDB1 where subset == 'Y';", conn)
+        df = pd.read_sql_query("SELECT AREA FROM VolcDB1 where subset == 'Y';", conn)
     else:
-        df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
+        df = pd.read_sql_query("SELECT AREA FROM VolcDB1;", conn)
     # Count values and remove weird '0' rows
     df2 = df.apply(pd.value_counts)
     if 'logged_in' in session:
         df2 = df2.drop(index='none')
     df2['Area_name'] = df2.index.values
     df2 = df2.reset_index(drop=True)
-    print(df2)
     df2.columns = ['freq', 'Area']
     df2.Area.fillna(value='Unknown', inplace=True)
     total = df2.freq.sum()
