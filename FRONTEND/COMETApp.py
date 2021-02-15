@@ -102,7 +102,7 @@ def volcanodb():
 def volcanodb_region(region):
     # select country
     if 'logged_in' not in session:
-        df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE AREA = '"
+        df = pd.read_sql_query("SELECT country FROM VolcDB1 WHERE AREA = '"
                            + region + "' AND where subset == 'Y';", conn)
     else:
         df = pd.read_sql_query("SELECT country FROM VolcDB1 WHERE AREA = '"
