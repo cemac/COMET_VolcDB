@@ -156,7 +156,7 @@ def volcanodb_country(country, region):
 def volcanodb_all():
     if 'logged_in' not in session:
         df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
-                           "s, deformation_observation FROM VolcDB1where subset == 'Y';", conn)
+                           "s, deformation_observation FROM VolcDB1 where subset == 'Y';", conn)
     else:
         df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                                "s, deformation_observation FROM VolcDB1;", conn)
