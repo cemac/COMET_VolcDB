@@ -87,14 +87,18 @@ def volcanodb():
         df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
     # Count values and remove weird '0' rows
     if 'logged_in' not in session:
+        print('here')
         df['Area_name'] = df.index.values
+        print('h1')
         df2=df.reset_index(drop=True)
     else:
         df2 = df.apply(pd.value_counts)
         df2 = df2.drop(index='none')
         df2['Area_name'] = df2.index.values
         df2 = df2.reset_index(drop=True)
+    print('h2')
     df2.columns = ['freq', 'Area']
+    print('h3')
     df2.Area.fillna(value='Unknown', inplace=True)
     total = df2.freq.sum()
     return render_template('volcano-index.html.j2', tableClass='index',
