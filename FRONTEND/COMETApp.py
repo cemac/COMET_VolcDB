@@ -103,7 +103,7 @@ def volcanodb_region(region):
     # select country
     if 'logged_in' not in session:
         df = pd.read_sql_query("SELECT country FROM VolcDB1 WHERE AREA = '"
-                           + region + "' AND where subset == 'Y';", conn)
+                           + region + "' AND subset == 'Y';", conn)
     else:
         df = pd.read_sql_query("SELECT country FROM VolcDB1 WHERE AREA = '"
                            + region + "';", conn)
@@ -123,7 +123,7 @@ def volcanodb_region_all(region):
     if 'logged_in' not in session:
         df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1 WHERE " +
-                           "AREA = '" + str(region) + "' AND where subset == 'Y';", conn)
+                           "AREA = '" + str(region) + "' AND  subset == 'Y';", conn)
     else:
         df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1 WHERE " +
@@ -140,7 +140,7 @@ def volcanodb_country(country, region):
         df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1 WHERE " +
                            "country = '" + str(country.replace('_', '/')) +
-                           "' AND where subset == 'Y';", conn)
+                           "' AND subset == 'Y';", conn)
     else:
         df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1 WHERE " +
