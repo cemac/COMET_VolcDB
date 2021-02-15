@@ -3,7 +3,13 @@ body {
     font-family: Helvetica, Arial, sans-serif;
 
 }
+.row {
+ display: flex;
+}
 
+.column {
+ flex: 50%;
+}
 .center {
   display: block;
   margin-left: auto;

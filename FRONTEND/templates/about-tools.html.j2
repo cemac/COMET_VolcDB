@@ -1,23 +1,94 @@
 {% extends 'layout.html.j2' %}
 {% block body %}
-<h1>About our online analysis tools</h1>
+<h1>About online analysis tools</h1>
+<div class="row">
+<div class="column"></div>
+<p>Our online analysis tools are designed to help volcano observatory scientists
+interrogate the interferograms processed in the <a href="https://comet.nerc.ac.uk/comet-lics-portal/">LiCSAR</a>
+archive. This page describes how interferograms and time series are generated and gives some guidance
+on how to use to them.
+<br>
+<p>Our analysis tools are currently divided into three sections: (1) time series tools,
+(2) individual interferograms and (3) Machine Learning predictions of the location
+of any deformation. The start and end dates for the time series can be controlled
+using the sliders, while the user can select both the points to be plotted and a
+reference point or area using the buttons below the map of cumulative displacement.
+The slider at the base of the page allows the user to scroll through all of the
+interferograms and corresponding probability maps for volcano deformation.
+
+<p>Both the map of cumulative displacement and the time series for a selected point or
+area can be downloaded using the ‘save data as csv’ buttons.  Links to download the
+individual interferograms are found at the bottom of the webpage.
+
+<p>Time series are constructed using LiCSBAS (Morishita et al., 2019), an open-source
+time series package integrated with the LiCSAR Sentinel-1 InSAR Processor.
+For the volcano portal, we clip interferograms to the area around the volcano and
+downsample to a size of 50 x 50 pixels for computational reasons. The selected area
+centred on the volcano is by default a box of side length 50 km (resulting in a pixel
+dimension of ~1 km), except for volcanoes where the footprint of deformation is expected
+to be significantly larger or smaller.  LiCSBAS uses loop closure phase to identify
+interferograms with many unwrapping errors and removes them before construction of the
+timeseries. Incremental displacements are estimated using Single Value Decomposition of
+apparent displacement in each interferogram, with a weighted temporal constraint assuming
+linear displacement over network gaps. Standard deviations of each pixel velocity are
+estimated using bootstrap resampling, so that noisy pixels can be masked.
+Noise in the resulting time series is further reduced by applying a spatiotemporal
+filter that is high pass in time and low pass in space.
+
+<p>For each volcano we also provide the line-of-sight wrapped range change (cm), unwrapped
+range change (cm) and coherence for each individual interferogram. Links to geotiffs
+and png images for these are provided beneath the figures.
+
+<p>Flags of deformation in individual interferograms are obtained from the application of
+a deep learning approach to CCN (AlexNet) trained on a subset of real and synthetic
+interferograms (Anantrasirichai et al., 2018, 2019). Synthetic interferograms were
+designed to include both the range of deformation predicted by analytic elastic half
+space models, simulated turbulent and stratified atmosphere. These were combined with
+real examples drawn from LiCSAR automatic processing in 2016-2017 (from Etna,
+Ethiopia and the Galapagos) as well as earlier deformation in the Main Ethiopian
+Rift detected using ENVISAT imagery. Positive detections from an initial run were
+classified as deformation or atmosphere by experts and used for retraining. The
+detection threshold in the individual interferograms presented here is one fringe (2.8 cm),
+so we expect detections to be limited to rapid, relatively high magnitude deformation.
+A lack of flagging should therefore not be interpreted as a lack of any volcanic deformation.
+</div>
+<div class="column"></div>
+<p style="border:3px; border-style:solid; padding: 1em;">
+COMET/LiCSAR processing
+<br>
+LiCSAR is an automatic system that automatically processes interferograms from Sentinel-1
+imagery over the tectonically and volcanically active parts of the Earth. For each new
+Sentinel-1 image, spatially filtered interferograms are formed with the four immediately
+preceding images (spanning up to 48 days for a 12 day acquisition interval). Newly acquired
+images are co-registered to a single ‘leader’ image using spectral diversity methods. Over
+270,000 interferograms are available through the
+<a href="https://comet.nerc.ac.uk/comet-lics-portal/">LiCSAR portal</a> (May 2020), with some
+images for each of 1024 volcanoes. However, gaps in coverage remain for some volcanoes
+over periods where ‘live’ processing was not operational. LiCSAR interferograms are used
+to assess low rate, large spatial footprint tectonic deformation and therefore have a
+pixel size of ~100m (4 x 20 multilooked in azimuth and range).  We provide links to
+download the individual LiCSAR interferograms selected with slider at the bottom of
+each volcano page.
+</p>
+</div>
 <div>
-<p>Our tools are designed to allow quick and easy interrogation of processed interferograms in the <a href="https://comet.nerc.ac.uk/comet-lics-portal/">LiCSAR</a> archive.  We combine the construction of interferograms and time series ‘on the fly’ according to user choices with flexibility in choice of point to plot and reference pixel.  These choices can be informed by consideration of interferogram coherence. We also provide access to the results of machine learning classification using Convolutional Neural Networks (CCN) for each interferogram plotted.
-<br>
-<p><b>Panel 1:</b>You can use the sliding bars on the ‘Explore Sentinel-1 Imagery’ tabs to select any first and second date of Sentinel-1 imagery acquired since 2015.  The down-sampled interferogram will then be displayed, along with a time series constructed using LiCSBAS (Morishita et al., 2019).  LiCSBAS is an open-source time series package that is integrated with the LiCSAR automated Sentinel-1 InSAR Processor to produce time series with corrections including the removal of interferograms with high numbers of unwrapping errors and masking according to noise.
-<p><b>Panel 2:</b>  Sliding bars allow the selection of individual interferograms already constructed by LiCSAR.  Four panels show (1) coherence, (2) line-of-sight wrapped range change in centimetres, (3) line-of-sight unwrapped range change in centimetres and (4) a heat map indicating the probability of any particular signal being magmatic in origin.
-<br>
-<p> These heat maps are the product of the application of a deep learning approach to CCN trained on a subset of real and synthetic interferograms classified as containing magmatic deformation or not (Anantrasirichai et al., 2019a, 2019b). <!--[This section will require development to match the final version of the scripts that Pui provides.]--> Interferograms containing signals with probabilities > 0.05 are indicated by a line next to the sliding bar. For an understanding of the uncertainties and implications of these probabilities, please refer to Anantrasirichai et al., 2019a, 2019b.
-<br>
+<h1>How to use the Sentinel-1 online analysis tools</h1>
+<p>The aim of our tools is to make Sentinel-1 interferograms accessible and interpretable online, without requiring local computing.  We have designed the tools to allow users to interrogate the InSAR data and assess for themselves the likelihood of the data showing volcanic deformation. Please use the flow charts below as a guide to how to use the tools. The questions that we suggest are not necessarily diagnostic of either deformation or a particular source of noise by themselves, but should help establish the reliability of any suspected volcanic deformation signal.
 <figure>
-<img src="static/About_our_online_analysis_tools.jpg" alt="Figure showing the Analysis tools" width="90%" height="auto"></img>
+<img src="static/timeseries_flowchart.pdf" alt="how to use LICSBAS-based timeseries" width="90%" height="auto"></img>
+<figcaption><b>Figure 1:</b>  How to use the LICSBAS-based time series tools (Panel 1) </figcaption>
 </figure>
+<figure>
+<img src="static/interferograms_flowchart.pdf" alt="how to use LICSBAS-based interferograms" width="90%" height="auto"></img>
+<figcaption><b>Figure 2:</b>  How to use the previews of individual LiCSAR interferograms and machine learning flags (Panels 2 and 3) </figcaption>
+</figure>
+</div>
 <h3> References </h3>
 <ul>
-<li>Anantrasirichai, N., Biggs, J., Albino, F., & Bull, D. (2019). The Application of Convolutional Neural Networks to Detect Slow, Sustained Deformation in InSAR Time Series. Geophysical Research Letters, 46(21), 11850-11858.</li>
+<li>Anantrasirichai, N., Biggs, J., Albino, F., Hill, P. and Bull, D., (2018). Application of machine learning to classification of volcanic deformation in routinely generated InSAR data. Journal of Geophysical Research: Solid Earth, 123(8), pp.6592-6606.</li>
 <li>Anantrasirichai, N., Biggs, J., Albino, F., & Bull, D. (2019). A deep learning approach to detecting volcano deformation from satellite imagery using synthetic datasets. Remote Sensing of Environment, 230, 111179.</li>
-<!--<li></li>[Milan Lazecky’s LiCSAR paper final reference]-->
-<li>Morishita, Y.; Lazecky, M.; Wright, T.J.; Weiss, J.R.; Elliott, J.R.; Hooper, A. LiCSBAS: An Open-Source InSAR Time Series Analysis Package Integrated with the LiCSAR Automated Sentinel-1 InSAR Processor. Remote Sens. 2020, 12, 424.</li>
+<li>Lazecký, M., Spaans, K., González, P.J., Maghsoudi, Y., Morishita, Y., Albino, F., Elliott, J., Greenall, N., Hatton, E., Hooper, A. and Juncu, D., (2020). LiCSAR: An automatic InSAR tool for measuring and monitoring tectonic and volcanic activity. Remote Sensing, 12(15), p.2430.</li>
+<li>Morishita, Y.; Lazecky, M.; Wright, T.J.; Weiss, J.R.; Elliott, J.R.; Hooper, A. (2020) LiCSBAS: An Open-Source InSAR Time Series Analysis Package Integrated with the LiCSAR Automated Sentinel-1 InSAR Processor. Remote Sensing, 12, 424.</li>
 </ul>
 </div>
 {% endblock %}
