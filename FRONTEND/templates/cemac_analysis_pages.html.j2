@@ -48,16 +48,12 @@
 		</ul>
    <div>
 <div style="width:100%; display:block; margin:auto;">
-  <p>These tools can be used to interrogate interferograms constructed by LiCSAR.
-     First select the Sentinel-1 frame you want to look at from the buttons at the
-     top of the page.  Then select a point to plot and a reference area.
-     You can display both average <!--[check definition!]-->phase coherence and
-     displacement to help with your choice. The cumulative displacement will be
-     shown as a downsampled interferogram in panel A, while the time series is
-     shown in panel B.  You can also inspect individual wrapped and unwrapped
-     interferograms, coherence and look a the automatically estimated probability
-     of the image containing a magmatic signal.  Algorithm details and references
-     can be found on the <a href="/about-tools">About</a> page.
+  <p>These tools can be used to interrogate interferograms constructed automatically
+  by LiCSAR – details of how to use them can be found <a href="/about-tools">here</a>.
+  Select the Sentinel-1 frame you want to interrogate from the buttons at the top of
+  the page (frame definitions can be found on the
+  <a href="https://comet.nerc.ac.uk/comet-lics-portal/">LiCSAR</a> portal).
+
   </div>
 <div style="width:100%; display:block; margin:auto;">
 
@@ -102,6 +98,15 @@
       <div class="col_s1_type flex_column flex_grow"
            id="col_s1_type">
         <span class="s1_section_hdr">Time series analysis</span>
+        <p><b>Panel 1: Time series Analysis.</b> Explore the LiCSBAS time series of 
+        apparent displacement, selecting your point or area to plot (green) and
+        a reference area (red). You can examine both average phase coherence and
+        cumulative displacement to help with your choice. The time series for your
+        selected point can be displayed with and without temporal filtering, and
+        start and end points can be selected using the sliders. Use the profile
+        or surface plot tools to compare the shape of the apparent displacement
+        to underlying topography.
+
         <h3 class="s1_page_hdr">Displacement data type</h3>
         <div class="s1_type_control flex_row_wrap flex_grow"
              id="s1_type_control">
