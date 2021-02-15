@@ -58,7 +58,10 @@ def close_connection(exception):
 
 @app.route('/', methods=["GET"])
 def index():
-    df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
+    if 'logged_in' not in session:
+        df = pd.read_sql_query("SELECT * FROM VolcDB1 where subset == 'Y';", conn)
+    else:
+        df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
     df = df[df.Area != 'none']
     df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
     volcinfo = df[['name', 'latitude', 'longitude', 'Area', 'country']]
