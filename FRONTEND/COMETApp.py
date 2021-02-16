@@ -77,7 +77,7 @@ def index():
     volcs = df.loc[df.jasmin_name.isin(recent_events.index.to_list())].sort_values(by=['jasmin_name'])
     volcs['prob_date'] = recent_events.sort_index()['prob_date'].values
     return render_template('home.html.j2',
-                           volcinfo=json.dumps(volcinfo.values.tolist())
+                           volcinfo=json.dumps(volcinfo.values.tolist()),
                            recent_volcs=volcs)
 
 
