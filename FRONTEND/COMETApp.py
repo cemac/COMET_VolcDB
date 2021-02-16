@@ -72,7 +72,7 @@ def index():
     volcanos_with_events=rawdf[pd.notna(rawdf.prob_date)]
     now = dt.datetime.now().strftime("%Y-%m-%d")
     last_sixmonths = pd.to_datetime(now) - pd.DateOffset(months=6)
-    mask = (volcanos_with_events['prob_date'] > last_sixmonths) & (volcanos_with_events['prob_date']  <= now)
+    mask = (volcanos_with_events['prob_date'] > last_sixmonths.strftime("%Y-%m-%d")) & (volcanos_with_events['prob_date']  <= now)
     recent_events = volcanos_with_events.loc[mask]
     volcs = df.loc[df.jasmin_name.isin(recent_events.index.to_list())].sort_values(by=['jasmin_name'])
     volcs['prob_date'] = recent_events.sort_index()['prob_date'].values
