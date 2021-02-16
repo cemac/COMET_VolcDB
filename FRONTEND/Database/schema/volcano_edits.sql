@@ -1,6 +1,7 @@
 alter table VolcDB1 add column "Review needed" VARCHAR;
 alter table VolcDB1 add column "date_edited" DATE;
 alter table VolcDB1 add column "owner_id" TEXT;
+alter table VolcDB1_edits add column "subset" TEXT;
 
 create table VolcDB1_edits (
 jasmin_name TEXT,

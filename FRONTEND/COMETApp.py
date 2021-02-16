@@ -58,7 +58,10 @@ def close_connection(exception):
 
 @app.route('/', methods=["GET"])
 def index():
-    df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
+    if 'logged_in' not in session:
+        df = pd.read_sql_query("SELECT * FROM VolcDB1 where subset == 'Y';", conn)
+    else:
+        df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
     df = df[df.Area != 'none']
     df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
     volcinfo = df[['name', 'latitude', 'longitude', 'Area', 'country']]
@@ -78,10 +81,14 @@ def hitcounter():
 
 @app.route('/volcano-index', methods=["GET"])
 def volcanodb():
-    df = pd.read_sql_query("SELECT AREA FROM VolcDB1;", conn)
+    if 'logged_in' not in session:
+        df = pd.read_sql_query("SELECT AREA FROM VolcDB1 where subset == 'Y';", conn)
+    else:
+        df = pd.read_sql_query("SELECT AREA FROM VolcDB1;", conn)
     # Count values and remove weird '0' rows
     df2 = df.apply(pd.value_counts)
-    df2 = df2.drop(index='none')
+    if 'logged_in' in session:
+        df2 = df2.drop(index='none')
     df2['Area_name'] = df2.index.values
     df2 = df2.reset_index(drop=True)
     df2.columns = ['freq', 'Area']
@@ -94,7 +101,11 @@ def volcanodb():
 @app.route('/volcano-index/<string:region>', methods=["GET", "POST"])
 def volcanodb_region(region):
     # select country
-    df = pd.read_sql_query("SELECT country FROM VolcDB1 WHERE AREA = '"
+    if 'logged_in' not in session:
+        df = pd.read_sql_query("SELECT country FROM VolcDB1 WHERE AREA = '"
+                           + region + "' AND subset == 'Y';", conn)
+    else:
+        df = pd.read_sql_query("SELECT country FROM VolcDB1 WHERE AREA = '"
                            + region + "';", conn)
     # Count values and remove weird '0' rows
     df2 = df.apply(pd.value_counts)
@@ -109,7 +120,12 @@ def volcanodb_region(region):
 @app.route('/volcano-index/<string:region>-all', methods=["GET"])
 def volcanodb_region_all(region):
     # select country
-    df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
+    if 'logged_in' not in session:
+        df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
+                           "s, deformation_observation FROM VolcDB1 WHERE " +
+                           "AREA = '" + str(region) + "' AND  subset == 'Y';", conn)
+    else:
+        df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1 WHERE " +
                            "AREA = '" + str(region) + "';", conn)
     total = len(df.index)
@@ -120,7 +136,13 @@ def volcanodb_region_all(region):
 @app.route('/volcano-index/<string:region>/<path:country>', methods=["GET"])
 def volcanodb_country(country, region):
     # select country
-    df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
+    if 'logged_in' not in session:
+        df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
+                           "s, deformation_observation FROM VolcDB1 WHERE " +
+                           "country = '" + str(country.replace('_', '/')) +
+                           "' AND subset == 'Y';", conn)
+    else:
+        df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
                            "s, deformation_observation FROM VolcDB1 WHERE " +
                            "country = '" + str(country.replace('_', '/')) +
                            "';", conn)
@@ -133,8 +155,12 @@ def volcanodb_country(country, region):
 
 @app.route('/volcano-index/Search-All', methods=["GET"])
 def volcanodb_all():
-    df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
-                           "s, deformation_observation FROM VolcDB1;", conn)
+    if 'logged_in' not in session:
+        df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
+                           "s, deformation_observation FROM VolcDB1 where subset == 'Y';", conn)
+    else:
+        df = pd.read_sql_query("SELECT ID, AREA, country, name, geodetic_measurement" +
+                               "s, deformation_observation FROM VolcDB1;", conn)
     df = df[df.Area != 'none']
     df.Area.fillna(value='Unknown', inplace=True)
     df.country.fillna(value='Unknown', inplace=True)
