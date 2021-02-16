@@ -75,10 +75,11 @@ def index():
     mask = (volcanos_with_events['prob_date'] > last_sixmonths.strftime("%Y-%m-%d")) & (volcanos_with_events['prob_date']  <= now)
     recent_events = volcanos_with_events.loc[mask]
     volcs = df.loc[df.jasmin_name.isin(recent_events.index.to_list())].sort_values(by=['jasmin_name'])
+    recent_events = recent_events.loc[recent_events.index.isin(df.jasmin_name.to_list())]
     volcs['prob_date'] = recent_events.sort_index()['prob_date'].values
     return render_template('home.html.j2',
                            volcinfo=json.dumps(volcinfo.values.tolist()),
-                           recent_volcs=volcs)
+                           data=volcs)
 
 
 @app.route("/")
