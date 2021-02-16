@@ -53,7 +53,6 @@ def close_connection(exception):
     if db is not None:
         conn.close()
 
-
 # Index ----------------------------------------------------------------------
 
 @app.route('/', methods=["GET"])
@@ -66,8 +65,20 @@ def index():
     df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
     volcinfo = df[['name', 'latitude', 'longitude', 'Area', 'country']]
     volcinfo = volcinfo[volcinfo['latitude'].notna()]
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, "static/data", "volcanoes_status.json")
+    data = json.load(open(json_url))
+    rawdf = pd.DataFrame.from_dict(data, orient='index')
+    volcanos_with_events=rawdf[pd.notna(rawdf.prob_date)]
+    now = dt.datetime.now().strftime("%Y-%m-%d")
+    last_sixmonths = pd.to_datetime(now) - pd.DateOffset(months=6)
+    mask = (volcanos_with_events['prob_date'] >date_1) & (volcanos_with_events['prob_date']  <= now)
+    recent_events = volcanos_with_events.loc[mask]
+    volcs = df.loc[df.jasmin_name.isin(recent_events.index.to_list())].sort_values(by=['jasmin_name'])
+    volcs['prob_date'] = recent_events.sort_index()['prob_date'].values
     return render_template('home.html.j2',
-                           volcinfo=json.dumps(volcinfo.values.tolist()))
+                           volcinfo=json.dumps(volcinfo.values.tolist())
+                           recent_volcs=volcs)
 
 
 @app.route("/")
@@ -684,7 +695,6 @@ def measure():
 @app.route('/glossary', methods=["GET"])
 def glossary():
     return render_template('glossary.html.j2')
-
 
 # Error Pages ----------------------------------------------------------------
 @app.errorhandler(404)
