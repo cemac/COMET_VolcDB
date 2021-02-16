@@ -44,6 +44,8 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
 <div id="map" style="height: 512px; width:1050px; display:block; margin:auto;"></div>
 <div style="text-align: center"> <a href="https://zenodo.org/badge/latestdoi/197738447"><img src="https://zenodo.org/badge/197738447.svg" alt="DOI"></a> </div>
 <div style="text-align: center">
+<br>
+<br>
 <h3> Recent activity (past 6 months)</h3>
  <table id="myTable"  class="display" style="width:40%">
     <thead>
@@ -64,6 +66,8 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
     </tbody>
 </table>
 </div>
+{% block scripts %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 
 <script type="text/javascript">
   // The first parameter are the coordinates of the center of the map
@@ -98,23 +102,16 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
   map.setZoom(2)
   map.setView([0, 0])
 </script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.22/filtering/type-based/accent-neutralise.js"></script>
 <script>
 $(document).ready(function(){
   $('.dropdown-toggle').dropdown();
   var table = $('#myTable').DataTable({
-    columnDefs: [
-        {targets: [-1], orderable: false}
-    ],
       order: [[0, "asc"]],
-			stateSave: true
   });
 });
-
 </script>
-
+{% endblock %}
 {% endblock %}
 
 </html>
