@@ -24,21 +24,24 @@ from sqlalchemy import create_engine
 # connect to volcano.db
 conn = sqlite3.connect('volcano.db')
 # load in smithonian dataset nb encoding
-subset = pd.read_csv('smithsonian_vols.csv', encoding='latin-1')
+subset = pd.read_csv('portal_subset.csv')
+subset = list(subset.values.flatten())
+subset =  [x.lower().replace(' ', '_') for x in subset]
 # Create dataframe from db
 dball = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
 dball['subset']='N'
 for row in dball.iterrows():
-    if row[1]['jasmin_name'] in subset.values:
-        print(row[1]['jasmin_name'])
-        dball.at[row[0], 'subset'] = 'Y'
-    elif row[1]['name'] in subset.values:
-        print(row[1]['name'] )
-        dball.at[row[0], 'subset'] = 'Y'
-    else:
+    try:
+        if row[1]['jasmin_name'].lower().replace(' ', '_') in subset:
+            print(row[1]['jasmin_name'])
+            dball.at[row[0], 'subset'] = 'Y'
+        elif row[1]['name'].lower().replace(' ', '_') in subset:
+            print(row[1]['name'] )
+            dball.at[row[0], 'subset'] = 'Y'
+        else:
+            continue
+    except AttributeError:
         continue
-
-
 dball.to_sql('VolcDB1', con=conn, if_exists='replace', index=False)
 conn.close()
 # This might liead to read only database - setfacl and restart app req
