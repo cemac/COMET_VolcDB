@@ -24,7 +24,7 @@ from sqlalchemy import create_engine
 # connect to volcano.db
 conn = sqlite3.connect('volcano.db')
 # load in smithonian dataset nb encoding
-subset = pd.read_csv('portal_subset.csv')
+subset = pd.read_csv('portal_subset.csv', header=None)
 subset = list(subset.values.flatten())
 subset =  [x.lower().replace(' ', '_') for x in subset]
 # Create dataframe from db
