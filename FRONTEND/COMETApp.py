@@ -191,7 +191,7 @@ def volcano(country, region, volcano):
     elif "'" in str(volcano):
         volcano=str(volcano).replace("'","&#039;")
     df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
-                                "name = '" + str(volcano) + "';", conn)
+                                "name = '" + str(volcano) + "' and country ='" + str(country) "';", conn)
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
