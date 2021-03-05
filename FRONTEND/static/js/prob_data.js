@@ -60,7 +60,7 @@ function prob_plot(index) {
     /* loop through indexes: */
     for (var i = 0; i < indexes.length; i++) {
       /* set the hover data: */
-      hover_data[i] = 'index : ' + indexes[i] + '<br>' +
+      hover_data[i] = 'index : ' + ('0000' + indexes[i]).slice(-4) + '<br>' +
                       'date  : ' + dates[i] + '<br>' +
                       'mean  : ' + means[i] + '<br>' +
                       'max  : ' + maxs[i];
