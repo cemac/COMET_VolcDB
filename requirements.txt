@@ -26,7 +26,7 @@ folium=0.11.0=py_0
 gunicorn=20.0.4=py37hc8dfbb8_1
 idna=2.10=pyh9f0ad1d_0
 itsdangerous=1.1.0=py_0
-jinja2=2.11.2=pyh9f0ad1d_0
+jinja2=2.11.3=pyh44b312d_0
 ld_impl_linux-64=2.34=h53a641e_7
 libblas=3.8.0=17_openblas
 libcblas=3.8.0=17_openblas
@@ -41,7 +41,7 @@ mako=1.1.0=py_0
 markupsafe=1.1.1=py37h8f50634_1
 ncurses=6.2=he1b5a44_1
 numpy=1.19.0=py37h8960a57_0
-openssl=1.1.1i=h7f98852_0
+openssl=1.1.1j=h7f98852_0
 pandas=1.0.5=py37h0da4684_0
 passlib=1.7.1=py_0
 pip=20.1.1=py_1
