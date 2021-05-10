@@ -61,7 +61,7 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
       <tr>
         <td>{{row['name']}}</td>
         <td> {{row['prob_date']}} </td>
-        <td> <a href='/volcano-index/{{row['Area']}}/{{row['country']}}/{{row['name']}}/S1_analysis'> View </td>
+        <td> <a href='/volcano-index/{{row['Area']}}/{{row['country']}}/{{row['name']}}/S1_analysis?frame={{row['prob_frame']}}'> View </td>
       </tr>
       {% endfor %}
     </tbody>
