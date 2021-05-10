@@ -17,6 +17,28 @@ var prob_range_el_display = null;
 var disp_plot_el_display = null;
 var disp_range_el_display = null;
 
+/*
+ * function to get GET variables
+ * see: https://stackoverflow.com/a/12049737
+ */
+function get_get_vars() {
+ /* init _GET variable: */
+ var get_vars = {};
+ /* check for any URL parameters: */
+ if (document.location.toString().indexOf('?') !== -1) {
+   /* extract URL parameters: */
+   var doc_url = document.location.toString()
+   var url_pars = doc_url.replace(/^.*?\?/, '').replace(/#.*$/, '').split('&');
+   /* loop through parameters, and add to _GET: */
+   for(var i = 0; i < url_pars.length; i++) {
+     var url_par = decodeURIComponent(url_pars[i]).split('=');
+     get_vars[url_par[0]] = url_par[1];
+   };
+ };
+ /* return the GET variables: */
+ return get_vars;
+};
+
 /* page set up function: */
 function s1_page_set_up(frame_index) {
 
@@ -54,6 +76,19 @@ function s1_page_set_up(frame_index) {
     disp_plot_el.style.display : disp_plot_el_display;
   disp_range_el_display == (disp_range_el_display === null) ?
     disp_range_el.style.display : disp_range_el_display;
+
+  /* if frame index is undefined: */
+  if (frame_index == undefined) {
+    /* check for frame id in URL parameters: */
+    get_vars = get_get_vars();
+    var get_frame_id = get_vars['frame'];
+    /* check if frame id from url is valid: */
+    for (var i = 0; i < volcano_frames.length; i++) {
+      if (volcano_frames[i]['id'] == get_frame_id) {
+        frame_index = i;
+      };
+    };
+  };
 
   /* check if frame index is set: */
   if (frame_index == undefined) {
