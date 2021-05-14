@@ -1,8 +1,6 @@
 {% extends 'layout.html.j2' %}
 
-
 {% block body %}
-
 <div style="text-align: center">
 <h2>Welcome to the COMET Volcano Deformation Portal</h2>
 <h3>This site is in continual development.  Currently, analysis tools are only active for volcanoes where the majority of Sentinel-1 imagery has been processed.</h3>
@@ -41,7 +39,7 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
 </p>
 
 </div><!-- .entry-content -->
-<div id="map" style="height: 512px; width:1050px; display:block; margin:auto;"></div>
+<div id="map" style="height: 512px; width: 100%; display:block; margin:auto;"></div>
 <div style="text-align: center"> <a href="https://zenodo.org/badge/latestdoi/197738447"><img src="https://zenodo.org/badge/197738447.svg" alt="DOI"></a> </div>
 <div style="text-align: center">
 <br>
@@ -67,56 +65,105 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
     </tbody>
 </table>
 </div>
+{% endblock %}
+
 {% block scripts %}
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-
 <script type="text/javascript">
-  // The first parameter are the coordinates of the center of the map
-  // The second parameter is the zoom level
-  var map = L.map('map', {
-    minZoom: 0,
-    zoomSnap: 0.25,
-  });
-  // {s}, {z}, {x} and {y} are placeholders for map tiles
-  // {x} and {y} are the x/y of where you are on the map
-  // {z} is the zoom level
-  // {s} is the subdomain of cartodb
-  var layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-  });
+  /* map div id: */
+  var map_div = 'map';
+  /* if map does not exist: */
+  if (document.getElementById(map_div)._leaflet_id == undefined) {
 
-  // Now add the layer onto the map
-  map.addLayer(layer);
+    /*
+     * map does not exist ... create map!:
+     * The first parameter are the coordinates of the center of the map
+     * The second parameter is the zoom level
+     */
+    var map = L.map(map_div, {
+      minZoom: 2,
+      maxZoom: 15,
+      zoomSnap: 0.25,
+      gestureHandling: true,
+      gestureHandlingOptions: {
+        duration: 1000
+      },
+      /* map center: */
+      center: [
+        0,
+        0
+      ],
+      /* define bounds: */
+      maxBounds: [
+        [-90, -180],
+        [90, 180]
+      ],
+      maxBoundsViscosity: 1.0
+    });
+    /*
+     * {s}, {z}, {x} and {y} are placeholders for map tiles
+     * {x} and {y} are the x/y of where you are on the map
+     * {z} is the zoom level
+     * {s} is the subdomain of cartodb
+     */
+    var layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    });
+    /* Now add the layer onto the map: */
+    map.addLayer(layer);
 
-  var planes = {{volcinfo}};
-    for (var i = 0; i < planes.length; i++) {
-      marker = new L.circleMarker([planes[i][1],planes[i][2]],{
-        radius: 4,
-        stroke: false,
-        fill: true,
-        fillColor: "red",
-      })
-        .bindPopup('<a href="/volcano-index/'+planes[i][3]+'/'+planes[i][4]+'/'+ planes[i][0]+'">'+planes[i][0]+'</a>')
-        .addTo(map);
-    }
+    /* add volcano markers: */
+    var planes = {{volcinfo}};
+      for (var i = 0; i < planes.length; i++) {
+        var plane_lat = planes[i][1];
+        var plane_lon = planes[i][2];
+        var plane_region = planes[i][3];
+        var plane_country = planes[i][4];
+        var plane_name = planes[i][0];
+        var plane_frame_count = planes[i][5];
+        var plane_ifg_count = planes[i][6];
+        var plane_url = '/volcano-index/'+plane_region+'/'+plane_country+'/'+ plane_name;
+        function plane_function() { alert(plane_name) };
+        var marker = new L.circleMarker([plane_lat, plane_lon],{
+          radius: 6,
+          stroke: true,
+          weight: 1,
+          opacity: 0.8,
+          color: '#cc0033',
+          fill: true,
+          fillOpacity: 0.6,
+          fillColor: '#cc0033'
+        });
+        marker.url = plane_url;
+        marker.bindTooltip('<a href="'+plane_url+'">'+plane_name+'</a><br>'+
+           'Frames: '+plane_frame_count+'<br>'+
+           'Interferograms: '+plane_ifg_count, {
+             interactive: true,
+          });
+        marker.on('click', function(e) { window.open(e.sourceTarget.url); });
+        marker.addTo(map);
+      }
+    /* set zoom and view: */
+    map.setZoom(2)
+    map.setView([0, 0])
 
-  map.setZoom(2)
-  map.setView([0, 0])
+  /* end if map does not exist: */
+  };
 </script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script>
-$(document).ready(function(){
-  $('.dropdown-toggle').dropdown();
-  var table = $('#myTable').DataTable({
-    columnDefs: [
-        {targets: [-1], orderable: false}
-    ],
-    "searching": false,
-    order: [[1, "dsc"]],
+  $(document).ready(function(){
+    $('.dropdown-toggle').dropdown();
+    var table = $('#myTable').DataTable({
+      columnDefs: [
+          {targets: [-1], orderable: false}
+      ],
+      "searching": false,
+      order: [[1, "dsc"]],
+    });
   });
-});
 </script>
-{% endblock %}
 {% endblock %}
 
 </html>

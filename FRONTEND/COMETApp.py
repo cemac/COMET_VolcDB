@@ -63,12 +63,17 @@ def index():
         df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
     df = df[df.Area != 'none']
     df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
-    volcinfo = df[['name', 'latitude', 'longitude', 'Area', 'country']]
-    volcinfo = volcinfo[volcinfo['latitude'].notna()]
+
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     json_url = os.path.join(SITE_ROOT, "static/data", "volcanoes_status.json")
     data = json.load(open(json_url))
     rawdf = pd.DataFrame.from_dict(data, orient='index')
+    # join volcano status information with database information for mapping:
+    volcinfo = df.set_index('jasmin_name').join(rawdf, rsuffix='raw_')
+    volcinfo = volcinfo[['name', 'latitude', 'longitude', 'Area', 'country',
+                         'frame_count', 'ifg_count']]
+    volcinfo = volcinfo[volcinfo['latitude'].notna()]
+    # checking for recent events:
     volcanos_with_events=rawdf[pd.notna(rawdf.prob_date)]
     now = dt.datetime.now().strftime("%Y-%m-%d")
     last_sixmonths = pd.to_datetime(now) - pd.DateOffset(months=12)
