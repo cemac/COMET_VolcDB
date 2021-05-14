@@ -121,7 +121,8 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
         var plane_name = planes[i][0];
         var plane_frame_count = planes[i][5];
         var plane_ifg_count = planes[i][6];
-        var plane_url = '/volcano-index/'+plane_region+'/'+plane_country+'/'+ plane_name;
+        var plane_url = window.location.href +
+           'volcano-index/'+plane_region+'/'+plane_country+'/'+plane_name;
         function plane_function() { alert(plane_name) };
         var marker = new L.circleMarker([plane_lat, plane_lon],{
           radius: 6,
