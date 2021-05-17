@@ -121,20 +121,42 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
         var plane_name = planes[i][0];
         var plane_frame_count = planes[i][5];
         var plane_ifg_count = planes[i][6];
+        var plane_ave = plane_ifg_count / plane_frame_count;
+        if (plane_ave > 800) {
+          var plane_radius = 7;
+          var plane_color = '#33ccff';
+          var plane_fill = '#000000';
+        } else if ((800 > plane_ave) && (plane_ave > 600)) {
+          var plane_radius = 6.5;
+          var plane_color = '#33ccff';
+          var plane_fill = '#1f5d73';
+        } else if ((600 > plane_ave) && (plane_ave > 400)) {
+          var plane_radius = 6;
+          var plane_color = '#33ccff';
+          var plane_fill = '#2ab1a0';
+        } else if ((400 > plane_ave) && (plane_ave > 200)) {
+          var plane_radius = 5.5;
+          var plane_color = '#33ccff';
+          var plane_fill = '#31cdaa';
+        } else {
+          var plane_radius = 5;
+          var plane_color = '#33ccff';
+          var plane_fill = '#93f2c9';
+        };
         if (isNaN(plane_frame_count)) { plane_frame_count = '--'  };
         if (isNaN(plane_ifg_count)) { plane_ifg_count = '--'  };
         var plane_url = window.location.href +
            'volcano-index/'+plane_region+'/'+plane_country+'/'+plane_name;
         function plane_function() { alert(plane_name) };
         var marker = new L.circleMarker([plane_lat, plane_lon],{
-          radius: 6,
+          radius: plane_radius,
           stroke: true,
           weight: 1,
           opacity: 0.8,
-          color: '#cc0033',
+          color: plane_color,
           fill: true,
           fillOpacity: 0.6,
-          fillColor: '#cc0033'
+          fillColor: plane_fill
         });
         marker.url = plane_url;
         marker.bindTooltip('<a href="'+plane_url+'">'+plane_name+'</a><br>'+
