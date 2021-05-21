@@ -140,5 +140,26 @@ function display_licsar_images(index) {
         tooltips: false
       });
     };
+  /* else, make sure sliders are in the right place: */
+  } else {
+      /* get current slider index: */
+      var slider_current_index = parseInt(slider_div.noUiSlider.get());
+      /* check slider index matches image index: */
+      if (slider_current_index != image_index) {
+        /* if not, adjust the slider: */
+        slider_div.noUiSlider.set(image_index);
+      };
+      /* if licsar and probability display should be linked and array lengths
+         are equal: */
+      if (link_licsar_prob == true &&
+          licsar_data['indexes'].length == prob_data['indexes'].length) {
+        /* get the nearest index in other data: */
+        var other_data_index = get_nearest_value(image_index,
+                                                 prob_data['indexes']);
+        /* adjust the other data: */
+        link_licsar_prob = false;
+        display_prob_data(other_data_index);
+        link_licsar_prob = true;
+      };
   };
 };

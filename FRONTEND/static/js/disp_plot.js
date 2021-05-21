@@ -431,27 +431,6 @@ function get_ts_indexes() {
   };
 };
 
-/* return the nearest value from an array: */
-function get_nearest_value(val, arr) {
-  /* init min diff variable: */
-  var min_diff = 999999999;
-  /* return value: */
-  var index;
-  /* loop through array: */
-  for (var i = 0; i < arr.length - 1; i++) {
-    /* get the difference: */
-    var diff = Math.abs(val - arr[i]);
-    /* if less than current min: */
-    if (diff < min_diff) {
-      /* update min_diff and index variables: */
-      min_diff = diff;
-      index = i;
-    };
-  };
-  /* return the index of nearest value: */
-  return index;
-};
-
 /* function to get mean value of specified area in a set of data: */
 function get_area_mean(var_area, var_data) {
   /* init mean calculating variables: */

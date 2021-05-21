@@ -7,6 +7,8 @@ var volcano_track = null;
 var disp_data = null;
 var licsar_data = null;
 
+var link_licsar_prob = true;
+
 var s1_frame_el_display = null;
 var s1_type_el_display = null;
 var licsar_img_el_display = null;
@@ -37,6 +39,27 @@ function get_get_vars() {
  };
  /* return the GET variables: */
  return get_vars;
+};
+
+/* return the nearest value from an array: */
+function get_nearest_value(val, arr) {
+  /* init min diff variable: */
+  var min_diff = 999999999;
+  /* return value: */
+  var index;
+  /* loop through array: */
+  for (var i = 0; i < arr.length; i++) {
+    /* get the difference: */
+    var diff = Math.abs(val - arr[i]);
+    /* if less than current min: */
+    if (diff < min_diff) {
+      /* update min_diff and index variables: */
+      min_diff = diff;
+      index = i;
+    };
+  };
+  /* return the index of nearest value: */
+  return index;
 };
 
 /* page set up function: */
