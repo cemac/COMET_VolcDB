@@ -318,17 +318,19 @@ function display_prob_data(index) {
         /* if not, adjust the slider: */
         slider_div.noUiSlider.set(image_index);
       };
-      /* if licsar and probability display should be linked and array lengths
-         are equal: */
-      if (link_licsar_prob == true &&
-          licsar_data['indexes'].length == prob_data['indexes'].length) {
-        /* get the nearest index in other data: */
-        var other_data_index = get_nearest_value(image_index,
-                                                 licsar_data['indexes']);
-        /* adjust the other data avoiding infinite loops: */
-        link_licsar_prob = false;
-        display_licsar_images(other_data_index);
-        link_licsar_prob = true;
+      /* if licsar and probability display should be linked: */
+      if (link_licsar_prob == true) {
+        /* try to get the index of the date in other data: */
+        var other_data_index = licsar_data['dates'].indexOf(
+          prob_data['dates'][image_index]
+        );
+        /* if a result is found: */
+        if (other_data_index > -1) {
+          /* adjust the other data avoiding infinite loops: */
+          link_licsar_prob = false;
+          display_licsar_images(other_data_index);
+          link_licsar_prob = true;
+        };
       };
   };
 
