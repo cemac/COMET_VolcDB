@@ -150,7 +150,8 @@ function display_licsar_images(index) {
         slider_div.noUiSlider.set(image_index);
       };
       /* if licsar and probability display should be linked: */
-      if (link_licsar_prob == true) {
+      if (typeof(prob_data) !== 'undefined' && prob_data != null &&
+          link_licsar_prob == true) {
         /* try to get the index of the date in other data: */
         var other_data_index = prob_data['dates'].indexOf(
           licsar_data['dates'][image_index]
