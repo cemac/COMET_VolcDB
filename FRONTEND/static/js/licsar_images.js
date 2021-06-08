@@ -1,7 +1,18 @@
 
-var licsar_indexes = {};
+var licsar_indexes_uncorrected = {};
+var licsar_indexes_corrected = {};
+var licsar_indexes = null;
 
 function display_licsar_images(index) {
+
+  /* check if using uncorrected / corrected data and set variables
+     accordingly: */
+  var use_correct = frame_use_correct[volcano_frame_index];
+  if (use_correct != undefined && use_correct == true) {
+    licsar_indexes = licsar_indexes_corrected;
+  } else {
+    licsar_indexes = licsar_indexes_uncorrected;
+  };
 
   /* image index: */
   if ((index == undefined) ||

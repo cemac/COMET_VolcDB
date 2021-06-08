@@ -1,9 +1,23 @@
 /** variables: **/
 
+var plot_vars_uncorrected = null;
+var plot_vars_corrected = null;
 var plot_vars = null;
+var my_disp_data_prefix = null;
 
 /* function to init plot variables: */
 function init_plot_vars(fid, call_back) {
+
+  /* check if using uncorrected / corrected data and set plot variables
+     accordingly: */
+  var use_correct = frame_use_correct[volcano_frame_index];
+  if (use_correct != undefined && use_correct == true) {
+    plot_vars = plot_vars_corrected;
+    my_disp_data_prefix = disp_data_gacos_prefix;
+  } else {
+    plot_vars = plot_vars_uncorrected;
+    my_disp_data_prefix = disp_data_prefix;
+  };
 
   /* if main plot_vars is undefined: */
   if (plot_vars == undefined) {
@@ -163,7 +177,7 @@ function init_plot_vars(fid, call_back) {
   /* function to check if displacement data exists: */
   function check_disp_data(data_suffix, data_button) {
     /* data url: */
-    var disp_data_url = js_data_prefix + disp_data_prefix + '/' +
+    var disp_data_url = js_data_prefix + my_disp_data_prefix +
                         volcano_region + '/' + volcano_name + '_' +
                         volcano_frame + '_' + data_suffix + '.json';
     /* create new request: */
@@ -200,6 +214,13 @@ function init_plot_vars(fid, call_back) {
   /* create s2 map: */
   draw_s2_map(volcano_lat, volcano_lon);
 
+  /* store the plot variables: */
+  if (use_correct != undefined && use_correct == true) {
+    plot_vars_corrected = plot_vars;
+  } else {
+    plot_vars_uncorrected = plot_vars;
+  };
+
 };
 
 
@@ -211,7 +232,7 @@ function get_disp_data(disp_type, fid, disp_args) {
   /* get data suffix: */
   var disp_suffix = disp_type.replace('disp_', '');
   /* data url: */
-  var disp_data_url = js_data_prefix + disp_data_prefix + '/' +
+  var disp_data_url = js_data_prefix + my_disp_data_prefix +
                       volcano_region + '/' + volcano_name + '_' +
                       volcano_frame + '_' + disp_suffix + '.json';
   /* create new request: */
@@ -308,8 +329,8 @@ function disp_to_csv() {
   var csv_coh = plot_vars[fid]['coh'];
   var csv_elev = plot_vars[fid]['elev'];
   /* loop through values: */
-  for (var i = 0; i < csv_disp.length - 1; i++) {
-    for (var j = 0; j < csv_disp[i].length - 1; j++) {
+  for (var i = 0; i < csv_disp.length; i++) {
+    for (var j = 0; j < csv_disp[i].length; j++) {
       /* add line to csv: */
       csv_data += parseFloat(csv_lat[i]).toFixed(3) + ',' +
                   parseFloat(csv_lon[j]).toFixed(3) + ',' +
@@ -365,7 +386,7 @@ function scatter_to_csv() {
     var csv_y2 = plot_vars[fid]['profile_elev'];
   };
   /* loop through values: */
-  for (var i = 0; i < csv_x.length - 1; i++) {
+  for (var i = 0; i < csv_x.length; i++) {
     /* add line to csv: */
     if (csv_y2 != null) {
       csv_data += csv_x[i] + ',' +  parseFloat(csv_y[i]).toFixed(2) + ',' +

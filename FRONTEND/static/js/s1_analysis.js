@@ -4,12 +4,15 @@ var page_update = false;
 var volcano_frame_index = null;
 var volcano_frame = null;
 var volcano_track = null;
+var frame_has_correct = null;
+var frame_use_correct = null;
 var disp_data = null;
 var licsar_data = null;
 
 var link_licsar_prob = true;
 
 var s1_frame_el_display = null;
+var s1_correct_el_display = null;
 var s1_type_el_display = null;
 var licsar_img_el_display = null;
 var licsar_range_el_display = null;
@@ -62,11 +65,69 @@ function get_nearest_value(val, arr) {
   return index;
 };
 
+/* function to enable / disable display of correction type buttons: */
+function enable_correct(enable_data, html_element, html_display) {
+  /* if this frame does not have corrected data, set use_correct to false: */
+  if (enable_data == false) {
+    html_element.style.display = 'none';
+  } else {
+    html_element.style.display = html_display;
+  };
+};
+
+/* function to check if correction data exists: */
+function check_correct_data(data_url, html_element, html_display) {
+  /* create new request: */
+  var disp_req = new XMLHttpRequest();
+  disp_req.responseType = 'json';
+  disp_req.open('HEAD', data_url, true);
+  /* on data download: */
+  disp_req.onload = function() {
+    /* if not successful: */
+    if (disp_req.status != 200) {
+      /* set has_correct to false: */
+      frame_has_correct[volcano_frame_index] = false;
+      /* disable buttons: */
+      enable_correct(false, html_element, html_display);
+    } else {
+      /* set has_correct to true: */
+      frame_has_correct[volcano_frame_index] = true;
+      /* enable buttons: */
+      enable_correct(true, html_element, html_display);
+    };
+  };
+  /* if data check fails: */
+  disp_req.onerror = function() {
+    /* set has_correct to false: */
+    frame_has_correct[volcano_frame_index] = false;
+    /* disable buttons: */
+    enable_correct(false, html_element, html_display);
+  };
+  /* send the request: */
+  disp_req.send(null);
+};
+
 /* page set up function: */
-function s1_page_set_up(frame_index) {
+function s1_page_set_up(frame_index, use_correct) {
+
+  /* set up data correct variables for storing if corrected data is availble
+     and in use for each frame: */
+  if (frame_has_correct == undefined) {
+    frame_has_correct = [];
+    for (var i = 0; i < volcano_frames.length; i++) {
+      frame_has_correct.push(null);
+    };
+  };
+  if (frame_use_correct == undefined) {
+    frame_use_correct = [];
+    for (var i = 0; i < volcano_frames.length; i++) {
+      frame_use_correct.push(false);
+    };
+  };
 
   /* html elements of interest: */
   var s1_frame_el = document.getElementById('row_s1_frame');
+  var s1_correct_el = document.getElementById('row_s1_correct');
   var s1_type_el = document.getElementById('row_s1_type');
   var licsar_img_el = document.getElementById('row_licsar_images');
   var licsar_range_el = document.getElementById('row_licsar_img_range');
@@ -83,6 +144,8 @@ function s1_page_set_up(frame_index) {
   /* get display style of element: */
   s1_frame_el_display == (s1_frame_el_display === null) ?
     s1_frame_el.style.display : s1_frame_el_display;
+  s1_correct_el_display == (s1_correct_el_display === null) ?
+    s1_correct_el.style.display : s1_correct_el_display;
   s1_type_el_display == (s1_type_el_display === null) ?
     s1_type_el.style.display : s1_type_el_display;
   licsar_img_el_display == (licsar_img_el_display === null) ?
@@ -124,7 +187,8 @@ function s1_page_set_up(frame_index) {
     };
   } else {
     /* if frame index hasn't changed, return: */
-    if (frame_index == volcano_frame_index) {
+    if (frame_index == volcano_frame_index &&
+        frame_use_correct[frame_index] == use_correct) {
       return;
     }
     /* otherwise, use specified frame: */
@@ -141,6 +205,57 @@ function s1_page_set_up(frame_index) {
   } else {
     /* show frame selection element: */
     s1_frame_el.style.display = s1_frame_el_display;
+  };
+
+  /* check if this fram has corrected data available. check for probability
+     data: */
+  var prob_data_url = js_data_prefix + prob_data_gacos_prefix +
+                      volcano_region + '/' + volcano_name + '_' +
+                      volcano_frame + '.json';
+  check_correct_data(prob_data_url, s1_correct_el, s1_correct_el_display);
+  /* check for licsar data: */
+  if (frame_has_correct[frame_index] != true) {
+    var licsar_data_url = js_data_prefix + licsar_data_gacos_prefix +
+                        volcano_region + '/' + volcano_name + '_' +
+                        volcano_frame + '.json';
+    check_correct_data(licsar_data_url, s1_correct_el, s1_correct_el_display);
+  };
+  /* check for displacement data: */
+  if (frame_has_correct[frame_index] != true) {
+    var disp_data_url = js_data_prefix + disp_data_gacos_prefix +
+                        volcano_region + '/' + volcano_name + '_' +
+                        volcano_frame + '.json';
+    check_correct_data(disp_data_url, s1_correct_el, s1_correct_el_display);
+  };
+
+  /* check for undefined use_correct: */
+  if (use_correct == undefined) {
+    use_correct = frame_use_correct[frame_index];
+  };
+  /* store use_correct value: */
+  frame_use_correct[volcano_frame_index] = use_correct;
+
+  /* check if using corrected data: */
+  var button_uncorrected = document.getElementById('data_select_button_uncorrected');
+  var button_corrected = document.getElementById('data_select_button_corrected');
+  if (use_correct == true) {
+    /* data prefixes: */
+    var my_disp_data_prefix = disp_data_gacos_prefix;
+    var my_prob_data_prefix = prob_data_gacos_prefix;
+    var my_prob_imgs_prefix = prob_imgs_gacos_prefix;
+    var my_licsar_data_prefix = licsar_data_gacos_prefix;
+    var my_licsar_imgs_prefix = licsar_imgs_gacos_prefix;
+    button_corrected.setAttribute('disabled', true);
+    button_uncorrected.removeAttribute('disabled');
+  } else {
+    /* data prefixes: */
+    var my_disp_data_prefix = disp_data_prefix;
+    var my_prob_data_prefix = prob_data_prefix;
+    var my_prob_imgs_prefix = prob_imgs_prefix;
+    var my_licsar_data_prefix = licsar_data_prefix;
+    var my_licsar_imgs_prefix = licsar_imgs_prefix;
+    button_corrected.removeAttribute('disabled');
+    button_uncorrected.setAttribute('disabled', true);
   };
 
   /* page is updating: */
@@ -172,7 +287,7 @@ function s1_page_set_up(frame_index) {
 
   function prob_update() {
     /* get prob data: */
-    var prob_data_url = js_data_prefix + prob_data_prefix + '/' +
+    var prob_data_url = js_data_prefix + my_prob_data_prefix +
                         volcano_region + '/' + volcano_name + '_' +
                         volcano_frame + '.json';
     /* create new request: */
@@ -188,7 +303,7 @@ function s1_page_set_up(frame_index) {
         /* set prob_data variable: */
         prob_data = prob_req.response;
         /* set image prefix variable: */
-        prob_img_prefix = prob_imgs_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
+        prob_img_prefix = my_prob_imgs_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
         /* hide error element: */
         prob_error_el.style.display = 'none';
         /* make sure html elements are visible: */
@@ -228,7 +343,7 @@ function s1_page_set_up(frame_index) {
 
   function licsar_update() {
     /* get licsar data: */
-    var licsar_data_url = js_data_prefix + licsar_data_prefix + '/' +
+    var licsar_data_url = js_data_prefix + my_licsar_data_prefix +
                         volcano_region + '/' + volcano_name + '_' +
                         volcano_frame + '.json';
     /* create new request: */
@@ -244,7 +359,7 @@ function s1_page_set_up(frame_index) {
         /* set licsar_data variable: */
         licsar_data = licsar_req.response;
         /* set image prefix variable: */
-        licsar_img_prefix = licsar_imgs_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
+        licsar_img_prefix = my_licsar_imgs_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
         /* hide error element: */
         licsar_error_el.style.display = 'none';
         /* make sure html elements are visible: */
@@ -281,7 +396,7 @@ function s1_page_set_up(frame_index) {
   };
 
   /* get displacement data: */
-  var disp_data_url = js_data_prefix + disp_data_prefix + '/' +
+  var disp_data_url = js_data_prefix + my_disp_data_prefix +
                       volcano_region + '/' + volcano_name + '_' +
                       volcano_frame + '.json';
   /* create new request: */

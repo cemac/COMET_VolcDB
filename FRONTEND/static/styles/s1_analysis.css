@@ -130,15 +130,16 @@ body {
 
 /** sentinel 1 frame and data type selection: **/
 
-.row_s1_frame, .row_s1_type {
+.row_s1_frame, .row_s1_correct, .row_s1_type {
   margin-bottom: 10px;
 }
 
-.s1_frame_control, .s1_type_control {
+.s1_frame_control, .s1_correct_control, .s1_type_control {
   padding-left: 2%;
 }
 
-.s1_frame_control button, .s1_type_control button {
+.s1_frame_control button, .s1_correct_control button,
+.s1_type_control button {
   margin: 2px;
 }
 
@@ -152,10 +153,6 @@ body {
 .row_disp_plot {
   max-width: 100%;
   margin-bottom: 20px;
-}
-
-.row_s1_frame {
-  margin-bottom: 10px;
 }
 
 .disp_plot_box {

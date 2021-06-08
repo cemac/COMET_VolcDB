@@ -1,8 +1,20 @@
 
-var prob_indexes = {};
+var prob_indexes_uncorrected = {};
+var prob_indexes_corrected = {};
+var prob_indexes = null;
+var prob_plot_vars_uncorrected = null;
+var prob_plot_vars_corrected = null;
 var prob_plot_vars = null;
 
 function init_prob_plot_vars(fid, call_back, call_back_args) {
+
+  /* check if using corrected data: */
+  var use_correct = frame_use_correct[volcano_frame_index];
+  if (use_correct != undefined && use_correct == true) {
+    prob_plot_vars = prob_plot_vars_corrected;
+  } else {
+    prob_plot_vars = prob_plot_vars_uncorrected;
+  };
 
   /* if main plot_vars is undefined: */
   if (prob_plot_vars == undefined) {
@@ -184,6 +196,15 @@ function prob_plot(index) {
 };
 
 function display_prob_data(index) {
+
+  /* check if using uncorrected / corrected data and set variables
+     accordingly: */
+  var use_correct = frame_use_correct[volcano_frame_index];
+  if (use_correct != undefined && use_correct == true) {
+    prob_indexes = prob_indexes_corrected;
+  } else {
+    prob_indexes = prob_indexes_uncorrected;
+  };
 
   /* data index: */
   if ((index == undefined) ||

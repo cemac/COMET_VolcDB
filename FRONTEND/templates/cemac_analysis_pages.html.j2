@@ -69,11 +69,16 @@
       var volcano_lat = {{ lat }};
       var volcano_lon = {{ lon }};
       var js_data_prefix = '/data/';
-      var disp_data_prefix = 'disp_data';
-      var licsar_data_prefix = 'licsar_data';
-      var prob_data_prefix = 'prob_data';
+      var disp_data_prefix = 'disp_data/';
+      var disp_data_gacos_prefix = 'disp_data_gacos/';
+      var licsar_data_prefix = 'licsar_data/';
+      var licsar_data_gacos_prefix = 'licsar_data_gacos/';
+      var prob_data_prefix = 'prob_data/';
+      var prob_data_gacos_prefix = 'prob_data_gacos/';
       var prob_imgs_prefix = '/images/prob_images/';
+      var prob_imgs_gacos_prefix = '/images/prob_images_gacos/';
       var licsar_imgs_prefix = '/images/licsar_images/';
+      var licsar_imgs_gacos_prefix = '/images/licsar_images_gacos/';
       var data_href_prefix = 'http://gws-access.ceda.ac.uk/public/nceo_geohazards/LiCSAR_products';
     </script>
 
@@ -90,6 +95,30 @@
       </div>
     </div>
     <!-- end frame selection. -->
+
+
+    <!-- corrected selection: -->
+    <div class="row_s1_correct flex_row flex_grow"
+         id="row_s1_correct">
+      <div class="col_s1_correct flex_column flex_grow"
+           id="col_s1_correct">
+        <h3 class="s1_page_hdr">Data type</h3>
+        <div class="s1_type_control flex_row_wrap flex_grow"
+             id="s1_correct_control">
+          <button id="data_select_button_uncorrected"
+                  onclick="s1_page_set_up(null, false);"
+                  title="Displacement data with no atmospheric correction">
+            uncorrected
+          </button>
+          <button id="data_select_button_corrected"
+                  onclick="s1_page_set_up(null, true);"
+                  title="Displacement data with GACOS atmospheric correction">
+            corrected
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- end corrected data selection. -->
 
 
     <!-- displacement data type selection: -->
