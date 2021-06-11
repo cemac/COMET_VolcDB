@@ -165,13 +165,16 @@ function s1_page_set_up(frame_index, use_correct) {
 
   /* if frame index is undefined: */
   if (frame_index == undefined) {
-    /* check for frame id in URL parameters: */
-    get_vars = get_get_vars();
-    var get_frame_id = get_vars['frame'];
-    /* check if frame id from url is valid: */
-    for (var i = 0; i < volcano_frames.length; i++) {
-      if (volcano_frames[i]['id'] == get_frame_id) {
-        frame_index = i;
+    /* if global frame var is also unset: */
+    if (volcano_frame == null) {
+      /* check for frame id in URL parameters: */
+      get_vars = get_get_vars();
+      var get_frame_id = get_vars['frame'];
+      /* check if frame id from url is valid: */
+      for (var i = 0; i < volcano_frames.length; i++) {
+        if (volcano_frames[i]['id'] == get_frame_id) {
+          frame_index = i;
+        };
       };
     };
   };
