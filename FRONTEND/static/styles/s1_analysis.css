@@ -2,7 +2,6 @@
 /** page defaults: **/
 * {
   color: #5c5b56;
-  font: 14px Verdana,Helvetica,Arial,sans-serif;
 }
 
 /** body: **/
@@ -204,7 +203,7 @@ body {
 }
 
 #s2_tile_info,
-#s2_tile_info, a {
+#s2_tile_info a {
   font-size: smaller;
 }
 

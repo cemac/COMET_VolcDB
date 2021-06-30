@@ -157,7 +157,7 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
         if (isNaN(plane_frame_count)) { plane_frame_count = '--'  };
         if (isNaN(plane_ifg_count)) { plane_ifg_count = '--'  };
         var plane_url = window.location.href +
-           'volcano-index/'+plane_region+'/'+plane_country+'/'+plane_name;
+           'volcano-index/'+plane_region+'/'+plane_country+'/'+plane_name+'/S1_analysis';
         function plane_function() { alert(plane_name) };
         var marker = new L.circleMarker([plane_lat, plane_lon],{
           radius: plane_radius,
@@ -176,7 +176,7 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
            'Max interferograms per frame: '+plane_max_ifg_count, {
              interactive: true,
           });
-        marker.on('click', function(e) { window.open(e.sourceTarget.url); });
+        marker.on('click', function(e) { window.location.href = e.sourceTarget.url; });
         marker.addTo(map);
       }
     /* set zoom and view: */

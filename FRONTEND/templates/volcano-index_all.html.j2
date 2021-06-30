@@ -61,9 +61,9 @@ or session.usertype == "Collaborators"%}
         <td>{{row['geodetic_measurements']}}</td>
         <td> {{row['deformation_observation']}} </td>
         {% if row['name'] == 'Unnamed' %}
-          <td> <a href='/volcano-index/{{row['Area']}}/{{row['country']}}/{{row['ID']}}'> View(unnamed) </td>
+          <td> <a href='/volcano-index/{{row['Area']}}/{{row['country']}}/{{row['ID']}}/S1_analysis'> View(unnamed) </td>
         {% else %}
-        <td> <a href='/volcano-index/{{row['Area']}}/{{row['country']}}/{{row['name']}}'> View </td>
+          <td> <a href='/volcano-index/{{row['Area']}}/{{row['country']}}/{{row['name']}}/S1_analysis'> View </td>
         {% endif %}
       </tr>
       {% endfor %}
