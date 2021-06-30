@@ -39,8 +39,19 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
 </p>
 
 </div><!-- .entry-content -->
-<div id="map" style="height: 512px; width: 100%; display:block; margin:auto;"></div>
-<div style="text-align: center"> <a href="https://zenodo.org/badge/latestdoi/197738447"><img src="https://zenodo.org/badge/197738447.svg" alt="DOI"></a> </div>
+<div id="map" style="height: 512px; width: 100%; display:block; margin:auto;">
+  <div class="leaflet-legend">
+    <div class="leaflet-legend-header">
+      Max interferograms per frame
+    </div>
+    <i style="background: #93f2c9; opacity:0.6"></i> 0-200<br>
+    <i style="background: #31cdaa; opacity:0.6"></i> 200-400<br>
+    <i style="background: #2ab1a0; opacity:0.6"></i> 400-600<br>
+    <i style="background: #1f5d73; opacity:0.6"></i> 600-800<br>
+    <i style="background: #000000; opacity:0.6"></i> &gt;800<br>
+  </div>
+</div>
+<div style="text-align: center; margin-top: 3px; margin-bottom: 3px"> <a href="https://zenodo.org/badge/latestdoi/197738447"><img src="https://zenodo.org/badge/197738447.svg" alt="DOI"></a> </div>
 <div style="text-align: center">
 <br>
 <br>
@@ -121,20 +132,20 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
         var plane_name = planes[i][0];
         var plane_frame_count = planes[i][5];
         var plane_ifg_count = planes[i][6];
-        var plane_ave = plane_ifg_count / plane_frame_count;
-        if (plane_ave > 800) {
+        var plane_max_ifg_count = planes[i][7];
+        if (plane_max_ifg_count > 800) {
           var plane_radius = 7;
           var plane_color = '#33ccff';
           var plane_fill = '#000000';
-        } else if ((800 > plane_ave) && (plane_ave > 600)) {
+        } else if ((800 > plane_max_ifg_count) && (plane_max_ifg_count > 600)) {
           var plane_radius = 6.5;
           var plane_color = '#33ccff';
           var plane_fill = '#1f5d73';
-        } else if ((600 > plane_ave) && (plane_ave > 400)) {
+        } else if ((600 > plane_max_ifg_count) && (plane_max_ifg_count > 400)) {
           var plane_radius = 6;
           var plane_color = '#33ccff';
           var plane_fill = '#2ab1a0';
-        } else if ((400 > plane_ave) && (plane_ave > 200)) {
+        } else if ((400 > plane_max_ifg_count) && (plane_max_ifg_count > 200)) {
           var plane_radius = 5.5;
           var plane_color = '#33ccff';
           var plane_fill = '#31cdaa';
@@ -161,7 +172,8 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
         marker.url = plane_url;
         marker.bindTooltip('<a href="'+plane_url+'">'+plane_name+'</a><br>'+
            'Frames: '+plane_frame_count+'<br>'+
-           'Interferograms: '+plane_ifg_count, {
+           'Interferograms: '+plane_ifg_count+'<br>'+
+           'Max interferograms per frame: '+plane_max_ifg_count, {
              interactive: true,
           });
         marker.on('click', function(e) { window.open(e.sourceTarget.url); });

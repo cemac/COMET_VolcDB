@@ -71,7 +71,7 @@ def index():
     # join volcano status information with database information for mapping:
     volcinfo = df.set_index('jasmin_name').join(rawdf, rsuffix='raw_')
     volcinfo = volcinfo[['name', 'latitude', 'longitude', 'Area', 'country',
-                         'frame_count', 'ifg_count']]
+                         'frame_count', 'ifg_count', 'max_ifg_count']]
     volcinfo = volcinfo[volcinfo['latitude'].notna()]
     # checking for recent events:
     volcanos_with_events=rawdf[pd.notna(rawdf.prob_date)]
