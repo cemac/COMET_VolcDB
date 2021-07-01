@@ -9,7 +9,7 @@ var prob_plot_vars = null;
 function init_prob_plot_vars(fid, call_back, call_back_args) {
 
   /* check if using corrected data: */
-  var use_correct = frame_use_correct[volcano_frame_index];
+  var use_correct = false;
   if (use_correct != undefined && use_correct == true) {
     prob_plot_vars = prob_plot_vars_corrected;
   } else {
@@ -199,7 +199,7 @@ function display_prob_data(index) {
 
   /* check if using uncorrected / corrected data and set variables
      accordingly: */
-  var use_correct = frame_use_correct[volcano_frame_index];
+  var use_correct = false;
   if (use_correct != undefined && use_correct == true) {
     prob_indexes = prob_indexes_corrected;
   } else {
@@ -350,7 +350,7 @@ function display_prob_data(index) {
         if (other_data_index > -1) {
           /* adjust the other data avoiding infinite loops: */
           link_licsar_prob = false;
-          display_licsar_images(other_data_index);
+          init_licsar_images(other_data_index);
           link_licsar_prob = true;
         };
       };

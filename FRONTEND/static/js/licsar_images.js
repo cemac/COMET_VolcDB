@@ -1,18 +1,108 @@
 
 var licsar_indexes_uncorrected = {};
 var licsar_indexes_corrected = {};
+var licsar_dates_corrected = {};
 var licsar_indexes = null;
+
+function init_licsar_images(index) {
+
+  /* function to enable / disable gacos data display: */
+  function enable_licsar_gacos(data_elements, data_enabled) {
+    /* hide elements if no data: */
+    if (data_enabled == true) {
+      for (var i = 0; i < data_elements.length; i++) {
+        data_elements[i].style.display = 'inline';
+      };
+    } else {
+      for (var i = 0; i < data_elements.length; i++) {
+        data_elements[i].style.display = 'none';
+      };
+    };
+  };
+
+  /* function to get corrected data exists: */
+  function get_licsar_gacos_data(html_elements) {
+    /* get licsar data: */
+    var licsar_data_url = js_data_prefix + licsar_data_gacos_prefix +
+                        volcano_region + '/' + volcano_name + '_' +
+                        volcano_frame + '.json';
+    /* create new request: */
+    var licsar_req = new XMLHttpRequest();
+    licsar_req.responseType = 'json';
+    licsar_req.open('GET', licsar_data_url, true);
+    /* on data download: */
+    licsar_req.onload = function() {
+      /* if not successful: */
+      if (licsar_req.status != 200) {
+        enable_licsar_gacos(html_elements, false);
+      } else {
+        /* set licsar_data variable: */
+        licsar_data_gacos = licsar_req.response;
+        /* set image prefix variable: */
+        licsar_img_gacos_prefix = licsar_imgs_gacos_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
+        /* if no images, hide html elements: */
+        if (licsar_data['count'] < 1) {
+          frame_has_licsar_correct[volcano_frame_index] = false;
+          enable_licsar_gacos(html_elements, false);
+        /* else, enable html elements: */
+        } else {
+          enable_licsar_gacos(html_elements, true);
+        };
+        /* display images: */
+        display_licsar_images(index);
+      };
+    };
+    /* if licsar data retrival fails: */
+    licsar_req.onerror = function() {
+      enable_licsar_gacos(html_elements, false);
+      display_licsar_images(index);
+    };
+    /* send the request: */
+    licsar_req.send(null);
+  };
+
+  /* gacos html elements: */
+  var licsar_gacos_hdr_el = document.getElementById('licsar_gacos_hdr');
+  var licsar_gacos_imgs_el = document.getElementById('licsar_gacos_imgs');
+  /* check if this frame has corrrected data and get it if so: */
+  if (frame_has_licsar_correct[volcano_frame_index] == true) {
+    get_licsar_gacos_data([licsar_gacos_hdr_el, licsar_gacos_imgs_el]);
+  } else {
+    enable_licsar_gacos([licsar_gacos_hdr_el, licsar_gacos_imgs_el], false);
+    display_licsar_images(index);
+  };
+
+};
 
 function display_licsar_images(index) {
 
-  /* check if using uncorrected / corrected data and set variables
-     accordingly: */
-  var use_correct = frame_use_correct[volcano_frame_index];
-  if (use_correct != undefined && use_correct == true) {
-    licsar_indexes = licsar_indexes_corrected;
-  } else {
-    licsar_indexes = licsar_indexes_uncorrected;
+  /* return the nearest dates from an array: */
+  function get_nearest_dates(val, arr) {
+    /* init min diff variable: */
+    var min_diff = 999999999;
+    /* return value: */
+    var index;
+    /* convert value to numeric: */
+    val = parseInt(val.replace(/-/g, ''))
+    /* loop through array: */
+    for (var i = 0; i < arr.length; i++) {
+      /* other value as integer: */
+      var other_val = parseInt(arr[i].replace(/-/g, ''))
+      /* get the difference: */
+      var diff = Math.abs(val - other_val);
+      /* if less than current min: */
+      if (diff < min_diff) {
+        /* update min_diff and index variables: */
+        min_diff = diff;
+        index = i;
+      };
+    };
+    /* return the index of nearest value: */
+    return index;
   };
+
+  /* set licsar indexes to point to uncorrected values: */
+  licsar_indexes = licsar_indexes_corrected;
 
   /* image index: */
   if ((index == undefined) ||
@@ -27,23 +117,66 @@ function display_licsar_images(index) {
   };
   licsar_indexes[volcano_frame] = image_index;
 
+  /* try to get the indexes of the dates in gacos data: */
+  if (frame_has_licsar_correct[volcano_frame_index] == true) {
+    /* if not already defined: */
+    if (licsar_dates_corrected[volcano_frame_index] == undefined) {
+      licsar_dates_corrected[volcano_frame_index] = {};
+      licsar_dates_corrected[volcano_frame_index]['dates'] = [];
+      licsar_dates_corrected[volcano_frame_index]['indexes'] = [];
+      for (var i = 0; i < licsar_data['dates'].length; i++) {
+        var image_gacos_index = licsar_data_gacos['dates'].indexOf(
+          licsar_data['dates'][i]
+        );
+        /* if a result is not found: */
+        if (image_gacos_index < 0) {
+          /* try and find the nearest value: */
+          image_gacos_index = get_nearest_dates(
+            licsar_data['dates'][i],
+            licsar_data_gacos['dates']
+          );
+        };
+        /* store the date and index: */
+        licsar_dates_corrected[volcano_frame_index]['dates'][i] = (
+          licsar_data_gacos['dates'][image_gacos_index]
+        );
+        licsar_dates_corrected[volcano_frame_index]['indexes'][i] = image_gacos_index;
+      };
+    };
+  };
+
   /* get image elements: */
   var if_img = document.getElementById('licsar_if_img');
+  var if_gacos_img = document.getElementById('licsar_if_gacos_img');
 
   /* get image paths: */
   var image_path = licsar_data['images'][image_index];
-
   /* get image label: */
   var image_label = licsar_data['dates'][image_index];
-
   /* set images: */
   if_img.src = licsar_img_prefix + image_path;
 
   /* get image label div: */
   var image_label_div = document.getElementById('licsar_image_value');
-
   /* get image label: */
   var image_label = (licsar_data['dates'][image_index]);
+
+  /* set gacos image, if available: */
+  if (frame_has_licsar_correct[volcano_frame_index] == true) {
+    /* get / set index: */
+    licsar_indexes_corrected[volcano_frame] = (
+      licsar_dates_corrected[volcano_frame_index]['indexes'][image_index]
+    );
+    var image_gacos_index = licsar_indexes_corrected[volcano_frame];
+    /* get image paths: */
+    var image_gacos_path = licsar_data_gacos['images'][image_gacos_index];
+    /* get image label: */
+    var image_gacos_label = licsar_data_gacos['dates'][image_gacos_index];
+    /* set images: */
+    if_gacos_img.src = licsar_img_gacos_prefix + image_gacos_path;
+    /* update image label: */
+    image_label = image_label + ' (' + image_gacos_label + ')';
+  };
 
   /* set image label: */
   image_label_div.innerHTML = '<label>' +
@@ -123,8 +256,6 @@ function display_licsar_images(index) {
         var slider_value = slider_div.noUiSlider.get();
         /* index to int: */
         var slider_index = parseInt(slider_value);
-        /* label: */
-        var slider_date = licsar_data['dates'][slider_index];
         /* update image: */
         display_licsar_images(slider_index);
       });
@@ -136,6 +267,10 @@ function display_licsar_images(index) {
         var slider_index = parseInt(slider_value);
         /* label: */
         var slider_date = licsar_data['dates'][slider_index];
+        if (frame_has_licsar_correct[volcano_frame_index] == true) {
+          var slider_gacos_date = licsar_dates_corrected[volcano_frame_index]['dates'][slider_index];
+          slider_date = slider_date + ' (' + slider_gacos_date + ')';
+        };
         /* set labels: */
         image_label_div.innerHTML = '<label>' + slider_date + '</label>';
       });

@@ -5,12 +5,22 @@ var plot_vars_corrected = null;
 var plot_vars = null;
 var my_disp_data_prefix = null;
 
+/* s2 map variables: */
+var s2_vars = {
+  /* sentinel-2 leaflet map: */
+  's2_map': null,
+  /* s2 map overlays: */
+  's2_ts_poly': null,
+  's2_ref_poly': null,
+  's2_profile_line': null
+}
+
 /* function to init plot variables: */
 function init_plot_vars(fid, call_back) {
 
   /* check if using uncorrected / corrected data and set plot variables
      accordingly: */
-  var use_correct = frame_use_correct[volcano_frame_index];
+  var use_correct = frame_use_disp_correct[volcano_frame_index];
   if (use_correct != undefined && use_correct == true) {
     plot_vars = plot_vars_corrected;
     my_disp_data_prefix = disp_data_gacos_prefix;
@@ -23,12 +33,6 @@ function init_plot_vars(fid, call_back) {
   if (plot_vars == undefined) {
     /* init plotting variables: */
     plot_vars = {
-      /* sentinel-2 leaflet map: */
-      's2_map': null,
-      /* s2 map overlays: */
-      's2_ts_poly': null,
-      's2_ref_poly': null,
-      's2_profile_line': null,
       /* default displacement data type: */
       'disp_type': 'disp_raw',
       /* default heatmap type: */
@@ -213,6 +217,8 @@ function init_plot_vars(fid, call_back) {
   };
   /* create s2 map: */
   draw_s2_map(volcano_lat, volcano_lon);
+  /* try to add polygons: */
+  draw_s2_map_polygons();
 
   /* store the plot variables: */
   if (use_correct != undefined && use_correct == true) {
@@ -2052,15 +2058,15 @@ function draw_s2_map_polygons() {
   /* volcano frame id: */
   var fid = volcano_frame;
   /* get variables from plot_vars .. leaflet map: */
-  var s2_map = plot_vars['s2_map'];
+  var s2_map = s2_vars['s2_map'];
   /* give up if no map: */
   if (s2_map == null) {
     return;
   };
   /* time series / ref area polygons and profile line: */
-  var s2_ts_poly = plot_vars['s2_ts_poly'];
-  var s2_ref_poly = plot_vars['s2_ref_poly'];
-  var s2_profile_line = plot_vars['s2_profile_line'];
+  var s2_ts_poly = s2_vars['s2_ts_poly'];
+  var s2_ref_poly = s2_vars['s2_ref_poly'];
+  var s2_profile_line = s2_vars['s2_profile_line'];
   /* ts / ref / profile areas: */
   var ts_latlon_area = plot_vars[fid]['ts_latlon_area'];
   var ref_latlon_area = plot_vars[fid]['ref_latlon_area'];
@@ -2090,8 +2096,8 @@ function draw_s2_map_polygons() {
       });
       /* add to map and store in plot_vars: */
       s2_map.addLayer(s2_ts_poly);
-      plot_vars['s2_ts_poly'] = s2_ts_poly;
-      plot_vars['s2_profile_line'] = null;
+      s2_vars['s2_ts_poly'] = s2_ts_poly;
+      s2_vars['s2_profile_line'] = null;
     };
 
   /* else in profile plotting mode: */
@@ -2116,8 +2122,8 @@ function draw_s2_map_polygons() {
       });
       /* add to map and store in plot_vars: */
       s2_map.addLayer(s2_profile_line);
-      plot_vars['s2_profile_line'] = s2_profile_line;
-      plot_vars['s2_ts_poly'] = null;
+      s2_vars['s2_profile_line'] = s2_profile_line;
+      s2_vars['s2_ts_poly'] = null;
     };
 
   };
@@ -2139,7 +2145,7 @@ function draw_s2_map_polygons() {
     });
     /* add to map and store in plot_vars: */
     s2_map.addLayer(s2_ref_poly);
-    plot_vars['s2_ref_poly'] = s2_ref_poly;
+    s2_vars['s2_ref_poly'] = s2_ref_poly;
   };
 
 };
@@ -2191,10 +2197,8 @@ function draw_s2_map(aoi_lat, aoi_lon) {
   L.control.scale().addTo(s2_map);
   /* add mouse pointer position: */
   L.control.mousePosition().addTo(s2_map);
-  /* store map in plot_vars: */
-  plot_vars['s2_map'] = s2_map;
-  /* try to add polygons: */
-  draw_s2_map_polygons();
+  /* store map in global variables: */
+  s2_vars['s2_map'] = s2_map;
 
 };
 
