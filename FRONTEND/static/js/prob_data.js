@@ -6,6 +6,26 @@ var prob_plot_vars_uncorrected = null;
 var prob_plot_vars_corrected = null;
 var prob_plot_vars = null;
 
+
+/* function to filter probability data.
+   currently used to set 'bad' values to 'null': */
+function filter_prob_data(prob_data) {
+  /* means and maxes: */
+  var means = prob_data['means'];
+  var maxs = prob_data['maxs'];
+  /* loop through values.: */
+  for (var i = 0; i < means.length; i++) {
+    /* if mean is 0.72 and max is 0.92, then this is a 'bad' value: */
+    if (means[i] == 0.72 && maxs[i] == 0.92) {
+      /* set values to 'null': */
+      means[i] = 'null';
+      maxs[i] = 'null';
+    }
+  };
+  /* return the filtered / updated data: */
+  return prob_data;
+}
+
 function init_prob_plot_vars(fid, call_back, call_back_args) {
 
   /* check if using corrected data: */
@@ -34,6 +54,8 @@ function init_prob_plot_vars(fid, call_back, call_back_args) {
 
   /* if plot variables for this frame are undefined: */
   if (prob_plot_vars[fid] == undefined) {
+    /* set 'bad' values to 'null' in probability data: */
+    prob_data = filter_prob_data(prob_data);
     prob_plot_vars[fid] = {
       /* values for plotting: */
       'indexes': prob_data['indexes'],
@@ -228,13 +250,21 @@ function display_prob_data(index) {
   /* get image path: */
   var image_path = prob_img_prefix + prob_data['images'][image_index];
 
+  /* get mean and max value: */
+  var mean_value = prob_data['means'][image_index];
+  if (mean_value != 'null') {
+    mean_value = mean_value.toFixed(2);
+  };
+  var max_value = prob_data['maxs'][image_index];
+  if (max_value != 'null') {
+    max_value = max_value.toFixed(2);
+  };
+
   /* get image label: */
   var image_label = '<label>' +  prob_data['dates'][image_index] + '</label>' +
                     ' (' + ('0000' + (image_index)).slice(-4) + ')<br>' +
-                     'mean: ' +
-                     prob_data['means'][image_index].toFixed(2) +
-                     ', max: ' +
-                     prob_data['maxs'][image_index].toFixed(2);
+                     'mean: ' + mean_value +
+                     ', max: ' + max_value;
 
   /* set image: */
   image_img.src = image_path;
@@ -285,10 +315,19 @@ function display_prob_data(index) {
         var slider_index = parseInt(slider_value);
         /* label: */
         var slider_date = prob_data['dates'][slider_index];
+        /* get mean and max value: */
+        var mean_value = prob_data['means'][slider_index];
+        if (mean_value != 'null') {
+          mean_value = mean_value.toFixed(2);
+        };
+        var max_value = prob_data['maxs'][slider_index];
+        if (max_value != 'null') {
+          max_value = max_value.toFixed(2);
+        };
         /* mean: */
-        var slider_mean = prob_data['means'][slider_index].toFixed(2);
+        var slider_mean = mean_value;
         /* max: */
-        var slider_max = prob_data['maxs'][slider_index].toFixed(2);
+        var slider_max = max_value;
         /* update image: */
         display_prob_data(slider_index);
       });
@@ -300,10 +339,19 @@ function display_prob_data(index) {
         var slider_index = parseInt(slider_value);
         /* label: */
         var slider_date = prob_data['dates'][slider_index];
+        /* get mean and max value: */
+        var mean_value = prob_data['means'][slider_index];
+        if (mean_value != 'null') {
+          mean_value = mean_value.toFixed(2);
+        };
+        var max_value = prob_data['maxs'][slider_index];
+        if (max_value != 'null') {
+          max_value = max_value.toFixed(2);
+        };
         /* mean: */
-        var slider_mean = prob_data['means'][slider_index].toFixed(2);
+        var slider_mean = mean_value;
         /* max: */
-        var slider_max = prob_data['maxs'][slider_index].toFixed(2);
+        var slider_max = max_value;
         /* set labels: */
         image_label_div.innerHTML = (
           '<label>' + slider_date + '</label>' +
