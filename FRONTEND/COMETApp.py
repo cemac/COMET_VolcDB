@@ -61,13 +61,6 @@ def index():
         df = pd.read_sql_query("SELECT * FROM VolcDB1 where subset == 'Y';", conn)
     else:
         df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
-
-    # Make sure jasmin name field has a value:
-    df['jasmin_name'].fillna(
-        df['name'].apply(str.lower).apply(str.replace, args=(' ', '_')),
-        inplace=True
-    )
-
     df = df[df.Area != 'none']
     df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
 
