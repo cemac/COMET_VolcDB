@@ -61,14 +61,15 @@ def index():
         df = pd.read_sql_query("SELECT * FROM VolcDB1 where subset == 'Y';", conn)
     else:
         df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
-    df = df[df.Area != 'none']
-    df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
 
     # Make sure jasmin name field has a value:
     df['jasmin_name'].fillna(
-        df['name'].apply(str).apply(str.lower).apply(str.replace, args=(' ', '_')),
+        df['name'].apply(str.lower).apply(str.replace, args=(' ', '_')),
         inplace=True
     )
+
+    df = df[df.Area != 'none']
+    df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
 
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     json_url = os.path.join(SITE_ROOT, "static/data", "volcanoes_status.json")
