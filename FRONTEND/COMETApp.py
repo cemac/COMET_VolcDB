@@ -64,6 +64,12 @@ def index():
     df = df[df.Area != 'none']
     df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
 
+    # Make sure jasmin name field has a value:
+    df['jasmin_name'].fillna(
+        df['name'].apply(str.lower).apply(str.replace, args=(' ', '_')),
+        inplace=True
+    )
+
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     json_url = os.path.join(SITE_ROOT, "static/data", "volcanoes_status.json")
     data = json.load(open(json_url))
