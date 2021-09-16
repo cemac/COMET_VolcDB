@@ -231,6 +231,9 @@ def volcano_analysis(country, region, volcano):
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
     volcano_name = df.jasmin_name.values[0]
+    # Is jasmin_name is None, try to replace with name_to_lower:
+    if volcano_name is None:
+        volcano_name = '{0}'.format(df.name.values[0]).lower().replace(' ', '_')
     lat=df.latitude.values[0]
     lon=df.longitude.values[0]
     frame = df.frames[0].replace(": u'", ": '").replace(", u'", ", '").replace("{u'", "{'")
