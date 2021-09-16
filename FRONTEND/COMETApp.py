@@ -66,7 +66,7 @@ def index():
 
     # Make sure jasmin name field has a value:
     df['jasmin_name'].fillna(
-        df['name'].apply(str.lower).apply(str.replace, args=(' ', '_')),
+        df['name'].apply(str).apply(str.lower).apply(str.replace, args=(' ', '_')),
         inplace=True
     )
 
