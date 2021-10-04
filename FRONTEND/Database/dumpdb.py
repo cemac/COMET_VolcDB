@@ -22,11 +22,7 @@ conn = sqlite3.connect('volcano.db')
 # Create dataframe from db
 dball = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
 conn.close()
-<<<<<<< HEAD
 volcanolist = dball[['name', 'latitude', 'longitude', 'ID']]
-=======
-volcanolist = dball[['jasmin_name', 'name', 'ID']]
->>>>>>> 0f175b46158e2d94163a40b2c85d8de21e41fd02
 dbdump=dball[['jasmin_name', 'name', 'ID', 'country', 'geodetic_measurements',
               'deformation_observation', 'duration_of_observation',
               'characteristics_of_deformation', 'latitude', 'longitude',
