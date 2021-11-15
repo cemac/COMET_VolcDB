@@ -39,7 +39,7 @@ numpy==1.19.0
 openssl==1.1.1k
 pandas==1.0.5
 passlib==1.7.1
-pip==20.1.1
+pip==21.1
 pycosat==0.6.3
 pycparser==2.20
 pyopenssl==19.1.0
