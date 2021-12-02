@@ -63,7 +63,6 @@ def index():
         df = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
     df = df[df.Area != 'none']
     df['name'] = df['ID'].where(df['name'] == 'Unnamed', df['name'].values)
-
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     json_url = os.path.join(SITE_ROOT, "static/data", "volcanoes_status.json")
     data = json.load(open(json_url))
@@ -81,8 +80,16 @@ def index():
     recent_events = volcanos_with_events.loc[mask]
     volcs = df.loc[df.jasmin_name.isin(recent_events.index.to_list())].sort_values(by=['jasmin_name'])
     recent_events = recent_events.loc[recent_events.index.isin(df.jasmin_name.to_list())]
-    volcs['prob_date'] = recent_events.sort_index()['prob_date'].values
-    volcs['prob_frame'] = recent_events.sort_index()['prob_frame'].values
+    try:
+        volcs['prob_date'] = recent_events.sort_index()['prob_date'].values
+        volcs['prob_frame'] = recent_events.sort_index()['prob_frame'].values
+    except:
+        ids=volcs['jasmin_name']
+        dupsfound=volcs[ids.isin(ids[ids.duplicated()])].sort_values(by=["jasmin_name"])['name'].values
+        flash('Warning duplicated volcano found, please check '+str(dupsfound), 'danger')
+        volcs = volcs.drop_duplicates(subset=['jasmin_name'])
+        volcs['prob_date'] = recent_events.sort_index()['prob_date'].values
+        volcs['prob_frame'] = recent_events.sort_index()['prob_frame'].values
     total = len(volcs.index)
     return render_template('home.html.j2',
                            volcinfo=json.dumps(volcinfo.values.tolist()),
