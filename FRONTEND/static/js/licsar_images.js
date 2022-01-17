@@ -102,7 +102,7 @@ function display_licsar_images(index) {
   };
 
   /* set licsar indexes to point to uncorrected values: */
-  licsar_indexes = licsar_indexes_corrected;
+  licsar_indexes = licsar_indexes_uncorrected;
 
   /* image index: */
   if ((index == undefined) ||
