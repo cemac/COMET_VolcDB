@@ -44,7 +44,7 @@ libsqlite==3.39.2
 libstdcxx-ng==12.1.0
 libuuid==2.32.1
 libzlib==1.2.12
-mako==1.2.1
+mako==1.2.2
 markupsafe==2.1.1
 ncurses==6.3
 numpy==1.23.2
