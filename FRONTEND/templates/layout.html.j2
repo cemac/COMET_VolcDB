@@ -29,7 +29,7 @@
         integrity="sha512-vX0FO9CCqFIE79wbaX/s/iU6YDGRtHrlVukRf4541PpIAMuQctMIkCljit1QKm3iqUnqxZ6SGC7mQ9TFM2BYJw=="
         crossorigin="anonymous"
         type="text/css">
-  <!-- sscripts: -->
+  <!-- scripts: -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
           crossorigin="anonymous">
@@ -41,6 +41,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
   </script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88865536-1">
   </script>
   {% block styles %}{% endblock %}
 </head>
@@ -56,6 +58,12 @@
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
     }
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-88865536-1');
   </script>
   {% include 'includes/_footer.html.j2' %}
   {% block scripts %}{% endblock %}
