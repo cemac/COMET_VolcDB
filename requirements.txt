@@ -7,7 +7,7 @@ branca==0.6.0
 brotlipy==0.7.0
 bzip2==1.0.8
 ca-certificates==2022.9.24
-certifi==2022.9.24
+certifi==2022.12.7
 cffi==1.15.1
 charset-normalizer==2.1.1
 click==8.1.3
