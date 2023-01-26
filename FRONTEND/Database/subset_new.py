@@ -30,8 +30,10 @@ subset_jasmin =  [x.lower().replace(' ', '_') for x in subset]
 # Create dataframe from db
 dball = pd.read_sql_query("SELECT * FROM VolcDB1;", conn)
 #dball['subset']='N'
-dball=dball[dball.subset.str.contains('N')]
+#dball=dball[dball.subset.str.contains('N')]
 for row in dball.iterrows():
+    if  row[1]['subset'] == 'Y':
+        continue
     try:
         if row[1]['name'] in subset:
             print(row[1]['name'] )
