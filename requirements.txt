@@ -15,7 +15,7 @@ colorama==0.4.6
 conda==22.11.1
 conda-package-handling==2.0.2
 conda-package-streaming==0.7.0
-cryptography==39.0.0
+cryptography==39.0.1
 flask==2.2.2
 flask-mail==0.9.1
 flask-migrate==4.0.3
