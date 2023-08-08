@@ -53,7 +53,7 @@ conda activate cometapp
 
 <hr>
 
-<!--- release table --->
+<!--- release table -->
 
 
 |  Version            | Release          |
@@ -62,7 +62,7 @@ conda activate cometapp
 |  Beta-1.1 Feb 2021  | [![GitHubrelease](https://img.shields.io/badge/release-v.1.1-blue.svg)](https://github.com/cemac/COMET_VolcDB/releases/tag/1.1-beta)|
 
 
-<!--- table --->
+<!--- table -->
 
 ## License Information
 
