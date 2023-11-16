@@ -110,6 +110,9 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
       ],
       maxBoundsViscosity: 1.0
     });
+    /* remove prefix from attribution control: */
+    var map_atrr_control = map.attributionControl;
+    map_atrr_control.setPrefix(false);
     /*
      * {s}, {z}, {x} and {y} are placeholders for map tiles
      * {x} and {y} are the x/y of where you are on the map
