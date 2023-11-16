@@ -229,6 +229,9 @@ function init_plot_vars(fid, call_back) {
 
 };
 
+/* init plotly config: */
+Plotly.setPlotConfig({ logging: 0 })
+
 
 /** helper functions: **/
 
