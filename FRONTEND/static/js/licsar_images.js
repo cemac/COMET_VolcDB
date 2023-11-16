@@ -41,7 +41,7 @@ function init_licsar_images(index) {
         /* set image prefix variable: */
         licsar_img_gacos_prefix = licsar_imgs_gacos_prefix + volcano_region + '/' + volcano_name + '_' + volcano_frame + '/';
         /* if no images, hide html elements: */
-        if (licsar_data['count'] < 1) {
+        if (licsar_data_gacos['count'] < 1) {
           frame_has_licsar_correct[volcano_frame_index] = false;
           enable_licsar_gacos(html_elements, false);
         /* else, enable html elements: */
