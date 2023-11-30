@@ -99,6 +99,36 @@
 
     <span class="s1_section_hdr">Time series analysis</span>
 
+
+    <!-- displacement data resolution selection: -->
+    <div class="row_disp_res flex_row flex_grow"
+         id="row_disp_res">
+      <div class="col_disp_res flex_column flex_grow"
+           id="col_disp_res">
+        <h3 class="s1_page_hdr">Displacement data resolution</h3>
+        <div class="disp_res_control flex_row_wrap flex_grow"
+             id="disp_res_control">
+          <button id="disp_res_select_button_x100"
+                  onclick="switch_res(100);"
+                  title="Unfiltered displacement data">
+            100x100
+          </button>
+          <button id="disp_res_select_button_x75"
+                  onclick="switch_res(75);"
+                  title="Unfiltered displacement data">
+            75x75
+          </button>
+          <button id="disp_res_select_button_x50"
+                  onclick="switch_res(50);"
+                  title="Unfiltered displacement data">
+            50x50
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- end resolution selection. -->
+
+
     <p><b>Panel 1: Time series Analysis.</b> Explore the LiCSBAS time series of
     apparent displacement, selecting your point or area to plot (green) and
     a reference area (red). You can examine both average phase coherence and

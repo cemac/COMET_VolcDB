@@ -129,16 +129,16 @@ body {
 
 /** sentinel 1 frame and data type selection: **/
 
-.row_s1_frame, .row_disp_correct, .row_s1_type {
+.row_s1_frame, .row_disp_res, .row_disp_correct, .row_s1_type {
   margin-bottom: 10px;
 }
 
-.s1_frame_control, .disp_correct_control, .s1_type_control {
+.s1_frame_control, .disp_res_control, .disp_correct_control, .s1_type_control {
   padding-left: 2%;
 }
 
-.s1_frame_control button, .disp_correct_control button,
-.s1_type_control button {
+.s1_frame_control button, .disp_res_control button,
+.disp_correct_control button, .s1_type_control button {
   margin: 2px;
 }
 

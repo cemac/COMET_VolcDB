@@ -15,6 +15,14 @@ var s2_vars = {
   's2_profile_line': null
 }
 
+/* function to switch resolution of disp data: */
+function switch_res(res) {
+  disp_resolution = res;
+  var __volcano_frame_index = volcano_frame_index;
+  volcano_frame_index = null;
+  s1_page_set_up(__volcano_frame_index);
+};
+
 /* function to init plot variables: */
 function init_plot_vars(fid, call_back) {
 
@@ -183,7 +191,8 @@ function init_plot_vars(fid, call_back) {
     /* data url: */
     var disp_data_url = js_data_prefix + my_disp_data_prefix +
                         volcano_region + '/' + volcano_name + '_' +
-                        volcano_frame + '_' + data_suffix + '.json';
+                        volcano_frame + '_web_x' + disp_resolution +
+                        '_' + data_suffix + '.json';
     /* create new request: */
     var disp_req = new XMLHttpRequest();
     disp_req.responseType = 'json';
@@ -243,7 +252,8 @@ function get_disp_data(disp_type, fid, disp_args) {
   /* data url: */
   var disp_data_url = js_data_prefix + my_disp_data_prefix +
                       volcano_region + '/' + volcano_name + '_' +
-                      volcano_frame + '_' + disp_suffix + '.json';
+                      volcano_frame + '_web_x' + disp_resolution +
+                      '_' + disp_suffix + '.json';
   /* create new request: */
   var disp_req = new XMLHttpRequest();
   disp_req.responseType = 'json';
@@ -272,7 +282,7 @@ function get_disp_data(disp_type, fid, disp_args) {
    'ref' (reference area): */
 function set_click_mode(click_mode) {
   /* volcano frame id: */
-  var fid = volcano_frame;
+  var fid = volcano_fid;
   /* if click mode is 'ref': */
   if (click_mode == 'ref') {
     /* disable button for active click mode: */
@@ -298,7 +308,7 @@ function set_click_mode(click_mode) {
    or a sentinel-2 map is displayed: */
 function select_scatter_display(display_type) {
   /* volcano frame id: */
-  var fid = volcano_frame;
+  var fid = volcano_fid;
   /* if 's2' is selected: */
   if (display_type == 's2') {
     /* disable button for active click mode: */
@@ -326,7 +336,7 @@ function select_scatter_display(display_type) {
 /* function to save displacement plot data as csv file: */
 function disp_to_csv() {
   /* volcano frame id: */
-  var fid = volcano_frame;
+  var fid = volcano_fid;
   /* start csv content: */
   var csv_data = 'data:text/csv;charset=utf-8,';
   /* header line: */
@@ -369,7 +379,7 @@ function disp_to_csv() {
 /* function to save scatter plot data as csv file: */
 function scatter_to_csv() {
   /* volcano frame id: */
-  var fid = volcano_frame;
+  var fid = volcano_fid;
   /* check scatter plot type, if time series: */
   if (plot_vars[fid]['scatter_type'] == 'ts') {
     /* start csv content: */
@@ -424,7 +434,7 @@ function scatter_to_csv() {
    masked, and is near the center: */
 function get_ts_indexes() {
   /* volcano frame id: */
-  var fid = volcano_frame;
+  var fid = volcano_fid;
   /* get x and y midpoint indexes: */
   var mid_y = Math.floor(plot_vars[fid]['y'].length / 2) - 1;
   var mid_x = Math.floor(plot_vars[fid]['x'].length / 2) - 1;
@@ -476,11 +486,11 @@ function get_area_mean(var_area, var_data) {
       };
     };
   };
-  /* calculate mean, or return 0 if no values: */
+  /* calculate mean, or return NaN if no values: */
   if (var_count > 0) {
     var_mean = var_sum / var_count;
   } else {
-    var_mean = 0;
+    var_mean = NaN;
   };
   return var_mean;
 };
@@ -516,7 +526,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   /** displacement data values: */
 
 
-  var fid = volcano_frame;
+  var fid = volcano_fid;
   var x = plot_vars[fid]['x'];
   var y = plot_vars[fid]['y'];
   var x_dist = plot_vars[fid]['x_dist'];
@@ -525,6 +535,10 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   var coh = plot_vars[fid]['coh'];
   var mask = plot_vars[fid]['mask'];
   var refarea = plot_vars[fid]['refarea'];
+
+  /* calculate pixel size: */
+  var pixel_x_dist = Math.round((x_dist / x.length) * 1000);
+  var pixel_y_dist = Math.round((y_dist / y.length) * 1000);
 
   /* get displacement data type value. set default value if not set: */
   var disp_type = disp_type ||
@@ -643,13 +657,19 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   if (ts_x.length == 1) {
     var ts_area_x = [ts_x[0], ts_x[0] + 1];
   } else {
-    var ts_area_x = [ts_x[0], ts_x.slice(-1)[0] + 1];
+    var ts_area_x = [
+      Math.min.apply(Math, ts_x),
+      Math.max.apply(Math, ts_x) + 1
+    ];
   };
   /* y values: */
   if (ts_y.length == 1) {
     var ts_area_y = [ts_y[0], ts_y[0] + 1];
   } else {
-    var ts_area_y = [ts_y[0], ts_y.slice(-1)[0] + 1];
+    var ts_area_y = [
+      Math.min.apply(Math, ts_y),
+      Math.max.apply(Math, ts_y) + 1
+    ];
   };
   /* set the area: */
   ts_area = [ts_area_y[0], ts_area_y[1],
@@ -797,7 +817,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       /* add change listener: */
       slider_div.noUiSlider.on('change', function() {
         /* volcano frame: */
-        var fid = volcano_frame;
+        var fid = volcano_fid;
         /* get slider value: */
         var slider_value = slider_div.noUiSlider.get();
         /* indexes to ints: */
@@ -818,7 +838,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       /* add slide listener: */
       slider_div.noUiSlider.on('slide', function() {
         /* volcano frame: */
-        var fid = volcano_frame;
+        var fid = volcano_fid;
         /* get slider value: */
         var slider_value = slider_div.noUiSlider.get();
         /* indexes to ints: */
@@ -903,7 +923,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     if (ref_count > 0) {
       ref_mean = ref_sum / ref_count;
     } else {
-      ref_mean = 0;
+      ref_mean = NaN;
     };
 
     /* init heatmap data variables: */
@@ -946,6 +966,9 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
         } else {
           heatmap_disp[i][j] = ((end_disp[i][j] - start_disp[i][j]) -
                                 ref_mean).toFixed(2);
+          if (isNaN(heatmap_disp[i][j]) == true) {
+            heatmap_disp[i][j] = 'null';
+          };
         };
         /* if this pixel is masked ... : */
         if (mask[i][j] == 0) {
@@ -1087,12 +1110,19 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       /* value is data value - ref area mean for time step - ref area mean
          for start data: */
       var value_disp_out = value_disp - ref_mean - ts_ref_minus_disp;
+      if (isNaN(value_disp_out) == true) {
+        value_disp_out = 'null';
+      };
       /* add to ts data: */
       ts_disp.push(value_disp_out);
       /* add to ts dates: */
       ts_dates.push(dates[i]);
       /* add hover data: */
-      ts_hover.push(dates[i] + ', ' + value_disp_out.toFixed(2) + ' mm');
+      if (value_disp_out == 'null') {
+        ts_hover.push(dates[i] + ', null');
+      } else {
+        ts_hover.push(dates[i] + ', ' + value_disp_out.toFixed(2) + ' mm');
+      };
     /* end loop through time series: */
     };
   } else {
@@ -1182,7 +1212,9 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
                           Math.abs(heatmap_disp_z_max));
   var heatmap_disp_tickmax = Math.round((0.9 * heatmap_disp_cmax) / 10) * 10;
   heatmap_disp_tickmax = Math.max(heatmap_disp_tickmax, 10);
-  var heatmap_disp_title = plot_vars['heatmap_disp_title'];
+  var heatmap_dist_text = ', pixel size ' + pixel_x_dist + 'm x ' + pixel_y_dist + 'm';
+  var heatmap_disp_title = plot_vars['heatmap_disp_title'] + heatmap_dist_text;
+  var heatmap_disp_cb_title = plot_vars['heatmap_disp_title'];
   var heatmap_disp_colorscale = plot_vars['heatmap_disp_colorscale'];
   var heatmap_disp_colorbar = {
     'tickprefix': '   ',
@@ -1191,9 +1223,10 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     'thickness': 25,
     'len': 0.9,
     'title': {
-      'text': heatmap_disp_title,
+      'text': heatmap_disp_cb_title,
       'side': 'right',
       'font': {
+        'family': '"Open Sans", verdana, arial, sans-serif',
         'size': 14
       }
     },
@@ -1206,7 +1239,8 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   };
 
   /* heatmap coherence variables: */
-  var heatmap_coh_title = plot_vars['heatmap_coh_title'];
+  var heatmap_coh_title = plot_vars['heatmap_coh_title'] + heatmap_dist_text;
+  var heatmap_coh_cb_title = plot_vars['heatmap_coh_title'];
   var heatmap_coh_colorscale = plot_vars['heatmap_coh_colorscale'];
   var heatmap_coh_z_min = plot_vars['heatmap_coh_z_min'];
   var heatmap_coh_z_max = plot_vars['heatmap_coh_z_max'];
@@ -1216,9 +1250,10 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     'thickness': 25,
     'len': 0.9,
     'title': {
-      'text': heatmap_coh_title,
+      'text': heatmap_coh_cb_title,
       'side': 'right',
       'font': {
+        'family': '"Open Sans", verdana, arial, sans-serif',
         'size': 14
       },
     },
@@ -1552,8 +1587,8 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
         'title': {
           'text': 'longitude',
           'font': {
-            'family': 'sans-serif, Arial, Helvetica',
-            'size': 10
+            'family': '"Open Sans", verdana, arial, sans-serif',
+            'size': 12
           }
         },
         'range': [x.slice(-1)[0], x[0]],
@@ -1561,16 +1596,16 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
         'autorange': false,
         'constrain': 'domain',
         'tickfont': {
-          'family': 'sans-serif, Arial, Helvetica',
-          'size': 10
+          'family': '"Open Sans", verdana, arial, sans-serif',
+          'size': 12
         }
       },
       'yaxis': {
         'title': {
           'text': 'latitude',
           'font': {
-            'family': 'sans-serif, Arial, Helvetica',
-            'size': 10
+            'family': '"Open Sans", verdana, arial, sans-serif',
+            'size': 12
           }
         },
         'range': [y.slice(-1)[0], y[0]],
@@ -1578,24 +1613,24 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
         'autorange': false,
         'constrain': 'domain',
         'tickfont': {
-          'family': 'sans-serif, Arial, Helvetica',
-          'size': 10
+          'family': '"Open Sans", verdana, arial, sans-serif',
+          'size': 12
         }
       },
       'zaxis': {
         'title': {
           'text': 'elevation (m)',
           'font': {
-            'family': 'sans-serif, Arial, Helvetica',
-            'size': 10
+            'family': '"Open Sans", verdana, arial, sans-serif',
+            'size': 12
           }
         },
         'range': surf_z_range,
         'tickmode': 'array',
         'tickvals': [0, 2500, 5000, 7500],
         'tickfont': {
-          'family': 'sans-serif, Arial, Helvetica',
-          'size': 10
+          'family': '"Open Sans", verdana, arial, sans-serif',
+          'size': 12
         }
       }
     },
@@ -1749,7 +1784,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   function heatmap_on_click(click_data) {
 
     /* volcano frame id: */
-    var fid = volcano_frame;
+    var fid = volcano_fid;
     /* x and y indexes from data: */
     var click_y = click_data.points[0].y;
     var click_x = click_data.points[0].x;
@@ -1760,9 +1795,9 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
 
     /* don't do anything if this is a masked pixel, unless selecting profile
        to plot: */
-    if (mask[click_y][click_x] == 0 &&
-        plot_vars[fid]['click_mode'] != 'select' &&
-        plot_vars[fid]['scatter_type'] != 'profile') {
+    if (plot_vars[fid]['mask'][click_y][click_x] == 0 &&
+        (plot_vars[fid]['click_mode'] != 'select' ||
+         plot_vars[fid]['scatter_type'] != 'profile')) {
       {};
     /* don't do anything if this is a null pixel, unless slecting profile to
        plot: */
@@ -1847,7 +1882,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   function heatmap_on_hover(hover_data) {
 
     /* volcano frame id: */
-    var fid = volcano_frame;
+    var fid = volcano_fid;
     /* if profile plotting and click mode is select: */
     if (plot_vars[fid]['scatter_type'] == 'profile' &&
         plot_vars[fid]['click_mode'] == 'select') {
@@ -1876,7 +1911,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   function heatmap_on_select(sel_data) {
 
     /* volcano frame id: */
-    var fid = volcano_frame;
+    var fid = volcano_fid;
     /* if profile plot mode, and click mode is select, don't do anything: */
     if (plot_vars[fid]['plot_type'] == 'profile' &&
         plot_vars[fid]['click_mode'] == 'select') {
@@ -1892,11 +1927,11 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     if (sel_data != undefined && sel_data.range != undefined) {
 
       /* get nearest x and y values: */
-      var sel_x0 = get_nearest_value(sel_data.range.x[0], x_indexes);
-      var sel_x1 = get_nearest_value(sel_data.range.x[1], x_indexes);
+      var sel_x0 = get_nearest_value(sel_data.range.x[0], plot_vars[fid]['x_indexes']);
+      var sel_x1 = get_nearest_value(sel_data.range.x[1], plot_vars[fid]['x_indexes']);
       sel_x1++;
-      var sel_y0 = get_nearest_value(sel_data.range.y[0], y_indexes);
-      var sel_y1 = get_nearest_value(sel_data.range.y[1], y_indexes);
+      var sel_y0 = get_nearest_value(sel_data.range.y[0], plot_vars[fid]['y_indexes']);
+      var sel_y1 = get_nearest_value(sel_data.range.y[1], plot_vars[fid]['y_indexes']);
       sel_y1++;
       /* check if all values are masked. presume yes: */
       var ref_masked = true;
@@ -1918,6 +1953,25 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
 
       /* if current click mode is reference area selecting: */
       if (plot_vars[fid]['click_mode'] == 'ref') {
+
+        /* check we have valid reference data for at least one selected
+           pixel: */
+        var ref_null = true;
+        /* loop through selected values: */
+        for (var i = sel_y0; i < sel_y1 ; i++) {
+          for (var j = sel_x0; j < sel_x1; j++) {
+            /* if any non null values, things are o.k.: */
+            if (plot_vars[fid][plot_vars[fid]['disp_type']][plot_vars[fid]['start_index']][i][j] != 'null' &&
+                plot_vars[fid][plot_vars[fid]['disp_type']][plot_vars[fid]['end_index']][i][j] != 'null') {
+              ref_null = false;
+              break;
+            };
+          };
+        };
+        /* if all values are null, return: */
+        if (ref_null) {
+          return;
+        };
 
         /* update plot: */
         disp_plot(plot_vars[fid]['disp_type'],
@@ -1968,7 +2022,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     heatmap_div.on('plotly_selected', heatmap_on_select);
   } else {
     /* update the plot: */
-    Plotly.update(heatmap_div, heatmap_update, heatmap_layout_update);
+    Plotly.react(heatmap_div, heatmap_data, heatmap_layout, heatmap_conf);
   };
 
   /* surface plot: */
@@ -1980,7 +2034,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     plot_vars[fid]['surf_plot'] = surf_plot;
   } else {
     /* update the plot: */
-    Plotly.update(surf_div, surf_update, surf_layout);
+    Plotly.react(surf_div, surf_data, surf_layout, surf_conf);
   };
 
   /* scatter plot: */
@@ -2059,7 +2113,7 @@ L.control.mousePosition = function (options) {
 /* function to draw ts and ref polygons on map: */
 function draw_s2_map_polygons() {
   /* volcano frame id: */
-  var fid = volcano_frame;
+  var fid = volcano_fid;
   /* get variables from plot_vars .. leaflet map: */
   var s2_map = s2_vars['s2_map'];
   /* give up if no map: */
@@ -2211,7 +2265,7 @@ function draw_s2_map(aoi_lat, aoi_lon) {
 
 /* function to update displacement data type: */
 function set_disp_type(disp_type) {
-  var fid = volcano_frame;
+  var fid = volcano_fid;
   disp_plot(disp_type,
     plot_vars[fid]['heatmap_type'],
     plot_vars[fid]['scatter_type'],
@@ -2223,7 +2277,7 @@ function set_disp_type(disp_type) {
 
 /* function to update heatmap type: */
 function set_heatmap_type(heatmap_type) {
-  var fid = volcano_frame;
+  var fid = volcano_fid;
   disp_plot(plot_vars[fid]['disp_type'],
     heatmap_type,
     plot_vars[fid]['scatter_type'],
@@ -2235,7 +2289,7 @@ function set_heatmap_type(heatmap_type) {
 
 /* function to update scatter type: */
 function set_scatter_type(scatter_type) {
-  var fid = volcano_frame;
+  var fid = volcano_fid;
   disp_plot(plot_vars[fid]['disp_type'],
     plot_vars[fid]['heatmap_type'],
     scatter_type,

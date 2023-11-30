@@ -4,11 +4,13 @@ var page_update = false;
 var volcano_frame_index = null;
 var volcano_frame = null;
 var volcano_track = null;
+var volcano_fid = null;
 
 var frame_has_disp_correct = null;
 var frame_has_licsar_correct = null;
 var frame_use_disp_correct = null;
 
+var disp_resolution = null;
 var disp_data = null;
 var licsar_data = null;
 var licsar_data_gacos = null;
@@ -72,6 +74,32 @@ function get_nearest_value(val, arr) {
   return index;
 };
 
+/* set default licsbas data resolution based on a simple performance test: */
+function set_disp_resolution() {
+  /* how many times to run test and get average: */
+  var test_count = 3;
+  /* init time to complete calculation variable: */
+  var time = 0.0;
+  /* run test specified number of times to get average: */
+  for (var i = 0; i < test_count; i++) {
+    /* run test and time: */
+    var date = new Date();
+    for(var j = 0 ; j < 1e7; j++) {
+      j + j - j * j / j ** j;
+    };
+    time += (new Date() - date);
+  };
+  time /= test_count;
+  /* set resolution based on calculation time: */
+  if (time < 10) {
+    disp_resolution = 100;
+  } else if (time < 20) {
+    disp_resolution = 75;
+  } else {
+    disp_resolution = 50;
+  };
+};
+
 /* function to enable / disable display of correction type buttons: */
 function enable_correct(enable_data, html_element, html_display) {
   /* if this frame does not have corrected data, set use_correct to false: */
@@ -122,6 +150,11 @@ function check_correct_data(data_url, has_correct, html_element, html_display) {
 
 /* page set up function: */
 function s1_page_set_up(frame_index, use_disp_correct) {
+
+  /* set default licsbas resolution, if not set: */
+  if (disp_resolution == null) {
+    set_disp_resolution();
+  };
 
   /* set up data correct variables for storing if corrected data is availble
      and in use for each frame: */
@@ -218,6 +251,9 @@ function s1_page_set_up(frame_index, use_disp_correct) {
     volcano_track = volcano_frames[frame_index]['track'];
   };
 
+  /* set volcano_fid: */
+  volcano_fid = volcano_frame + '_x' + disp_resolution;
+
   /* check for no frames: */
   if (volcano_frames.length == 1 &&
       volcano_frames[0]['id'] == '') {
@@ -241,7 +277,7 @@ function s1_page_set_up(frame_index, use_disp_correct) {
   if (frame_has_disp_correct[frame_index] != true) {
     var disp_data_url = js_data_prefix + disp_data_gacos_prefix +
                         volcano_region + '/' + volcano_name + '_' +
-                        volcano_frame + '.json';
+                        volcano_frame + '_web_x' + disp_resolution + '.json';
     check_correct_data(disp_data_url, frame_has_disp_correct,
                        disp_correct_el, disp_correct_el_display);
   };
@@ -252,6 +288,24 @@ function s1_page_set_up(frame_index, use_disp_correct) {
   };
   /* store use_correct value: */
   frame_use_disp_correct[volcano_frame_index] = use_disp_correct;
+
+  /* check resolution: */
+  var button_res_x100 = document.getElementById('disp_res_select_button_x100');
+  var button_res_x75 = document.getElementById('disp_res_select_button_x75');
+  var button_res_x50 = document.getElementById('disp_res_select_button_x50');
+  if (disp_resolution == 100) {
+    button_res_x100.setAttribute('disabled', true);
+    button_res_x75.removeAttribute('disabled');
+    button_res_x50.removeAttribute('disabled');
+  } else if (disp_resolution == 75) {
+    button_res_x100.removeAttribute('disabled');
+    button_res_x75.setAttribute('disabled', true);
+    button_res_x50.removeAttribute('disabled');
+  } else if (disp_resolution == 50) {
+    button_res_x100.removeAttribute('disabled');
+    button_res_x75.removeAttribute('disabled');
+    button_res_x50.setAttribute('disabled', true);
+  };
 
   /* check if using corrected disp data: */
   var button_disp_uncorrected = document.getElementById('disp_select_button_uncorrected');
@@ -408,7 +462,7 @@ function s1_page_set_up(frame_index, use_disp_correct) {
   /* get displacement data: */
   var disp_data_url = js_data_prefix + my_disp_data_prefix +
                       volcano_region + '/' + volcano_name + '_' +
-                      volcano_frame + '.json';
+                      volcano_frame + '_web_x' + disp_resolution + '.json';
   /* create new request: */
   var disp_req = new XMLHttpRequest();
   disp_req.responseType = 'json';
@@ -429,7 +483,7 @@ function s1_page_set_up(frame_index, use_disp_correct) {
       disp_range_el.style.display = disp_range_el_display;
       /* set plot variables for the frame, then run displacement plotting
          function: */
-      init_plot_vars(volcano_frame, disp_plot);
+      init_plot_vars(volcano_fid, disp_plot);
       /* then update licsar data: */
       licsar_update();
     };
