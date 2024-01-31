@@ -318,6 +318,8 @@ def user_login(username, password_candidate, conn):
             session['usertype'] = str(role.name[0])
             if session['usertype'] == 'Admins':
                 flash('You have admin privileges', 'success')
+            return redirect(url_for('index'))
+                
         else:
             flash('Incorrect password', 'danger')
 
@@ -333,7 +335,7 @@ def user_login(username, password_candidate, conn):
             session['username'] = 'admin'
             session['usertype'] = 'Admins'
             flash('You are now logged in as admin', 'success')
-            return redirect(url_for('login'))
+            return redirect(url_for('index'))
         else:
             flash('Incorrect password', 'danger')
             return redirect(url_for('login'))
