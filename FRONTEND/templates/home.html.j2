@@ -163,6 +163,8 @@ how to us the online analysis tools to interrogate Sentinel-1 imagery available
         if (! plane_url_base.endsWith('/')) {
           plane_url_base = plane_url_base + '/';
         }
+        plane_url_base = plane_url_base.replace(/login\/$/, '');
+        plane_url_base = plane_url_base.replace(/logout\/$/, '');
         var plane_url = plane_url_base +
            'volcano-index/'+plane_region+'/'+plane_country+'/'+plane_name+'/S1_analysis';
         function plane_function() { alert(plane_name) };
