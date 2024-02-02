@@ -449,7 +449,7 @@ def volcano_review(volcano):
         newvolc = 'True'
 
     df_diffs = df_old.copy()
-    for (columnName, columnData) in df_old.iteritems():
+    for (columnName, columnData) in df_old.items():
         new = df_edits[str(columnName)].values
         old = df_old[str(columnName)].values
         if new == old:
@@ -533,9 +533,9 @@ def change_pwd():
         if sha256_crypt.verify(current, password):
             user.password = sha256_crypt.hash(str(form.new.data))
             sql = "UPDATE users SET password = ? WHERE username is ? ;"
-            cur = conn.cursor()
+            cur = connuser.cursor()
             cur.execute(sql, (user.password[0], str(username)))
-            conn.commit()
+            connuser.commit()
             flash('Password changed', 'success')
             return redirect(url_for('change_pwd'))
         else:
