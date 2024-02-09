@@ -12,7 +12,7 @@ var plot_vars = {
   'text_div': document.getElementById('content_text'),
   'error_div': document.getElementById('error_text'),
   /* prefix for data: */
-  'data_prefix': js_data_prefix + '/licsalert_data',
+  'data_prefix': js_data_prefix + 'licsalert_data',
   /* directory within each volcano / frame directory which contains licsalert
      data: */
   'data_dir': 'json_data',
@@ -147,15 +147,19 @@ async function get_frames() {
 
     /* check data with fetch: */
     var data_url = new Request(data_file, {'method': 'HEAD'});
-    var data_req = await fetch(data_url);
-    /* if successful: */
-    if (data_req.status == 200) {
-      /* store as good frame: */
-      frames_good.push(frame_id);
-    } else {
-      /* else, store as bad frame: */
+    await fetch(data_url).then(function(data_req) {
+      /* if successful: */
+      if (data_req.status == 200) {
+        /* store as good frame: */
+        frames_good.push(frame_id);
+      } else {
+        /* else, store as bad frame: */
+        frames_bad.push(frame_id);
+      };
+    }).catch(function() {
+       /* else, store as bad frame: */
       frames_bad.push(frame_id);
-    };
+    });
   };
   /* all frames: */
   var frame_ids = frames_good.concat(frames_bad);
@@ -188,30 +192,51 @@ async function load_data(data_file, ifg_data=false) {
   /* url to data file: */
   var data_url = new Request(plot_vars['data_prefix'] + '/' + data_file);
   /* get data using fetch: */
-  var data_req = await fetch(data_url);
-  /* if successful: */
-  if (data_req.status == 200) {
-    /* store json information from request. if ifg data: */
-    if (ifg_data == true) {
-      var req_data = await data_req.arrayBuffer();
-      req_data = JSON.parse(
-        pako.ungzip(req_data, {'to': 'string'})
-      );
-      plot_vars['plot_data']['ifg_inc'] = req_data['ifg_inc'];
-      plot_vars['plot_data']['ifg_cml'] = req_data['ifg_cml'];
-      plot_vars['plot_data']['ifg_recon'] = req_data['reconstruction'];
-      plot_vars['plot_data']['ifg_resid'] = req_data['residual'];
-    /* else, getting plot data: */
+  await fetch(data_url).then(async function(data_req) {
+    /* if successful: */
+    if (data_req.status == 200) {
+      /* store json information from request. if ifg data: */
+      if (ifg_data == true) {
+        var req_data = await data_req.arrayBuffer();
+        req_data = JSON.parse(
+          pako.ungzip(req_data, {'to': 'string'})
+        );
+        plot_vars['plot_data']['ifg_inc'] = req_data['ifg_inc'];
+        plot_vars['plot_data']['ifg_cml'] = req_data['ifg_cml'];
+        plot_vars['plot_data']['ifg_recon'] = req_data['reconstruction'];
+        plot_vars['plot_data']['ifg_resid'] = req_data['residual'];
+      /* else, getting plot data: */
+      } else {
+        var req_data = await data_req.arrayBuffer();
+        req_data = JSON.parse(
+          pako.ungzip(req_data, {'to': 'string'})
+        );
+        plot_vars['plot_data'] = req_data;
+      };
     } else {
-      var req_data = await data_req.arrayBuffer();
-      req_data = JSON.parse(
-        pako.ungzip(req_data, {'to': 'string'})
-      );
-      plot_vars['plot_data'] = req_data;
+      /* log error: */
+      console.log('* failed to load data from: ' + data_url);
+      /* if getting ifg data: */
+      if (ifg_data == true) {
+        /* ifg data is null: */
+        plot_vars['plot_data']['ifg_inc'] = null;
+        plot_vars['plot_data']['ifg_cml'] = null;
+      /* else, getting plot data: */
+      } else {
+        /* plot data is null: */
+        plot_vars['plot_data'] = null;
+        /* add error text div: */
+        var error_00_div = document.createElement('div');
+        error_00_div.id = 'error_text_00';
+        error_00_div.classList = 'text_container error text';
+        error_00_div.innerHTML = 'No LiCSAlert data available for frame ' +
+                                 plot_vars['frame_id'];
+        error_div.appendChild(error_00_div);
+      };
     };
-  } else {
+  }).catch(function() {
     /* log error: */
-    console.log('* failed to load data from: ' + data_url);
+    console.log('* failed to load data from file: ' + data_file);
     /* if getting ifg data: */
     if (ifg_data == true) {
       /* ifg data is null: */
@@ -229,7 +254,7 @@ async function load_data(data_file, ifg_data=false) {
                                plot_vars['frame_id'];
       error_div.appendChild(error_00_div);
     };
-  };
+  });
 };
 
 /* heatmap plotting function: */
