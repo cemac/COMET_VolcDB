@@ -215,7 +215,7 @@ async function load_data(data_file, ifg_data=false) {
       };
     } else {
       /* log error: */
-      console.log('* failed to load data from: ' + data_url);
+      console.log('* failed to load data from file: ' + data_file);
       /* if getting ifg data: */
       if (ifg_data == true) {
         /* ifg data is null: */
