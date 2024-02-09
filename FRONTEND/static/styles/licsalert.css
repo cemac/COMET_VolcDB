@@ -1,0 +1,116 @@
+/** buttons: */
+
+button {
+  width: 14em;
+  color: #494949;
+  background-color: #c9c9c9;
+  border: 1px solid #c9c9c9;
+  border-radius: 3px;
+  padding: 3px;
+  margin: 0.3em;
+  cursor: pointer;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
+}
+
+button:focus, button:active, button:hover {
+  background-color: #d9d9d9;
+  border: 1px solid #a9a9a9;
+  color: #494949;
+}
+
+button:disabled, button[disabled] {
+  background-color: #494949;
+  border: 1px solid #494949;
+  color: #ffffff;
+  cursor: auto;
+}
+
+/* remove outlines from active buttons: */
+button, button:focus, button:active {
+  outline: 0;
+}
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
+
+/** content: **/
+
+.text_section,
+.plot_section {
+  margin: 0;
+  padding: 0;
+}
+
+.text_container {
+  background-color: #ffffff;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  padding: 0.5em;
+}
+
+.text_container h2, label {
+  color: #0e1c3f;
+}
+
+.plot_container {
+  background-color: #ffffff;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  display: flex;
+  flex: 1 1 auto;
+  flex-flow: row wrap;
+  padding: 0.5em;
+}
+
+#heatmap_plot_container_a {
+  margin-bottom: 0em;
+}
+
+#heatmap_plot_container_b {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+
+.heatmap_plot {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 300px;
+  max-height: 300px;
+  min-width: 300px;
+  max-width: 300px;
+}
+
+.ts_plot {
+  display: flex;
+  flex: 1 1 auto;
+  max-height: 300px;
+}
+
+.js-plotly-plot .plotly .modebar {
+  margin-top: 0.5em;
+  left: 0.5em;
+  min-width: 12em;
+}
+
+/** sliders: **/
+
+.content_slider {
+  background-color: #ffffff;
+  margin-top: 0em;
+  margin-bottom: 0.25em;
+  padding: 0.5em;
+}
+
+.noUi-target {
+  margin: 0.3em 2em 1em 2em;
+}
+
+.slider_text {
+  margin-left: 2em;
+  font-weight: lighter;
+}
+
+.slider_text label {
+  font-weight: normal;
+}

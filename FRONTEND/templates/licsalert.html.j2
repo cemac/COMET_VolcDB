@@ -1,0 +1,88 @@
+{% extends 'layout.html.j2' %}
+{% block body %}
+
+  <!-- volcanoes and frames: -->
+  <script src="/data/volcanoes_frames/volcanoes_frames.js" charset="utf-8">
+  </script>
+  <!-- plotly js: -->
+  <script src="{{ url_for('static',filename='js/plotly.js')}}" charset="utf-8">
+  </script>
+  <!-- no ui slider js: -->
+  <script src="{{ url_for('static',filename='js/nouislider.min.js')}}" charset="utf-8">
+  </script>
+  <!-- pako compression js: -->
+  <script src="{{ url_for('static',filename='js/pako_inflate.min.js')}}" charset="utf-8">
+  </script>
+  <!-- licsalert plotting: -->
+  <script src="{{ url_for('static',filename='js/licsalert.js')}}" charset="utf-8" defer>
+  </script>
+
+<div>
+  <div>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/nouislider.min.css')}}" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/licsalert.css')}}" media="all">
+    <header>
+      <h1>{{data.name[0]}} {{data.ID[0]}} </h1>
+    </header><!-- .entry-header -->
+                <ul class="tabrow">
+			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}">Observations of Deformation</a></li>
+                        <!-- unnamed -->
+			{% if data.name[0] == 'Unnamed' %}
+				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/S1_analysis">Explore Sentinel-1 imagery</a></li>
+			<!-- named -->
+			{% else %}
+				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/S1_analysis">Explore Sentinel-1 imagery</a></li>
+			{% endif %}
+			<li class="selected">LiCSAlert</li>
+		</ul>
+   <div>
+
+<div style="width:100%; display:block; margin:auto; background-color: #eeeeee;">
+
+<!-- start content. -->
+
+    <script>
+      var volcano_name = '{{ volcano }}';
+      var this_volcano = volcanoes_frames[volcano_name];
+      if (this_volcano == undefined) {
+        var this_volcano = {'region': '', 'frames': [{'id': '', 'track': ''}]};
+      };
+      var volcano_region = this_volcano['region'];
+      var volcano_frames = this_volcano['frames'];
+      var js_data_prefix = '/data/';
+    </script>
+
+    <!-- content text: ___________________________________________________ -->
+    <div id="content_text"
+         class="text_section">
+    </div>
+    <!-- error text: _____________________________________________________ -->
+    <div id="error_text"
+         class="text_section">
+    </div>
+    <!-- heatmap plots (dem + ifgs): _____________________________________ -->
+    <div id="heatmap_plots"
+         class="plot_section">
+    </div>
+    <!-- slider: _________________________________________________________ -->
+    <div id="content_slider"
+         class="content_slider">
+    </div>
+    <!-- ic plots: _______________________________________________________ -->
+    <div id="ic_plots"
+         class="plot_section">
+    </div>
+    <!-- residuals plots: ________________________________________________ -->
+    <div id="residuals_plots"
+         class="plot_section">
+    </div>
+
+<!-- end content. -->
+
+    </div><!-- .entry-content -->
+  </div><!-- #content -->
+</div><!-- #primary -->
+</div><!-- #main .wrapper -->
+{% endblock %}
+
+</html>

@@ -31,13 +31,14 @@
 
 		<ul class="tabrow">
 			<li class="selected">Observations of Deformation</li>
-<!-- unnamed -->
+                        <!-- unnamed -->
 			{% if data.name[0] == 'Unnamed' %}
 				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/S1_analysis">Explore Sentinel-1 imagery</a></li>
-				<!-- named -->
+                                <li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/LiCSAlert">LiCSAlert</a></li>
+			<!-- named -->
 			{% else %}
 				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/S1_analysis">Explore Sentinel-1 imagery</a></li>
-
+                                <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/LiCSAlert">LiCSAlert</a></li>
 			{% endif %}
 		</ul>
 		<div>

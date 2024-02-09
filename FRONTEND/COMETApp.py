@@ -250,6 +250,30 @@ def volcano_analysis(country, region, volcano):
                            country=country, region=region,lat=lat,lon=lon,
                            frame=frame, volcano=volcano_name)
 
+@app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/LiCSAlert',
+           methods=["GET"])
+def volcano_licsalert(country, region, volcano):
+    if "'" not in str(volcano):
+        pass
+    elif "'" in str(volcano):
+        volcano=str(volcano).replace("'","&#039;")
+    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                           "name = '" + str(volcano) + "';", conn)
+    if len(df.index) == 0:
+        df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                               "ID = '" + str(volcano) + "';", conn)
+    volcano_name = df.jasmin_name.values[0]
+    # Is jasmin_name is None, try to replace with name_to_lower:
+    if volcano_name is None:
+        volcano_name = '{0}'.format(df.name.values[0]).lower().replace(' ', '_')
+    lat=df.latitude.values[0]
+    lon=df.longitude.values[0]
+    frame = df.frames[0].replace(": u'", ": '").replace(", u'", ", '").replace("{u'", "{'")
+    if frame == '':
+        frame = 'none'
+    return render_template('licsalert.html.j2', data=df,
+                           country=country, region=region,lat=lat,lon=lon,
+                           frame=frame, volcano=volcano_name)
 
 @app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/download',
            methods=["GET", "POST"])
