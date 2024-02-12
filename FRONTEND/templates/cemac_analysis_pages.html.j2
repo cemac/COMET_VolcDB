@@ -46,12 +46,14 @@
 			<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}">Observations of Deformation</a></li>
 			<li class="selected">Explore Sentinel-1 imagery</li>
                         <!-- unnamed -->
+{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
                         {% if data.name[0] == 'Unnamed' %}
                                 <li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/LiCSAlert">LiCSAlert</a></li>
                         <!-- named -->
                         {% else %}
                                 <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/LiCSAlert">LiCSAlert</a></li>
                         {% endif %}
+{% endif %}
 		</ul>
    <div>
 <div style="width:100%; display:block; margin:auto;">

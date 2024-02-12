@@ -34,11 +34,15 @@
                         <!-- unnamed -->
 			{% if data.name[0] == 'Unnamed' %}
 				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/S1_analysis">Explore Sentinel-1 imagery</a></li>
+{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
                                 <li><a href="/volcano-index/{{region}}/{{country}}/{{data.ID[0]}}/LiCSAlert">LiCSAlert</a></li>
+{% endif %}
 			<!-- named -->
 			{% else %}
 				<li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/S1_analysis">Explore Sentinel-1 imagery</a></li>
+{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
                                 <li><a href="/volcano-index/{{region}}/{{country}}/{{data.name[0]}}/LiCSAlert">LiCSAlert</a></li>
+{% endif %}
 			{% endif %}
 		</ul>
 		<div>

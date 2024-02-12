@@ -40,6 +40,7 @@
 <div style="width:100%; display:block; margin:auto; background-color: #eeeeee;">
 
 <!-- start content. -->
+{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
 
     <script>
       var volcano_name = '{{ volcano }}';
@@ -77,6 +78,7 @@
          class="plot_section">
     </div>
 
+{% endif %}
 <!-- end content. -->
 
     </div><!-- .entry-content -->
