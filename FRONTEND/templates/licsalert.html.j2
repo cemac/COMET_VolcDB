@@ -40,7 +40,7 @@
 <div style="width:100%; display:block; margin:auto; background-color: #eeeeee;">
 
 <!-- start content. -->
-{% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
+{% if session.logged_in %}
 
     <script>
       var volcano_name = '{{ volcano }}';
