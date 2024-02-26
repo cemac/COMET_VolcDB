@@ -15,11 +15,11 @@ cffi==1.16.0
 charset-normalizer==3.3.2
 click==8.1.7
 colorama==0.4.6
-conda==24.1.1
+conda==24.1.2
 conda-libmamba-solver==23.12.0
 conda-package-handling==2.2.0
 conda-package-streaming==0.9.0
-cryptography==42.0.3
+cryptography==42.0.5
 distro==1.9.0
 flask==3.0.0
 flask-mail==0.9.1
