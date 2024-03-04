@@ -21,6 +21,7 @@ var licsar_img_gacos_prefix = null;
 var link_licsar_prob = true;
 
 var s1_frame_el_display = null;
+var disp_res_el_display = null;
 var disp_correct_el_display = null;
 var s1_type_el_display = null;
 var licsar_img_el_display = null;
@@ -213,6 +214,7 @@ function s1_page_set_up(frame_index, use_disp_correct) {
   };
   /* html elements of interest: */
   var s1_frame_el = document.getElementById('row_s1_frame');
+  var disp_res_el = document.getElementById('row_disp_res');
   var disp_correct_el = document.getElementById('row_disp_correct');
   var s1_type_el = document.getElementById('row_s1_type');
   var licsar_img_el = document.getElementById('row_licsar_images');
@@ -230,6 +232,8 @@ function s1_page_set_up(frame_index, use_disp_correct) {
   /* get display style of element: */
   s1_frame_el_display == (s1_frame_el_display === null) ?
     s1_frame_el.style.display : s1_frame_el_display;
+  disp_res_el_display == (disp_res_el_display === null) ?
+    disp_res_el.style.display : disp_res_el_display;
   disp_correct_el_display == (disp_correct_el_display === null) ?
     disp_correct_el.style.display : disp_correct_el_display;
   s1_type_el_display == (s1_type_el_display === null) ?
@@ -292,11 +296,13 @@ function s1_page_set_up(frame_index, use_disp_correct) {
   /* check for no frames: */
   if (volcano_frames.length == 1 &&
       volcano_frames[0]['id'] == '') {
-    /* hide frame selection element: */
+    /* hide frame and resolution selection elements: */
     s1_frame_el.style.display = 'none';
+    disp_res_el.style.display = 'none';
   } else {
-    /* show frame selection element: */
+    /* show frame and resolution selection elements: */
     s1_frame_el.style.display = s1_frame_el_display;
+    disp_res_el.style.display = disp_res_el_display;
   };
 
   /* check if this frame has corrected data available. check for licsar
@@ -484,7 +490,8 @@ function s1_page_set_up(frame_index, use_disp_correct) {
 
   /* displacement data load error function: */
   function disp_req_error() {
-    /* hide displacement plotting elements: */
+    /* hide resolution selection and displacement plotting elements: */
+    disp_res_el.style.display = 'none';
     s1_type_el.style.display = 'none';
     disp_plot_el.style.display = 'none';
     disp_range_el.style.display = 'none';
@@ -513,6 +520,7 @@ function s1_page_set_up(frame_index, use_disp_correct) {
       /* hide error element: */
       disp_error_el.style.display = 'none';
       /* make sure displacement elements are visible: */
+      disp_res_el.style.display = disp_res_el_display;
       s1_type_el.style.display = s1_type_el_display;
       disp_plot_el.style.display = disp_plot_el_display;
       disp_range_el.style.display = disp_range_el_display;
