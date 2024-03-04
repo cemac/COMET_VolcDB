@@ -74,8 +74,41 @@ function get_nearest_value(val, arr) {
   return index;
 };
 
+
+/* functions to set and retrieve cookis. borrowed from 23 schools: */
+function set_cookie(cookie_name, cookie_value, expire_days) {
+  const d = new Date();
+  d.setTime(d.getTime() + (expire_days * 24 * 60 * 60 * 1000));
+  let expires = 'expires='+ d.toUTCString();
+  document.cookie = cookie_name + '=' + cookie_value + ';' + expires +
+                    ';path=/';
+}
+function get_cookie(cookie_name) {
+  let name = cookie_name + '=';
+  let decoded_cookie = decodeURIComponent(document.cookie);
+  let ca = decoded_cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
+}
+
 /* set default licsbas data resolution based on a simple performance test: */
 function set_disp_resolution() {
+  /* sheck for cookie value first: */
+  var stored_res = get_cookie('disp_resolution');
+  /* if a value is retrieved ... : */
+  if (stored_res != '') {
+    /* use stored value: */
+    disp_resolution = stored_res;
+    return;
+  };
   /* how many times to run test and get average: */
   var test_count = 3;
   /* init time to complete calculation variable: */
@@ -98,6 +131,8 @@ function set_disp_resolution() {
   } else {
     disp_resolution = 50;
   };
+  /* store value in cookie: */
+  set_cookie('disp_resolution', disp_resolution, 3);
 };
 
 /* function to enable / disable display of correction type buttons: */

@@ -18,6 +18,7 @@ var s2_vars = {
 /* function to switch resolution of disp data: */
 function switch_res(res) {
   disp_resolution = res;
+  set_cookie('disp_resolution', disp_resolution, 3);
   var __volcano_frame_index = volcano_frame_index;
   volcano_frame_index = null;
   s1_page_set_up(__volcano_frame_index);
