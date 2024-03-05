@@ -1431,7 +1431,10 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     },
     /* axis based on index values': */
     'xaxis': {
-      'title': 'longitude',
+      'title': {
+        'text': 'longitude',
+        'standoff': 15
+      },
       'range': [x_indexes[0], x_indexes.slice(-1)[0]],
       'zeroline': false,
       'autorange': false,
@@ -1441,7 +1444,10 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       'visible': false
     },
     'yaxis': {
-      'title': 'latitude',
+      'title': {
+        'text': 'latitude',
+        'standoff': 5
+      },
       'range': [y_indexes[0], y_indexes.slice(-1)[0]],
       'zeroline': false,
       'autorange': false,
@@ -1450,7 +1456,10 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     },
     /* axis based on lat and lon values: */
     'xaxis2': {
-      'title': 'longitude',
+      'title': {
+        'text': 'longitude',
+        'standoff': 15
+      },
       'overlaying': 'x',
       'range': [x[0], x.slice(-1)[0]],
       'zeroline': false,
@@ -1461,7 +1470,10 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       'side': 'bottom'
     },
     'yaxis2': {
-      'title': 'latitude',
+      'title': {
+        'text': 'latitude',
+        'standoff': 5
+      },
       'overlaying': 'y',
       'range': [y[0], y.slice(-1)[0]],
       'zeroline': false,
@@ -1477,6 +1489,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
           'size': 14,
           'color': '#666666'
         },
+        'standoff': 1
       },
       'overlaying': 'x',
       'range': [-x_dist / 2, x_dist / 2],
@@ -1492,6 +1505,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
           'size': 14,
           'color': '#666666'
         },
+        'standoff': 1
       },
       'overlaying': 'y',
       'range': [-y_dist / 2, y_dist / 2],
@@ -1710,15 +1724,24 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       'y': 0.96
     },
     'xaxis': {
-      'title': scatter_x_title,
+      'title': {
+        'text': scatter_x_title,
+        'standoff': 15
+      },
       'zeroline': false
     },
     'yaxis': {
-      'title': scatter_y1_title,
+      'title': {
+        'text': scatter_y1_title,
+        'standoff': 5
+      },
       'zeroline': false
     },
     'yaxis2': {
-      'title': scatter_y2_title,
+      'title': {
+        'text': scatter_y2_title,
+        'standoff': 1
+      },
       'showticklabels': scatter_y2_showticklabels,
       'zeroline': false,
       'overlaying': 'y',
