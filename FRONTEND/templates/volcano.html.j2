@@ -130,10 +130,13 @@
 					<th>Location:</th>
 					<td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
 				</tr>
-				<tr>
-					<th>Viewable with out log in:</th>
+				
+				    {% if session.usertype == 'Admins' or session.usertype == 'Collaborators'or session.usertype == 'Reviewers' %}
+					<tr>
+					<th>Viewable without login:</th>
 					<td> {{data.subset[0]}} </td>
-				</tr>
+    				</tr>
+					{% endif %}
 			</table>
 			<br>
 			<hr style="width:50%;text-align:left;margin-left:0">
