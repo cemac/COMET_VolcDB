@@ -14,17 +14,54 @@
 		<header>
 			<div style='text-align: right'>
 				{% if session.usertype == 'Admins' %}
-			<form action=/delete/VolcDB1/{{data.ID[0]}} method="post" onsubmit="return confirm('Are you sure?');">
-				<input type="hidden" name="_method" value="delete">
-				<input type="submit" value="&#10008; delete " class="btn btn-danger pull-right">
-			</form>
+					<form action=/delete/VolcDB1/{{data.ID[0]}} method="post" onsubmit="return confirm('Are you sure?');">
+						<input type="hidden" name="_method" value="delete">
+						<input type="submit" value="&#10008; delete " class="btn btn-danger pull-right">
+					</form>
 			{% endif %}
 		</div>
 			{% if pending == 'Y' %}
-			<h1>{{data.name[0]}}*</h1>
-			<p> <i> *updates pending approval </i>
+				<h1>{{data.name[0]}}*</h1>
+				<p> <i> *updates pending approval </i>
+				{% if session.usertype == 'Admins' %}
+				 
+				    {% if data.subset[0] == 'Y' %}
+						<form action=/volcano-index/subsetremove/{{data.ID[0]}} method="post" onsubmit="return confirm('Are you sure?');">
+							<input type="hidden" name="_method" value="Remove from public database">
+						<input type="submit" value="Remove public database " class="btn btn-outlined-danger ">
+						</form>
+					{% else %}
+						<form action=/volcano-index/subsetadd/{{data.ID[0]}} method="post" onsubmit="return confirm('Are you sure?');">
+							
+							<input type="hidden" name="_method" value="Add to public database">
+						<input type="submit" value="Add to public database " class="btn btn-success ">
+						</form>
+						
+					{% endif %}
+					
+					
+				{% endif %}
 			{% else %}
 			<h1>{{data.name[0]}}</h1>
+				{% if session.usertype == 'Admins' %}
+				 
+				    
+					{% if data.subset[0] == 'Y' %}
+						<form action=/volcano-index/subsetremove/{{data.ID[0]}} method="post" onsubmit="return confirm('Are you sure?');">
+							<input type="hidden" name="_method" value="Remove from public database">
+						<input type="submit" value="Remove public database " class="btn btn-outlined-danger ">
+						</form>
+					{% else %}
+						<form action=/volcano-index/subsetadd/{{data.ID[0]}} method="post" onsubmit="return confirm('Are you sure?');">
+							
+							<input type="hidden" name="_method" value="Add to public database">
+						<input type="submit" value="Add to public database " class="btn btn-success ">
+						</form>
+						
+					{% endif %}
+					
+					
+				{% endif %}
 			{% endif %}
 
 		</header><!-- .entry-header -->
@@ -92,6 +129,10 @@
 				<tr>
 					<th>Location:</th>
 					<td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
+				</tr>
+				<tr>
+					<th>Viewable with out log in:</th>
+					<td> {{data.subset[0]}} </td>
 				</tr>
 			</table>
 			<br>

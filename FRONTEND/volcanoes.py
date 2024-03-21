@@ -43,6 +43,8 @@ class Volcano_edit_Form(Form):
                                render_kw={"placeholder": "list of references"})
     latitude = DecimalField(u'latitude', places=3)
     longitude = DecimalField(u'longitude', places=3)
+    subset = SelectField(u'add to public subset?',
+                                        [validators.Optional()])
 
 
 class Volcano_Form(Form):
@@ -80,3 +82,5 @@ class Volcano_Form(Form):
         u'*latitude', places=3, render_kw={"placeholder": "degrees North (between -90.000 and 90.000)"})
     longitude = DecimalField(u'*longitude', places=3, render_kw={
                              "placeholder": "degrees East (between -180.000 and 180.000)"})
+    subset = SelectField(u'add to public subset?',
+                                        [validators.Optional()])

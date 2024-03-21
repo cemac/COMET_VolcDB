@@ -126,6 +126,17 @@
 					{% else %}
 					<th>Location:</th>
 					<td> {{data.longitude[0]}}, {{data.latitude[0]}} </td>
+
+					{% endif %}
+				</tr>
+				<tr>
+					{% if data_diff.subset[0]=='new'  %}
+					<th><span style="color: red"> In public subset?:</span></th>
+					<td><span style="color: red"> {{data.subset[0]}}</span> </td>
+					{% else %}
+					<th>In public subset?:</th>
+					<td> {{data.subset[0]}} </td>
+					
 					{% endif %}
 				</tr>
 			</table>
@@ -179,6 +190,10 @@
 				<tr>
 					<th>Location:</th>
 					<td> {{data_old.longitude[0]}}, {{data_old.latitude[0]}} </td>
+				</tr>
+				<tr>
+					<th>In public Subset:</th>
+					<td> {{data_old.subset[0]}} </td>
 				</tr>
 			</table>
 			{% endif %}

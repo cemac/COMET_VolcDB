@@ -70,6 +70,14 @@ def yesno_list():
     list.append(('No', 'No'))
     return list
 
+def yn_list():
+    """generate yes no list for forms
+    """
+    list = []
+    list.append(('blank', '--Please select--'))
+    list.append(('Y', 'Yes'))
+    list.append(('N', 'No'))
+    return list
 
 def subject_list():
     """generate yes no list for forms

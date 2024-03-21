@@ -208,21 +208,30 @@ def volcano(country, region, volcano):
     if len(df.index) == 0:
         df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
                                "ID = '" + str(volcano) + "';", conn)
+      
     # fill in missing region and country
     df.fillna(value='Unknown', inplace=True)
     # If there is a pending update
     pending = df['Review needed'].values
+    subset = df['subset'].values
     editor = False
     if pending == 'Y':
-        dfeds = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+        try:
+            dfeds = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
                                   "name = '" + str(volcano) + "';", conn)
-        if dfeds.owner_id.values[0] == session['username']:
-            editor = True
+        except:
+             dfeds = pd.read_sql_query("SELECT * FROM VolcDB1_edits WHERE " +
+                                  "ID = '" + str(volcano) + "';", conn)
+        try:        
+            if dfeds.owner_id.values[0] == session['username']:
+                editor = True
+        except:
+            print('couldnt determin owner')
     else:
         dfeds = None
     return render_template('volcano.html.j2', data=df, country=country,
                            region=region, id=id, pending=pending,
-                           editor=editor, edits=dfeds)
+                           editor=editor, edits=dfeds, subset=subset)
 
 
 @app.route('/volcano-index/<string:region>/<path:country>/<string:volcano>/S1_analysis',
@@ -319,6 +328,7 @@ def volcano_edit(country, region, volcano):
     form = eval("Volcano_edit_Form")(request.form)
     form.geodetic_measurements.choices = yesno_list()
     form.deformation_observation.choices = yesno_list()
+    form.subset.choices = yn_list()
     if request.method == 'POST' and form.validate():
         df.fillna(value='Unknown', inplace=True)
         # Get each form field and update DB:
@@ -372,6 +382,7 @@ def volcano_add():
     form = eval("Volcano_Form")(request.form)
     form.geodetic_measurements.choices = yesno_list()
     form.deformation_observation.choices = yesno_list()
+    form.subset.choices = yn_list()
     form.Area.choices = option_list('Area', conn)
     form.country.choices = option_list('country', conn)
     if request.method == 'POST' and form.validate():
@@ -396,6 +407,7 @@ def volcano_add():
         df.longitude = 0
         df.name = 'not null'
         df.Area = 'not null'
+        df.subset = 'N'
         df.owner_id = str(session['username'])
         addrowedits('VolcDB1_edits', df, conn)
         # Get each form field and update DB:
@@ -437,6 +449,24 @@ def volcano_add():
     return render_template('add.html.j2', title=title, form=form,
                            tableClass='Volcano')
 
+
+@app.route('/volcano-index/subsetadd/<string:id>',  methods=["GET","POST"])
+@is_logged_in_as_admin
+def subsvolcano_add(id):
+    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                               "ID = '" + str(id) + "';", conn)
+    editrow('VolcDB1',str(id), 'subset', 'Y', conn)
+    flash('Added to public subset', 'success')
+    return redirect(url_for('volcano', region=df.Area[0], country=df.country[0], volcano=id ))
+
+@app.route('/volcano-index/subsetremove/<string:id>',  methods=["GET","POST"])
+@is_logged_in_as_admin
+def subsvolcano_remove(id):
+    df = pd.read_sql_query("SELECT * FROM VolcDB1 WHERE " +
+                               "ID = '" + str(id) + "';", conn)
+    editrow('VolcDB1',str(id), 'subset', 'N', conn)
+    flash('Removed from public subset', 'info')
+    return redirect(url_for('volcano', region=df.Area[0], country=df.country[0], volcano=id ))
 
 @app.route('/volcano-index/volcanointerferograms', methods=["GET"])
 def volcanointerferograms():
@@ -495,6 +525,9 @@ def delete_entry(tableClass, id):
     else:
         flash('not set up for this yet', 'danger')
     return redirect(url_for('volcanodb_reviewlist', tableClass=tableClass))
+
+
+
 
 
 @app.route('/delete/VolcDB1/<string:id>', methods=['POST'])
