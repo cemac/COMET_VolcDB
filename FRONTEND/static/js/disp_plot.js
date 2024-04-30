@@ -473,7 +473,7 @@ function get_ts_indexes() {
 };
 
 /* function to get mean value of specified area in a set of data: */
-function get_area_mean(var_area, var_data) {
+function get_area_mean(var_area, var_data, var_mask) {
   /* init mean calculating variables: */
   var var_sum = 0;
   var var_count = 0;
@@ -481,7 +481,7 @@ function get_area_mean(var_area, var_data) {
   /* loop through var values, adding to sum if value is good: */
   for (var i = var_area[0]; i < var_area[1]; i++) {
     for (var j = var_area[2]; j < var_area[3]; j++) {
-      if (var_data[i][j] != 'null') {
+      if ((var_data[i][j] != 'null') && (var_mask[i][j] != 0)) {
         var_sum += var_data[i][j];
         var_count += 1;
       };
@@ -1096,8 +1096,8 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     /* get start data: */
     var start = disp[start_index];
     /* get reference area data: */
-    var ts_ref_mean = get_area_mean(ref_area, start);
-    var ts_ref_minus_disp = get_area_mean(ts_area,  start) - ts_ref_mean;
+    var ts_ref_mean = get_area_mean(ref_area, start, mask);
+    var ts_ref_minus_disp = get_area_mean(ts_area,  start, mask) - ts_ref_mean;
     /* init vars for data: */
     var ts_disp = [];
     var ts_dates = [];
@@ -1105,9 +1105,9 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     /* have loop through time series to get values: */
     for (var i = start_index; i < end_index + 1; i++) {
       /* disp data value: */
-      var value_disp = get_area_mean(ts_area, disp[i]);
+      var value_disp = get_area_mean(ts_area, disp[i], mask);
       /* ref area mean: */
-      var ref_mean = get_area_mean(ref_area, disp[i]);
+      var ref_mean = get_area_mean(ref_area, disp[i], mask);
       /* value is data value - ref area mean for time step - ref area mean
          for start data: */
       var value_disp_out = value_disp - ref_mean - ts_ref_minus_disp;
