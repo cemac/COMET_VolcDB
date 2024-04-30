@@ -90,6 +90,8 @@ function init_plot_vars(fid, call_back) {
       'scatter_ts_mode': 'markers',
       'scatter_ts_x_title': 'date',
       'scatter_profile_mode': 'lines',
+      /* gap plotting variables: */
+      'scatter_gap_color': 'rgba(200, 200, 200, 0.2)',
       /* inital hover variables: */
       'hover': false,
       'hover_x': false,
@@ -173,7 +175,9 @@ function init_plot_vars(fid, call_back) {
       /* reference area: */
       'refarea': disp_data['refarea'],
       /* elevation data: */
-      'elev': disp_data['elev']
+      'elev': disp_data['elev'],
+      /* gap data: */
+      'gaps': disp_data['gaps']
     };
   };
 
@@ -631,6 +635,8 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
 
   /* get ts_area value. set defaults if not set: */
   var ts_area = ts_area || plot_vars[fid]['ts_area'] ;
+  /* get ts_gaps value. set default if not set: */
+  var ts_gaps = plot_vars[fid]['gaps'] || [];
   /* arrays for storing time series x and y values: */
   var ts_x = [];
   var ts_y = [];
@@ -1305,6 +1311,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     var scatter_y1_title = 'displacement (mm)';
     var scatter_y2_title = null;
     var scatter_y2_showticklabels = false;
+    var scatter_showlegend = true;
   } else {
     /* profile plotting: */
     var selected_x = profile_x;
@@ -1321,6 +1328,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     var scatter_y1_title = 'displacement (mm)';
     var scatter_y2_title = 'elevation (m)';
     var scatter_y2_showticklabels = true;
+    var scatter_showlegend = true;
   };
 
   /* if data is filtered: */
@@ -1335,6 +1343,9 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   /* store current scatter x and y values: */
   plot_vars[fid]['selected_x'] = selected_x;
   plot_vars[fid]['selected_y'] = selected_y;
+
+  /* gap plotting color: */
+  var scatter_gap_color = plot_vars['scatter_gap_color'];
 
 
   /** heatmap plot: **/
@@ -1547,6 +1558,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
 
   /** surface plot: **/
 
+
   /* calculate x axis distance: */
   var surf_x_distance = get_distance(
     {'latitude': y[0], 'longitude': x[0]},
@@ -1688,7 +1700,8 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       'color': disp_scatter_color
     },
     'hoverinfo': 'text',
-    'hovertext': scatter_hover
+    'hovertext': scatter_hover,
+    'showlegend': scatter_showlegend
   };
 
   var scatter2 = {
@@ -1702,7 +1715,8 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       'color': elev_scatter_color
     },
     'hoverinfo': 'text',
-    'hovertext': scatter_hover
+    'hovertext': scatter_hover,
+    'showlegend': scatter_showlegend
   };
 
   /* plot data, in order of plotting: */
@@ -1714,7 +1728,75 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     'y': [scatter_y1, scatter_y2],
     'marker.color': [disp_scatter_color, elev_scatter_color],
     'mode': [scatter_mode, scatter_mode],
-    'hovertext': [scatter_hover, scatter_hover]
+    'hovertext': [scatter_hover, scatter_hover],
+    'showlegend': [scatter_showlegend, scatter_showlegend]
+  };
+
+  /* if plotting time series, plot gaps.
+     loop through all gaps: */
+  if (scatter_type == 'ts') {
+    /* get min and max y, if there are gaps: */
+    if (ts_gaps.length > 0) {
+      var gap_y_min = Math.min.apply(
+        null, scatter_y1.filter(function(x) { return !isNaN(x); })
+      );
+      var gap_y_max = Math.max.apply(
+        null, scatter_y1.filter(function(x) { return !isNaN(x); })
+      );
+    } else {
+      var min_y = 0;
+      var max_y = 0;
+    };
+    for (var i = 0; i < ts_gaps.length ; i++) {
+      /* this gap, start and end date: */
+      var ts_gap = ts_gaps[i];
+      var gap_start = ts_gap[0];
+      var gap_end = ts_gap[1];
+      /* create x and y values: */
+      var gap_x = [gap_start, gap_start, gap_end, gap_end, gap_start];
+      var gap_y = [gap_y_min, gap_y_max, gap_y_max, gap_y_min, gap_y_min];
+      /* create scatter plot: */
+      var gap_scatter = {
+        'type': 'scatter',
+        'name': 'data gap: ' + gap_start + ' to ' + gap_end,
+        'mode': 'lines',
+        'x': gap_x,
+        'y': gap_y,
+        'yaxis': 'y1',
+        'fill': 'toself',
+        'fillcolor': scatter_gap_color,
+        'marker': {
+          'color': scatter_gap_color
+        },
+        'zorder': -10,
+        'showlegend': false
+      };
+      /* add to plot data: */
+      scatter_data.push(gap_scatter);
+      /* and add to plot update data: */
+      scatter_update['x'].push(gap_x);
+      scatter_update['y'].push(gap_y);
+      scatter_update['marker.color'].push(scatter_gap_color);
+      scatter_update['mode'].push('lines');
+      scatter_update['hovertext'].push(null);
+      scatter_update['showlegend'].push(false);
+    };
+  /* else, profile plotting, don't plot gaps: */
+  } else {
+    /* loop through gaps: */
+    for (var i = 0; i < ts_gaps.length ; i++) {
+      /* add empty data to plot data: */
+      scatter_data.push({});
+      /* add empty data to plot data: */
+      scatter_data.push({});
+      /* add empty data to plot update data: */
+      scatter_update['x'].push(null);
+      scatter_update['y'].push(null);
+      scatter_update['marker.color'].push(null);
+      scatter_update['mode'].push(null);
+      scatter_update['hovertext'].push(null);
+      scatter_update['showlegend'].push(false);
+   };
   };
 
   /* scatter plot layout: */
@@ -1752,7 +1834,9 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     'legend': {
       'x': 1,
       'y': 1,
-      'xanchor': 'right'
+      'xanchor': 'right',
+      'bordercolor': 'rgba(200, 200, 200, 0.4)',
+      'borderwidth': 1
     },
     'hovermode': 'closest'
   };
@@ -1783,7 +1867,9 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     'legend': {
       'x': 1,
       'y': 1,
-      'xanchor': 'right'
+      'xanchor': 'right',
+      'bordercolor': 'rgba(200, 200, 200, 0.4)',
+      'borderwidth': 1
     },
   };
 
