@@ -10,6 +10,7 @@ var s2_vars = {
   /* sentinel-2 leaflet map: */
   's2_map': null,
   /* s2 map overlays: */
+  's2_area_poly': null,
   's2_ts_poly': null,
   's2_ref_poly': null,
   's2_profile_line': null
@@ -2145,6 +2146,7 @@ function draw_s2_map_polygons() {
     return;
   };
   /* time series / ref area polygons and profile line: */
+  var s2_area_poly = s2_vars['s2_area_poly'];
   var s2_ts_poly = s2_vars['s2_ts_poly'];
   var s2_ref_poly = s2_vars['s2_ref_poly'];
   var s2_profile_line = s2_vars['s2_profile_line'];
@@ -2152,6 +2154,30 @@ function draw_s2_map_polygons() {
   var ts_latlon_area = plot_vars[fid]['ts_latlon_area'];
   var ref_latlon_area = plot_vars[fid]['ref_latlon_area'];
   var profile_latlon_area = plot_vars[fid]['profile_latlon_area'];
+
+  /* draw data area ploygon ... check for existing and remove:: */
+  if (s2_area_poly != null) {
+    s2_map.removeLayer(s2_area_poly);
+  };
+  /* get min and max x and y: */
+  var min_x = Math.min.apply(Math, plot_vars[fid]['x']);
+  var max_x = Math.max.apply(Math, plot_vars[fid]['x']);
+  var min_y = Math.min.apply(Math, plot_vars[fid]['y']);
+  var max_y = Math.max.apply(Math, plot_vars[fid]['y']);
+  /* draw new polygon: */
+  s2_area_poly = L.polygon([
+    [min_y, min_x],
+    [max_y, min_x],
+    [max_y, max_x],
+    [min_y, max_x]
+  ], {
+    'color': '#0000ff',
+    'fillOpacity': 0,
+    'dashArray': 4
+  });
+  /* add to map and store in plot_vars: */
+  s2_map.addLayer(s2_area_poly);
+  s2_vars['s2_area_poly'] = s2_area_poly;
 
   /* if in time series plotting mode: */
   if (plot_vars[fid]['scatter_type'] == 'ts') {
