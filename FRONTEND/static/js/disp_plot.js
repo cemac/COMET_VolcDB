@@ -2157,7 +2157,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     plot_vars[fid]['scatter_plot'] = scatter_plot;
   } else {
     /* update the plot: */
-    Plotly.update(scatter_div, scatter_update, scatter_layout_update);
+    Plotly.react(scatter_div, scatter_data, scatter_layout, scatter_conf);
   };
 
 /* end disp_plot function: */
