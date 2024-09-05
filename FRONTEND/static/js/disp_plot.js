@@ -2354,10 +2354,12 @@ function draw_s2_map(aoi_lat, aoi_lon) {
     return;
   };
 
-  /* define sentinel-2 layer: */
-  var s2_layer = L.tileLayer(
-    'https://{s}.s2maps-tiles.eu/wmts/1.0.0/s2cloudless/default/WGS84/{z}/{y}/{x}.jpg',
-    {}
+  /* define blue marble layer: */
+  var bm_layer = L.tileLayer(
+    'https://gibs-{s}.earthdata.nasa.gov/wmts/epsg3857/best/BlueMarble_ShadedRelief/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpg', {
+      'maxNativeZoom': 8,
+      'maxZoom': 14
+    }
   );
 
   /* define map: */
@@ -2368,7 +2370,7 @@ function draw_s2_map(aoi_lat, aoi_lon) {
     crs: L.CRS.EPSG4326,
     /* map layers: */
     layers: [
-      s2_layer
+      bm_layer
     ],
     /* map center: */
     center: [
