@@ -2356,7 +2356,7 @@ function draw_s2_map(aoi_lat, aoi_lon) {
 
   /* define blue marble layer: */
   var bm_layer = L.tileLayer(
-    'https://gibs-{s}.earthdata.nasa.gov/wmts/epsg3857/best/BlueMarble_ShadedRelief/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpg', {
+    'https://gibs-{s}.earthdata.nasa.gov/wmts/epsg4326/best/BlueMarble_ShadedRelief/default/500m/{z}/{y}/{x}.jpg', {
       'maxNativeZoom': 8,
       'maxZoom': 14
     }
