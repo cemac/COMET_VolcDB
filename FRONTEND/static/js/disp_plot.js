@@ -1253,7 +1253,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   var heatmap_coh_z_min = plot_vars['heatmap_coh_z_min'];
   var heatmap_coh_z_max = plot_vars['heatmap_coh_z_max'];
   var heatmap_coh_colorbar = {
-    'tickprefix': '  ',
+    'tickprefix': '   ',
     'x': 1.10,
     'thickness': 25,
     'len': 0.9,
