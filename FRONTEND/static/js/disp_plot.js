@@ -1225,7 +1225,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   var heatmap_disp_cb_title = plot_vars['heatmap_disp_title'];
   var heatmap_disp_colorscale = plot_vars['heatmap_disp_colorscale'];
   var heatmap_disp_colorbar = {
-    'tickprefix': '   ',
+    'tickprefix': ' ',
     'tickvals': [-heatmap_disp_tickmax, 0, heatmap_disp_tickmax],
     'x': 1.10,
     'thickness': 25,
@@ -1253,7 +1253,7 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
   var heatmap_coh_z_min = plot_vars['heatmap_coh_z_min'];
   var heatmap_coh_z_max = plot_vars['heatmap_coh_z_max'];
   var heatmap_coh_colorbar = {
-    'tickprefix': ' ',
+    'tickprefix': '  ',
     'x': 1.10,
     'thickness': 25,
     'len': 0.9,
@@ -1479,7 +1479,8 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       'scaleanchor': 'y2',
       'scaleratio': 1,
       'constrain': 'domain',
-      'side': 'bottom'
+      'side': 'bottom',
+      'gridcolor': '#999999'
     },
     'yaxis2': {
       'title': {
@@ -1491,7 +1492,8 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       'zeroline': false,
       'autorange': false,
       'constrain': 'domain',
-      'side': 'left'
+      'side': 'left',
+      'gridcolor': '#999999'
     },
     /* axis based on distance values: */
     'xaxis3': {
@@ -1526,7 +1528,21 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       'showgrid': false,
       'side': 'right'
     },
+    'images': [{
+      'source': frame_imgs_prefix + volcano_region + '/' +
+                volcano_name + '_' + volcano_frame + '.png',
+      'opacity': 0.25,
+      'layer': 'above',
+      'sizing': 'stretch',
+      'xref': 'x domain',
+      'yref': 'y domain',
+      'sizex': 1,
+      'sizey': 1,
+      'x': 0,
+      'y': 1
+    }],
     'hovermode': 'closest',
+    'hoverdistance': 1,
     'dragmode': 'select',
     'showlegend': false
   };
