@@ -44,7 +44,7 @@ function init_plot_vars(fid, call_back) {
     /* init plotting variables: */
     plot_vars = {
       /* default displacement data type: */
-      'disp_type': 'disp_raw',
+      'disp_type': 'disp_filt',
       /* default heatmap type: */
       'heatmap_type': 'disp',
       /* default scatter type: */
