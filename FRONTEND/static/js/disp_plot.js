@@ -119,6 +119,7 @@ function init_plot_vars(fid, call_back) {
       'profile_area': null,
       'profile_latlon_area': null,
       /* reference area: */
+      'ref_area_init': false,
       'ref_area': null,
       'ref_latlon_area': null,
       /* reference area x and y values for plotting: */
@@ -441,6 +442,10 @@ function scatter_to_csv() {
 function get_ts_indexes() {
   /* volcano frame id: */
   var fid = volcano_fid;
+  /* disp data / info: */
+  var my_disp_type = plot_vars['disp_type'];
+  var my_disp_data = plot_vars[fid][my_disp_type];
+  var my_disp_last = my_disp_data.length - 1;
   /* get x and y midpoint indexes: */
   var mid_y = Math.floor(plot_vars[fid]['y'].length / 2) - 1;
   var mid_x = Math.floor(plot_vars[fid]['x'].length / 2) - 1;
@@ -448,14 +453,18 @@ function get_ts_indexes() {
      search through the data, one quarter at a time: */
   for (var i = mid_y; i < plot_vars[fid]['y'].length; i++) {
     for (var j = mid_x; j < plot_vars[fid]['x'].length; j++) {
-      if (plot_vars[fid]['mask'][i][j] == 1) {
+      if ((plot_vars[fid]['mask'][i][j] == 1) &&
+          (my_disp_data[0][i][j] != 'null') &&
+          (my_disp_data[my_disp_last][i][j] != 'null')) {
         return[i, j];
       };
     };
   };
   for (var i = mid_y; i < plot_vars[fid]['y'].length; i++) {
     for (var j = mid_x; j > -1; j--) {
-      if (plot_vars[fid]['mask'][i][j] == 1) {
+      if ((plot_vars[fid]['mask'][i][j] == 1) &&
+          (my_disp_data[0][i][j] != 'null') &&
+          (my_disp_data[my_disp_last][i][j] != 'null')) {
         return[i, j];
       };
     };
@@ -463,14 +472,18 @@ function get_ts_indexes() {
   /* nothing found ... try the other half of the data: */
   for (var i = mid_y; i > -1; i--) {
     for (var j = mid_x; j > -1; j--) {
-      if (plot_vars[fid]['mask'][i][j] == 1) {
+      if ((plot_vars[fid]['mask'][i][j] == 1) &&
+          (my_disp_data[0][i][j] != 'null') &&
+          (my_disp_data[my_disp_last][i][j] != 'null')) {
         return[i, j];
       };
     };
   };
   for (var i = mid_y; i > -1; i--) {
     for (var j = mid_x; j < plot_vars[fid]['x'].length; j++) {
-      if (plot_vars[fid]['mask'][i][j] == 1) {
+      if ((plot_vars[fid]['mask'][i][j] == 1) &&
+          (my_disp_data[0][i][j] != 'null') &&
+          (my_disp_data[my_disp_last][i][j] != 'null')) {
         return[i, j];
       };
     };
@@ -721,6 +734,91 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
     y[profile_area[0]], y[profile_area[2]],
     x[profile_area[1]], x[profile_area[3]]
   ];
+
+  /* check initial reference area has some values: */
+  if (plot_vars[fid]['ref_area_init'] == false) {
+    /* get start and end data: */
+    var start_disp = disp[start_index];
+    var end_disp = disp[end_index];
+    /* get reference area data. arrays of x an y values: */
+    var ref_y = [];
+    var ref_x = [];
+    /* raw data mean valculating values: */
+    var ref_sum = 0;
+    var ref_count = 0;
+    var ref_mean;
+    /* spin through ref area indexes: */
+    for (var i = refarea[0]; i < refarea[1]; i++) {
+      for (var j = refarea[2]; j < refarea[3]; j++) {
+        /* if the value is not masked: */
+        if (mask[i][j] == 1) {
+          /* store x and y index values: */
+          ref_y.push(i);
+          ref_x.push(j);
+          /* if raw data value is valid, add it to the sum: */
+          if (end_disp[i][j] != 'null' && start_disp[i][j] != 'null') {
+            ref_sum += end_disp[i][j] - start_disp[i][j];
+            ref_count += 1;
+          };
+        };
+      };
+    };
+    /* calculate mean for raw values: */
+    if (ref_count > 0) {
+      ref_mean = ref_sum / ref_count;
+    } else {
+      ref_mean = NaN;
+    };
+    /* if referance are mean is NaN: */
+    if (isNaN(ref_mean) == true) {
+      /* get x and y 'midpoint' indexes: */
+      var mid_y = Math.floor(plot_vars[fid]['y'].length / 3) - 1;
+      var mid_x = Math.floor(plot_vars[fid]['x'].length / 3) - 1;
+      /* find the first value near center which is not masked.
+         search through the data, one quarter at a time: */
+      function get_init_refarea(mid_x, mid_y, start_disp, end_disp) {
+        for (var i = mid_y; i > -1; i--) {
+          for (var j = mid_x; j < plot_vars[fid]['x'].length; j++) {
+            if ((plot_vars[fid]['mask'][i][j] == 1) &&
+                (start_disp[i][j] != 'null') &&
+                (end_disp[i][j] != 'null')) {
+              return [i, i + 1, j, j + 1];
+            };
+          };
+        };
+        for (var i = mid_y; i > -1; i--) {
+          for (var j = mid_x; j > -1; j--) {
+            if ((plot_vars[fid]['mask'][i][j] == 1) &&
+                (start_disp[i][j] != 'null') &&
+                (end_disp[i][j] != 'null')) {
+              return [i, i + 1, j, j + 1];
+            };
+          };
+        };
+        for (var i = mid_y; i < plot_vars[fid]['y'].length; i++) {
+          for (var j = mid_x; j > -1; j--) {
+            if ((plot_vars[fid]['mask'][i][j] == 1) &&
+                (start_disp[i][j] != 'null') &&
+                (end_disp[i][j] != 'null')) {
+              return [i, i + 1, j, j + 1];
+            };
+          };
+        };
+        for (var i = mid_y; i < plot_vars[fid]['y'].length; i++) {
+          for (var j = mid_x; j < plot_vars[fid]['x'].length; j++) {
+              if ((plot_vars[fid]['mask'][i][j] == 1) &&
+                  (start_disp[i][j] != 'null') &&
+                  (end_disp[i][j] != 'null')) {
+                return [i, i + 1, j, j + 1];
+              };
+          };
+        };
+      };
+      refarea = get_init_refarea(mid_x, mid_y, start_disp, end_disp);
+    };
+    /* reference area init'd: */
+    plot_vars[fid]['ref_area_init'] = true;
+  };
 
   /* get reference area value, set defaults if not set: */
   var ref_area = ref_area || plot_vars[fid]['ref_area'] || refarea ;
