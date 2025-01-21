@@ -7,7 +7,7 @@
  <h1> <center> COMET VOLC DB </center> </h1>
 
 ![GitHub release](https://img.shields.io/github/release/cemac/COMET_VolcDB.svg) ![GitHub](https://img.shields.io/github/license/cemac/COMET_VolcDB.svg) [![GitHub top language](https://img.shields.io/github/languages/top/cemac/COMET_VolcDB.svg)](https://github.com/cemac/COMET_VolcDB) [![GitHub issues](https://img.shields.io/github/issues/cemac/COMET_VolcDB.svg)](https://github.com/cemac/COMET_VolcDB/issues) [![GitHub last commit](https://img.shields.io/github/last-commit/cemac/COMET_VolcDB.svg)](https://github.com/cemac/COMET_VolcDB/commits/master) [![GitHub All Releases](https://img.shields.io/github/downloads/cemac/COMET_VolcDB/total.svg)](https://github.com/cemac/COMET_VolcDB/releases)
-
+[![Bluesky](https://img.shields.io/badge/Bluesky-0285FF?logo=bluesky&logoColor=fff)](https://bsky.app/profile/uk-comet.bsky.social)
 
 Repository for the [COMET](www.comet.nerc.ac.uk) Volcano Database hosted at [comet.nerc.ac.uk/comet-volcano-portal](https://comet-volcanodb.org/)
 
