@@ -80,6 +80,8 @@
       var js_data_prefix = '/data/';
       var disp_data_prefix = 'disp_data/';
       var disp_data_gacos_prefix = 'disp_data_gacos/';
+      var disp_imgs_prefix = '/images/disp_images/';
+      var disp_imgs_gacos_prefix = '/images/disp_images_gacos/';
       var licsar_data_prefix = 'licsar_data/';
       var licsar_data_gacos_prefix = 'licsar_data_gacos/';
       var prob_data_prefix = 'prob_data/';
@@ -323,16 +325,28 @@
               </button>
             </div>
           </div>
-          <!-- save csv button: -->
+          <!-- save csv / qc image buttons: -->
           <div>
             <div class="action_button_box"
                  id="ts_to_csv_button_box">
+              <!-- save as csv button: -->
               <button id="ts_to_csv_button"
                       class="disp_action_button"
                       onclick="scatter_to_csv();"
                       title="Save plot data as a CSV file">
                 save data as csv
                </button>
+              <!-- qc image button: -->
+              <a id="qc_image_link"
+                 class="qc_image_link"
+                 href=""
+                 target="_new">
+                <button id="qc_img_button"
+                        class="disp_action_button"
+                        title="Quality metrics image file">
+                  quality metrics image
+                </button>
+              </a>
             </div>
           </div>
         </div>

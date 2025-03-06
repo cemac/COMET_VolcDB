@@ -34,9 +34,11 @@ function init_plot_vars(fid, call_back) {
   if (use_correct != undefined && use_correct == true) {
     plot_vars = plot_vars_corrected;
     my_disp_data_prefix = disp_data_gacos_prefix;
+    my_disp_imgs_prefix = disp_imgs_gacos_prefix;
   } else {
     plot_vars = plot_vars_uncorrected;
     my_disp_data_prefix = disp_data_prefix;
+    my_disp_imgs_prefix = disp_imgs_prefix;
   };
 
   /* if main plot_vars is undefined: */
@@ -67,6 +69,9 @@ function init_plot_vars(fid, call_back) {
       'button_ref': document.getElementById('click_mode_button_ref'),
       'button_select_plot': document.getElementById('scatter_select_button_plot'),
       'button_select_s2': document.getElementById('scatter_select_button_s2'),
+      'button_qc_img': document.getElementById('qc_img_button'),
+      /* link elements: */
+      'link_qc_img': document.getElementById('qc_image_link'),
       /* min and max for coherence heatmap: */
       'heatmap_coh_z_min': 0,
       'heatmap_coh_z_max': 1.0,
@@ -193,8 +198,65 @@ function init_plot_vars(fid, call_back) {
     };
   };
 
+  /* function to enable / qc image button: */
+  function enable_qc_image(qc_suffix, qc_button, qc_link, qc_enabled) {
+
+    /* sub function for button and link enabling / disabling: */
+    function enable_qc_link(qc_enabled, qc_link, qc_button, qc_img_url) {
+      /* if not enabling: */
+      if (qc_enabled != true) {
+        /* remove link: */
+        qc_link.href = '';
+        /* remove button: */
+        qc_button.setAttribute('disabled', true);
+        qc_button.style.display = 'none';
+      } else {
+        /* set link: */
+        qc_link.href = qc_img_url;
+        /* display button: */
+        qc_button.style.display = 'inline';
+        qc_button.removeAttribute('disabled');
+      };
+    };
+
+    /* check if image is avaiable (if enabling): */
+    if (qc_enabled == true) {
+      /* url for qc image: */
+      var qc_img_url = js_data_prefix + my_disp_imgs_prefix +
+                       volcano_region + '/' + volcano_name + '_' +
+                       volcano_frame + '_ts_latest.png';
+      /* create new request to check if image exists: */
+      var qc_req = new XMLHttpRequest();
+      qc_req.responseType = 'blob';
+      qc_req.open('HEAD', qc_img_url, true);
+      /* on data download: */
+      qc_req.onload = function() {
+        /* if not successful: */
+        if (qc_req.status != 200) {
+          /* disable qc image: */
+          enable_qc_link(false, qc_link, qc_button);
+        } else {
+          /* enable qc image: */
+          enable_qc_link(qc_enabled, qc_link, qc_button, qc_img_url);
+        };
+      };
+      /* if data check fails: */
+      qc_req.onerror = function() {
+        /* disable qc image: */
+        enable_qc_link(false, qc_link, qc_button);
+        return;
+      };
+      /* send the request: */
+      qc_req.send(null);
+    /* else, disable qc image: */
+    } else {
+      enable_qc_link(false, qc_link, qc_button);
+    };
+
+  };
+
   /* function to check if displacement data exists: */
-  function check_disp_data(data_suffix, data_button) {
+  function check_disp_data(data_suffix, data_button, qc_button, qc_link) {
     /* data url: */
     var disp_data_url = js_data_prefix + my_disp_data_prefix +
                         volcano_region + '/' + volcano_name + '_' +
@@ -210,22 +272,31 @@ function init_plot_vars(fid, call_back) {
       if (disp_req.status != 200) {
         /* disable button for this data type: */
         enable_disp_data(data_button, false);
+        /* disable qc image: */
+        enable_qc_image(data_suffix, qc_button, qc_link, false);
       } else {
         /* enable button for this data type: */
         enable_disp_data(data_button, true);
+        /* enable qc image: */
+        enable_qc_image(data_suffix, qc_button, qc_link, true);
       };
     };
     /* if data check fails: */
     disp_req.onerror = function() {
       /* disable button for this data type: */
       enable_disp_data(data_button, false);
+      /* disable qc image: */
+      enable_qc_image(data_suffix, qc_button, qc_link, false);
     };
     /* send the request: */
     disp_req.send(null);
   };
 
   /* check for and enable / disable filtered data: */
-  check_disp_data('filt', plot_vars['button_filt']);
+  check_disp_data(
+    'filt', plot_vars['button_filt'],
+    plot_vars['button_qc_img'], plot_vars['link_qc_img']
+  );
 
   /* run call back function: */
   if (call_back && typeof(call_back) === "function") {
