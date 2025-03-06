@@ -224,7 +224,7 @@ function init_plot_vars(fid, call_back) {
       /* url for qc image: */
       var qc_img_url = my_disp_imgs_prefix +
                        volcano_region + '/' + volcano_name + '_' +
-                       volcano_frame + '_ts_latest.png';
+                       volcano_frame + '_ts_masked_latest.png';
       /* create new request to check if image exists: */
       var qc_req = new XMLHttpRequest();
       qc_req.responseType = 'blob';
