@@ -222,7 +222,7 @@ function init_plot_vars(fid, call_back) {
     /* check if image is avaiable (if enabling): */
     if (qc_enabled == true) {
       /* url for qc image: */
-      var qc_img_url = js_data_prefix + my_disp_imgs_prefix +
+      var qc_img_url = my_disp_imgs_prefix +
                        volcano_region + '/' + volcano_name + '_' +
                        volcano_frame + '_ts_latest.png';
       /* create new request to check if image exists: */
