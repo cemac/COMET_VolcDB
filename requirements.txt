@@ -39,7 +39,7 @@ idna==3.10
 importlib-metadata==8.5.0
 importlib_resources==6.4.5
 itsdangerous==2.2.0
-jinja2==3.1.5
+jinja2==3.1.6
 jsonpatch==1.33
 jsonpointer==3.0.0
 keyutils==1.6.1
