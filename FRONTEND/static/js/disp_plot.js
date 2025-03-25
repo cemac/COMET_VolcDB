@@ -183,7 +183,11 @@ function init_plot_vars(fid, call_back) {
       /* elevation data: */
       'elev': disp_data['elev'],
       /* gap data: */
-      'gaps': disp_data['gaps']
+      'gaps': disp_data['gaps'],
+      /* los data: */
+      'e_geo': disp_data['e_geo'],
+      'n_geo': disp_data['n_geo'],
+      'u_geo': disp_data['u_geo']
     };
   };
 
@@ -1174,13 +1178,25 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
             surf_elev_masked[i][j] = 'null';
           };
         };
+        /* add los data, if available: */
+        if ((plot_vars[fid]['e_geo'] != undefined) &&
+            (plot_vars[fid]['n_geo'] != undefined) &&
+            (plot_vars[fid]['e_geo'] != undefined)) {
+          var los_hover_label = '<br>los: ' +
+                                plot_vars[fid]['e_geo'][i][j] + ' E, ' +
+                                plot_vars[fid]['n_geo'][i][j] + ' N, ' +
+                                plot_vars[fid]['u_geo'][i][j] + ' U';
+        } else {
+          var los_hover_label = '';
+        };
         /* hover data values: */
         heatmap_hover[i][j] =
           'lat : ' + plot_vars[fid]['y'][i] + '<br>' +
           'lon : ' + plot_vars[fid]['x'][j] + '<br>' +
           'displacement : ' + disp_hover_label + '<br>' +
           'coherence : ' + coh_hover_label + '<br>' +
-          'elevation : ' + elev_hover_label;
+          'elevation : ' + elev_hover_label +
+          los_hover_label;
       /* end for j: */
       };
     /* end for i: */
