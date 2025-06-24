@@ -115,7 +115,7 @@ tqdm==4.66.6
 typing-extensions==4.12.2
 typing_extensions==4.12.2
 tzdata==2024b
-urllib3==2.2.3
+urllib3==2.5.0
 werkzeug==3.0.6
 wheel==0.44.0
 wtforms==3.2.1
