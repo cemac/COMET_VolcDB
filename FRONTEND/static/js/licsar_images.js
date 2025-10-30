@@ -74,6 +74,21 @@ function init_licsar_images(index) {
 
 };
 
+async function load_links(links_url, element_id) {
+  var link_div = document.getElementById(element_id);
+  await fetch(links_url, {'cache': 'no-cache'}).then(
+    async function(data_req) {
+      /* if successful: */
+      if (data_req.status == 200) {
+        var links_text = await data_req.text();
+      } else {
+        var links_text = '';
+      };
+      link_div.innerHTML = links_text;
+    }
+  );
+};
+
 function display_licsar_images(index) {
 
   /* return the nearest dates from an array: */
@@ -186,11 +201,6 @@ function display_licsar_images(index) {
   /* get image slider div: */
   var slider_div = document.getElementById('licsar_image_control');
 
-  /* get data links elements: */
-  var links_cc = document.getElementById('licsar_cc_data_links');
-  var links_pha = document.getElementById('licsar_pha_data_links');
-  var links_unw = document.getElementById('licsar_unw_data_links');
-
   /* track directory in links does not have leading zeros: */
   var track_dir = parseInt(volcano_track);
 
@@ -198,39 +208,9 @@ function display_licsar_images(index) {
   var links_date = licsar_data['dates'][image_index]
   links_date = links_date.replace(' - ', '_');
   links_date = links_date.replace(/-/g, '');
-  links_pha.innerHTML = '<div class="div_data_links"><span>Wrapped LOS change</span></div>' +
-                        '<div class="div_data_links"><a target="_blank" href="' +
-                        data_href_prefix + '/' + track_dir +
-                        '/' + volcano_frame + '/interferograms/' + links_date +
-                        '/' + links_date + '.geo.diff_pha.tif">' + links_date +
-                        '.geo.diff_pha.tif</a></div>' +
-                        '<div class="div_data_links"><a target="_blank" href="' +
-                        data_href_prefix + '/' + track_dir +
-                        '/' + volcano_frame + '/interferograms/' + links_date +
-                        '/' + links_date + '.geo.diff.png">' + links_date +
-                        '.geo.diff.png</a></div>';
-  links_unw.innerHTML = '<div class="div_data_links"><span>Unwrapped LOS change</span></div>' +
-                        '<div class="div_data_links"><a target="_blank" href="' +
-                        data_href_prefix + '/' + track_dir +
-                        '/' + volcano_frame + '/interferograms/' + links_date +
-                        '/' + links_date + '.geo.unw.tif">' + links_date +
-                        '.geo.unw.tif</a></div>' +
-                        '<div class="div_data_links"><a target="_blank" href="' +
-                        data_href_prefix + '/' + track_dir +
-                        '/' + volcano_frame + '/interferograms/' + links_date +
-                        '/' + links_date + '.geo.unw.png">' + links_date +
-                        '.geo.unw.png</a></div>';
-  links_cc.innerHTML = '<div class="div_data_links"><span>Coherence</span></div>' +
-                       '<div class="div_data_links"><a target="_blank" href="' +
-                       data_href_prefix + '/' + track_dir +
-                       '/' + volcano_frame + '/interferograms/' + links_date +
-                       '/' + links_date + '.geo.cc.tif">' + links_date +
-                       '.geo.cc.tif</a></div>' +
-                       '<div class="div_data_links"><a target="_blank" href="' +
-                       data_href_prefix + '/' + track_dir +
-                       '/' + volcano_frame + '/interferograms/' + links_date +
-                       '/' + links_date + '.geo.cc.png">' + links_date +
-                       '.geo.cc.png</a></div>';
+  var links_url = data_href_prefix + '/' + track_dir + '/' +
+                  volcano_frame + '/interferograms/' + links_date;
+  load_links(links_url, 'licsar_data_links');
 
   /* if slider does not exist or page is being updated: */
   if ((slider_div.noUiSlider == undefined) ||
