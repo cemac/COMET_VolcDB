@@ -7,6 +7,7 @@ blinker==1.8.2
 boltons==24.0.0
 branca==0.7.2
 brotli-python==1.1.0
+brotlicffi==1.2.0.0
 bzip2==1.0.8
 c-ares==1.34.2
 ca-certificates==2025.11.12
@@ -15,7 +16,7 @@ cffi==1.17.1
 charset-normalizer==3.4.0
 click==8.1.7
 colorama==0.4.6
-conda==25.9.1
+conda==25.11.0
 conda-libmamba-solver==25.4.0
 conda-package-handling==2.4.0
 conda-package-streaming==0.11.0
@@ -117,8 +118,8 @@ truststore==0.10.3
 typing-extensions==4.12.2
 typing_extensions==4.12.2
 tzdata==2024b
-urllib3==2.5.0
-werkzeug==3.0.6
+urllib3==2.6.0
+werkzeug==3.1.4
 wheel==0.44.0
 wtforms==3.2.1
 xyzservices==2024.9.0
