@@ -1953,6 +1953,19 @@ function disp_plot(disp_type, heatmap_type, scatter_type,
       var ts_gap = ts_gaps[i];
       var gap_start = ts_gap[0];
       var gap_end = ts_gap[1];
+      /* check the gap falls within the time bounds of the plot: */
+      if (gap_start > scatter_x.slice(-1)) {
+        continue;
+      };
+      if (gap_end < scatter_x[0]) {
+        continue;
+      };
+      if (gap_start < scatter_x[0]) {
+        gap_start = scatter_x[0];
+      };
+      if (gap_end > scatter_x.slice(-1)) {
+        gap_end = scatter_x.slice(-1);
+      };
       /* create x and y values: */
       var gap_x = [gap_start, gap_start, gap_end, gap_end, gap_start];
       var gap_y = [gap_y_min, gap_y_max, gap_y_max, gap_y_min, gap_y_min];
