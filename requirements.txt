@@ -21,7 +21,7 @@ conda-libmamba-solver==25.4.0
 conda-package-handling==2.4.0
 conda-package-streaming==0.11.0
 cpp-expected==1.1.0
-cryptography==45.0.6
+cryptography==46.0.5
 distro==1.9.0
 flask==3.0.3
 flask-mail==0.9.1
@@ -115,8 +115,8 @@ sqlalchemy==2.0.43
 tk==8.6.13
 tqdm==4.66.6
 truststore==0.10.3
-typing-extensions==4.12.2
-typing_extensions==4.12.2
+typing-extensions==4.15.0
+typing_extensions==4.15.0
 tzdata==2024b
 urllib3==2.6.3
 werkzeug==3.1.5
