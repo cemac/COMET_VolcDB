@@ -119,7 +119,7 @@ typing-extensions==4.15.0
 typing_extensions==4.15.0
 tzdata==2024b
 urllib3==2.6.3
-werkzeug==3.1.5
+werkzeug==3.1.6
 wheel==0.46.3
 wtforms==3.2.1
 xyzservices==2024.9.0
