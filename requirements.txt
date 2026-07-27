@@ -107,7 +107,7 @@ reproc-cpp==14.2.5.post0
 requests==2.33.1
 ruamel.yaml==0.18.17
 ruamel.yaml.clib==0.2.15
-setuptools==82.0.1
+setuptools==83.0.0
 simdjson==4.2.4
 six==1.17.0
 spdlog==1.17.0
