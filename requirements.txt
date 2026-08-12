@@ -34,8 +34,8 @@ folium==0.20.0
 frozendict==2.4.7
 greenlet==3.3.2
 gunicorn==25.3.0
-h2==4.3.0
-hpack==4.1.0
+h2==4.4.1
+hpack==4.2.0
 hyperframe==6.1.0
 icu==78.2
 idna==3.15
